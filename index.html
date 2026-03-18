@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DuttyBookBag — TradingView Indicators</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --black:#000000;--dark:#050d0d;--panel:#080f0f;--border:#0c3030;
+      --cyan:#00ffe1;--green:#00ff6a;--blue:#4db8ff;--gold:#ffd166;
+      --red:#ff5252;--text:#b8e8e2;--muted:#3d7070;
+      --mono:'Share Tech Mono',monospace;--display:'Bebas Neue',sans-serif;--body:'Rajdhani',sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--black);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.7;overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,255,225,0.012) 3px,rgba(0,255,225,0.012) 4px);pointer-events:none;z-index:999;}
+    body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,255,225,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,225,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0;}
+    .wrap{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:0 24px;}
+
+    header{position:relative;padding:80px 0 60px;text-align:center;overflow:hidden;}
+    .glow-orb{position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(0,255,225,0.07) 0%,transparent 70%);pointer-events:none;}
+    .badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:5px;color:var(--cyan);border:1px solid var(--cyan);padding:5px 18px;margin-bottom:28px;text-transform:uppercase;animation:fadeDown 0.6s ease both;}
+    h1{font-family:var(--display);font-size:clamp(48px,9vw,90px);letter-spacing:4px;line-height:0.95;color:#fff;text-transform:uppercase;animation:fadeDown 0.7s 0.1s ease both;}
+    h1 .accent{color:var(--cyan);text-shadow:0 0 30px rgba(0,255,225,0.5);}
+    .hero-problem{margin:22px auto 0;font-size:18px;color:var(--text);max-width:560px;line-height:1.65;animation:fadeDown 0.7s 0.2s ease both;}
+    .hero-problem strong{color:#fff;}
+
+    .divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);margin:50px 0;}
+    .section-label{font-family:var(--mono);font-size:10px;letter-spacing:5px;color:var(--green);text-transform:uppercase;margin-bottom:14px;}
+    h2{font-family:var(--display);font-size:clamp(28px,5vw,48px);letter-spacing:3px;color:#fff;text-transform:uppercase;margin-bottom:28px;}
+
+    /* SUBSCRIPTION ALERT BOX */
+    .sub-alert{background:rgba(255,82,82,0.08);border:1px solid rgba(255,82,82,0.4);border-left:4px solid var(--red);border-radius:6px;padding:26px 28px;margin-bottom:14px;}
+    .sub-alert h3{font-family:var(--display);font-size:24px;letter-spacing:3px;color:var(--red);text-transform:uppercase;margin-bottom:14px;}
+    .sub-steps{display:flex;flex-direction:column;gap:12px;margin-top:14px;}
+    .sub-step{display:flex;gap:14px;align-items:flex-start;}
+    .sub-num{font-family:var(--mono);font-size:13px;color:#000;background:var(--cyan);width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:700;margin-top:2px;}
+    .sub-step p{font-size:14px;color:var(--text);line-height:1.6;}
+    .sub-step strong{color:#fff;}
+    .sub-step .no{color:var(--red);font-weight:700;}
+    .sub-step .yes{color:var(--green);font-weight:700;}
+
+    /* PAIN GRID */
+    .pain-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+    @media(max-width:580px){.pain-grid{grid-template-columns:1fr;}}
+    .pain-card{background:rgba(255,82,82,0.04);border:1px solid rgba(255,82,82,0.18);border-radius:6px;padding:18px 20px;font-size:15px;color:var(--text);display:flex;align-items:flex-start;gap:12px;animation:fadeUp 0.5s ease both;}
+    .pain-icon{font-size:18px;flex-shrink:0;margin-top:2px;}
+
+    /* STATS */
+    .stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+    @media(max-width:580px){.stats-row{grid-template-columns:1fr;}}
+    .stat-card{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:22px 18px;text-align:center;animation:fadeUp 0.5s ease both;}
+    .stat-num{font-family:var(--display);font-size:46px;letter-spacing:2px;color:var(--cyan);text-shadow:0 0 20px rgba(0,255,225,0.35);line-height:1;margin-bottom:6px;}
+    .stat-label{font-family:var(--mono);font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;}
+
+    /* INDICATOR CARDS */
+    .ind-card{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:30px;display:flex;align-items:center;justify-content:space-between;gap:24px;transition:border-color 0.25s,box-shadow 0.25s;animation:fadeUp 0.5s ease both;text-decoration:none;flex-wrap:wrap;margin-bottom:16px;}
+    .ind-card:hover{border-color:var(--cyan);box-shadow:0 0 28px rgba(0,255,225,0.09);}
+    .ind-card.paid{border-color:rgba(0,255,225,0.25);}
+    .ind-card.free{border-color:rgba(0,255,106,0.25);}
+    .ind-info{flex:1;}
+    .ind-tag{font-family:var(--mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;}
+    .ind-tag.paid-tag{color:var(--cyan);}
+    .ind-tag.free-tag{color:var(--green);}
+    .ind-name{font-family:var(--display);font-size:clamp(24px,4vw,36px);letter-spacing:3px;color:#fff;text-transform:uppercase;line-height:1;margin-bottom:10px;}
+    .ind-desc{font-size:14px;color:var(--text);max-width:480px;line-height:1.6;}
+    .ind-pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
+    .pill{display:inline-block;background:rgba(0,255,225,0.08);border:1px solid rgba(0,255,225,0.25);color:var(--cyan);font-family:var(--mono);font-size:11px;padding:3px 12px;border-radius:3px;}
+    .pill.g{background:rgba(0,255,106,0.08);border-color:rgba(0,255,106,0.25);color:var(--green);}
+    .pill.gold{background:rgba(255,209,102,0.08);border-color:rgba(255,209,102,0.25);color:var(--gold);}
+    .ind-arrow{font-family:var(--mono);font-size:28px;color:var(--cyan);flex-shrink:0;transition:transform 0.2s;}
+    .ind-card.free .ind-arrow{color:var(--green);}
+    .ind-card:hover .ind-arrow{transform:translateX(6px);}
+
+    /* VALUE LIST */
+    .value-list{display:flex;flex-direction:column;gap:12px;}
+    .value-item{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:18px 22px;display:flex;gap:16px;align-items:flex-start;transition:border-color 0.25s;animation:fadeUp 0.5s ease both;}
+    .value-item:hover{border-color:var(--cyan);}
+    .value-icon{font-size:18px;flex-shrink:0;margin-top:3px;}
+    .value-text h4{font-family:var(--display);font-size:18px;letter-spacing:2px;color:#fff;text-transform:uppercase;margin-bottom:3px;}
+    .value-text p{font-size:14px;color:var(--text);line-height:1.6;}
+
+    /* TABLE DEMO */
+    .table-demo{background:var(--panel);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:14px;}
+    .table-demo-label{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:3px;text-transform:uppercase;padding:12px 16px 0;}
+    .table-visual{display:flex;flex-wrap:wrap;gap:4px;padding:10px 16px 16px;}
+    .tv-cell{padding:7px 14px;border-radius:3px;font-family:var(--mono);font-size:12px;font-weight:600;color:#fff;white-space:nowrap;}
+
+    /* SETUP */
+    .flow-bar{display:flex;flex-wrap:wrap;align-items:center;background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:22px 28px;margin-bottom:30px;justify-content:center;gap:0;}
+    .flow-node{background:rgba(0,255,225,0.05);border:1px solid rgba(0,255,225,0.25);border-radius:4px;padding:8px 16px;font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--cyan);text-align:center;}
+    .flow-arr{color:var(--muted);font-size:20px;padding:0 8px;font-family:var(--mono);}
+    @media(max-width:580px){.flow-bar{flex-direction:column;}.flow-arr{transform:rotate(90deg);}}
+
+    .steps{display:flex;flex-direction:column;gap:14px;}
+    .step{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:22px 26px;display:flex;gap:18px;align-items:flex-start;transition:border-color 0.25s;}
+    .step:hover{border-color:var(--cyan);}
+    .step-num{width:40px;height:40px;border:2px solid var(--cyan);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:15px;color:var(--cyan);flex-shrink:0;text-shadow:0 0 10px rgba(0,255,225,0.6);}
+    .step-body h4{font-family:var(--display);font-size:20px;letter-spacing:2px;color:#fff;margin-bottom:4px;}
+    .step-body p{font-size:14px;color:var(--text);}
+    .tip{background:rgba(0,255,106,0.04);border-left:3px solid var(--green);border-radius:3px;padding:8px 14px;margin-top:10px;font-family:var(--mono);font-size:12px;color:var(--green);}
+    .warn{background:rgba(255,82,82,0.04);border-left:3px solid var(--red);border-radius:3px;padding:8px 14px;margin-top:10px;font-family:var(--mono);font-size:12px;color:var(--red);}
+
+    /* PRICING */
+    .pricing-reveal{background:var(--panel);border:1px solid rgba(0,255,225,0.3);border-radius:8px;overflow:hidden;}
+    .pricing-top{background:rgba(0,255,225,0.04);padding:36px 32px 28px;text-align:center;border-bottom:1px solid rgba(0,255,225,0.12);}
+    .pricing-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:5px;color:var(--green);text-transform:uppercase;margin-bottom:12px;}
+    .pricing-name{font-family:var(--display);font-size:34px;letter-spacing:4px;color:#fff;text-transform:uppercase;margin-bottom:20px;}
+    .price-was{font-family:var(--mono);font-size:16px;color:var(--muted);text-decoration:line-through;margin-bottom:4px;}
+    .price-now{font-family:var(--display);font-size:80px;letter-spacing:2px;color:var(--cyan);text-shadow:0 0 30px rgba(0,255,225,0.4);line-height:1;margin-bottom:4px;}
+    .price-period{font-family:var(--mono);font-size:12px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:20px;}
+    .price-per-day{display:inline-block;background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);font-family:var(--mono);font-size:11px;letter-spacing:2px;padding:5px 16px;border-radius:3px;margin-bottom:28px;}
+    .pricing-includes{padding:24px 32px 28px;}
+    .includes-label{font-family:var(--mono);font-size:10px;letter-spacing:4px;color:var(--muted);text-transform:uppercase;margin-bottom:14px;}
+    .includes-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:28px;}
+    .includes-list li{font-size:14px;color:var(--text);display:flex;align-items:center;gap:10px;font-family:var(--mono);}
+    .includes-list li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0;}
+
+    .btn{font-family:var(--mono);font-size:13px;letter-spacing:2px;padding:14px 28px;border-radius:3px;text-decoration:none;border:none;cursor:pointer;transition:transform 0.15s,box-shadow 0.2s;display:inline-flex;align-items:center;justify-content:center;gap:8px;}
+    .btn:hover{transform:translateY(-2px);}
+    .btn-primary{background:var(--cyan);color:#000;font-weight:700;box-shadow:0 0 20px rgba(0,255,225,0.3);width:100%;font-size:15px;padding:16px;}
+    .btn-primary:hover{box-shadow:0 0 40px rgba(0,255,225,0.6);}
+    .btn-outline{background:transparent;color:var(--cyan);border:1px solid var(--cyan);}
+    .btn-outline:hover{background:rgba(0,255,225,0.05);}
+    .btn-green{background:transparent;color:var(--green);border:1px solid var(--green);}
+    .btn-green:hover{background:rgba(0,255,106,0.05);}
+    .btn-yt{background:transparent;color:#ff4444;border:1px solid #ff4444;}
+    .btn-yt:hover{background:rgba(255,68,68,0.07);}
+    .btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;}
+    .micro-copy{font-family:var(--mono);font-size:11px;color:var(--muted);text-align:center;letter-spacing:2px;margin-top:10px;}
+
+    /* CRYPTO */
+    .crypto-section{margin-top:20px;padding:20px 24px;background:var(--dark);border:1px solid var(--border);border-radius:6px;}
+    .crypto-title{font-family:var(--mono);font-size:10px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:12px;}
+    .crypto-row{display:flex;align-items:center;gap:10px;background:#030a0a;border:1px solid var(--border);border-radius:4px;padding:10px 14px;margin-bottom:8px;}
+    .crypto-row:last-child{margin-bottom:0;}
+    .crypto-label{font-family:var(--mono);font-size:11px;color:var(--gold);min-width:38px;}
+    .crypto-addr{font-family:var(--mono);font-size:11px;color:var(--text);word-break:break-all;flex:1;user-select:all;}
+    .copy-btn{background:var(--border);color:var(--cyan);border:1px solid var(--border);border-radius:3px;padding:4px 10px;font-family:var(--mono);font-size:10px;letter-spacing:1px;cursor:pointer;white-space:nowrap;transition:background 0.2s,color 0.2s;}
+    .copy-btn:hover{background:var(--cyan);color:#000;}
+    .copy-btn.done{background:var(--green);color:#000;}
+
+    /* MISSION */
+    .mission-box{background:var(--panel);border:1px solid var(--border);border-left:4px solid var(--green);border-radius:6px;padding:30px;text-align:center;}
+    .mission-box p{color:var(--text);font-size:15px;margin-bottom:10px;}
+    .mission-title{font-family:var(--display);font-size:26px;letter-spacing:3px;color:var(--green);text-shadow:0 0 20px rgba(0,255,106,0.4);margin:12px 0 8px;}
+
+    footer{border-top:1px solid var(--border);padding:40px 0 60px;text-align:center;color:var(--muted);font-family:var(--mono);font-size:11px;letter-spacing:2px;}
+    footer span{color:var(--cyan);}
+
+    @keyframes fadeDown{from{opacity:0;transform:translateY(-16px);}to{opacity:1;transform:translateY(0);}}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+    /* NAV BAR */
+    .site-nav{position:sticky;top:0;z-index:100;background:rgba(0,0,0,0.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:0 24px;}
+    .site-nav .wrap{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;padding:0;max-width:860px;margin:0 auto;}
+    .site-nav a{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--muted);text-decoration:none;text-transform:uppercase;padding:14px 16px;transition:color 0.2s;white-space:nowrap;}
+    .site-nav a:hover{color:var(--cyan);}
+    .site-nav a.nav-highlight{color:var(--gold);font-weight:700;}
+    .site-nav a.nav-highlight:hover{color:#fff;}
+    @media(max-width:580px){.site-nav a{font-size:10px;padding:10px 8px;letter-spacing:1px;}}
+
+  </style>
+</head>
+<body>
+
+<!-- NAV BAR -->
+<nav class="site-nav">
+  <div class="wrap">
+    <a href="#indicators">Indicators</a>
+    <a href="getting-started.html#tradingview" class="nav-highlight">What Is TradingView?</a>
+    <a href="getting-started.html#gumroad" class="nav-highlight">What Is Gumroad?</a>
+    <a href="#access">Get Access</a>
+  </div>
+</nav>
+
+<!-- LOGO -->
+<div style="display:flex;justify-content:center;padding:18px 0 0;position:relative;z-index:1;">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:7px;background:#000;padding:10px 14px;border-radius:6px;">
+    <div style="display:flex;gap:9px;"><div style="width:8px;height:8px;border-radius:50%;background:#ff2020;"></div></div>
+    <div style="display:flex;gap:9px;">
+      <div style="width:8px;height:8px;border-radius:50%;background:#00ff44;"></div>
+      <div style="width:8px;height:8px;border-radius:50%;background:#ff2020;"></div>
+      <div style="width:8px;height:8px;border-radius:50%;background:#00ff44;"></div>
+    </div>
+    <div style="display:flex;gap:9px;">
+      <div style="width:8px;height:8px;border-radius:50%;background:#00ff44;"></div>
+      <div style="width:8px;height:8px;border-radius:50%;background:transparent;"></div>
+      <div style="width:8px;height:8px;border-radius:50%;background:#00ff44;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<header>
+  <div class="glow-orb"></div>
+  <div class="wrap">
+    <div class="badge">DuttyBookBag · TradingView Tools</div>
+    <h1>Stop Guessing<br><span class="accent">The Market</span></h1>
+    <p class="hero-problem">Most traders stare at charts and <strong>feel</strong> something is happening — but can't measure it. Our indicators read the intensity of every move so the data does the talking.</p>
+  </div>
+</header>
+
+<!-- ══ SUBSCRIPTION CONFUSION — FIXED FIRST ══ -->
+<section>
+  <div class="wrap">
+    <div class="divider"></div>
+    <div class="section-label">// Before You Do Anything — Read This</div>
+    <h2>How Access Actually Works</h2>
+
+    <div class="sub-alert">
+      <h3>⚠ YouTube Is NOT a Subscription</h3>
+      <p style="font-size:15px;color:var(--text);margin-bottom:16px;">A lot of people follow on YouTube thinking that gives them indicator access. <span style="color:var(--red);font-weight:700;">It does not.</span> YouTube is where the videos live. Access to the indicators requires two completely separate steps:</p>
+
+      <div class="sub-steps">
+        <div class="sub-step">
+          <div class="sub-num">1</div>
+          <div>
+            <p><strong>Create a free TradingView account</strong> at tradingview.com — write down your exact username. You need this to receive access.</p>
+          </div>
+        </div>
+        <div class="sub-step">
+          <div class="sub-num">2</div>
+          <div>
+            <p><strong>Pay on Gumroad</strong> — $4.99/month. This is the actual subscription. <span class="no">NOT YouTube.</span> <span class="no">NOT following.</span> <span class="no">NOT subscribing to the channel.</span> <span class="yes">Gumroad only.</span></p>
+          </div>
+        </div>
+        <div class="sub-step">
+          <div class="sub-num">3</div>
+          <div>
+            <p><strong>Paid via Gumroad?</strong> Reply to the confirmation email with your TradingView username and which indicators you want — ① DBB Analytics Table, ② duttyb@g@von blocks, or both. <strong>Paid via Bitcoin or XRP?</strong> Email <strong style="color:var(--cyan);"><a href="/cdn-cgi/l/email-protection#e6829392929f8489898d848781a6818b878f8ac885898b" style="color:inherit;"><span class="__cf_email__" data-cfemail="4b2f3e3f3f3229242420292a2c0b2c262a222765282426">[email&#160;protected]</span></a></strong> with your username, transaction ID, and your choices. DBB Intensity Monitor ③ is added free automatically.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ THE PROBLEM ══ -->
+<section>
+  <div class="wrap">
+    <div class="divider"></div>
+    <div class="section-label">// Sound Familiar?</div>
+    <h2>The Problem Every Trader Faces</h2>
+    <div class="pain-grid">
+      <div class="pain-card"><span class="pain-icon">😤</span><span>You see a big candle — but is it real momentum or just noise?</span></div>
+      <div class="pain-card"><span class="pain-icon">📉</span><span>Volume moves — but you don't know if it's actually meaningful.</span></div>
+      <div class="pain-card"><span class="pain-icon">🔄</span><span>RSI is moving — but you can't tell if it's accelerating or fading.</span></div>
+      <div class="pain-card"><span class="pain-icon">⏱️</span><span>You switch timeframes manually — by the time you check, it's too late.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ STATS ══ -->
+<section>
+  <div class="wrap">
+    <div class="divider"></div>
+    <div class="section-label">// By The Numbers</div>
+    <h2>What You're Working With</h2>
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-num">7</div><div class="stat-label">Timeframes At Once</div></div>
+      <div class="stat-card"><div class="stat-num">6</div><div class="stat-label">Analysis Columns</div></div>
+      <div class="stat-card"><div class="stat-num">3</div><div class="stat-label">Indicators Total</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ THE TWO INDICATORS ══ -->
+<section>
+  <div class="wrap">
+    <div class="divider"></div>
+    <div class="section-label">// Available Indicators</div>
+    <h2 id="indicators">Choose Your Tool</h2>
+
+    <!-- PAID -->
+    <a href="dbb-analytics.html" class="ind-card paid">
+      <div class="ind-info">
+        <div class="ind-tag paid-tag">⚡ Paid — $4.99/month</div>
+        <div class="ind-name">DBB Clean Analytics Table</div>
+        <div class="ind-desc">The main indicator. Multi-timeframe table showing RSI, compression, SAR direction, volume power, directional intensity, market bias, and historical highs/lows — all live on your chart across 7 timeframes simultaneously. This is what the demo video shows.</div>
+        <div class="ind-pills">
+          <span class="pill gold">$4.99 / month</span>
+          <span class="pill">7 Timeframes</span>
+          <span class="pill">6 Columns</span>
+          <span class="pill">Full Manual Inside →</span>
+        </div>
+      </div>
+      <div class="ind-arrow">→</div>
+    </a>
+
+    <!-- PAID 2 -->
+    <a href="dbb-von-blocks.html" class="ind-card paid" style="border-color:rgba(255,140,0,0.25);">
+      <div class="ind-info">
+        <div class="ind-tag paid-tag" style="color:#ff8c00;">⚡ Paid — $4.99/month</div>
+        <div class="ind-name" style="color:#fff;">duttyb@g@von blocks</div>
+        <div class="ind-desc">VWAP with standard deviation bands, multi-timeframe order blocks across 7 timeframes, confluence scoring, mitigation shapes, and 10 alert conditions — all overlaid directly on your chart.</div>
+        <div class="ind-pills">
+          <span class="pill" style="color:#ff8c00;border-color:rgba(255,140,0,0.3);background:rgba(255,140,0,0.08);">$4.99 / month</span>
+          <span class="pill">VWAP System</span>
+          <span class="pill">Order Blocks</span>
+          <span class="pill">MTF Confluence →</span>
+        </div>
+      </div>
+      <div class="ind-arrow" style="color:#ff8c00;">→</div>
+    </a>
+
+    <!-- FREE -->
+    <a href="dbb-intensity.html" class="ind-card free">
+      <div class="ind-info">
+        <div class="ind-tag free-tag">✅ 100% Free — No Payment Needed</div>
+        <div class="ind-name">DBB Intensity Monitor</div>
+        <div class="ind-desc">A free bonus indicator — available to everyone, no subscription needed. Measures market intensity across 5 systems — RSI Velocity, Volume ROC, Candle Strength, Pure RSI, and Pure Volume. Shows a live color-coded table on your chart.</div>
+        <div class="ind-pills">
+          <span class="pill g">Free Forever</span>
+          <span class="pill g">5 Systems</span>
+          <span class="pill g">No Payment →</span>
+        </div>
+      </div>
+      <div class="ind-arrow" style="color:var(--green);">→</div>
+    </a>
+  </div>
+</section>
+
+<!-- ══ WHAT THE PAID ONE GIVES YOU ══ -->
+<section>
+  <div class="wrap">
+    <div class="divider"></div>
+    <div class="section-label">// DBB Clean Analytics Table</div>
+    <h2>What You Get for $4.99</h2>
+
+    <div class="value-list">
+      <div class="value-item"><span class="value-icon">📊</span><div class="value-text"><h4>7 Timeframes — One Table</h4><p>1m, 5m, 15m, 30m, 1h, 4h, and 1D all visible simultaneously. Stop switching timeframes manually — it's all there at once.</p></div></div>
+      <div class="value-item"><span class="value-icon">📈</span><div class="value-text"><h4>I/O — RSI Across All Timeframes</h4><p>See whether RSI is above or below 50 on every timeframe in one glance. Green = above 50. Red = below 50. The exact value shown.</p></div></div>
+      <div class="value-item"><span class="value-icon">🔒</span><div class="value-text"><h4>S — Compression Detection</h4><p>Detects when price is squeezed (🔒) or expanded (⚡) using an internal compression system. Know when a big move might be building.</p></div></div>
+      <div class="value-item"><span class="value-icon">⬆️</span><div class="value-text"><h4>SR — SAR Direction + Dominance</h4><p>Parabolic SAR direction on higher timeframes. Combined dominance score on 1m and 5m. All in one column.</p></div></div>
+      <div class="value-item"><span class="value-icon">💧</span><div class="value-text"><h4>PWR — Volume Power</h4><p>Measures volume activity and direction on each candle. Green = strong volume up candle. Red = strong volume down candle. Gray = no conviction.</p></div></div>
+      <div class="value-item"><span class="value-icon">🔵</span><div class="value-text"><h4>DI — Directional Intensity</h4><p>Shows the dominant directional momentum on each timeframe. Once a direction is confirmed, it holds — giving you a clear read on whether buyers or sellers are in control. Designed to filter out noise and show the bigger picture.</p></div></div>
+      <div class="value-item"><span class="value-icon">🌊</span><div class="value-text"><h4>BIA Row — Market Bias + Wave Stages</h4><p>Confirms when the market has entered a directional wave (BULL or BEAR) and tracks how far the wave has progressed — B1, B2, B3 or R1, R2, R3. Flashes yellow at warning stage.</p></div></div>
+      <div class="value-item"><span class="value-icon">📏</span><div class="value-text"><h4>H/L Row — 252-Bar High / Low</h4><p>Shows the historical high and low for context. Know instantly whether price is near an extreme or in the middle of its range.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ HOW TO GET ACCESS ══ -->
+<section>
+  <div class="wrap">
+    <div class="divider"></div>
+    <div class="section-label">// How to Get Access</div>
+    <h2>3 Steps — Done in Minutes</h2>
+
+    <div class="flow-bar">
+      <div class="flow-node">TradingView<br>Account</div>
+      <div class="flow-arr">→</div>
+      <div class="flow-node">Pay on<br>Gumroad</div>
+      <div class="flow-arr">→</div>
+      <div class="flow-node">Access<br>Within 24hr</div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Create a TradingView Account</h4>
+          <p>Go to tradingview.com — sign up free. Write down your exact username. You need this to receive indicator access.</p>
+          <div class="tip">✔ Free account is all you need. No paid TradingView plan required.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Pay on Gumroad — $4.99/month</h4>
+          <p>This is the only way to get access. Following on YouTube does NOT grant access. Gumroad is the subscription.</p>
+          <div class="warn">⚠ YouTube = videos only. Gumroad = paid indicator access. They are completely separate.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>Reply With Your Choices</h4>
+          <p>After payment, Gumroad sends you a confirmation — <strong style="color:#fff;">reply to it</strong> with your TradingView username and which indicators you want. If you paid with <strong style="color:var(--gold);">Bitcoin or XRP</strong>, email <strong style="color:var(--cyan);"><a href="/cdn-cgi/l/email-protection#97f3e2e3e3eef5f8f8fcf5f6f0d7f0faf6fefbb9f4f8fa" style="color:inherit;"><span class="__cf_email__" data-cfemail="94f0e1e0e0edf6fbfbfff6f5f3d4f3f9f5fdf8baf7fbf9">[email&#160;protected]</span></a></strong> with your username, transaction ID, and your choices.</p>
+          <div class="tip">✔ You choose what you want — ① DBB Analytics Table · ② duttyb@g@von blocks · ③ Intensity Monitor (free, auto-added)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PRICING ══ -->
+<section>
+  <div class="wrap">
+    <div class="divider"></div>
+    <div class="section-label">// Get Access</div>
+    <h2 id="access">Less Than a Cup of Coffee</h2>
+
+    <div class="pricing-reveal">
+      <div class="pricing-top">
+        <div class="pricing-eyebrow">// DBB Clean Analytics Table — Full Access</div>
+        <div class="pricing-name">One Simple Price</div>
+        <div class="price-now">$4.99</div>
+        <div class="price-period">per month · cancel anytime</div>
+        <div class="price-per-day">Less than $0.10 per day</div>
+        <a href="https://duttybookbag.gumroad.com/l/wazqn" target="_blank" class="btn btn-primary">⚡ Subscribe on Gumroad — $4.99/mo</a>
+        <p class="micro-copy">Instant confirmation · Cancel anytime · No hidden fees</p>
+      </div>
+      <div class="pricing-includes">
+        <div class="includes-label">// Everything included</div>
+        <ul class="includes-list">
+          <li>DBB Clean Analytics Table — full paid indicator</li>
+          <li>DBB Intensity Monitor — free bonus included</li>
+          <li>7 timeframes simultaneously on one table</li>
+          <li>RSI, Compression, SAR, Volume Power, DI columns</li>
+          <li>Market Bias + Wave Stages (B1-B3, R1-R3)</li>
+          <li>Historical High / Low row</li>
+          <li>Full user manual for both indicators</li>
+          <li>All future updates at no extra cost</li>
+        </ul>
+        <div class="btn-row">
+          <a href="https://youtu.be/iOSJLXGUP70?si=58Gnflul1-BLq4Ix" target="_blank" class="btn btn-yt" style="flex:1;">▶ Watch Demo</a>
+          <a href="dbb-analytics.html" class="btn btn-outline" style="flex:1;">📖 Full Manual</a>
+          <a href="dbb-intensity.html" class="btn btn-green" style="flex:1;">✅ Free Indicator</a>
+          <a href="getting-started.html" class="btn btn-outline" style="flex:1;color:var(--gold);border-color:var(--gold);">🆕 New? Start Here</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="crypto-section">
+      <div class="crypto-title">// Prefer Crypto? Send $4.99 equivalent — then email <a href="/cdn-cgi/l/email-protection#a9cddcddddd0cbc6c6c2cbc8cee9cec4c8c0c587cac6c4" style="color:inherit;"><span class="__cf_email__" data-cfemail="4b2f3e3f3f3229242420292a2c0b2c262a222765282426">[email&#160;protected]</span></a> with your TradingView username + transaction ID</div>
+      <div class="crypto-row">
+        <span class="crypto-label">BTC</span>
+        <span class="crypto-addr" id="btc">bc1q2r54edzd5xc98plj76w8npjtg9czxga6tk0mnm</span>
+        <button class="copy-btn" onclick="copyAddr('btc',this)">COPY</button>
+      </div>
+      <div class="crypto-row">
+        <span class="crypto-label">XRP</span>
+        <span class="crypto-addr" id="xrp">rHbTQ9DX9MRSWhMzhkJidFVDu9GHzYshex</span>
+        <button class="copy-btn" onclick="copyAddr('xrp',this)">COPY</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ MISSION ══ -->
+<section>
+  <div class="wrap">
+    <div class="divider"></div>
+    <div class="section-label">// Our Mission</div>
+    <div class="mission-box">
+      <p>These tools are designed to support your trading decision-making and add real value to your journey.</p>
+      <div class="mission-title">Dutty Ashy Win_G Foundation</div>
+      <p>When this business becomes profitable, the plan is to establish this foundation for youth and children — giving back to the community and helping young people achieve their dreams.</p>
+    </div>
+    <div class="divider"></div>
+  </div>
+</section>
+
+<!-- LARGE LOGO -->
+<section>
+  <div class="wrap">
+    <div style="display:flex;justify-content:center;padding:20px 0 50px;">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:28px;background:#000;padding:48px 60px;border-radius:12px;">
+        <div style="display:flex;gap:36px;"><div style="width:32px;height:32px;border-radius:50%;background:#ff2020;"></div></div>
+        <div style="display:flex;gap:36px;">
+          <div style="width:32px;height:32px;border-radius:50%;background:#00ff44;"></div>
+          <div style="width:32px;height:32px;border-radius:50%;background:#ff2020;"></div>
+          <div style="width:32px;height:32px;border-radius:50%;background:#00ff44;"></div>
+        </div>
+        <div style="display:flex;gap:36px;">
+   
