@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DBB NOMAD v5.0 — DuttyBookBag</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --black:#000000;--dark:#050d0d;--panel:#080f0f;--border:#0c3030;
+      --cyan:#00ffe1;--green:#00ff6a;--blue:#4db8ff;--gold:#ffd166;
+      --red:#ff5252;--yellow:#ffd740;--purple:#b44dff;
+      --text:#b8e8e2;--muted:#3d7070;
+      --mono:'Share Tech Mono',monospace;--display:'Bebas Neue',sans-serif;--body:'Rajdhani',sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--black);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.7;overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,255,225,0.012) 3px,rgba(0,255,225,0.012) 4px);pointer-events:none;z-index:999;}
+    body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,255,225,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,225,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0;}
+    .wrap{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:0 24px;}
+    .nav-back{position:relative;z-index:1;padding:18px 24px 0;max-width:860px;margin:0 auto;}
+    .nav-back a{font-family:var(--mono);font-size:11px;letter-spacing:3px;color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color 0.2s;display:inline-flex;align-items:center;gap:8px;}
+    .nav-back a:hover{color:var(--cyan);}
+    header{position:relative;padding:60px 0 50px;text-align:center;overflow:hidden;}
+    .glow-orb{position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:500px;height:500px;background:radial-gradient(circle,rgba(0,255,225,0.07) 0%,transparent 70%);pointer-events:none;}
+    .paid-badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:4px;color:#000;background:var(--cyan);padding:5px 18px;margin-bottom:12px;text-transform:uppercase;border-radius:3px;}
+    .badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:5px;color:var(--cyan);border:1px solid var(--cyan);padding:5px 18px;margin-bottom:20px;text-transform:uppercase;}
+    h1{font-family:var(--display);font-size:clamp(42px,8vw,80px);letter-spacing:4px;line-height:0.95;color:#fff;text-transform:uppercase;}
+    h1 .accent{color:var(--cyan);text-shadow:0 0 30px rgba(0,255,225,0.5);}
+    .hero-sub{margin-top:14px;font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:3px;}
+    .hero-cta{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:24px;}
+    .divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);margin:50px 0;}
+    .section-label{font-family:var(--mono);font-size:10px;letter-spacing:5px;color:var(--green);text-transform:uppercase;margin-bottom:14px;}
+    h2{font-family:var(--display);font-size:clamp(28px,5vw,48px);letter-spacing:3px;color:#fff;text-transform:uppercase;margin-bottom:28px;}
+    .disclaimer{background:rgba(255,82,82,0.06);border:1px solid rgba(255,82,82,0.2);border-radius:6px;padding:24px;margin-bottom:28px;}
+    .disc-title{font-family:var(--display);font-size:22px;letter-spacing:3px;color:var(--red);margin-bottom:14px;text-transform:uppercase;}
+    .disclaimer p{font-size:14px;color:var(--text);margin-bottom:10px;line-height:1.7;}
+    .disclaimer p:last-child{margin-bottom:0;}
+    .what-box{background:var(--panel);border:1px solid var(--border);border-left:4px solid var(--cyan);border-radius:6px;padding:28px 26px;margin-bottom:28px;}
+    .what-box h3{font-family:var(--display);font-size:26px;letter-spacing:3px;color:#fff;text-transform:uppercase;margin-bottom:12px;}
+    .what-box p{font-size:15px;color:var(--text);line-height:1.7;margin-bottom:12px;}
+    .what-box p:last-child{margin-bottom:0;}
+    .col-card{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:22px 24px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color 0.25s;}
+    .col-card:hover{border-color:var(--cyan);}
+    .col-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--cyan);}
+    .col-name{font-family:var(--display);font-size:22px;letter-spacing:2px;color:#fff;text-transform:uppercase;margin-bottom:4px;}
+    .col-sub{font-family:var(--mono);font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:10px;}
+    .col-card p{font-size:14px;color:var(--text);line-height:1.7;}
+    .tip{background:rgba(0,255,106,0.04);border-left:3px solid var(--green);border-radius:3px;padding:8px 14px;margin-top:10px;font-family:var(--mono);font-size:12px;color:var(--green);}
+    .btn{font-family:var(--mono);font-size:13px;letter-spacing:2px;padding:14px 28px;border-radius:3px;text-decoration:none;border:none;cursor:pointer;transition:transform 0.15s,box-shadow 0.2s;display:inline-flex;align-items:center;justify-content:center;gap:8px;}
+    .btn:hover{transform:translateY(-2px);}
+    .btn-primary{background:var(--cyan);color:#000;font-weight:700;box-shadow:0 0 20px rgba(0,255,225,0.3);}
+    .btn-primary:hover{box-shadow:0 0 40px rgba(0,255,225,0.6);}
+    .btn-outline{background:transparent;color:var(--cyan);border:1px solid var(--cyan);}
+    .btn-outline:hover{background:rgba(0,255,225,0.05);}
+    .btn-yt{background:transparent;color:#ff4444;border:1px solid #ff4444;opacity:0.5;cursor:default;}
+    .pill{display:inline-block;background:rgba(0,255,225,0.08);border:1px solid rgba(0,255,225,0.25);color:var(--cyan);font-family:var(--mono);font-size:11px;padding:3px 12px;border-radius:3px;}
+    footer{border-top:1px solid var(--border);padding:40px 0 60px;text-align:center;color:var(--muted);font-family:var(--mono);font-size:11px;letter-spacing:2px;}
+    footer span{color:var(--cyan);}
+    @keyframes fadeDown{from{opacity:0;transform:translateY(-16px);}to{opacity:1;transform:translateY(0);}}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+  </style>
+</head>
+<body>
+
+<div class="nav-back">
+  <a href="index.html">← Back to All Indicators</a>
+</div>
+
+<header>
+  <div class="glow-orb"></div>
+  <div class="wrap">
+    <div class="paid-badge">⚡ Paid — $4.99/month</div>
+    <div class="badge">DuttyBookBag · Indicator Manual</div>
+    <h1>DBB NOMAD<br><span class="accent">v5.0</span></h1>
+    <p class="hero-sub">// Signals · Moving Averages · price average · CT1 · Multi-Timeframe · Volume · DI · Compression //</p>
+    <div class="hero-cta">
+      <a href="https://duttybookbag.gumroad.com/l/qogzst" target="_blank" class="btn btn-primary">⚡ Get Access — $4.99/mo</a>
+      <a href="https://www.youtube.com/results?search_query=duttybookbag" target="_blank" class="btn btn-yt" style="opacity:1;">▶ YouTube Channel</a>
+      <a href="index.html" class="btn btn-outline">← All Indicators</a>
+    </div>
+  </div>
+</header>
+
+<!-- DISCLAIMER -->
+<section>
+  <div class="wrap">
+    <div class="disclaimer">
+      <div class="disc-title">⚠ Important Disclaimer</div>
+      <p><strong>NOT FINANCIAL ADVICE.</strong> DBB NOMAD v5.0 is an educational and informational tool only. Nothing displayed is a recommendation to buy, sell, or hold any asset.</p>
+      <p><strong>YOUR RESPONSIBILITY.</strong> You are solely responsible for all trading decisions and any profits or losses. Trading involves substantial risk — you can lose some or all of your capital.</p>
+      <p><strong>NO WARRANTIES.</strong> This tool is provided "as is" with no guarantees. The creator is not a licensed financial advisor. Always do your own research and trade responsibly.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT IT IS -->
+<section>
+  <div class="wrap">
+    <div class="divider"></div>
+    <div class="section-label">// What It Is</div>
+    <h2>DBB NOMAD v5.0</h2>
+
+    <div class="what-box">
+      <h3>A Complete Chart Overlay System</h3>
+      <p><strong>DBB NOMAD v5.0</strong> is a complete chart overlay system combining bull/bear signal detection, moving averages (EMA 8, EMA 21, SMA 50, SMA 64, SMA 200), price average, CT1, multi-timeframe analysis, volume power, directional intensity, and compression detection — all in one indicator on your chart.</p>
+      <p>Every system can be individually toggled on or off using the Performance Masters panel. Built-in alerts for bullish signals, bearish signals, and multi-timeframe triggers.</p>
+      <p>It does <strong>not</strong> tell you what to do. You see the data and make your own decisions.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SYSTEMS -->
+<section>
+  <div class="wrap">
+    <div class="divider"></div>
+    <div class="section-label">// What's Inside</div>
+    <h2>Systems & Features</h2>
+
+    <div class="col-card">
+      <div class="col-name">Bull / Bear Signal System</div>
+      <div class="col-sub">// Triangle markers on your chart</div>
+      <p>Detects bullish and bearish conditions based on multiple confluence factors. When conditions align, a green triangle (bull) or red triangle (bear) appears on your chart. Background color changes to match the active signal direction.</p>
+    </div>
+
+    <div class="col-card">
+      <div class="col-name">Moving Average Suite</div>
+      <div class="col-sub">// EMA 8 · EMA 21 · SMA 50 · SMA 64 · SMA 200</div>
+      <p>Five moving averages with fully customizable periods, colors, line width, and opacity. Toggle each one individually. Use them together or pick the ones that fit your strategy. Each can be enabled or disabled from the Performance Masters panel.</p>
+    </div>
+
+    <div class="col-card">
+      <div class="col-name">Price Average System</div>
+      <div class="col-sub">// Volume Weighted Average Price</div>
+      <p>Live Price Average plotted directly on your chart. See where the volume-weighted price sits relative to current price action. Fully customizable color and toggle.</p>
+    </div>
+
+    <div class="col-card">
+      <div class="col-name">CT1</div>
+      <div class="col-sub">// Upper · Middle · Lower with fill</div>
+      <p>Standard CT1 with adjustable colors for upper, middle, and lower bands. Includes a fill between the bands with adjustable opacity so you can see the squeeze and expansion zones visually.</p>
+    </div>
+
+    <div class="col-card">
+      <div class="col-name">Multi-Timeframe System</div>
+      <div class="col-sub">// X1 · X2 · X3 · X4 · X5 · X6</div>
+      <p>Monitors conditions across multiple timeframes and triggers signals when key thresholds are hit. Shows which score level triggered directly on your chart. A proprietary detection system built for speed and accuracy.</p>
+    </div>
+
+    <div class="col-card">
+      <div class="col-name">Xpush System</div>
+      <div class="col-sub">// Cross-timeframe signal scoring</div>
+      <p>When a bull or bear signal fires, the Xpush system watches for confirmation across your selected score levels — X1 through X5. When a score level confirms, its label appears on the chart at the exact bar it triggered. Each score level can be enabled or disabled individually and shares the same toggle as the Multi-Timeframe system.</p>
+      <div class="tip">✔ X1 = fastest · X2 · X3 · X4 · X5 = higher timeframe confirmation</div>
+    </div>
+
+    <div class="col-card">
+      <div class="col-name">Compression Detection</div>
+      <div class="col-sub">// Squeeze and expansion states</div>
+      <p>Detects when price is being squeezed into a tight range (compression) or when it has expanded out. Compression often precedes big moves. Visible across multiple timeframes so you can spot when several are coiling at once.</p>
+    </div>
+
+    <div class="col-card">
+      <div class="col-name">Volume Power Analysis</div>
+      <div class="col-sub">// Volume direction and strength</div>
+      <p>Measures volume activity relative to the 20-period average and determines whether the volume is supporting bullish or bearish price action. Shows whether volume is strong or weak and which direction it favors.</p>
+    </div>
+
+    <div class="col-card">
+      <div class="col-name">Directional Intensity (DI)</div>
+      <div class="col-sub">// Dominant momentum tracking</div>
+      <p>Shows the dominant directional momentum on each timeframe. Once a direction is confirmed, it holds — giving you a clear read on whether buyers or sellers are in control. Designed to filter out noise and show the bigger picture.</p>
+    </div>
+
+    <div class="col-card">
+      <div class="col-name">Performance Masters Panel</div>
+      <div class="col-sub">// Toggle everything on or off</div>
+      <p>Every single system can be individually enabled or disabled. Running on a slow device? Turn off the multi-timeframe system. Want a clean chart? Hit the Clean Chart toggle and everything disappears. You control exactly what runs.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- HOW TO GET ACCESS -->
+<section>
+  <div class="wrap">
+    <div class="divider"></div>
+    <div class="section-label">// Get Access</div>
+    <h2>$4.99 / Month</h2>
+
+    <div style="text-align:center;margin-bottom:30px;">
+      <a href="https://duttybookbag.gumroad.com/l/qogzst" target="_blank" class="btn btn-primary" style="font-size:15px;padding:16px 40px;">⚡ Get Access — $4.99/month</a>
+    </div>
+
+    <div class="tip">✔ After payment, reply to the Gumroad confirmation email with your TradingView username. Access granted within 24 hours.</div>
+  </div>
+</section>
+
+<!-- ALERTS SECTION -->
+<section>
+  <div class="wrap">
+    <div class="divider"></div>
+    <div class="section-label">// Alerts</div>
+    <h2>How to Set Up Alerts</h2>
+    <div class="what-box">
+      <h3>Step-by-Step Alert Setup</h3>
+      <p><strong>Step 1</strong> — Right-click anywhere on your chart where the indicator is loaded.</p>
+      <p><strong>Step 2</strong> — Select <strong>"Add alert on DBB NOMAD v5.0"</strong> from the menu.</p>
+      <p><strong>Step 3</strong> — In the Condition dropdown, choose the alert you want.</p>
+      <p><strong>Step 4</strong> — Set your notification method — popup, email, phone notification, or webhook.</p>
+      <p><strong>Step 5</strong> — Click <strong>"Create"</strong> and you are done.</p>
+    </div>
+    <div class="col-card">
+      <div class="col-name">Available Alerts</div>
+      <div class="col-sub">// Built-in alert conditions</div>
+      <p><strong>Bullish Signal</strong> — Fires when bullish conditions align across multiple confluence factors.</p>
+      <p><strong>Bearish Signal</strong> — Fires when bearish conditions align across multiple confluence factors.</p>
+      <p><strong>Multi-Timeframe Triggers</strong> — Fires when key thresholds are hit on specific score levels.</p>
+    </div>
+    <div class="tip">TradingView free accounts can set basic alerts. No paid plan needed.</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <p>Not financial advice · Trade responsibly · <span>DuttyBookBag</span></p>
+    <p style="margin-top:8px;">© Uncle_E · DBB NOMAD v5.0 · All Rights Reserved</p>
+  </div>
+</footer>
+
+</body>
+</html>
