@@ -1,0 +1,2093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dutty Ashy Win_G Learning Center — DuttyBookBag</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --black:#000000;--dark:#050d0d;--panel:#080f0f;--border:#0c3030;
+      --cyan:#00ffe1;--green:#00ff6a;--blue:#4db8ff;--gold:#ffd166;
+      --red:#ff5252;--yellow:#ffd740;--purple:#b44dff;
+      --text:#b8e8e2;--muted:#3d7070;
+      --mono:'Share Tech Mono',monospace;--display:'Bebas Neue',sans-serif;--body:'Rajdhani',sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--black);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.7;overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,255,225,0.012) 3px,rgba(0,255,225,0.012) 4px);pointer-events:none;z-index:999;}
+    body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,255,225,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,225,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0;}
+    .wrap{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:0 24px;}
+    .nav-back{position:relative;z-index:1;padding:18px 24px 0;max-width:860px;margin:0 auto;}
+    .nav-back a{font-family:var(--mono);font-size:11px;letter-spacing:3px;color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color 0.2s;display:inline-flex;align-items:center;gap:8px;}
+    .nav-back a:hover{color:var(--cyan);}
+    header{position:relative;padding:60px 0 50px;text-align:center;overflow:hidden;}
+    .glow-orb{position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:500px;height:500px;background:radial-gradient(circle,rgba(0,255,225,0.07) 0%,transparent 70%);pointer-events:none;}
+    .badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:5px;color:var(--cyan);border:1px solid var(--cyan);padding:5px 18px;margin-bottom:28px;text-transform:uppercase;}
+    h1{font-family:var(--display);font-size:clamp(42px,8vw,80px);letter-spacing:4px;line-height:0.95;color:#fff;text-transform:uppercase;}
+    h1 .accent{color:var(--cyan);text-shadow:0 0 30px rgba(0,255,225,0.5);}
+    .hero-sub{margin-top:14px;font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:3px;}
+    .divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,#39ff14,transparent);margin:50px 0;}
+    .section-label{font-family:var(--mono);font-size:10px;letter-spacing:5px;color:var(--green);text-transform:uppercase;margin-bottom:14px;}
+    h2{font-family:var(--display);font-size:clamp(28px,5vw,48px);letter-spacing:3px;color:#fff;text-transform:uppercase;margin-bottom:28px;}
+    /* JUMP NAV */
+    .jump-nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:20px 0 10px;padding:20px;background:var(--panel);border:1px solid var(--border);border-radius:6px;}
+    .jump-nav a{font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--cyan);text-decoration:none;padding:6px 14px;border:1px solid rgba(0,255,225,0.2);border-radius:3px;transition:all 0.2s;}
+    .jump-nav a:hover{background:rgba(0,255,225,0.1);border-color:var(--cyan);}
+    /* TERM CARDS */
+    .term-card{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:24px 26px;margin-bottom:16px;position:relative;overflow:hidden;transition:border-color 0.25s;}
+    .term-card:hover{border-color:var(--cyan);}
+    .term-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--cyan);}
+    .term-card.green::before{background:var(--green);}
+    .term-card.gold::before{background:var(--gold);}
+    .term-card.blue::before{background:var(--blue);}
+    .term-card.purple::before{background:var(--purple);}
+    .term-card.red::before{background:var(--red);}
+    .term-name{font-family:var(--display);font-size:24px;letter-spacing:2px;color:#fff;text-transform:uppercase;margin-bottom:4px;}
+    .term-aka{font-family:var(--mono);font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:10px;}
+    .term-card p{font-size:15px;color:var(--text);line-height:1.7;margin-bottom:10px;}
+    .term-card p:last-child{margin-bottom:0;}
+    .term-card strong{color:#fff;}
+    .term-used{font-family:var(--mono);font-size:11px;color:var(--green);margin-top:10px;display:block;}
+    .btn{font-family:var(--mono);font-size:13px;letter-spacing:2px;padding:14px 28px;border-radius:3px;text-decoration:none;border:none;cursor:pointer;transition:transform 0.15s,box-shadow 0.2s;display:inline-flex;align-items:center;justify-content:center;gap:8px;}
+    .btn:hover{transform:translateY(-2px);}
+    .btn-primary{background:var(--cyan);color:#000;font-weight:700;box-shadow:0 0 20px rgba(0,255,225,0.3);}
+    .btn-outline{background:transparent;color:var(--cyan);border:1px solid var(--cyan);}
+    footer{border-top:1px solid var(--border);padding:40px 0 60px;text-align:center;color:var(--muted);font-family:var(--mono);font-size:11px;letter-spacing:2px;}
+    footer span{color:var(--cyan);}
+  </style>
+</head>
+<body>
+
+<div class="nav-back">
+  <a href="index.html">← Back to All Indicators</a>
+</div>
+
+<header>
+  <div class="glow-orb"></div>
+  <div class="wrap">
+    <!-- MASCOT -->
+    <div style="display:flex;justify-content:center;margin-bottom:20px;">
+      <svg viewBox="0 0 80 80" width="80" height="80" style="filter:drop-shadow(0 0 12px rgba(57,255,20,0.4));">
+        <rect x="5" y="5" width="70" height="70" rx="16" fill="#080f0f" stroke="#39ff14" stroke-width="2" opacity="0.9"/>
+        <!-- Left eye (green, solid glow) -->
+        <circle cx="28" cy="30" r="6" fill="#39ff14"><animate attributeName="opacity" values="1;0.7;1" dur="3s" repeatCount="indefinite"/></circle>
+        <circle cx="28" cy="30" r="3" fill="#fff" opacity="0.6"/>
+        <!-- Right eye (green, solid glow) -->
+        <circle cx="52" cy="30" r="6" fill="#39ff14"><animate attributeName="opacity" values="1;0.7;1" dur="3s" repeatCount="indefinite"/></circle>
+        <circle cx="52" cy="30" r="3" fill="#fff" opacity="0.6"/>
+        <!-- Mouth dots (4 dots, color cycle) -->
+        <circle cx="25" cy="55" r="4"><animate attributeName="fill" values="#ff5252;#ffd740;#4db8ff;#ff5252" dur="4s" repeatCount="indefinite"/></circle>
+        <circle cx="35" cy="55" r="4"><animate attributeName="fill" values="#ffd740;#4db8ff;#ff5252;#ffd740" dur="4s" repeatCount="indefinite"/></circle>
+        <circle cx="45" cy="55" r="4"><animate attributeName="fill" values="#4db8ff;#ff5252;#ffd740;#4db8ff" dur="4s" repeatCount="indefinite"/></circle>
+        <circle cx="55" cy="55" r="4"><animate attributeName="fill" values="#ff5252;#ffd740;#4db8ff;#ff5252" dur="4s" repeatCount="indefinite"/><animate attributeName="fill" begin="1s" values="#4db8ff;#ff5252;#ffd740;#4db8ff" dur="4s" repeatCount="indefinite"/></circle>
+      </svg>
+    </div>
+    <div class="badge">DuttyBookBag · Education</div>
+    <h1>Dutty Ashy Win_G<br><span class="accent">Learning Center</span></h1>
+    <p class="hero-sub">// Trading terms explained simple -- no fluff, no textbook talk //</p>
+  </div>
+</header>
+
+<!-- SECTION NAV -->
+<section>
+  <div class="wrap">
+    <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:20px 0 0;padding:16px;background:var(--panel);border:1px solid var(--border);border-radius:6px;">
+      <a href="#sec-basics" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--cyan);text-decoration:none;padding:10px 18px;border:2px solid var(--cyan);border-radius:4px;text-transform:uppercase;transition:all 0.2s;">Trading Terms</a>
+      <a href="#sec-advanced" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--green);text-decoration:none;padding:10px 18px;border:2px solid var(--green);border-radius:4px;text-transform:uppercase;transition:all 0.2s;">Advanced</a>
+      <a href="#sec-wyckoff" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--gold);text-decoration:none;padding:10px 18px;border:2px solid var(--gold);border-radius:4px;text-transform:uppercase;transition:all 0.2s;">Wyckoff</a>
+      <a href="#sec-internal" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:#39ff14;text-decoration:none;padding:10px 18px;border:2px solid #39ff14;border-radius:4px;text-transform:uppercase;transition:all 0.2s;text-shadow:0 0 8px rgba(57,255,20,0.4);">My Designs</a>
+      <a href="#sec-crypto" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--purple);text-decoration:none;padding:10px 18px;border:2px solid var(--purple);border-radius:4px;text-transform:uppercase;transition:all 0.2s;">Crypto</a>
+      <a href="#sec-good" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:#00d4ff;text-decoration:none;padding:10px 18px;border:2px solid #00d4ff;border-radius:4px;text-transform:uppercase;transition:all 0.2s;">Why Crypto Matters</a>
+      <a href="#sec-candles" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--green);text-decoration:none;padding:10px 18px;border:2px solid var(--green);border-radius:4px;text-transform:uppercase;transition:all 0.2s;">Candle Patterns</a>
+      <a href="#sec-slang" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--yellow);text-decoration:none;padding:10px 18px;border:2px solid var(--yellow);border-radius:4px;text-transform:uppercase;transition:all 0.2s;">Slang</a>
+      <a href="#sec-quiz" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--purple);text-decoration:none;padding:10px 18px;border:2px solid var(--purple);border-radius:4px;text-transform:uppercase;transition:all 0.2s;">Quiz</a>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="wrap">
+    <div class="jump-nav">
+      <a href="#candlesticks">Candlesticks</a>
+      <a href="#rsi">RSI</a>
+      <a href="#volume">Volume</a>
+      <a href="#vwap">VWAP</a>
+      <a href="#sma">SMA</a>
+      <a href="#ema">EMA</a>
+      <a href="#sar">Parabolic SAR</a>
+      <a href="#bb">Bollinger Bands</a>
+      <a href="#compression">Compression</a>
+      <a href="#golden-death">Golden/Death Cross</a>
+      <a href="#order-blocks">Order Blocks</a>
+      <a href="#confluence">Confluence</a>
+      <a href="#mitigation">Mitigation</a>
+      <a href="#timeframes">Timeframes</a>
+      <a href="#momentum">Momentum</a>
+      <a href="#dominance">Dominance</a>
+      <a href="#wave-stages">Wave Stages</a>
+      <a href="#alerts">Alerts</a>
+      <a href="#bull-bear">Bull vs Bear</a>
+      <a href="#support-resistance">Support/Resistance</a>
+      <a href="#atr">ATR</a>
+      <a href="#divergence">Divergence</a>
+      <a href="#pullback">Pullback</a>
+      <a href="#breakout">Breakout</a>
+      <a href="#supply-demand">Supply & Demand</a>
+      <a href="#wyckoff" style="color:var(--gold);border-color:rgba(255,209,102,0.3);">Wyckoff Method</a>
+      <a href="#wyckoff-laws" style="color:var(--gold);border-color:rgba(255,209,102,0.3);">3 Laws</a>
+      <a href="#accumulation" style="color:var(--gold);border-color:rgba(255,209,102,0.3);">Accumulation</a>
+      <a href="#distribution" style="color:var(--gold);border-color:rgba(255,209,102,0.3);">Distribution</a>
+      <a href="#spring" style="color:var(--gold);border-color:rgba(255,209,102,0.3);">Spring</a>
+      <a href="#upthrust" style="color:var(--gold);border-color:rgba(255,209,102,0.3);">Upthrust</a>
+      <a href="#composite-operator" style="color:var(--gold);border-color:rgba(255,209,102,0.3);">Composite Operator</a>
+      <a href="#wave-stages" style="color:#39ff14;border-color:rgba(57,255,20,0.4);background:rgba(57,255,20,0.05);">Wave Stages</a>
+      <a href="#internal-di" style="color:#39ff14;border-color:rgba(57,255,20,0.4);background:rgba(57,255,20,0.05);">DI System</a>
+      <a href="#internal-xpush" style="color:#39ff14;border-color:rgba(57,255,20,0.4);background:rgba(57,255,20,0.05);">Xpush</a>
+      <a href="#internal-mtf" style="color:#39ff14;border-color:rgba(57,255,20,0.4);background:rgba(57,255,20,0.05);">Multi-TF X</a>
+      <a href="#internal-bias" style="color:#39ff14;border-color:rgba(57,255,20,0.4);background:rgba(57,255,20,0.05);">Bias System</a>
+      <a href="#crypto" style="color:var(--purple);border-color:rgba(180,77,255,0.3);">Cryptocurrency</a>
+      <a href="#bitcoin" style="color:var(--purple);border-color:rgba(180,77,255,0.3);">Bitcoin</a>
+      <a href="#blockchain" style="color:var(--purple);border-color:rgba(180,77,255,0.3);">Blockchain</a>
+      <a href="#ethereum" style="color:var(--purple);border-color:rgba(180,77,255,0.3);">Ethereum</a>
+      <a href="#altcoins" style="color:var(--purple);border-color:rgba(180,77,255,0.3);">Altcoins</a>
+      <a href="#tokens" style="color:var(--purple);border-color:rgba(180,77,255,0.3);">Tokens vs Coins</a>
+      <a href="#stablecoins" style="color:var(--purple);border-color:rgba(180,77,255,0.3);">Stablecoins</a>
+      <a href="#btc-dominance" style="color:var(--purple);border-color:rgba(180,77,255,0.3);">BTC Dominance</a>
+      <a href="#wallet" style="color:var(--purple);border-color:rgba(180,77,255,0.3);">Wallets</a>
+      <a href="#cold-wallet" style="color:var(--purple);border-color:rgba(180,77,255,0.3);">Cold Wallet</a>
+      <a href="#seed-phrase" style="color:var(--purple);border-color:rgba(180,77,255,0.3);">Seed Phrase</a>
+      <a href="#exchange" style="color:var(--purple);border-color:rgba(180,77,255,0.3);">Exchanges</a>
+      <a href="#staking" style="color:var(--purple);border-color:rgba(180,77,255,0.3);">Staking</a>
+      <a href="#defi" style="color:var(--purple);border-color:rgba(180,77,255,0.3);">DeFi</a>
+      <a href="#airdrop" style="color:var(--purple);border-color:rgba(180,77,255,0.3);">Airdrop</a>
+      <a href="#nft" style="color:var(--purple);border-color:rgba(180,77,255,0.3);">NFT</a>
+      <a href="#rug-pull" style="color:var(--purple);border-color:rgba(180,77,255,0.3);">Rug Pull</a>
+    </div>
+  </div>
+</section>
+
+<!-- TERMS -->
+<section>
+  <div class="wrap">
+    <div class="divider"></div>
+    <div id="sec-basics" class="section-label">// The Basics</div>
+    <h2>Chart Fundamentals</h2>
+
+    <div class="term-card green" id="candlesticks">
+      <div class="term-name">Candlesticks</div>
+      <div class="term-aka">// How price is displayed on a chart</div>
+      <p>A candlestick is a single bar on your chart that shows four pieces of information: where price opened, where it closed, the highest point it reached, and the lowest point it hit -- all within a specific time period.</p>
+      <p>If the candle closes higher than it opened, it's usually colored <strong>green</strong> (bullish). If it closes lower, it's usually <strong>red</strong> (bearish). The thick part is called the <strong>body</strong> and the thin lines above and below are called <strong>wicks</strong> (or shadows).</p>
+      <p>A candle with a big body means price moved a lot between open and close. A candle with long wicks means price tried to go higher or lower but got pushed back. Reading candles is the foundation of chart analysis.</p>
+
+      <!-- CANDLE DIAGRAM -->
+      <div style="display:flex;justify-content:center;gap:60px;margin:30px 0 10px;flex-wrap:wrap;">
+
+        <!-- BULLISH CANDLE -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0;">
+          <div style="font-family:var(--mono);font-size:10px;color:var(--green);letter-spacing:2px;margin-bottom:12px;">BULLISH (GREEN)</div>
+          <div style="position:relative;width:120px;height:260px;">
+            <!-- Upper wick -->
+            <div style="position:absolute;left:50%;transform:translateX(-50%);top:0;width:3px;height:50px;background:var(--green);animation:wickGrow 1.5s ease-out both;"></div>
+            <!-- HIGH label -->
+            <div style="position:absolute;right:-45px;top:-2px;font-family:var(--mono);font-size:10px;color:var(--muted);">HIGH</div>
+            <!-- Body -->
+            <div style="position:absolute;left:50%;transform:translateX(-50%);top:50px;width:50px;height:120px;background:var(--green);border-radius:3px;animation:bodyGrow 1s 0.3s ease-out both;box-shadow:0 0 15px rgba(0,255,106,0.3);"></div>
+            <!-- CLOSE label (top of body for bullish) -->
+            <div style="position:absolute;right:-50px;top:48px;font-family:var(--mono);font-size:10px;color:#fff;">CLOSE</div>
+            <!-- OPEN label (bottom of body for bullish) -->
+            <div style="position:absolute;right:-45px;top:163px;font-family:var(--mono);font-size:10px;color:#fff;">OPEN</div>
+            <!-- Body label -->
+            <div style="position:absolute;left:-45px;top:100px;font-family:var(--mono);font-size:10px;color:var(--green);writing-mode:vertical-lr;letter-spacing:3px;">BODY</div>
+            <!-- Lower wick -->
+            <div style="position:absolute;left:50%;transform:translateX(-50%);top:170px;width:3px;height:60px;background:var(--green);animation:wickGrow 1.5s 0.5s ease-out both;"></div>
+            <!-- LOW label -->
+            <div style="position:absolute;right:-40px;top:222px;font-family:var(--mono);font-size:10px;color:var(--muted);">LOW</div>
+            <!-- Upper wick label -->
+            <div style="position:absolute;left:-45px;top:15px;font-family:var(--mono);font-size:9px;color:var(--muted);writing-mode:vertical-lr;letter-spacing:2px;">WICK</div>
+            <!-- Lower wick label -->
+            <div style="position:absolute;left:-45px;top:185px;font-family:var(--mono);font-size:9px;color:var(--muted);writing-mode:vertical-lr;letter-spacing:2px;">WICK</div>
+          </div>
+          <div style="font-family:var(--mono);font-size:11px;color:var(--green);margin-top:15px;">Price went UP</div>
+        </div>
+
+        <!-- BEARISH CANDLE -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0;">
+          <div style="font-family:var(--mono);font-size:10px;color:var(--red);letter-spacing:2px;margin-bottom:12px;">BEARISH (RED)</div>
+          <div style="position:relative;width:120px;height:260px;">
+            <!-- Upper wick -->
+            <div style="position:absolute;left:50%;transform:translateX(-50%);top:0;width:3px;height:50px;background:var(--red);animation:wickGrow 1.5s ease-out both;"></div>
+            <!-- HIGH label -->
+            <div style="position:absolute;right:-45px;top:-2px;font-family:var(--mono);font-size:10px;color:var(--muted);">HIGH</div>
+            <!-- Body -->
+            <div style="position:absolute;left:50%;transform:translateX(-50%);top:50px;width:50px;height:120px;background:var(--red);border-radius:3px;animation:bodyGrow 1s 0.3s ease-out both;box-shadow:0 0 15px rgba(255,82,82,0.3);"></div>
+            <!-- OPEN label (top of body for bearish) -->
+            <div style="position:absolute;right:-45px;top:48px;font-family:var(--mono);font-size:10px;color:#fff;">OPEN</div>
+            <!-- CLOSE label (bottom of body for bearish) -->
+            <div style="position:absolute;right:-50px;top:163px;font-family:var(--mono);font-size:10px;color:#fff;">CLOSE</div>
+            <!-- Body label -->
+            <div style="position:absolute;left:-45px;top:100px;font-family:var(--mono);font-size:10px;color:var(--red);writing-mode:vertical-lr;letter-spacing:3px;">BODY</div>
+            <!-- Lower wick -->
+            <div style="position:absolute;left:50%;transform:translateX(-50%);top:170px;width:3px;height:60px;background:var(--red);animation:wickGrow 1.5s 0.5s ease-out both;"></div>
+            <!-- LOW label -->
+            <div style="position:absolute;right:-40px;top:222px;font-family:var(--mono);font-size:10px;color:var(--muted);">LOW</div>
+            <!-- Upper wick label -->
+            <div style="position:absolute;left:-45px;top:15px;font-family:var(--mono);font-size:9px;color:var(--muted);writing-mode:vertical-lr;letter-spacing:2px;">WICK</div>
+            <!-- Lower wick label -->
+            <div style="position:absolute;left:-45px;top:185px;font-family:var(--mono);font-size:9px;color:var(--muted);writing-mode:vertical-lr;letter-spacing:2px;">WICK</div>
+          </div>
+          <div style="font-family:var(--mono);font-size:11px;color:var(--red);margin-top:15px;">Price went DOWN</div>
+        </div>
+
+      </div>
+      <style>
+        @keyframes wickGrow{from{height:0;opacity:0;}to{opacity:1;}}
+        @keyframes bodyGrow{from{height:0;opacity:0;}to{opacity:1;}}
+      </style>
+      <p style="margin-top:20px;font-family:var(--mono);font-size:11px;color:var(--muted);text-align:center;">On a bullish candle, the CLOSE is above the OPEN. On a bearish candle, the OPEN is above the CLOSE.</p>
+    </div>
+
+    <div class="term-card" id="timeframes">
+      <div class="term-name">Timeframes</div>
+      <div class="term-aka">// The time each candle represents</div>
+      <p>A timeframe is how much time each candlestick covers. On a <strong>1-minute chart</strong>, each candle shows 1 minute of price action. On a <strong>1-hour chart</strong>, each candle covers a full hour. On a <strong>daily chart</strong>, each candle is one full trading day.</p>
+      <p>Lower timeframes (1m, 5m) show fast, detailed movement -- good for scalpers. Higher timeframes (1h, 4h, 1D) show the bigger picture -- good for swing traders. Many of our indicators read multiple timeframes at once so you don't have to switch back and forth.</p>
+    </div>
+
+    <div class="term-card blue" id="bull-bear">
+      <div class="term-name">Bull vs Bear</div>
+      <div class="term-aka">// Market direction</div>
+      <p><strong>Bull (Bullish)</strong> means price is going up or expected to go up. Think of a bull charging upward with its horns.</p>
+      <p><strong>Bear (Bearish)</strong> means price is going down or expected to go down. Think of a bear swiping downward with its paw.</p>
+      <p>When someone says "the market is bullish," they mean buyers are in control and price is rising. When they say "bearish," sellers are in control and price is falling. Most of our indicators color-code green for bull and red for bear.</p>
+    </div>
+
+    <div class="term-card gold" id="support-resistance">
+      <div class="term-name">Support & Resistance</div>
+      <div class="term-aka">// Price levels where the market tends to react</div>
+      <p><strong>Support</strong> is a price level where buyers tend to step in and prevent price from falling further. Think of it as a floor.</p>
+      <p><strong>Resistance</strong> is a price level where sellers tend to step in and prevent price from rising further. Think of it as a ceiling.</p>
+      <p>When price breaks through support, it often becomes resistance. When price breaks through resistance, it often becomes support. These levels are key for understanding where price might bounce or break.</p>
+
+      <!-- SUPPORT/RESISTANCE DIAGRAM -->
+      <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:20px;margin:20px 0 10px;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:12px;">SUPPORT & RESISTANCE</div>
+        <svg viewBox="0 0 400 160" style="width:100%;height:auto;">
+          <!-- Resistance line -->
+          <line x1="0" y1="35" x2="400" y2="35" stroke="#ff5252" stroke-width="1.5" stroke-dasharray="6"/>
+          <text x="5" y="28" fill="#ff5252" font-family="Share Tech Mono" font-size="9">RESISTANCE (CEILING)</text>
+          <!-- Support line -->
+          <line x1="0" y1="125" x2="400" y2="125" stroke="#00ff6a" stroke-width="1.5" stroke-dasharray="6"/>
+          <text x="5" y="145" fill="#00ff6a" font-family="Share Tech Mono" font-size="9">SUPPORT (FLOOR)</text>
+          <!-- Price bouncing between -->
+          <polyline points="20,120 50,90 80,50 100,40 120,55 150,90 180,120 200,118 220,85 250,45 270,40 290,50 310,80 340,120 370,115" fill="none" stroke="#00ffe1" stroke-width="2">
+            <animate attributeName="stroke-dasharray" from="0,800" to="800,0" dur="3s" fill="freeze"/>
+          </polyline>
+          <!-- Bounce arrows -->
+          <text x="170" y="110" fill="#00ff6a" font-family="Share Tech Mono" font-size="8" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="2s" dur="0.3s" fill="freeze"/>BOUNCE</text>
+          <text x="85" y="55" fill="#ff5252" font-family="Share Tech Mono" font-size="8" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="1s" dur="0.3s" fill="freeze"/>REJECTED</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="section-label">// Indicators & Tools</div>
+    <h2>What the Numbers Mean</h2>
+
+    <div class="term-card red" id="rsi">
+      <div class="term-name">RSI (Relative Strength Index)</div>
+      <div class="term-aka">// Measures how fast price is moving up or down</div>
+      <p>RSI is a number between 0 and 100 that tells you how strong recent price movement has been. It compares how much price went up versus how much it went down over a set period (usually 14 bars).</p>
+      <p><strong>Above 70</strong> = the market has been moving up aggressively. Some traders consider this "overbought" -- meaning it might slow down or pull back.</p>
+      <p><strong>Below 30</strong> = the market has been moving down aggressively. Some traders consider this "oversold" -- meaning it might bounce.</p>
+      <p><strong>Around 50</strong> = neutral. Neither side is dominating. The further from 50, the stronger the directional pressure.</p>
+
+      <!-- RSI DIAGRAM -->
+      <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:20px;margin:20px 0 10px;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:12px;">RSI SCALE (0 — 100)</div>
+        <svg viewBox="0 0 400 180" style="width:100%;height:auto;">
+          <!-- Overbought zone -->
+          <rect x="0" y="0" width="400" height="42" fill="rgba(255,82,82,0.1)"/>
+          <!-- Oversold zone -->
+          <rect x="0" y="138" width="400" height="42" fill="rgba(0,255,106,0.1)"/>
+          <!-- Grid lines -->
+          <line x1="0" y1="0" x2="400" y2="0" stroke="#ff5252" stroke-width="1" opacity="0.4"/>
+          <line x1="0" y1="42" x2="400" y2="42" stroke="#ff5252" stroke-width="1" stroke-dasharray="4" opacity="0.6"/>
+          <line x1="0" y1="90" x2="400" y2="90" stroke="#3d7070" stroke-width="1" stroke-dasharray="4"/>
+          <line x1="0" y1="138" x2="400" y2="138" stroke="#00ff6a" stroke-width="1" stroke-dasharray="4" opacity="0.6"/>
+          <line x1="0" y1="180" x2="400" y2="180" stroke="#00ff6a" stroke-width="1" opacity="0.4"/>
+          <!-- Labels -->
+          <text x="5" y="12" fill="#ff5252" font-family="Share Tech Mono" font-size="9">100</text>
+          <text x="5" y="38" fill="#ff5252" font-family="Share Tech Mono" font-size="9">70 — OVERBOUGHT</text>
+          <text x="5" y="86" fill="#3d7070" font-family="Share Tech Mono" font-size="9">50 — NEUTRAL</text>
+          <text x="5" y="134" fill="#00ff6a" font-family="Share Tech Mono" font-size="9">30 — OVERSOLD</text>
+          <text x="5" y="176" fill="#00ff6a" font-family="Share Tech Mono" font-size="9">0</text>
+          <!-- RSI line -->
+          <polyline points="20,90 40,78 60,65 80,50 100,35 120,28 140,38 160,55 180,75 200,90 220,105 240,120 260,140 280,150 300,145 320,130 340,110 360,90 380,75" fill="none" stroke="#b44dff" stroke-width="2.5">
+            <animate attributeName="stroke-dasharray" from="0,800" to="800,0" dur="3s" fill="freeze"/>
+          </polyline>
+          <!-- Overbought dot -->
+          <circle cx="120" cy="28" r="5" fill="#ff5252" opacity="0">
+            <animate attributeName="opacity" from="0" to="1" begin="1.5s" dur="0.5s" fill="freeze"/>
+          </circle>
+          <text x="130" y="24" fill="#ff5252" font-family="Share Tech Mono" font-size="8" opacity="0">
+            <animate attributeName="opacity" from="0" to="1" begin="1.5s" dur="0.5s" fill="freeze"/>OVERBOUGHT
+          </text>
+          <!-- Oversold dot -->
+          <circle cx="280" cy="150" r="5" fill="#00ff6a" opacity="0">
+            <animate attributeName="opacity" from="0" to="1" begin="2.5s" dur="0.5s" fill="freeze"/>
+          </circle>
+          <text x="230" y="165" fill="#00ff6a" font-family="Share Tech Mono" font-size="8" opacity="0">
+            <animate attributeName="opacity" from="0" to="1" begin="2.5s" dur="0.5s" fill="freeze"/>OVERSOLD
+          </text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="term-card purple" id="volume">
+      <div class="term-name">Volume</div>
+      <div class="term-aka">// How many shares or contracts are being traded</div>
+      <p>Volume tells you how much activity is happening. High volume means lots of people are buying and selling. Low volume means the market is quiet.</p>
+      <p>Volume matters because a price move on high volume is more meaningful than the same move on low volume. If price shoots up but volume is tiny, it might not last. If price shoots up on massive volume, real money is behind that move.</p>
+      <p><strong>Volume above average</strong> = elevated activity, something is happening. <strong>Volume below average</strong> = quiet market, be cautious with signals.</p>
+
+      <!-- VOLUME DIAGRAM -->
+      <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:20px;margin:20px 0 10px;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:12px;">VOLUME BARS — HIGH vs LOW</div>
+        <svg viewBox="0 0 400 140" style="width:100%;height:auto;">
+          <!-- Average line -->
+          <line x1="0" y1="80" x2="400" y2="80" stroke="#ffd166" stroke-width="1" stroke-dasharray="6"/>
+          <text x="330" y="75" fill="#ffd166" font-family="Share Tech Mono" font-size="8">AVERAGE</text>
+          <!-- Volume bars -->
+          <rect x="15" y="90" width="22" height="40" fill="#3d7070" rx="2"><animate attributeName="height" from="0" to="40" dur="0.3s" fill="freeze"/><animate attributeName="y" from="130" to="90" dur="0.3s" fill="freeze"/></rect>
+          <rect x="45" y="70" width="22" height="60" fill="#00ff6a" rx="2"><animate attributeName="height" from="0" to="60" dur="0.3s" begin="0.1s" fill="freeze"/><animate attributeName="y" from="130" to="70" dur="0.3s" begin="0.1s" fill="freeze"/></rect>
+          <rect x="75" y="95" width="22" height="35" fill="#3d7070" rx="2"><animate attributeName="height" from="0" to="35" dur="0.3s" begin="0.2s" fill="freeze"/><animate attributeName="y" from="130" to="95" dur="0.3s" begin="0.2s" fill="freeze"/></rect>
+          <rect x="105" y="100" width="22" height="30" fill="#3d7070" rx="2"><animate attributeName="height" from="0" to="30" dur="0.3s" begin="0.3s" fill="freeze"/><animate attributeName="y" from="130" to="100" dur="0.3s" begin="0.3s" fill="freeze"/></rect>
+          <rect x="135" y="25" width="22" height="105" fill="#00ff6a" rx="2"><animate attributeName="height" from="0" to="105" dur="0.3s" begin="0.4s" fill="freeze"/><animate attributeName="y" from="130" to="25" dur="0.3s" begin="0.4s" fill="freeze"/></rect>
+          <rect x="165" y="40" width="22" height="90" fill="#00ff6a" rx="2"><animate attributeName="height" from="0" to="90" dur="0.3s" begin="0.5s" fill="freeze"/><animate attributeName="y" from="130" to="40" dur="0.3s" begin="0.5s" fill="freeze"/></rect>
+          <rect x="195" y="60" width="22" height="70" fill="#ff5252" rx="2"><animate attributeName="height" from="0" to="70" dur="0.3s" begin="0.6s" fill="freeze"/><animate attributeName="y" from="130" to="60" dur="0.3s" begin="0.6s" fill="freeze"/></rect>
+          <rect x="225" y="50" width="22" height="80" fill="#ff5252" rx="2"><animate attributeName="height" from="0" to="80" dur="0.3s" begin="0.7s" fill="freeze"/><animate attributeName="y" from="130" to="50" dur="0.3s" begin="0.7s" fill="freeze"/></rect>
+          <rect x="255" y="85" width="22" height="45" fill="#3d7070" rx="2"><animate attributeName="height" from="0" to="45" dur="0.3s" begin="0.8s" fill="freeze"/><animate attributeName="y" from="130" to="85" dur="0.3s" begin="0.8s" fill="freeze"/></rect>
+          <rect x="285" y="95" width="22" height="35" fill="#3d7070" rx="2"><animate attributeName="height" from="0" to="35" dur="0.3s" begin="0.9s" fill="freeze"/><animate attributeName="y" from="130" to="95" dur="0.3s" begin="0.9s" fill="freeze"/></rect>
+          <rect x="315" y="105" width="22" height="25" fill="#3d7070" rx="2"><animate attributeName="height" from="0" to="25" dur="0.3s" begin="1.0s" fill="freeze"/><animate attributeName="y" from="130" to="105" dur="0.3s" begin="1.0s" fill="freeze"/></rect>
+          <rect x="345" y="55" width="22" height="75" fill="#00ff6a" rx="2"><animate attributeName="height" from="0" to="75" dur="0.3s" begin="1.1s" fill="freeze"/><animate attributeName="y" from="130" to="55" dur="0.3s" begin="1.1s" fill="freeze"/></rect>
+        </svg>
+        <div style="display:flex;gap:20px;justify-content:center;margin-top:10px;">
+          <div style="font-family:var(--mono);font-size:10px;color:var(--green);display:flex;align-items:center;gap:6px;"><div style="width:14px;height:14px;background:var(--green);border-radius:2px;"></div> Bull volume</div>
+          <div style="font-family:var(--mono);font-size:10px;color:var(--red);display:flex;align-items:center;gap:6px;"><div style="width:14px;height:14px;background:var(--red);border-radius:2px;"></div> Bear volume</div>
+          <div style="font-family:var(--mono);font-size:10px;color:var(--muted);display:flex;align-items:center;gap:6px;"><div style="width:14px;height:14px;background:#3d7070;border-radius:2px;"></div> Low volume</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="term-card green" id="vwap">
+      <div class="term-name">VWAP (Volume Weighted Average Price)</div>
+      <div class="term-aka">// The average price weighted by volume</div>
+      <p>VWAP calculates the average price of an asset throughout the day, but gives more weight to prices where more volume traded. It shows you where the "fair price" is based on actual trading activity.</p>
+      <p><strong>Price above VWAP</strong> = buyers are generally in control today. <strong>Price below VWAP</strong> = sellers are generally in control today.</p>
+      <p>Traders use VWAP as a reference point. Institutional traders especially watch VWAP because large orders are often executed around it. It resets at the start of each trading session.</p>
+
+      <!-- VWAP DIAGRAM -->
+      <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:20px;margin:20px 0 10px;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:12px;">PRICE vs VWAP</div>
+        <svg viewBox="0 0 400 140" style="width:100%;height:auto;">
+          <!-- VWAP line (steady) -->
+          <polyline points="10,75 50,73 90,70 130,68 170,70 210,72 250,70 290,68 330,70 370,72" fill="none" stroke="#00ff6a" stroke-width="2.5">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="2s" fill="freeze"/>
+          </polyline>
+          <!-- Price above VWAP zone -->
+          <polyline points="10,60 40,50 70,45 100,55 130,40 150,48" fill="none" stroke="#00ffe1" stroke-width="1.5" opacity="0.7">
+            <animate attributeName="stroke-dasharray" from="0,300" to="300,0" dur="2s" fill="freeze"/>
+          </polyline>
+          <!-- Price crosses below -->
+          <polyline points="150,48 170,65 190,80 210,95 230,100 250,90" fill="none" stroke="#ff5252" stroke-width="1.5" opacity="0.7">
+            <animate attributeName="stroke-dasharray" from="0,300" to="300,0" dur="2s" begin="0.5s" fill="freeze"/>
+          </polyline>
+          <!-- Price back above -->
+          <polyline points="250,90 270,75 290,60 310,50 330,45 360,40 390,35" fill="none" stroke="#00ffe1" stroke-width="1.5" opacity="0.7">
+            <animate attributeName="stroke-dasharray" from="0,300" to="300,0" dur="2s" begin="1s" fill="freeze"/>
+          </polyline>
+          <!-- Labels -->
+          <text x="30" y="38" fill="#00ffe1" font-family="Share Tech Mono" font-size="8">PRICE ABOVE VWAP</text>
+          <text x="170" y="115" fill="#ff5252" font-family="Share Tech Mono" font-size="8">PRICE BELOW VWAP</text>
+          <text x="372" y="78" fill="#00ff6a" font-family="Share Tech Mono" font-size="8">VWAP</text>
+        </svg>
+        <p style="font-family:var(--mono);font-size:10px;color:var(--muted);text-align:center;margin-top:8px;">Price above VWAP = buyers in control · Price below VWAP = sellers in control</p>
+      </div>
+    </div>
+
+    <div class="term-card" id="sma">
+      <div class="term-name">SMA (Simple Moving Average)</div>
+      <div class="term-aka">// The average price over a set number of bars</div>
+      <p>An SMA takes the closing prices of the last X bars, adds them up, and divides by X. For example, an SMA 50 takes the last 50 closing prices and gives you the average.</p>
+      <p>Moving averages smooth out price action so you can see the trend without the noise. <strong>Price above the SMA</strong> = generally trending up. <strong>Price below the SMA</strong> = generally trending down.</p>
+      <p>Common ones: <strong>SMA 50</strong> (medium-term trend), <strong>SMA 200</strong> (long-term trend). When the SMA 50 crosses above the SMA 200, it's called a Golden Cross. When it crosses below, it's called a Death Cross.</p>
+
+      <!-- SMA DIAGRAM -->
+      <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:20px;margin:20px 0 10px;position:relative;overflow:hidden;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:15px;">HOW SMA WORKS</div>
+        <svg viewBox="0 0 400 160" style="width:100%;height:auto;">
+          <!-- Grid lines -->
+          <line x1="0" y1="40" x2="400" y2="40" stroke="#0c3030" stroke-width="0.5" stroke-dasharray="4"/>
+          <line x1="0" y1="80" x2="400" y2="80" stroke="#0c3030" stroke-width="0.5" stroke-dasharray="4"/>
+          <line x1="0" y1="120" x2="400" y2="120" stroke="#0c3030" stroke-width="0.5" stroke-dasharray="4"/>
+          <!-- Price action (jagged) -->
+          <polyline points="10,100 30,85 50,95 70,60 90,70 110,45 130,55 150,35 170,50 190,30 210,45 230,25 250,40 270,35 290,20 310,30 330,25 350,15 370,30 390,20" fill="none" stroke="#3d7070" stroke-width="1.5" stroke-dasharray="3" opacity="0.5">
+            <animate attributeName="stroke-dashoffset" from="600" to="0" dur="2s" fill="freeze"/>
+          </polyline>
+          <!-- SMA line (smooth) -->
+          <polyline points="10,95 50,90 90,80 130,65 170,55 210,45 250,40 290,35 330,28 370,22" fill="none" stroke="#00ffe1" stroke-width="2.5">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="2.5s" fill="freeze"/>
+          </polyline>
+          <!-- Labels -->
+          <text x="392" y="18" fill="#3d7070" font-family="Share Tech Mono" font-size="9">PRICE</text>
+          <text x="372" y="35" fill="#00ffe1" font-family="Share Tech Mono" font-size="9">SMA</text>
+        </svg>
+        <div style="display:flex;gap:20px;justify-content:center;margin-top:10px;">
+          <div style="font-family:var(--mono);font-size:10px;color:var(--muted);display:flex;align-items:center;gap:6px;"><div style="width:20px;height:2px;background:#3d7070;"></div> Price (noisy)</div>
+          <div style="font-family:var(--mono);font-size:10px;color:var(--cyan);display:flex;align-items:center;gap:6px;"><div style="width:20px;height:2.5px;background:var(--cyan);"></div> SMA (smooth)</div>
+        </div>
+        <p style="font-family:var(--mono);font-size:10px;color:var(--muted);text-align:center;margin-top:8px;">The SMA smooths out price noise so you can see the actual trend direction</p>
+      </div>
+
+      <span class="term-used">Used in: NOMAD v5.0 (SMA 50, 64, 200), LLSS (SMA 8, 21, 50, 200)</span>
+    </div>
+
+    <div class="term-card blue" id="ema">
+      <div class="term-name">EMA (Exponential Moving Average)</div>
+      <div class="term-aka">// A moving average that reacts faster to recent price</div>
+      <p>An EMA works like an SMA but gives more weight to recent prices. This makes it react faster to new price changes compared to an SMA of the same length.</p>
+      <p><strong>EMA 8</strong> reacts very quickly -- good for seeing short-term momentum. <strong>EMA 21</strong> is slightly slower but still responsive. Traders often watch for price crossing above or below EMAs, or for a fast EMA crossing a slow one.</p>
+
+      <!-- EMA vs SMA DIAGRAM -->
+      <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:20px;margin:20px 0 10px;position:relative;overflow:hidden;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:15px;">EMA vs SMA — EMA REACTS FASTER</div>
+        <svg viewBox="0 0 400 160" style="width:100%;height:auto;">
+          <!-- Grid -->
+          <line x1="0" y1="40" x2="400" y2="40" stroke="#0c3030" stroke-width="0.5" stroke-dasharray="4"/>
+          <line x1="0" y1="80" x2="400" y2="80" stroke="#0c3030" stroke-width="0.5" stroke-dasharray="4"/>
+          <line x1="0" y1="120" x2="400" y2="120" stroke="#0c3030" stroke-width="0.5" stroke-dasharray="4"/>
+          <!-- Price drops then recovers -->
+          <polyline points="10,80 40,78 70,75 100,80 130,95 160,110 190,120 210,115 230,100 260,80 290,60 320,45 350,35 380,30" fill="none" stroke="#3d7070" stroke-width="1" stroke-dasharray="3" opacity="0.4"/>
+          <!-- SMA (slower reaction) -->
+          <polyline points="10,78 40,77 70,76 100,78 130,82 160,90 190,98 210,102 230,100 260,92 290,80 320,68 350,58 380,48" fill="none" stroke="#3d7070" stroke-width="2">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="2s" fill="freeze"/>
+          </polyline>
+          <!-- EMA (faster reaction) -->
+          <polyline points="10,79 40,77 70,75 100,79 130,88 160,102 190,114 210,112 230,102 260,85 290,65 320,48 350,38 380,32" fill="none" stroke="#ffd166" stroke-width="2.5">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="2s" fill="freeze"/>
+          </polyline>
+          <!-- Arrow showing EMA reacts first -->
+          <text x="200" y="135" fill="#ffd166" font-family="Share Tech Mono" font-size="9">EMA turns first</text>
+          <line x1="215" y1="125" x2="215" y2="115" stroke="#ffd166" stroke-width="1" marker-end="url(#arrowGold)"/>
+          <defs><marker id="arrowGold" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#ffd166"/></marker></defs>
+          <!-- Labels -->
+          <text x="382" y="52" fill="#3d7070" font-family="Share Tech Mono" font-size="9">SMA</text>
+          <text x="382" y="30" fill="#ffd166" font-family="Share Tech Mono" font-size="9">EMA</text>
+        </svg>
+        <div style="display:flex;gap:20px;justify-content:center;margin-top:10px;">
+          <div style="font-family:var(--mono);font-size:10px;color:var(--gold);display:flex;align-items:center;gap:6px;"><div style="width:20px;height:2.5px;background:var(--gold);"></div> EMA (fast)</div>
+          <div style="font-family:var(--mono);font-size:10px;color:var(--muted);display:flex;align-items:center;gap:6px;"><div style="width:20px;height:2px;background:#3d7070;"></div> SMA (slow)</div>
+        </div>
+        <p style="font-family:var(--mono);font-size:10px;color:var(--muted);text-align:center;margin-top:8px;">The EMA reacts to price changes faster because it weighs recent data more heavily</p>
+      </div>
+
+      <span class="term-used">Used in: NOMAD v5.0 (EMA 8, EMA 21)</span>
+    </div>
+
+    <div class="term-card gold" id="sar">
+      <div class="term-name">Parabolic SAR</div>
+      <div class="term-aka">// Stop And Reverse -- shows trend direction</div>
+      <p>Parabolic SAR plots dots above or below the price on your chart. When the dots are <strong>below price</strong>, the trend is considered up (bullish). When the dots are <strong>above price</strong>, the trend is considered down (bearish).</p>
+      <p>When the dots flip from below to above (or above to below), it signals a potential trend reversal. "SAR" stands for Stop And Reverse -- the idea is that when the trend reverses, you stop your current position and reverse direction.</p>
+      <p>It works best in trending markets. In sideways choppy markets, it can give false signals as the dots flip back and forth quickly.</p>
+
+      <!-- SAR DIAGRAM -->
+      <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:20px;margin:20px 0 10px;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:12px;">PARABOLIC SAR — DOTS FLIP WITH TREND</div>
+        <svg viewBox="0 0 400 150" style="width:100%;height:auto;">
+          <!-- Price line going up then down -->
+          <polyline points="10,110 40,100 70,85 100,70 130,55 160,45 190,50 220,60 250,75 280,90 310,100 340,110 370,120" fill="none" stroke="#3d7070" stroke-width="2">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="2.5s" fill="freeze"/>
+          </polyline>
+          <!-- SAR dots below price (bullish) -->
+          <circle cx="10" cy="120" r="4" fill="#00ff6a"><animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="0.2s" fill="freeze"/></circle>
+          <circle cx="40" cy="112" r="4" fill="#00ff6a"><animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="0.4s" fill="freeze"/></circle>
+          <circle cx="70" cy="100" r="4" fill="#00ff6a"><animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="0.6s" fill="freeze"/></circle>
+          <circle cx="100" cy="85" r="4" fill="#00ff6a"><animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="0.8s" fill="freeze"/></circle>
+          <circle cx="130" cy="70" r="4" fill="#00ff6a"><animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="1.0s" fill="freeze"/></circle>
+          <circle cx="160" cy="58" r="4" fill="#00ff6a"><animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="1.2s" fill="freeze"/></circle>
+          <!-- FLIP POINT -->
+          <text x="175" y="30" fill="#ffd166" font-family="Share Tech Mono" font-size="9" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="1.4s" dur="0.3s" fill="freeze"/>FLIP</text>
+          <!-- SAR dots above price (bearish) -->
+          <circle cx="190" cy="38" r="4" fill="#ff5252"><animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="1.5s" fill="freeze"/></circle>
+          <circle cx="220" cy="48" r="4" fill="#ff5252"><animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="1.7s" fill="freeze"/></circle>
+          <circle cx="250" cy="60" r="4" fill="#ff5252"><animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="1.9s" fill="freeze"/></circle>
+          <circle cx="280" cy="75" r="4" fill="#ff5252"><animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="2.1s" fill="freeze"/></circle>
+          <circle cx="310" cy="88" r="4" fill="#ff5252"><animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="2.3s" fill="freeze"/></circle>
+          <circle cx="340" cy="98" r="4" fill="#ff5252"><animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="2.5s" fill="freeze"/></circle>
+          <circle cx="370" cy="108" r="4" fill="#ff5252"><animate attributeName="opacity" from="0" to="1" dur="0.2s" begin="2.7s" fill="freeze"/></circle>
+          <!-- Labels -->
+          <text x="50" y="135" fill="#00ff6a" font-family="Share Tech Mono" font-size="8">DOTS BELOW = BULLISH</text>
+          <text x="250" y="135" fill="#ff5252" font-family="Share Tech Mono" font-size="8">DOTS ABOVE = BEARISH</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="term-card" id="bb">
+      <div class="term-name">Bollinger Bands</div>
+      <div class="term-aka">// Price envelope that expands and contracts with volatility</div>
+      <p>Bollinger Bands are three lines on your chart: a middle line (usually SMA 20), an upper band, and a lower band. The upper and lower bands are set at a distance above and below the middle based on how volatile the market is.</p>
+      <p>When the bands are <strong>tight (narrow)</strong>, the market is quiet and a big move may be coming. When the bands are <strong>wide</strong>, the market just made a big move and may be settling down.</p>
+      <p>Price touching or breaking the upper band can mean the market is stretched high. Price touching the lower band can mean the market is stretched low. Bands don't tell you direction -- just how stretched or compressed price is.</p>
+
+      <!-- BOLLINGER BANDS DIAGRAM -->
+      <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:20px;margin:20px 0 10px;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:12px;">BOLLINGER BANDS — EXPAND & CONTRACT</div>
+        <svg viewBox="0 0 400 160" style="width:100%;height:auto;">
+          <!-- Upper band -->
+          <polyline points="10,50 50,48 90,55 130,70 150,72 170,45 200,20 230,15 260,25 290,55 320,65 350,60 380,55" fill="none" stroke="#ffd166" stroke-width="1.5" opacity="0.6">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="2.5s" fill="freeze"/>
+          </polyline>
+          <!-- Middle band (SMA) -->
+          <polyline points="10,80 50,78 90,80 130,80 150,80 170,78 200,75 230,72 260,75 290,80 320,82 350,80 380,78" fill="none" stroke="#3d7070" stroke-width="1" stroke-dasharray="4">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="2.5s" fill="freeze"/>
+          </polyline>
+          <!-- Lower band -->
+          <polyline points="10,110 50,112 90,105 130,90 150,88 170,115 200,135 230,130 260,125 290,105 320,95 350,100 380,102" fill="none" stroke="#ffd166" stroke-width="1.5" opacity="0.6">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="2.5s" fill="freeze"/>
+          </polyline>
+          <!-- Fill between bands -->
+          <polygon points="10,50 50,48 90,55 130,70 150,72 170,45 200,20 230,15 260,25 290,55 320,65 350,60 380,55 380,102 350,100 320,95 290,105 260,125 230,130 200,135 170,115 150,88 130,90 90,105 50,112 10,110" fill="rgba(255,209,102,0.05)"/>
+          <!-- Price inside bands -->
+          <polyline points="10,82 50,75 90,88 130,78 150,82 170,60 200,40 230,55 260,70 290,85 320,78 350,82 380,75" fill="none" stroke="#00ffe1" stroke-width="2">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="2.5s" fill="freeze"/>
+          </polyline>
+          <!-- Squeeze label -->
+          <text x="105" y="60" fill="#ff5252" font-family="Share Tech Mono" font-size="8" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="1.2s" dur="0.5s" fill="freeze"/>TIGHT = SQUEEZE</text>
+          <!-- Expansion label -->
+          <text x="185" y="148" fill="#00ff6a" font-family="Share Tech Mono" font-size="8" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="1.8s" dur="0.5s" fill="freeze"/>WIDE = EXPANSION</text>
+          <!-- Band labels -->
+          <text x="382" y="53" fill="#ffd166" font-family="Share Tech Mono" font-size="7">UPPER</text>
+          <text x="382" y="76" fill="#3d7070" font-family="Share Tech Mono" font-size="7">MID</text>
+          <text x="382" y="100" fill="#ffd166" font-family="Share Tech Mono" font-size="7">LOWER</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="term-card red" id="compression">
+      <div class="term-name">Compression (Squeeze)</div>
+      <div class="term-aka">// When volatility gets extremely low</div>
+      <p>Compression happens when price is being squeezed into a very tight range. Bollinger Bands contract inside Keltner Channels -- this means volatility is at a low point and energy is building up.</p>
+      <p>Think of it like a spring being compressed. The tighter it gets, the more explosive the release can be. Compression doesn't tell you which direction the move will go -- just that a significant move is likely coming.</p>
+      <p>When compression releases (the "squeeze fires"), watch the other indicators to determine direction.</p>
+
+      <!-- COMPRESSION DIAGRAM -->
+      <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:20px;margin:20px 0 10px;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:12px;">COMPRESSION → RELEASE → BIG MOVE</div>
+        <svg viewBox="0 0 400 140" style="width:100%;height:auto;">
+          <!-- Phase 1: Compression (bands tight) -->
+          <polyline points="10,50 40,52 70,48 100,55 130,58 155,60" fill="none" stroke="#ff5252" stroke-width="1.5" opacity="0.5"/>
+          <polyline points="10,90 40,88 70,92 100,85 130,82 155,80" fill="none" stroke="#ff5252" stroke-width="1.5" opacity="0.5"/>
+          <polyline points="10,70 40,70 70,70 100,70 130,70 155,70" fill="none" stroke="#3d7070" stroke-width="1" stroke-dasharray="3"/>
+          <!-- Squeeze dots -->
+          <circle cx="30" cy="70" r="4" fill="#ff5252"><animate attributeName="opacity" values="1;0.3;1" dur="0.8s" repeatCount="5"/></circle>
+          <circle cx="60" cy="70" r="4" fill="#ff5252"><animate attributeName="opacity" values="1;0.3;1" dur="0.8s" repeatCount="5"/></circle>
+          <circle cx="90" cy="70" r="4" fill="#ff5252"><animate attributeName="opacity" values="1;0.3;1" dur="0.8s" repeatCount="5"/></circle>
+          <circle cx="120" cy="70" r="4" fill="#ff5252"><animate attributeName="opacity" values="1;0.3;1" dur="0.8s" repeatCount="5"/></circle>
+          <!-- Phase 2: Release (bands explode) -->
+          <polyline points="155,60 180,45 210,20 240,10 270,8 300,12 330,18 360,22 390,25" fill="none" stroke="#00ff6a" stroke-width="1.5" opacity="0.5">
+            <animate attributeName="stroke-dasharray" from="0,400" to="400,0" dur="2s" begin="1s" fill="freeze"/>
+          </polyline>
+          <polyline points="155,80 180,95 210,110 240,115 270,112 300,108 330,105 360,102 390,100" fill="none" stroke="#00ff6a" stroke-width="1.5" opacity="0.5">
+            <animate attributeName="stroke-dasharray" from="0,400" to="400,0" dur="2s" begin="1s" fill="freeze"/>
+          </polyline>
+          <!-- Price breakout up -->
+          <polyline points="155,70 180,55 210,35 240,22 270,15 300,18 330,22 360,28 390,30" fill="none" stroke="#00ffe1" stroke-width="2.5">
+            <animate attributeName="stroke-dasharray" from="0,400" to="400,0" dur="2s" begin="1s" fill="freeze"/>
+          </polyline>
+          <!-- Release dot -->
+          <circle cx="165" cy="70" r="4" fill="#00ff6a" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="1s" dur="0.3s" fill="freeze"/></circle>
+          <!-- Labels -->
+          <text x="40" y="115" fill="#ff5252" font-family="Share Tech Mono" font-size="9">COMPRESSION</text>
+          <text x="250" y="130" fill="#00ff6a" font-family="Share Tech Mono" font-size="9">RELEASE → BREAKOUT</text>
+        </svg>
+      </div>
+
+      <span class="term-used">Used in: DBB Analytics Table (S column), NOMAD v5.0, Wave Stages, Dutty Big Bag, LLSS (Volatility Filter)</span>
+    </div>
+
+    <div class="divider"></div>
+    <div id="sec-advanced" class="section-label">// Advanced Concepts</div>
+    <h2>Going Deeper</h2>
+
+    <div class="term-card green" id="golden-death">
+      <div class="term-name">Golden Cross & Death Cross</div>
+      <div class="term-aka">// Major long-term trend signals</div>
+      <p>A <strong>Golden Cross</strong> happens when a shorter-term moving average (like SMA 50) crosses above a longer-term one (like SMA 200). This is seen as a bullish signal -- it suggests the market may be shifting into a longer-term uptrend.</p>
+      <p>A <strong>Death Cross</strong> is the opposite -- the SMA 50 crosses below the SMA 200. This is seen as a bearish signal suggesting a potential longer-term downtrend.</p>
+      <p>These are slow signals that don't happen often, but when they do, traders pay attention because they represent shifts in the bigger picture.</p>
+
+      <!-- GOLDEN CROSS / DEATH CROSS DIAGRAM -->
+      <div style="display:flex;gap:20px;flex-wrap:wrap;margin:20px 0 10px;">
+
+        <!-- GOLDEN CROSS -->
+        <div style="flex:1;min-width:280px;background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:20px;position:relative;overflow:hidden;">
+          <div style="font-family:var(--mono);font-size:10px;color:var(--green);letter-spacing:2px;margin-bottom:12px;">GOLDEN CROSS (BULLISH)</div>
+          <svg viewBox="0 0 300 150" style="width:100%;height:auto;">
+            <!-- Grid -->
+            <line x1="0" y1="50" x2="300" y2="50" stroke="#0c3030" stroke-width="0.5" stroke-dasharray="3"/>
+            <line x1="0" y1="100" x2="300" y2="100" stroke="#0c3030" stroke-width="0.5" stroke-dasharray="3"/>
+            <!-- SMA 200 (slow - red) -->
+            <polyline points="10,55 50,58 90,62 130,68 160,72 190,70 220,62 250,55 280,48" fill="none" stroke="#ff5252" stroke-width="2">
+              <animate attributeName="stroke-dasharray" from="0,500" to="500,0" dur="2s" fill="freeze"/>
+            </polyline>
+            <!-- SMA 50 (fast - green) starts below, crosses above -->
+            <polyline points="10,85 50,82 90,78 130,72 160,65 190,55 220,42 250,32 280,25" fill="none" stroke="#00ff6a" stroke-width="2.5">
+              <animate attributeName="stroke-dasharray" from="0,500" to="500,0" dur="2s" fill="freeze"/>
+            </polyline>
+            <!-- Cross point marker -->
+            <circle cx="145" cy="70" r="8" fill="none" stroke="#ffd166" stroke-width="2" opacity="0.8">
+              <animate attributeName="r" values="5;10;5" dur="1.5s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/>
+            </circle>
+            <!-- Cross label -->
+            <text x="155" y="90" fill="#ffd166" font-family="Share Tech Mono" font-size="9">CROSS</text>
+            <!-- MA labels -->
+            <text x="240" y="22" fill="#00ff6a" font-family="Share Tech Mono" font-size="8">FAST (SMA 50)</text>
+            <text x="240" y="60" fill="#ff5252" font-family="Share Tech Mono" font-size="8">SLOW (SMA 200)</text>
+          </svg>
+          <p style="font-family:var(--mono);font-size:10px;color:var(--green);text-align:center;margin-top:8px;">Fast MA crosses ABOVE slow MA = Bullish shift</p>
+        </div>
+
+        <!-- DEATH CROSS -->
+        <div style="flex:1;min-width:280px;background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:20px;position:relative;overflow:hidden;">
+          <div style="font-family:var(--mono);font-size:10px;color:var(--red);letter-spacing:2px;margin-bottom:12px;">DEATH CROSS (BEARISH)</div>
+          <svg viewBox="0 0 300 150" style="width:100%;height:auto;">
+            <!-- Grid -->
+            <line x1="0" y1="50" x2="300" y2="50" stroke="#0c3030" stroke-width="0.5" stroke-dasharray="3"/>
+            <line x1="0" y1="100" x2="300" y2="100" stroke="#0c3030" stroke-width="0.5" stroke-dasharray="3"/>
+            <!-- SMA 200 (slow - green) -->
+            <polyline points="10,95 50,92 90,88 130,82 160,78 190,80 220,88 250,95 280,102" fill="none" stroke="#00ff6a" stroke-width="2">
+              <animate attributeName="stroke-dasharray" from="0,500" to="500,0" dur="2s" fill="freeze"/>
+            </polyline>
+            <!-- SMA 50 (fast - red) starts above, crosses below -->
+            <polyline points="10,65 50,68 90,72 130,78 160,85 190,95 220,108 250,118 280,125" fill="none" stroke="#ff5252" stroke-width="2.5">
+              <animate attributeName="stroke-dasharray" from="0,500" to="500,0" dur="2s" fill="freeze"/>
+            </polyline>
+            <!-- Cross point marker -->
+            <circle cx="145" cy="80" r="8" fill="none" stroke="#ffd166" stroke-width="2" opacity="0.8">
+              <animate attributeName="r" values="5;10;5" dur="1.5s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/>
+            </circle>
+            <!-- Cross label -->
+            <text x="155" y="100" fill="#ffd166" font-family="Share Tech Mono" font-size="9">CROSS</text>
+            <!-- MA labels -->
+            <text x="240" y="130" fill="#ff5252" font-family="Share Tech Mono" font-size="8">FAST (SMA 50)</text>
+            <text x="240" y="90" fill="#00ff6a" font-family="Share Tech Mono" font-size="8">SLOW (SMA 200)</text>
+          </svg>
+          <p style="font-family:var(--mono);font-size:10px;color:var(--red);text-align:center;margin-top:8px;">Fast MA crosses BELOW slow MA = Bearish shift</p>
+        </div>
+
+      </div>
+      <p style="font-family:var(--mono);font-size:10px;color:var(--muted);text-align:center;margin-top:5px;">The pulsing circle marks where the two moving averages cross -- the signal point</p>
+
+      <span class="term-used">Used in: LLSS (primary signal system)</span>
+    </div>
+
+    <div class="term-card purple" id="order-blocks">
+      <div class="term-name">Order Blocks</div>
+      <div class="term-aka">// Zones where large orders were placed</div>
+      <p>An order block is a price zone where significant buying or selling occurred. These are areas where institutional traders (banks, hedge funds, big money) placed large orders that moved the market.</p>
+      <p>When price returns to an order block, it often reacts -- either bouncing off it or breaking through. Bullish order blocks are zones where big buying happened. Bearish order blocks are zones where big selling happened.</p>
+      <span class="term-used">Used in: duttyb@g@von blocks</span>
+    </div>
+
+    <div class="term-card" id="confluence">
+      <div class="term-name">Confluence</div>
+      <div class="term-aka">// Multiple signals agreeing at the same level</div>
+      <p>Confluence means multiple technical factors are pointing to the same conclusion at the same price level. For example, if an order block, a VWAP level, and a moving average all sit at the same price -- that's high confluence.</p>
+      <p>The more factors that agree, the stronger the level. One signal alone might be weak. Three signals at the same spot? That's a zone worth watching closely.</p>
+      <span class="term-used">Used in: duttyb@g@von blocks (Confluence Scoring)</span>
+    </div>
+
+    <div class="term-card blue" id="mitigation">
+      <div class="term-name">Mitigation</div>
+      <div class="term-aka">// When price returns to a zone and closes through it</div>
+      <p>Mitigation happens when price comes back to a previous order block or zone and closes through it. This means the zone has been "used up" -- the orders that were sitting there have been filled.</p>
+      <p>A mitigated zone is less likely to cause a reaction the next time price visits it, because the big orders are already gone. Unmitigated zones are fresh and more likely to cause a bounce.</p>
+      <span class="term-used">Used in: duttyb@g@von blocks (Mitigation Shapes)</span>
+    </div>
+
+    <div class="term-card gold" id="momentum">
+      <div class="term-name">Momentum</div>
+      <div class="term-aka">// The speed and strength of price movement</div>
+      <p>Momentum measures how fast price is moving in a direction. Strong momentum means price is moving quickly and with conviction. Weak momentum means the move is slowing down.</p>
+      <p>Momentum can increase (accelerating) or decrease (decelerating). A market can be going up but with decreasing momentum -- meaning the uptrend might be running out of steam. Momentum oscillators display this as histograms that grow or shrink.</p>
+
+      <!-- MOMENTUM DIAGRAM -->
+      <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:20px;margin:20px 0 10px;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:12px;">MOMENTUM HISTOGRAM</div>
+        <svg viewBox="0 0 400 120" style="width:100%;height:auto;">
+          <!-- Zero line -->
+          <line x1="0" y1="60" x2="400" y2="60" stroke="#3d7070" stroke-width="1"/>
+          <text x="385" y="55" fill="#3d7070" font-family="Share Tech Mono" font-size="7">0</text>
+          <!-- Positive increasing (bright green) -->
+          <rect x="15" y="48" width="18" height="12" fill="#00ffe1" rx="1"><animate attributeName="height" from="0" to="12" dur="0.2s" fill="freeze"/><animate attributeName="y" from="60" to="48" dur="0.2s" fill="freeze"/></rect>
+          <rect x="38" y="35" width="18" height="25" fill="#00ffe1" rx="1"><animate attributeName="height" from="0" to="25" dur="0.2s" begin="0.1s" fill="freeze"/><animate attributeName="y" from="60" to="35" dur="0.2s" begin="0.1s" fill="freeze"/></rect>
+          <rect x="61" y="20" width="18" height="40" fill="#00ffe1" rx="1"><animate attributeName="height" from="0" to="40" dur="0.2s" begin="0.2s" fill="freeze"/><animate attributeName="y" from="60" to="20" dur="0.2s" begin="0.2s" fill="freeze"/></rect>
+          <rect x="84" y="10" width="18" height="50" fill="#00ffe1" rx="1"><animate attributeName="height" from="0" to="50" dur="0.2s" begin="0.3s" fill="freeze"/><animate attributeName="y" from="60" to="10" dur="0.2s" begin="0.3s" fill="freeze"/></rect>
+          <!-- Positive decreasing (blue) -->
+          <rect x="107" y="18" width="18" height="42" fill="#4db8ff" rx="1"><animate attributeName="height" from="0" to="42" dur="0.2s" begin="0.4s" fill="freeze"/><animate attributeName="y" from="60" to="18" dur="0.2s" begin="0.4s" fill="freeze"/></rect>
+          <rect x="130" y="30" width="18" height="30" fill="#4db8ff" rx="1"><animate attributeName="height" from="0" to="30" dur="0.2s" begin="0.5s" fill="freeze"/><animate attributeName="y" from="60" to="30" dur="0.2s" begin="0.5s" fill="freeze"/></rect>
+          <rect x="153" y="42" width="18" height="18" fill="#4db8ff" rx="1"><animate attributeName="height" from="0" to="18" dur="0.2s" begin="0.6s" fill="freeze"/><animate attributeName="y" from="60" to="42" dur="0.2s" begin="0.6s" fill="freeze"/></rect>
+          <!-- Negative increasing (red) -->
+          <rect x="186" y="60" width="18" height="12" fill="#ff5252" rx="1"><animate attributeName="height" from="0" to="12" dur="0.2s" begin="0.7s" fill="freeze"/></rect>
+          <rect x="209" y="60" width="18" height="25" fill="#ff5252" rx="1"><animate attributeName="height" from="0" to="25" dur="0.2s" begin="0.8s" fill="freeze"/></rect>
+          <rect x="232" y="60" width="18" height="40" fill="#ff5252" rx="1"><animate attributeName="height" from="0" to="40" dur="0.2s" begin="0.9s" fill="freeze"/></rect>
+          <rect x="255" y="60" width="18" height="50" fill="#ff5252" rx="1"><animate attributeName="height" from="0" to="50" dur="0.2s" begin="1.0s" fill="freeze"/></rect>
+          <!-- Negative decreasing (yellow) -->
+          <rect x="278" y="60" width="18" height="42" fill="#ffd740" rx="1"><animate attributeName="height" from="0" to="42" dur="0.2s" begin="1.1s" fill="freeze"/></rect>
+          <rect x="301" y="60" width="18" height="30" fill="#ffd740" rx="1"><animate attributeName="height" from="0" to="30" dur="0.2s" begin="1.2s" fill="freeze"/></rect>
+          <rect x="324" y="60" width="18" height="18" fill="#ffd740" rx="1"><animate attributeName="height" from="0" to="18" dur="0.2s" begin="1.3s" fill="freeze"/></rect>
+        </svg>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:10px;">
+          <div style="font-family:var(--mono);font-size:9px;color:var(--cyan);display:flex;align-items:center;gap:4px;"><div style="width:10px;height:10px;background:#00ffe1;border-radius:1px;"></div> Up + Accelerating</div>
+          <div style="font-family:var(--mono);font-size:9px;color:var(--blue);display:flex;align-items:center;gap:4px;"><div style="width:10px;height:10px;background:#4db8ff;border-radius:1px;"></div> Up + Slowing</div>
+          <div style="font-family:var(--mono);font-size:9px;color:var(--red);display:flex;align-items:center;gap:4px;"><div style="width:10px;height:10px;background:#ff5252;border-radius:1px;"></div> Down + Accelerating</div>
+          <div style="font-family:var(--mono);font-size:9px;color:var(--yellow);display:flex;align-items:center;gap:4px;"><div style="width:10px;height:10px;background:#ffd740;border-radius:1px;"></div> Down + Slowing</div>
+        </div>
+      </div>
+
+      <span class="term-used">Used in: Wave Stages (Momentum Oscillator), Alpha Oscillator (Engine 2), Intensity Monitor (RSI Velocity)</span>
+    </div>
+
+    <div class="term-card red" id="dominance">
+      <div class="term-name">Dominance</div>
+      <div class="term-aka">// Which side is winning -- bulls or bears</div>
+      <p>Dominance tells you whether buyers (bulls) or sellers (bears) have the upper hand right now. It looks at multiple factors across multiple timeframes and produces a single score.</p>
+      <p>A high positive dominance percentage means bulls are strongly in control. A high negative percentage means bears are in control. Near zero means neither side has a clear advantage.</p>
+      <span class="term-used">Used in: Alpha Oscillator (-100% to +100%), Dutty Big Bag (Combined Dominance), DBB Analytics Table (SR column on 1m/5m)</span>
+    </div>
+
+    <div class="term-card green" id="atr">
+      <div class="term-name">ATR (Average True Range)</div>
+      <div class="term-aka">// Measures how much price typically moves</div>
+      <p>ATR tells you the average range of price movement over a set number of bars. A high ATR means the market is volatile -- price is swinging a lot. A low ATR means the market is calm.</p>
+      <p>Traders use ATR to set stop losses, gauge how far price might move, and understand whether current volatility is normal or extreme. It doesn't tell you direction -- just how much movement to expect.</p>
+    </div>
+
+    <div class="term-card purple" id="divergence">
+      <div class="term-name">Divergence</div>
+      <div class="term-aka">// When price and an indicator disagree</div>
+      <p><strong>Bullish divergence</strong>: Price is making lower lows, but the indicator (like RSI or momentum) is making higher lows. This suggests the downtrend may be weakening.</p>
+      <p><strong>Bearish divergence</strong>: Price is making higher highs, but the indicator is making lower highs. This suggests the uptrend may be losing strength.</p>
+      <p>Divergence is a warning sign, not a guaranteed reversal. It means the trend and momentum are no longer in agreement -- something may be about to change.</p>
+
+      <!-- DIVERGENCE DIAGRAM -->
+      <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:20px;margin:20px 0 10px;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:12px;">BULLISH DIVERGENCE — PRICE vs INDICATOR</div>
+        <svg viewBox="0 0 400 160" style="width:100%;height:auto;">
+          <!-- Price making lower lows -->
+          <text x="5" y="12" fill="#3d7070" font-family="Share Tech Mono" font-size="8">PRICE</text>
+          <polyline points="20,30 60,50 100,35 140,60 180,45 220,75 260,55 300,80" fill="none" stroke="#00ffe1" stroke-width="2">
+            <animate attributeName="stroke-dasharray" from="0,500" to="500,0" dur="2s" fill="freeze"/>
+          </polyline>
+          <!-- Price lower lows line -->
+          <line x1="100" y1="35" x2="260" y2="55" stroke="#ff5252" stroke-width="1" stroke-dasharray="4">
+            <animate attributeName="stroke-dasharray" from="0,200" to="200,0" dur="1s" begin="2s" fill="freeze"/>
+          </line>
+          <text x="155" y="30" fill="#ff5252" font-family="Share Tech Mono" font-size="7" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="2s" dur="0.3s" fill="freeze"/>LOWER LOWS</text>
+          <!-- Separator -->
+          <line x1="0" y1="90" x2="400" y2="90" stroke="#0c3030" stroke-width="0.5"/>
+          <!-- Indicator making higher lows -->
+          <text x="5" y="102" fill="#3d7070" font-family="Share Tech Mono" font-size="8">INDICATOR</text>
+          <polyline points="20,130 60,120 100,140 140,115 180,135 220,110 260,125 300,105" fill="none" stroke="#b44dff" stroke-width="2">
+            <animate attributeName="stroke-dasharray" from="0,500" to="500,0" dur="2s" fill="freeze"/>
+          </polyline>
+          <!-- Indicator higher lows line -->
+          <line x1="100" y1="140" x2="260" y2="125" stroke="#00ff6a" stroke-width="1" stroke-dasharray="4">
+            <animate attributeName="stroke-dasharray" from="0,200" to="200,0" dur="1s" begin="2s" fill="freeze"/>
+          </line>
+          <text x="155" y="155" fill="#00ff6a" font-family="Share Tech Mono" font-size="7" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="2s" dur="0.3s" fill="freeze"/>HIGHER LOWS</text>
+          <!-- Warning -->
+          <text x="310" y="70" fill="#ffd166" font-family="Share Tech Mono" font-size="9" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="2.5s" dur="0.5s" fill="freeze"/>DIVERGENCE</text>
+          <text x="310" y="82" fill="#ffd166" font-family="Share Tech Mono" font-size="7" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="2.5s" dur="0.5s" fill="freeze"/>= WARNING</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="term-card" id="pullback">
+      <div class="term-name">Pullback</div>
+      <div class="term-aka">// A temporary move against the main trend</div>
+      <p>A pullback is when price temporarily moves against the current trend before continuing in the original direction. In an uptrend, a pullback is a short dip before price resumes going up.</p>
+      <p>Pullbacks are common and healthy -- they let the market "breathe" before the next push. Many traders wait for pullbacks to enter a trade at a better price rather than chasing the move.</p>
+    </div>
+
+    <div class="term-card gold" id="breakout">
+      <div class="term-name">Breakout</div>
+      <div class="term-aka">// When price moves beyond a key level</div>
+      <p>A breakout happens when price pushes through a support or resistance level with enough force to keep going. Breakouts often happen after periods of compression or consolidation.</p>
+      <p>A <strong>bullish breakout</strong> is when price breaks above resistance. A <strong>bearish breakout</strong> (sometimes called a breakdown) is when price breaks below support. Volume on the breakout matters -- high volume breakouts are more reliable than low volume ones.</p>
+    </div>
+
+    <div class="term-card red" id="supply-demand">
+      <div class="term-name">Supply and Demand</div>
+      <div class="term-aka">// The force that moves every market</div>
+      <p><strong>Demand</strong> is how badly buyers want something. <strong>Supply</strong> is how much of it is available. When more people want to buy than sell, demand exceeds supply and price goes up. When more people want to sell than buy, supply exceeds demand and price goes down.</p>
+      <p>This is the most fundamental concept in all of trading. Every candle, every indicator, every signal — it all comes back to supply and demand. Zones where price previously reversed often mark areas of heavy supply (sellers) or heavy demand (buyers).</p>
+      <p>Understanding supply and demand helps you see why price moves — not just where it moves.</p>
+
+      <!-- SUPPLY AND DEMAND DIAGRAM -->
+      <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:20px;margin:20px 0 10px;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:12px;">SUPPLY & DEMAND</div>
+        <svg viewBox="0 0 400 120" style="width:100%;height:auto;">
+          <!-- Demand zone -->
+          <rect x="10" y="80" width="380" height="30" fill="rgba(0,255,106,0.08)" stroke="rgba(0,255,106,0.3)" stroke-width="1" rx="3"/>
+          <text x="20" y="100" fill="#00ff6a" font-family="Share Tech Mono" font-size="9">DEMAND ZONE — Buyers step in here</text>
+          <!-- Supply zone -->
+          <rect x="10" y="10" width="380" height="30" fill="rgba(255,82,82,0.08)" stroke="rgba(255,82,82,0.3)" stroke-width="1" rx="3"/>
+          <text x="20" y="30" fill="#ff5252" font-family="Share Tech Mono" font-size="9">SUPPLY ZONE — Sellers step in here</text>
+          <!-- Price bouncing -->
+          <polyline points="30,75 70,50 110,20 140,35 180,70 210,75 240,50 280,20 310,35 350,65 380,75" fill="none" stroke="#00ffe1" stroke-width="2">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="2.5s" fill="freeze"/>
+          </polyline>
+        </svg>
+      </div>
+    </div>
+
+    <div class="term-card blue" id="alerts">
+      <div class="term-name">Alerts</div>
+      <div class="term-aka">// Automated notifications when conditions are met</div>
+      <p>Alerts are notifications that TradingView sends you when a specific condition happens on your chart. Instead of staring at the screen all day, you set an alert and TradingView tells you when something important occurs.</p>
+      <p>You can receive alerts as popup notifications, emails, phone notifications, or webhooks. Our indicators have built-in alert conditions -- you just right-click the indicator, select "Add alert," choose the condition, and create it.</p>
+      <p>Free TradingView accounts can set a limited number of alerts. Paid plans allow more.</p>
+    </div>
+
+    <div class="divider"></div>
+    <div class="section-label">// Wyckoff Method</div>
+    <h2>Richard D. Wyckoff (1873-1934)</h2>
+
+    <div class="term-card gold" id="wyckoff">
+      <div class="term-name">The Wyckoff Method</div>
+      <div class="term-aka">// A framework for reading the market developed over 100 years ago</div>
+      <p>Richard Wyckoff was a Wall Street legend who studied how the biggest traders of his time moved markets. He developed a method for understanding price action based on the idea that the market is driven by <strong>supply and demand</strong> -- and that you can read this on the chart if you know what to look for.</p>
+      <p>His method is still used by traders worldwide over 100 years later. It's not a formula or a magic indicator -- it's a way of thinking about why price moves the way it does.</p>
+    </div>
+
+    <div class="term-card" id="wyckoff-laws">
+      <div class="term-name">Wyckoff's 3 Laws</div>
+      <div class="term-aka">// The foundation of the method</div>
+      <p><strong>1. Supply and Demand</strong> -- When demand (buying) is greater than supply (selling), price goes up. When supply is greater than demand, price goes down. When they're roughly equal, price moves sideways. Everything on a chart comes down to this.</p>
+      <p><strong>2. Cause and Effect</strong> -- Every big price move (the effect) is preceded by a period of preparation (the cause). A long sideways range builds up energy. The longer the range, the bigger the potential move when it breaks out.</p>
+      <p><strong>3. Effort vs Result</strong> -- If there's a lot of effort (high volume) but little result (small price movement), something is off. The effort and the result should match. When they don't, it can signal that the current trend is weakening.</p>
+    </div>
+
+    <div class="term-card green" id="accumulation">
+      <div class="term-name">Accumulation</div>
+      <div class="term-aka">// Big money quietly buying before a move up</div>
+      <p>Accumulation is a phase where large, well-informed traders are buying shares while the general public is still selling or not paying attention. Price moves sideways in a range during this phase.</p>
+      <p>The big traders can't buy everything at once -- that would push the price up too fast. So they buy slowly, absorbing all the supply that sellers are dumping. Once they've accumulated enough, the markup phase begins and price starts to rise.</p>
+      <p>On a chart, accumulation looks like a sideways range after a decline. Volume patterns can give clues that buying is happening behind the scenes.</p>
+    </div>
+
+    <div class="term-card red" id="distribution">
+      <div class="term-name">Distribution</div>
+      <div class="term-aka">// Big money quietly selling before a move down</div>
+      <p>Distribution is the opposite of accumulation. Large traders who bought low are now selling their positions to the public, who is eager to buy because price has been going up.</p>
+      <p>Just like accumulation, they can't sell everything at once without crashing the price. So they sell gradually while the market moves sideways. Once they've distributed enough shares, the markdown phase begins and price drops.</p>
+      <p>On a chart, distribution looks like a sideways range after a rally. The public often thinks the uptrend will continue, but the smart money is already getting out.</p>
+    </div>
+
+    <div class="term-card blue" id="market-phases">
+      <div class="term-name">4 Market Phases</div>
+      <div class="term-aka">// The full cycle of price movement</div>
+      <p><strong>1. Accumulation</strong> -- Sideways range at the bottom. Smart money is buying.</p>
+      <p><strong>2. Markup</strong> -- Price rises. The uptrend begins as demand overwhelms supply. This is where most people notice the move and start buying.</p>
+      <p><strong>3. Distribution</strong> -- Sideways range at the top. Smart money is selling to the late buyers.</p>
+      <p><strong>4. Markdown</strong> -- Price falls. The downtrend begins as supply overwhelms demand. This is where fear takes over and people start panic selling.</p>
+      <p>The cycle repeats. Understanding where you are in the cycle helps you avoid buying at the top and selling at the bottom.</p>
+
+      <!-- WYCKOFF CYCLE DIAGRAM -->
+      <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:20px;margin:20px 0 10px;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:12px;">THE WYCKOFF CYCLE</div>
+        <svg viewBox="0 0 400 170" style="width:100%;height:auto;">
+          <!-- Full price cycle -->
+          <polyline points="10,120 30,118 50,122 70,118 90,120 110,115 130,90 150,65 170,45 190,35 210,30 230,32 250,28 270,32 290,35 310,55 330,80 350,105 370,125 390,130" fill="none" stroke="#00ffe1" stroke-width="2.5">
+            <animate attributeName="stroke-dasharray" from="0,800" to="800,0" dur="3.5s" fill="freeze"/>
+          </polyline>
+          <!-- Phase boxes -->
+          <!-- Accumulation -->
+          <rect x="5" y="110" width="100" height="30" fill="rgba(0,255,106,0.08)" stroke="rgba(0,255,106,0.3)" stroke-width="1" rx="3"/>
+          <text x="20" y="130" fill="#00ff6a" font-family="Share Tech Mono" font-size="8">ACCUMULATION</text>
+          <!-- Markup -->
+          <text x="120" y="65" fill="#00ffe1" font-family="Share Tech Mono" font-size="8" transform="rotate(-45,140,65)">MARKUP</text>
+          <!-- Distribution -->
+          <rect x="195" y="18" width="95" height="28" fill="rgba(255,82,82,0.08)" stroke="rgba(255,82,82,0.3)" stroke-width="1" rx="3"/>
+          <text x="205" y="36" fill="#ff5252" font-family="Share Tech Mono" font-size="8">DISTRIBUTION</text>
+          <!-- Markdown -->
+          <text x="310" y="75" fill="#ff5252" font-family="Share Tech Mono" font-size="8" transform="rotate(45,330,75)">MARKDOWN</text>
+          <!-- Smart money labels -->
+          <text x="20" y="155" fill="#ffd166" font-family="Share Tech Mono" font-size="7" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="1s" dur="0.5s" fill="freeze"/>Smart money BUYS</text>
+          <text x="210" y="55" fill="#ffd166" font-family="Share Tech Mono" font-size="7" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="2s" dur="0.5s" fill="freeze"/>Smart money SELLS</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="term-card purple" id="spring">
+      <div class="term-name">Spring</div>
+      <div class="term-aka">// A fake breakdown designed to trap sellers</div>
+      <p>A spring happens during accumulation when price briefly drops below the support level of the range, then quickly reverses and moves back up. It looks like a breakdown, but it's actually a trap.</p>
+      <p>The purpose of the spring is to trigger stop losses and scare weak holders into selling their shares -- which the big traders then buy at cheap prices. Once the spring is complete and supply has been absorbed, price is ready to move up.</p>
+      <p>A spring on low volume is considered more reliable than one on high volume. It's one of the most powerful Wyckoff signals.</p>
+
+      <!-- SPRING DIAGRAM -->
+      <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:20px;margin:20px 0 10px;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:12px;">SPRING — FAKE BREAKDOWN TRAP</div>
+        <svg viewBox="0 0 400 150" style="width:100%;height:auto;">
+          <!-- Support line -->
+          <line x1="0" y1="85" x2="400" y2="85" stroke="#00ff6a" stroke-width="1" stroke-dasharray="6" opacity="0.5"/>
+          <text x="5" y="80" fill="#00ff6a" font-family="Share Tech Mono" font-size="7">SUPPORT</text>
+          <!-- Price in range -->
+          <polyline points="10,70 40,60 70,75 100,65 130,80 150,78 170,82" fill="none" stroke="#3d7070" stroke-width="1.5"/>
+          <!-- Spring dip below support -->
+          <polyline points="170,82 190,90 210,110 220,115" fill="none" stroke="#ff5252" stroke-width="2.5">
+            <animate attributeName="stroke-dasharray" from="0,200" to="200,0" dur="1s" begin="0.5s" fill="freeze"/>
+          </polyline>
+          <!-- Spring label -->
+          <text x="225" y="120" fill="#ff5252" font-family="Share Tech Mono" font-size="9" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="1.5s" dur="0.3s" fill="freeze"/>SPRING</text>
+          <!-- Recovery back up -->
+          <polyline points="220,115 235,100 250,80 270,60 290,40 310,25 340,20 370,15" fill="none" stroke="#00ff6a" stroke-width="2.5">
+            <animate attributeName="stroke-dasharray" from="0,300" to="300,0" dur="1.5s" begin="2s" fill="freeze"/>
+          </polyline>
+          <!-- Trap label -->
+          <text x="280" y="55" fill="#ffd166" font-family="Share Tech Mono" font-size="8" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="3s" dur="0.5s" fill="freeze"/>REAL MOVE UP</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="term-card" id="upthrust">
+      <div class="term-name">Upthrust</div>
+      <div class="term-aka">// A fake breakout designed to trap buyers</div>
+      <p>An upthrust is the opposite of a spring. During distribution, price briefly breaks above the resistance level of the range, then quickly reverses and falls back down.</p>
+      <p>It's designed to trick people into thinking a breakout is happening. Traders buy the breakout, but price immediately reverses and drops. The big traders use that buying excitement to sell their remaining shares at higher prices.</p>
+      <p>Like the spring, an upthrust is a deception. The real move is in the opposite direction of what it initially looks like.</p>
+
+      <!-- UPTHRUST DIAGRAM -->
+      <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:20px;margin:20px 0 10px;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:12px;">UPTHRUST — FAKE BREAKOUT TRAP</div>
+        <svg viewBox="0 0 400 150" style="width:100%;height:auto;">
+          <!-- Resistance line -->
+          <line x1="0" y1="65" x2="400" y2="65" stroke="#ff5252" stroke-width="1" stroke-dasharray="6" opacity="0.5"/>
+          <text x="5" y="60" fill="#ff5252" font-family="Share Tech Mono" font-size="7">RESISTANCE</text>
+          <!-- Price in range -->
+          <polyline points="10,80 40,90 70,75 100,85 130,70 150,72 170,68" fill="none" stroke="#3d7070" stroke-width="1.5"/>
+          <!-- Upthrust spike above resistance -->
+          <polyline points="170,68 190,58 210,40 220,30" fill="none" stroke="#00ff6a" stroke-width="2.5">
+            <animate attributeName="stroke-dasharray" from="0,200" to="200,0" dur="1s" begin="0.5s" fill="freeze"/>
+          </polyline>
+          <!-- Upthrust label -->
+          <text x="225" y="28" fill="#00ff6a" font-family="Share Tech Mono" font-size="9" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="1.5s" dur="0.3s" fill="freeze"/>UPTHRUST</text>
+          <!-- Reversal down -->
+          <polyline points="220,30 235,50 250,70 270,90 290,105 310,120 340,130 370,138" fill="none" stroke="#ff5252" stroke-width="2.5">
+            <animate attributeName="stroke-dasharray" from="0,300" to="300,0" dur="1.5s" begin="2s" fill="freeze"/>
+          </polyline>
+          <!-- Trap label -->
+          <text x="280" y="100" fill="#ffd166" font-family="Share Tech Mono" font-size="8" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="3s" dur="0.5s" fill="freeze"/>REAL MOVE DOWN</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="term-card gold" id="composite-operator">
+      <div class="term-name">Composite Operator</div>
+      <div class="term-aka">// Think of the market as one big player</div>
+      <p>Wyckoff suggested imagining the market as if a single powerful entity controls it -- the Composite Operator (sometimes called the Composite Man). This isn't literally one person, but the combined effect of all the large, well-informed traders acting together.</p>
+      <p>The Composite Operator accumulates shares at low prices, marks up the price, distributes shares at high prices, then marks the price down. Understanding this cycle helps you see the market from the perspective of the big players instead of getting caught up in the emotions of the crowd.</p>
+      <p>The key insight: the market is designed to take money from the uninformed and transfer it to the informed. Wyckoff's method helps you read what the informed are doing.</p>
+    </div>
+
+    <div class="term-card red" id="selling-climax">
+      <div class="term-name">Selling Climax</div>
+      <div class="term-aka">// Panic selling that exhausts the sellers</div>
+      <p>A selling climax is a sharp, dramatic drop in price on very high volume. It happens when fear reaches a peak and everyone panics and sells at the same time. Prices plunge, volume spikes, and it feels like the world is ending.</p>
+      <p>But here's the key -- the selling climax often marks the end of the decline, not the beginning of more downside. All the weak holders have been flushed out. The big traders are on the other side of those panic sales, absorbing all that supply. Once the selling is exhausted, price stabilizes and accumulation can begin.</p>
+    </div>
+
+    <div class="term-card green" id="buying-climax">
+      <div class="term-name">Buying Climax</div>
+      <div class="term-aka">// Greed-driven buying that exhausts the buyers</div>
+      <p>A buying climax is the opposite -- a sharp spike up in price on high volume driven by greed and excitement. Everyone rushes to buy because they don't want to miss out. Price surges, volume spikes, and it feels like the rally will never stop.</p>
+      <p>But the buying climax often marks the end of the rally. The big traders use this wave of public buying to distribute their shares. Once the buying frenzy dies down, price stalls and distribution begins.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- DUTTYBOOKBAG INTERNAL -->
+<section>
+  <div class="wrap">
+    <div class="divider" style="background:linear-gradient(90deg,transparent,#39ff14,transparent);"></div>
+    <div id="sec-internal" class="section-label" style="color:#39ff14;">// DuttyBookBag Internal</div>
+    <h2 style="margin-bottom:14px;">Built from Imagination</h2>
+
+    <div style="background:rgba(57,255,20,0.04);border:1px solid rgba(57,255,20,0.2);border-radius:6px;padding:24px;margin-bottom:28px;">
+      <p style="font-size:15px;color:var(--text);line-height:1.8;margin:0;">The systems in this section are <strong style="color:#39ff14;">not</strong> standard trading tools. You will not find them in a textbook, a trading course, or on any other platform. These are original systems created by <strong style="color:#fff;">Uncle_E-1 (DuttyBookBag)</strong> — designed from scratch through years of studying charts, experimenting with ideas, and building something that didn't exist before. Each system below is exclusive to DuttyBookBag indicators.</p>
+    </div>
+
+    <div class="term-card" id="wave-stages" style="border-color:rgba(57,255,20,0.4);">
+      <div class="term-name">Wave Stages</div>
+      <div class="term-aka">// B1–B3 Bull · R1–R3 Bear · Stage Warning System</div>
+      <div style="display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:3px;color:#000;background:#39ff14;padding:4px 12px;margin-bottom:10px;border-radius:2px;text-transform:uppercase;">DuttyBookBag Internal</div>
+      <p>Wave Stages tracks how far a bullish or bearish move has progressed. As the move continues, the wave advances through stages — B1, B2, B3 for bulls and R1, R2, R3 for bears. The further the stage, the longer the move has been running.</p>
+      <p>At advanced stages, the market may be getting exhausted. A warning flashes yellow when the wave reaches the level you set — giving you a heads-up that the current move might be near its end.</p>
+      <p>This system was imagined and created by Uncle_E-1. It does not exist anywhere else. It is exclusive to DuttyBookBag indicators.</p>
+      <span class="term-used">Used in: DBB Wave Stages, DBB Analytics Table (BIA row), Dutty Big Bag</span>
+    </div>
+
+    <div class="term-card" id="internal-di" style="border-color:rgba(57,255,20,0.4);">
+      <div class="term-name">DI (Directional Intensity)</div>
+      <div class="term-aka">// Dominant Direction Lock Per Timeframe</div>
+      <div style="display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:3px;color:#000;background:#39ff14;padding:4px 12px;margin-bottom:10px;border-radius:2px;text-transform:uppercase;">DuttyBookBag Internal</div>
+      <p>Directional Intensity reads the dominant direction on each timeframe. Once a direction is confirmed, it locks in — filtering out the noise and giving you a clear read on whether buyers or sellers are truly in control.</p>
+      <p>This system was designed and built by Uncle_E-1. It is exclusive to DuttyBookBag indicators.</p>
+      <span class="term-used">Used in: DBB Analytics Table (DI column), Dutty Big Bag, NOMAD v5.0</span>
+    </div>
+
+    <div class="term-card" id="internal-xpush" style="border-color:rgba(57,255,20,0.4);">
+      <div class="term-name">Xpush System</div>
+      <div class="term-aka">// Cross-Timeframe Signal Scoring · X1–X5</div>
+      <div style="display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:3px;color:#000;background:#39ff14;padding:4px 12px;margin-bottom:10px;border-radius:2px;text-transform:uppercase;">DuttyBookBag Internal</div>
+      <p>The Xpush system watches for confirmation across multiple timeframes after a bull or bear signal fires. It scores the confirmation from X1 (fastest) through X5 (deepest confirmation). When a score level confirms, its label appears on the chart at the exact bar it triggered.</p>
+      <p>Each score level can be enabled or disabled individually. X1 confirms quickly. X5 means the signal has been validated across higher levels — the strongest confirmation you can get.</p>
+      <div class="tip">X1 = fastest · X2 · X3 · X4 · X5 = deepest confirmation</div>
+      <span class="term-used">Used in: DBB NOMAD v5.0</span>
+    </div>
+
+    <div class="term-card" id="internal-mtf" style="border-color:rgba(57,255,20,0.4);">
+      <div class="term-name">Multi-Timeframe X System</div>
+      <div class="term-aka">// X1–X6 Score Levels · Detection Across Timeframes</div>
+      <div style="display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:3px;color:#000;background:#39ff14;padding:4px 12px;margin-bottom:10px;border-radius:2px;text-transform:uppercase;">DuttyBookBag Internal</div>
+      <p>The Multi-Timeframe X system monitors conditions across multiple timeframes at the same time. When internal thresholds are hit, it triggers and shows which score level — X1 through X6 — fired directly on your chart. Built for speed and accuracy.</p>
+      <p>The X naming system, the scoring logic, and the threshold levels are entirely original — designed and built by Uncle_E-1.</p>
+      <div class="tip">X1 · X2 · X3 · X4 · X5 · X6 — each level represents a different depth of confirmation</div>
+      <span class="term-used">Used in: DBB NOMAD v5.0</span>
+    </div>
+
+    <div class="term-card" id="internal-bias" style="border-color:rgba(57,255,20,0.4);">
+      <div class="term-name">Bias System (BIA)</div>
+      <div class="term-aka">// Market Direction Detection · BULL · BEAR · NONE</div>
+      <div style="display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:3px;color:#000;background:#39ff14;padding:4px 12px;margin-bottom:10px;border-radius:2px;text-transform:uppercase;">DuttyBookBag Internal</div>
+      <p>The Bias System reads the overall market direction and outputs a single verdict — BULL, BEAR, or NONE. It's displayed in the BIA row of the analytics table and is tied directly to the Wave Stages system. When bias flips, it resets the wave count and starts tracking the new direction.</p>
+      <p>The Bias System was designed and built by Uncle_E-1 as its own detection engine. It is exclusive to DuttyBookBag indicators.</p>
+      <span class="term-used">Used in: DBB Analytics Table (BIA row), Dutty Big Bag, DBB Wave Stages</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- CRYPTO TERMS -->
+<section>
+  <div class="wrap">
+    <div class="divider"></div>
+    <div id="sec-crypto" class="section-label" style="color:var(--gold);">// Crypto &amp; Blockchain</div>
+    <h2>Crypto Terminology</h2>
+
+    <div class="term-card gold" id="crypto">
+      <div class="term-name">Cryptocurrency</div>
+      <div class="term-aka">// Digital money that runs on a blockchain</div>
+      <p>Cryptocurrency is digital money that exists only on the internet. There's no physical coin or bill. It runs on a technology called blockchain, which keeps a permanent record of every transaction without needing a bank or government to verify it.</p>
+      <p>You can send crypto to anyone in the world, anytime, without a middleman. Transactions are verified by a network of computers instead of a central authority. The most well-known cryptocurrency is Bitcoin (BTC), created in 2009.</p>
+    </div>
+
+    <div class="term-card" id="bitcoin">
+      <div class="term-name">Bitcoin (BTC)</div>
+      <div class="term-aka">// The first and most well-known cryptocurrency</div>
+      <p>Bitcoin is the original cryptocurrency, created in 2009 by someone (or a group) using the name Satoshi Nakamoto. It was designed as a peer-to-peer digital cash system -- a way to send money directly without going through a bank.</p>
+      <p>There will only ever be <strong>21 million Bitcoin</strong> in existence. This limited supply is one of the reasons it's often called "digital gold." BTC is the ticker symbol used on exchanges and charts.</p>
+      <p>Bitcoin runs on a Proof of Work blockchain, meaning miners use computing power to verify transactions and secure the network.</p>
+      <span class="term-used">Used in: Dutty Big Bag (BTC symbol selector, BTC Dominance tracking)</span>
+    </div>
+
+    <div class="term-card green" id="blockchain">
+      <div class="term-name">Blockchain</div>
+      <div class="term-aka">// The technology behind crypto</div>
+      <p>A blockchain is a digital ledger -- think of it as a permanent, public record book. Every transaction ever made is recorded in "blocks" that are chained together in order. Once a block is added, it can't be changed or deleted.</p>
+      <p>The ledger is stored across thousands of computers worldwide (called nodes), not in one central location. This makes it nearly impossible to hack or manipulate. Different cryptocurrencies run on different blockchains -- Bitcoin has its own, Ethereum has its own, and so on.</p>
+
+      <!-- BLOCKCHAIN DIAGRAM -->
+      <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:20px;margin:20px 0 10px;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:12px;">BLOCKCHAIN — BLOCKS LINKED TOGETHER</div>
+        <svg viewBox="0 0 400 80" style="width:100%;height:auto;">
+          <!-- Block 1 -->
+          <rect x="5" y="15" width="75" height="50" fill="rgba(0,255,225,0.1)" stroke="#00ffe1" stroke-width="1.5" rx="4"><animate attributeName="opacity" from="0" to="1" dur="0.3s" fill="freeze"/></rect>
+          <text x="22" y="38" fill="#00ffe1" font-family="Share Tech Mono" font-size="8">BLOCK 1</text>
+          <text x="14" y="52" fill="#3d7070" font-family="Share Tech Mono" font-size="6">TRANSACTIONS</text>
+          <!-- Chain 1-2 -->
+          <line x1="80" y1="40" x2="105" y2="40" stroke="#ffd166" stroke-width="2"><animate attributeName="stroke-dasharray" from="0,30" to="30,0" dur="0.3s" begin="0.3s" fill="freeze"/></line>
+          <!-- Block 2 -->
+          <rect x="105" y="15" width="75" height="50" fill="rgba(0,255,225,0.1)" stroke="#00ffe1" stroke-width="1.5" rx="4"><animate attributeName="opacity" from="0" to="1" dur="0.3s" begin="0.4s" fill="freeze"/></rect>
+          <text x="122" y="38" fill="#00ffe1" font-family="Share Tech Mono" font-size="8">BLOCK 2</text>
+          <text x="114" y="52" fill="#3d7070" font-family="Share Tech Mono" font-size="6">TRANSACTIONS</text>
+          <!-- Chain 2-3 -->
+          <line x1="180" y1="40" x2="205" y2="40" stroke="#ffd166" stroke-width="2"><animate attributeName="stroke-dasharray" from="0,30" to="30,0" dur="0.3s" begin="0.6s" fill="freeze"/></line>
+          <!-- Block 3 -->
+          <rect x="205" y="15" width="75" height="50" fill="rgba(0,255,225,0.1)" stroke="#00ffe1" stroke-width="1.5" rx="4"><animate attributeName="opacity" from="0" to="1" dur="0.3s" begin="0.7s" fill="freeze"/></rect>
+          <text x="222" y="38" fill="#00ffe1" font-family="Share Tech Mono" font-size="8">BLOCK 3</text>
+          <text x="214" y="52" fill="#3d7070" font-family="Share Tech Mono" font-size="6">TRANSACTIONS</text>
+          <!-- Chain 3-4 -->
+          <line x1="280" y1="40" x2="305" y2="40" stroke="#ffd166" stroke-width="2"><animate attributeName="stroke-dasharray" from="0,30" to="30,0" dur="0.3s" begin="0.9s" fill="freeze"/></line>
+          <!-- Block 4 -->
+          <rect x="305" y="15" width="75" height="50" fill="rgba(0,255,106,0.1)" stroke="#00ff6a" stroke-width="1.5" rx="4"><animate attributeName="opacity" from="0" to="1" dur="0.3s" begin="1s" fill="freeze"/></rect>
+          <text x="318" y="38" fill="#00ff6a" font-family="Share Tech Mono" font-size="8">BLOCK 4</text>
+          <text x="318" y="52" fill="#3d7070" font-family="Share Tech Mono" font-size="6">NEW BLOCK</text>
+        </svg>
+        <p style="font-family:var(--mono);font-size:10px;color:var(--muted);text-align:center;margin-top:8px;">Each block is permanently linked to the one before it — the chain can never be broken</p>
+      </div>
+    </div>
+
+    <div class="term-card blue" id="ethereum">
+      <div class="term-name">Ethereum (ETH)</div>
+      <div class="term-aka">// A blockchain that runs smart contracts and apps</div>
+      <p>Ethereum is the second-largest cryptocurrency by market cap. But it's more than just money -- it's a platform that lets developers build applications directly on the blockchain. These are called decentralized apps (dApps).</p>
+      <p>Ethereum introduced <strong>smart contracts</strong> -- self-executing code that automatically runs when conditions are met. This is what powers DeFi, NFTs, and thousands of tokens. ETH is the native currency used to pay transaction fees (called "gas") on the network.</p>
+    </div>
+
+    <div class="term-card purple" id="altcoins">
+      <div class="term-name">Altcoins</div>
+      <div class="term-aka">// Any cryptocurrency that isn't Bitcoin</div>
+      <p>Altcoin stands for "alternative coin." It refers to every cryptocurrency other than Bitcoin. Ethereum, Solana, Cardano, XRP, Dogecoin -- all altcoins.</p>
+      <p>Some altcoins have serious technology and use cases. Others are meme coins created as jokes. Not all altcoins are equal. <strong>DYOR</strong> (Do Your Own Research) before putting money into any of them.</p>
+    </div>
+
+    <div class="term-card red" id="tokens">
+      <div class="term-name">Tokens vs Coins</div>
+      <div class="term-aka">// They're not the same thing</div>
+      <p>A <strong>coin</strong> runs on its own blockchain. Bitcoin (BTC) runs on the Bitcoin blockchain. Ethereum (ETH) runs on the Ethereum blockchain. Solana (SOL) runs on the Solana blockchain. These are coins.</p>
+      <p>A <strong>token</strong> runs on someone else's blockchain. Thousands of tokens run on the Ethereum network using a standard called ERC-20. They don't have their own blockchain -- they borrow Ethereum's.</p>
+      <p>Example: USDT (Tether) is a token. ETH is a coin. Both are crypto, but they work differently under the hood.</p>
+
+      <!-- TOKENS vs COINS -->
+      <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:20px;margin:20px 0 10px;">
+        <div style="display:flex;gap:20px;flex-wrap:wrap;justify-content:center;">
+          <div style="flex:1;min-width:160px;text-align:center;padding:15px;border:1px solid rgba(0,255,225,0.3);border-radius:6px;background:rgba(0,255,225,0.05);">
+            <div style="font-family:var(--display);font-size:18px;color:var(--cyan);">COIN</div>
+            <div style="font-family:var(--mono);font-size:9px;color:var(--muted);margin:6px 0;">OWN BLOCKCHAIN</div>
+            <div style="font-family:var(--mono);font-size:11px;color:#fff;">BTC - Bitcoin chain</div>
+            <div style="font-family:var(--mono);font-size:11px;color:#fff;">ETH - Ethereum chain</div>
+            <div style="font-family:var(--mono);font-size:11px;color:#fff;">SOL - Solana chain</div>
+          </div>
+          <div style="flex:1;min-width:160px;text-align:center;padding:15px;border:1px solid rgba(255,209,102,0.3);border-radius:6px;background:rgba(255,209,102,0.05);">
+            <div style="font-family:var(--display);font-size:18px;color:var(--gold);">TOKEN</div>
+            <div style="font-family:var(--mono);font-size:9px;color:var(--muted);margin:6px 0;">BORROWS A BLOCKCHAIN</div>
+            <div style="font-family:var(--mono);font-size:11px;color:#fff;">USDT - on Ethereum</div>
+            <div style="font-family:var(--mono);font-size:11px;color:#fff;">LINK - on Ethereum</div>
+            <div style="font-family:var(--mono);font-size:11px;color:#fff;">SHIB - on Ethereum</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="term-card gold" id="stablecoins">
+      <div class="term-name">Stablecoins</div>
+      <div class="term-aka">// Crypto pegged to a real-world currency</div>
+      <p>A stablecoin is a cryptocurrency designed to maintain a stable value, usually pegged 1:1 to the US dollar. When you hold 1 USDT or 1 USDC, it's supposed to always be worth $1.00.</p>
+      <p>Traders use stablecoins to park money without leaving the crypto ecosystem. Instead of cashing out to a bank, you convert to USDT and wait. Common stablecoins: <strong>USDT</strong> (Tether), <strong>USDC</strong> (Circle), <strong>DAI</strong> (MakerDAO).</p>
+      <span class="term-used">Used in: Dutty Big Bag (USDT Dominance tracking)</span>
+    </div>
+
+    <div class="term-card" id="btc-dominance">
+      <div class="term-name">BTC Dominance</div>
+      <div class="term-aka">// Bitcoin's share of the total crypto market</div>
+      <p>BTC Dominance is a percentage that shows how much of the total crypto market cap belongs to Bitcoin. If BTC Dominance is 55%, that means Bitcoin accounts for 55% of all money in crypto.</p>
+      <p><strong>High BTC Dominance</strong> = money is flowing into Bitcoin over altcoins. This often means altcoins are underperforming. <strong>Low BTC Dominance</strong> = money is flowing into altcoins. This is often called "altseason."</p>
+      <p>Tracking dominance helps you understand where capital is moving in the market.</p>
+
+      <!-- BTC DOMINANCE DIAGRAM -->
+      <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:20px;margin:20px 0 10px;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:12px;">BTC DOMINANCE — WHERE IS THE MONEY?</div>
+        <div style="display:flex;gap:20px;flex-wrap:wrap;justify-content:center;">
+          <div style="flex:1;min-width:160px;text-align:center;padding:15px;border:1px solid rgba(255,209,102,0.3);border-radius:6px;background:rgba(255,209,102,0.05);">
+            <div style="font-family:var(--display);font-size:18px;color:var(--gold);">HIGH DOMINANCE</div>
+            <div style="font-family:var(--mono);font-size:28px;color:#fff;margin:8px 0;">60%+</div>
+            <div style="font-family:var(--mono);font-size:10px;color:var(--gold);">Money flowing to BTC</div>
+            <div style="font-family:var(--mono);font-size:9px;color:var(--muted);margin-top:6px;">Altcoins underperform</div>
+          </div>
+          <div style="flex:1;min-width:160px;text-align:center;padding:15px;border:1px solid rgba(180,77,255,0.3);border-radius:6px;background:rgba(180,77,255,0.05);">
+            <div style="font-family:var(--display);font-size:18px;color:var(--purple);">LOW DOMINANCE</div>
+            <div style="font-family:var(--mono);font-size:28px;color:#fff;margin:8px 0;">40%-</div>
+            <div style="font-family:var(--mono);font-size:10px;color:var(--purple);">Money flowing to Altcoins</div>
+            <div style="font-family:var(--mono);font-size:9px;color:var(--muted);margin-top:6px;">Altseason territory</div>
+          </div>
+        </div>
+      </div>
+
+      <span class="term-used">Used in: Dutty Big Bag (BTC Dominance + USDT Dominance row)</span>
+    </div>
+
+    <div class="term-card green" id="market-cap">
+      <div class="term-name">Market Cap</div>
+      <div class="term-aka">// The total value of a cryptocurrency</div>
+      <p>Market cap = current price multiplied by the total number of coins in circulation. If Bitcoin is $60,000 and there are 19.5 million BTC in circulation, the market cap is about $1.17 trillion.</p>
+      <p><strong>Large cap</strong> = BTC, ETH (billions in market cap, more stable). <strong>Mid cap</strong> = established altcoins (potential growth, moderate risk). <strong>Small cap</strong> = newer or lesser-known coins (high risk, high potential reward or loss).</p>
+
+      <!-- MARKET CAP DIAGRAM -->
+      <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:20px;margin:20px 0 10px;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:12px;">MARKET CAP = PRICE x SUPPLY</div>
+        <svg viewBox="0 0 400 90" style="width:100%;height:auto;">
+          <!-- Large cap bar -->
+          <rect x="10" y="10" width="350" height="20" fill="rgba(0,255,106,0.2)" stroke="#00ff6a" stroke-width="1" rx="3"><animate attributeName="width" from="0" to="350" dur="1s" fill="freeze"/></rect>
+          <text x="20" y="24" fill="#00ff6a" font-family="Share Tech Mono" font-size="9">LARGE CAP — BTC, ETH — More stable</text>
+          <!-- Mid cap bar -->
+          <rect x="10" y="38" width="200" height="20" fill="rgba(255,209,102,0.2)" stroke="#ffd166" stroke-width="1" rx="3"><animate attributeName="width" from="0" to="200" dur="0.8s" begin="0.3s" fill="freeze"/></rect>
+          <text x="20" y="52" fill="#ffd166" font-family="Share Tech Mono" font-size="9">MID CAP — Moderate risk</text>
+          <!-- Small cap bar -->
+          <rect x="10" y="66" width="90" height="20" fill="rgba(255,82,82,0.2)" stroke="#ff5252" stroke-width="1" rx="3"><animate attributeName="width" from="0" to="90" dur="0.6s" begin="0.6s" fill="freeze"/></rect>
+          <text x="20" y="80" fill="#ff5252" font-family="Share Tech Mono" font-size="9">SMALL CAP — High risk</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="term-card blue" id="wallet">
+      <div class="term-name">Wallet</div>
+      <div class="term-aka">// Where you store your crypto</div>
+      <p>A crypto wallet doesn't actually "hold" your coins. Your coins live on the blockchain. A wallet holds the <strong>keys</strong> that give you access to your coins. Without the keys, you can't move your money.</p>
+      <p>There are two types of keys: a <strong>public key</strong> (your wallet address -- like an email address, safe to share) and a <strong>private key</strong> (your password -- NEVER share this with anyone).</p>
+    </div>
+
+    <div class="term-card red" id="hot-wallet">
+      <div class="term-name">Hot Wallet</div>
+      <div class="term-aka">// A wallet connected to the internet</div>
+      <p>A hot wallet is any crypto wallet that stays connected to the internet. This includes wallet apps on your phone (like Trust Wallet, MetaMask), browser extensions, and exchange wallets (like keeping your crypto on Coinbase).</p>
+      <p><strong>Pros:</strong> Easy to use, fast to send and receive, good for daily transactions. <strong>Cons:</strong> Connected to the internet means it can be hacked. Not ideal for storing large amounts long-term.</p>
+    </div>
+
+    <div class="term-card" id="cold-wallet">
+      <div class="term-name">Cold Wallet</div>
+      <div class="term-aka">// A wallet NOT connected to the internet</div>
+      <p>A cold wallet stores your private keys completely offline. The most common type is a <strong>hardware wallet</strong> -- a small USB-like device (like a Ledger or Trezor) that you plug in only when you need to make a transaction.</p>
+      <p>Because it's offline, hackers can't reach it remotely. This is the safest way to store large amounts of crypto for the long term. The saying in crypto: <strong>"Not your keys, not your coins."</strong> If your crypto is on an exchange, you don't really control it. A cold wallet puts you in full control.</p>
+
+      <!-- WALLET DIAGRAM -->
+      <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:20px;margin:20px 0 10px;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:12px;">HOT WALLET vs COLD WALLET</div>
+        <div style="display:flex;gap:20px;flex-wrap:wrap;justify-content:center;">
+          <div style="flex:1;min-width:160px;text-align:center;padding:15px;border:1px solid rgba(255,82,82,0.3);border-radius:6px;background:rgba(255,82,82,0.05);">
+            <div style="font-family:var(--display);font-size:20px;color:#ff5252;">HOT WALLET</div>
+            <div style="font-family:var(--mono);font-size:9px;color:var(--muted);margin:8px 0;">ONLINE</div>
+            <div style="font-family:var(--mono);font-size:10px;color:var(--text);">Phone apps</div>
+            <div style="font-family:var(--mono);font-size:10px;color:var(--text);">Browser extensions</div>
+            <div style="font-family:var(--mono);font-size:10px;color:var(--text);">Exchange accounts</div>
+            <div style="font-family:var(--mono);font-size:9px;color:#ff5252;margin-top:8px;">Convenient but hackable</div>
+          </div>
+          <div style="flex:1;min-width:160px;text-align:center;padding:15px;border:1px solid rgba(0,255,106,0.3);border-radius:6px;background:rgba(0,255,106,0.05);">
+            <div style="font-family:var(--display);font-size:20px;color:#00ff6a;">COLD WALLET</div>
+            <div style="font-family:var(--mono);font-size:9px;color:var(--muted);margin:8px 0;">OFFLINE</div>
+            <div style="font-family:var(--mono);font-size:10px;color:var(--text);">Hardware devices</div>
+            <div style="font-family:var(--mono);font-size:10px;color:var(--text);">Ledger / Trezor</div>
+            <div style="font-family:var(--mono);font-size:10px;color:var(--text);">Paper wallets</div>
+            <div style="font-family:var(--mono);font-size:9px;color:#00ff6a;margin-top:8px;">Safest for long-term</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="term-card purple" id="seed-phrase">
+      <div class="term-name">Seed Phrase (Recovery Phrase)</div>
+      <div class="term-aka">// 12 or 24 words that unlock your wallet</div>
+      <p>When you create a crypto wallet, it generates a set of 12 or 24 random words in a specific order. This is your <strong>seed phrase</strong> (also called a recovery phrase or mnemonic phrase). It's the master key to your entire wallet.</p>
+      <p>If you lose your phone, break your hardware wallet, or forget your password -- the seed phrase is the ONLY way to recover your funds. Write it down on paper and store it somewhere safe.</p>
+      <p style="color:var(--red);"><strong>NEVER share your seed phrase with anyone. NEVER type it into a website. NEVER store it in a screenshot or text message. Anyone who has your seed phrase has full access to your money.</strong></p>
+
+      <!-- SEED PHRASE VISUAL -->
+      <div style="background:#050d0d;border:1px solid rgba(255,82,82,0.3);border-radius:6px;padding:20px;margin:20px 0 10px;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--red);letter-spacing:2px;margin-bottom:12px;">EXAMPLE SEED PHRASE (12 WORDS)</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:400px;margin:0 auto;">
+          <div style="font-family:var(--mono);font-size:11px;color:#fff;background:rgba(180,77,255,0.1);border:1px solid rgba(180,77,255,0.3);padding:8px;border-radius:3px;text-align:center;">1. apple</div>
+          <div style="font-family:var(--mono);font-size:11px;color:#fff;background:rgba(180,77,255,0.1);border:1px solid rgba(180,77,255,0.3);padding:8px;border-radius:3px;text-align:center;">2. river</div>
+          <div style="font-family:var(--mono);font-size:11px;color:#fff;background:rgba(180,77,255,0.1);border:1px solid rgba(180,77,255,0.3);padding:8px;border-radius:3px;text-align:center;">3. cloud</div>
+          <div style="font-family:var(--mono);font-size:11px;color:#fff;background:rgba(180,77,255,0.1);border:1px solid rgba(180,77,255,0.3);padding:8px;border-radius:3px;text-align:center;">4. tiger</div>
+          <div style="font-family:var(--mono);font-size:11px;color:#fff;background:rgba(180,77,255,0.1);border:1px solid rgba(180,77,255,0.3);padding:8px;border-radius:3px;text-align:center;">5. flame</div>
+          <div style="font-family:var(--mono);font-size:11px;color:#fff;background:rgba(180,77,255,0.1);border:1px solid rgba(180,77,255,0.3);padding:8px;border-radius:3px;text-align:center;">6. ocean</div>
+          <div style="font-family:var(--mono);font-size:11px;color:#fff;background:rgba(180,77,255,0.1);border:1px solid rgba(180,77,255,0.3);padding:8px;border-radius:3px;text-align:center;">7. steel</div>
+          <div style="font-family:var(--mono);font-size:11px;color:#fff;background:rgba(180,77,255,0.1);border:1px solid rgba(180,77,255,0.3);padding:8px;border-radius:3px;text-align:center;">8. crown</div>
+          <div style="font-family:var(--mono);font-size:11px;color:#fff;background:rgba(180,77,255,0.1);border:1px solid rgba(180,77,255,0.3);padding:8px;border-radius:3px;text-align:center;">9. lunar</div>
+          <div style="font-family:var(--mono);font-size:11px;color:#fff;background:rgba(180,77,255,0.1);border:1px solid rgba(180,77,255,0.3);padding:8px;border-radius:3px;text-align:center;">10. spark</div>
+          <div style="font-family:var(--mono);font-size:11px;color:#fff;background:rgba(180,77,255,0.1);border:1px solid rgba(180,77,255,0.3);padding:8px;border-radius:3px;text-align:center;">11. grain</div>
+          <div style="font-family:var(--mono);font-size:11px;color:#fff;background:rgba(180,77,255,0.1);border:1px solid rgba(180,77,255,0.3);padding:8px;border-radius:3px;text-align:center;">12. north</div>
+        </div>
+        <p style="font-family:var(--mono);font-size:10px;color:var(--red);text-align:center;margin-top:12px;">This is just an example. Your real seed phrase is unique to YOU. Write it on paper. Store it offline. NEVER share it.</p>
+      </div>
+    </div>
+
+    <div class="term-card gold" id="address">
+      <div class="term-name">Wallet Address</div>
+      <div class="term-aka">// Where people send you crypto</div>
+      <p>A wallet address is a long string of letters and numbers that acts as your "account number" on the blockchain. Each cryptocurrency has its own address format. A Bitcoin address looks different from an Ethereum address.</p>
+      <p>You share your wallet address with someone who wants to send you crypto. It's safe to share -- it's like giving someone your email address. They can send to you but can't take from you.</p>
+      <p><strong>Always double-check the address before sending.</strong> Crypto transactions are irreversible. Send to the wrong address and your money is gone forever. Copy and paste -- don't type it manually.</p>
+    </div>
+
+    <div class="term-card" id="gas-fees">
+      <div class="term-name">Gas Fees</div>
+      <div class="term-aka">// The cost of making a transaction on the blockchain</div>
+      <p>Every time you send crypto or interact with a smart contract, you pay a small fee called "gas." This fee pays the validators (or miners) who process your transaction.</p>
+      <p>Gas fees change based on network demand. When lots of people are transacting, fees go up. When the network is quiet, fees are low. Ethereum is known for high gas fees during busy periods. Blockchains like Solana and Polygon have much lower fees.</p>
+    </div>
+
+    <div class="term-card green" id="exchange">
+      <div class="term-name">Exchange (CEX)</div>
+      <div class="term-aka">// Where you buy, sell, and trade crypto</div>
+      <p>A centralized exchange (CEX) is a platform run by a company where you can buy and sell crypto using regular money (USD, EUR, etc.) or trade one crypto for another. The biggest ones: <strong>Coinbase, Binance, Kraken, Bybit</strong>.</p>
+      <p>When you use an exchange, you're trusting that company to hold your funds. This is convenient but risky -- if the exchange gets hacked or goes bankrupt (like FTX did), you could lose everything. That's why many traders move their crypto to a personal wallet after buying.</p>
+    </div>
+
+    <div class="term-card blue" id="dex">
+      <div class="term-name">DEX (Decentralized Exchange)</div>
+      <div class="term-aka">// Trade crypto without a middleman</div>
+      <p>A DEX lets you trade crypto directly from your own wallet without trusting a company to hold your funds. Trades happen through smart contracts on the blockchain. Popular DEXs: <strong>Uniswap, SushiSwap, Jupiter, Raydium</strong>.</p>
+      <p>No signup, no KYC (identity verification), no company holding your money. You connect your wallet, trade, and your funds stay in your control. The downside: DEXs can be more complex for beginners and may have lower liquidity on some trading pairs.</p>
+    </div>
+
+    <div class="term-card red" id="staking">
+      <div class="term-name">Staking</div>
+      <div class="term-aka">// Locking up crypto to earn rewards</div>
+      <p>Staking is when you lock up your cryptocurrency to help secure a blockchain network. In return, you earn rewards -- usually paid in the same crypto you staked. It's like earning interest in a savings account, but for crypto.</p>
+      <p>Staking works on <strong>Proof of Stake (PoS)</strong> blockchains like Ethereum, Solana, and Cardano. The more you stake, the more you can earn. Some platforms let you unstake at any time, while others have lock-up periods where you can't touch your funds.</p>
+
+      <!-- STAKING FLOW -->
+      <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:20px;margin:20px 0 10px;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:12px;">HOW STAKING WORKS</div>
+        <svg viewBox="0 0 400 80" style="width:100%;height:auto;">
+          <!-- Your crypto -->
+          <rect x="5" y="20" width="80" height="40" fill="rgba(0,255,225,0.1)" stroke="#00ffe1" stroke-width="1.5" rx="4"/>
+          <text x="15" y="38" fill="#00ffe1" font-family="Share Tech Mono" font-size="7">YOUR CRYPTO</text>
+          <text x="25" y="50" fill="#3d7070" font-family="Share Tech Mono" font-size="7">10 ETH</text>
+          <!-- Arrow -->
+          <line x1="85" y1="40" x2="120" y2="40" stroke="#ffd166" stroke-width="2" marker-end="url(#arrowStk)"/>
+          <text x="90" y="32" fill="#ffd166" font-family="Share Tech Mono" font-size="6">LOCK</text>
+          <!-- Network -->
+          <rect x="120" y="10" width="100" height="60" fill="rgba(180,77,255,0.1)" stroke="#b44dff" stroke-width="1.5" rx="4"/>
+          <text x="133" y="32" fill="#b44dff" font-family="Share Tech Mono" font-size="7">BLOCKCHAIN</text>
+          <text x="137" y="45" fill="#b44dff" font-family="Share Tech Mono" font-size="7">NETWORK</text>
+          <text x="128" y="60" fill="#3d7070" font-family="Share Tech Mono" font-size="6">Secures + Validates</text>
+          <!-- Arrow -->
+          <line x1="220" y1="40" x2="255" y2="40" stroke="#00ff6a" stroke-width="2" marker-end="url(#arrowStk2)"/>
+          <text x="223" y="32" fill="#00ff6a" font-family="Share Tech Mono" font-size="6">EARN</text>
+          <!-- Rewards -->
+          <rect x="255" y="20" width="80" height="40" fill="rgba(0,255,106,0.1)" stroke="#00ff6a" stroke-width="1.5" rx="4"/>
+          <text x="268" y="38" fill="#00ff6a" font-family="Share Tech Mono" font-size="7">REWARDS</text>
+          <text x="264" y="50" fill="#3d7070" font-family="Share Tech Mono" font-size="7">+0.5 ETH/yr</text>
+          <defs>
+            <marker id="arrowStk" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#ffd166"/></marker>
+            <marker id="arrowStk2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#00ff6a"/></marker>
+          </defs>
+        </svg>
+      </div>
+    </div>
+
+    <div class="term-card" id="mining">
+      <div class="term-name">Mining</div>
+      <div class="term-aka">// Using computing power to validate transactions</div>
+      <p>Mining is the process of using powerful computers to solve complex math problems that validate transactions on a <strong>Proof of Work (PoW)</strong> blockchain. The first miner to solve the problem gets to add a new block and earns a reward (newly minted coins + transaction fees).</p>
+      <p>Bitcoin is the most well-known mined cryptocurrency. Mining requires specialized hardware (ASIC miners) and uses a lot of electricity. It's how new Bitcoin enters circulation -- but the reward gets cut in half approximately every 4 years (called the "halving").</p>
+    </div>
+
+    <div class="term-card purple" id="halving">
+      <div class="term-name">Halving</div>
+      <div class="term-aka">// When Bitcoin mining rewards get cut in half</div>
+      <p>Approximately every 4 years (every 210,000 blocks), the reward miners receive for adding a new block to the Bitcoin blockchain is cut in half. This is called the halving.</p>
+      <p>In 2009 the reward was 50 BTC per block. After the first halving in 2012, it dropped to 25. Then 12.5 in 2016. Then 6.25 in 2020. Then 3.125 in 2024. This continues until all 21 million BTC are mined (estimated around the year 2140).</p>
+      <p>Halvings reduce the supply of new Bitcoin entering the market. Historically, price has increased significantly in the months following a halving -- though past performance doesn't guarantee future results.</p>
+    </div>
+
+    <div class="term-card gold" id="defi">
+      <div class="term-name">DeFi (Decentralized Finance)</div>
+      <div class="term-aka">// Financial services without banks</div>
+      <p>DeFi is a broad term for financial services built on blockchain technology that operate without banks, brokers, or middlemen. Lending, borrowing, earning interest, trading, insurance -- all done through smart contracts.</p>
+      <p>Instead of depositing money at a bank and earning 0.5% interest, you could lend crypto on a DeFi platform and earn higher returns. The tradeoff: DeFi is unregulated, smart contracts can have bugs, and there's no customer service to call if something goes wrong.</p>
+    </div>
+
+    <div class="term-card" id="smart-contracts">
+      <div class="term-name">Smart Contracts</div>
+      <div class="term-aka">// Self-executing code on the blockchain</div>
+      <p>A smart contract is a program stored on a blockchain that automatically executes when predefined conditions are met. No middleman needed. "If X happens, then do Y" -- and it runs on its own.</p>
+      <p>Example: "If Person A sends 1 ETH, automatically send them 100 tokens." The code runs, the swap happens, no human approval needed. Smart contracts power DeFi, NFTs, DAOs, and most of modern crypto.</p>
+    </div>
+
+    <div class="term-card green" id="airdrop">
+      <div class="term-name">Airdrop</div>
+      <div class="term-aka">// Free crypto sent to your wallet</div>
+      <p>An airdrop is when a crypto project distributes free tokens to wallet holders, usually as a marketing strategy or reward for early users. If you used a platform before it launched its own token, you might receive an airdrop.</p>
+      <p>Some airdrops have been worth thousands of dollars. Others are worthless. Be cautious -- scammers often create fake airdrop campaigns to trick people into connecting their wallets to malicious sites. <strong>Never connect your wallet to a site you don't trust.</strong></p>
+    </div>
+
+    <div class="term-card red" id="nft">
+      <div class="term-name">NFT (Non-Fungible Token)</div>
+      <div class="term-aka">// A unique digital item on the blockchain</div>
+      <p>An NFT is a one-of-a-kind digital token that represents ownership of something unique -- digital art, music, videos, in-game items, or even real-world assets. Unlike Bitcoin where every coin is identical, each NFT is different.</p>
+      <p>"Non-fungible" just means it's not interchangeable. A $1 bill can be swapped for any other $1 bill -- that's fungible. A one-of-a-kind painting can't be swapped for another identical one -- that's non-fungible.</p>
+    </div>
+
+    <div class="term-card blue" id="pos-pow">
+      <div class="term-name">Proof of Work vs Proof of Stake</div>
+      <div class="term-aka">// Two ways blockchains verify transactions</div>
+      <p><strong>Proof of Work (PoW)</strong> uses raw computing power. Miners compete to solve math puzzles. Winner gets the reward. Uses a lot of energy. Bitcoin, Litecoin, and Dogecoin use PoW.</p>
+      <p><strong>Proof of Stake (PoS)</strong> uses staked crypto as collateral. Validators are chosen based on how much they've staked. Uses far less energy. Ethereum, Solana, and Cardano use PoS.</p>
+      <p>PoW is more battle-tested and decentralized. PoS is faster, cheaper, and more environmentally friendly. Both have tradeoffs.</p>
+    </div>
+
+    <div class="term-card" id="liquidity">
+      <div class="term-name">Liquidity</div>
+      <div class="term-aka">// How easily you can buy or sell an asset</div>
+      <p>Liquidity refers to how quickly you can buy or sell a crypto asset without significantly affecting its price. High liquidity means lots of buyers and sellers -- you can trade easily. Low liquidity means fewer participants -- large trades can move the price a lot.</p>
+      <p>Bitcoin and Ethereum have high liquidity. A random small-cap altcoin might have very low liquidity, meaning you could struggle to sell a large amount without crashing the price.</p>
+    </div>
+
+    <div class="term-card purple" id="whale">
+      <div class="term-name">Whale</div>
+      <div class="term-aka">// Someone holding a huge amount of crypto</div>
+      <p>A whale is an individual or entity that holds a massive amount of a particular cryptocurrency. When a whale buys or sells, it can significantly move the price because of the sheer volume involved.</p>
+      <p>Whale tracking has become a popular strategy -- watching large wallet movements on the blockchain can give clues about potential price moves. When a whale moves a large amount of BTC to an exchange, it could signal they're about to sell.</p>
+
+      <!-- WHALE IMPACT -->
+      <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:20px;margin:20px 0 10px;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:12px;">WHALE SELLS → PRICE DROPS</div>
+        <svg viewBox="0 0 400 100" style="width:100%;height:auto;">
+          <!-- Stable price -->
+          <polyline points="10,40 50,38 90,42 130,40 160,38 180,40" fill="none" stroke="#00ffe1" stroke-width="2"/>
+          <!-- Whale sell event -->
+          <rect x="180" y="5" width="40" height="90" fill="rgba(255,82,82,0.08)"/>
+          <text x="183" y="18" fill="#ff5252" font-family="Share Tech Mono" font-size="7">WHALE</text>
+          <text x="186" y="28" fill="#ff5252" font-family="Share Tech Mono" font-size="7">SELLS</text>
+          <!-- Price crashes -->
+          <polyline points="180,40 200,55 220,72 240,80 260,78 290,75 320,72 360,70 390,68" fill="none" stroke="#ff5252" stroke-width="2.5">
+            <animate attributeName="stroke-dasharray" from="0,400" to="400,0" dur="1.5s" begin="0.5s" fill="freeze"/>
+          </polyline>
+          <!-- Volume spike -->
+          <rect x="185" y="65" width="8" height="30" fill="rgba(255,82,82,0.5)" rx="1"/>
+          <rect x="195" y="55" width="8" height="40" fill="rgba(255,82,82,0.5)" rx="1"/>
+          <rect x="205" y="60" width="8" height="35" fill="rgba(255,82,82,0.4)" rx="1"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="term-card gold" id="hodl">
+      <div class="term-name">HODL</div>
+      <div class="term-aka">// Hold On for Dear Life</div>
+      <p>HODL started as a typo of "hold" in a 2013 Bitcoin forum post and became one of crypto's most famous terms. It means holding your crypto long-term and not selling during dips or crashes.</p>
+      <p>HODLers believe in the long-term potential of their investment and refuse to panic sell. The philosophy: if you believe in the technology, short-term price drops don't matter.</p>
+    </div>
+
+    <div class="term-card" id="fomo-fud">
+      <div class="term-name">FOMO & FUD</div>
+      <div class="term-aka">// Emotions that drive bad trading decisions</div>
+      <p><strong>FOMO</strong> = Fear Of Missing Out. When you see a coin pumping and you buy in at the top because you don't want to miss the move. Usually ends in regret.</p>
+      <p><strong>FUD</strong> = Fear, Uncertainty, and Doubt. Negative news or rumors (real or fake) designed to scare people into selling. Someone spreading FUD might say "Bitcoin is going to zero" to drive the price down so they can buy cheaper.</p>
+      <p>Both are emotional traps. The best traders make decisions based on data, not feelings.</p>
+
+      <!-- FOMO/FUD CYCLE -->
+      <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:20px;margin:20px 0 10px;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:12px;">THE EMOTIONAL TRAP</div>
+        <svg viewBox="0 0 400 140" style="width:100%;height:auto;">
+          <!-- Price line up then crash -->
+          <polyline points="10,120 50,110 90,95 130,70 170,40 200,25 220,20 240,25 260,40 280,60 310,85 340,105 370,120" fill="none" stroke="#00ffe1" stroke-width="2">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="2.5s" fill="freeze"/>
+          </polyline>
+          <!-- FOMO buy at top -->
+          <circle cx="220" cy="20" r="6" fill="#ff5252" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="1.5s" dur="0.3s" fill="freeze"/></circle>
+          <text x="230" y="15" fill="#ff5252" font-family="Share Tech Mono" font-size="8" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="1.5s" dur="0.3s" fill="freeze"/>FOMO BUY HERE</text>
+          <!-- FUD sell at bottom -->
+          <circle cx="370" cy="120" r="6" fill="#ffd166" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="2.5s" dur="0.3s" fill="freeze"/></circle>
+          <text x="305" y="138" fill="#ffd166" font-family="Share Tech Mono" font-size="8" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="2.5s" dur="0.3s" fill="freeze"/>FUD SELL HERE</text>
+          <!-- Smart money labels -->
+          <text x="15" y="135" fill="#00ff6a" font-family="Share Tech Mono" font-size="7" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="0.5s" dur="0.3s" fill="freeze"/>Smart money buys low</text>
+          <text x="165" y="42" fill="#00ff6a" font-family="Share Tech Mono" font-size="7" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="1.2s" dur="0.3s" fill="freeze"/>Smart money sells high</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="term-card red" id="rug-pull">
+      <div class="term-name">Rug Pull</div>
+      <div class="term-aka">// A crypto scam where developers steal your money</div>
+      <p>A rug pull is when developers create a crypto project, hype it up to attract investors, then suddenly abandon the project and drain all the funds. The token becomes worthless overnight.</p>
+      <p>This happens most often with new, unaudited tokens on DEXs. Warning signs: anonymous team, unrealistic promises, locked liquidity that suddenly gets unlocked, and pressure to buy quickly. <strong>Always DYOR.</strong></p>
+
+      <!-- RUG PULL DIAGRAM -->
+      <div style="background:#050d0d;border:1px solid rgba(255,82,82,0.3);border-radius:6px;padding:20px;margin:20px 0 10px;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--red);letter-spacing:2px;margin-bottom:12px;">ANATOMY OF A RUG PULL</div>
+        <svg viewBox="0 0 400 120" style="width:100%;height:auto;">
+          <!-- Hype phase - price pumps -->
+          <polyline points="10,100 40,95 70,85 100,70 130,50 160,30 190,15 210,10" fill="none" stroke="#00ff6a" stroke-width="2">
+            <animate attributeName="stroke-dasharray" from="0,300" to="300,0" dur="1.5s" fill="freeze"/>
+          </polyline>
+          <!-- Rug pull - instant crash -->
+          <polyline points="210,10 215,25 220,50 225,75 230,95 235,108 240,110" fill="none" stroke="#ff5252" stroke-width="3">
+            <animate attributeName="stroke-dasharray" from="0,200" to="200,0" dur="0.5s" begin="1.5s" fill="freeze"/>
+          </polyline>
+          <!-- Flatline -->
+          <line x1="240" y1="110" x2="390" y2="110" stroke="#ff5252" stroke-width="1" stroke-dasharray="4">
+            <animate attributeName="stroke-dasharray" from="0,200" to="200,0" dur="0.5s" begin="2s" fill="freeze"/>
+          </line>
+          <!-- Labels -->
+          <text x="60" y="60" fill="#00ff6a" font-family="Share Tech Mono" font-size="8" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="0.8s" dur="0.3s" fill="freeze"/>HYPE PHASE</text>
+          <text x="215" y="60" fill="#ff5252" font-family="Share Tech Mono" font-size="9" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="1.8s" dur="0.3s" fill="freeze"/>RUG PULLED</text>
+          <text x="280" y="105" fill="#3d7070" font-family="Share Tech Mono" font-size="7" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="2.3s" dur="0.3s" fill="freeze"/>Token worthless</text>
+          <!-- Dev exit -->
+          <text x="200" y="35" fill="#ffd166" font-family="Share Tech Mono" font-size="7" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="1.5s" dur="0.3s" fill="freeze"/>Devs exit</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="term-card green" id="dyor">
+      <div class="term-name">DYOR (Do Your Own Research)</div>
+      <div class="term-aka">// The golden rule of crypto</div>
+      <p>DYOR means don't trust anyone blindly -- not influencers, not friends, not even your favorite indicators. Before putting money into any crypto project, research the team, the technology, the tokenomics, the community, and the use case.</p>
+      <p>Read the whitepaper. Check the GitHub activity. Look at the token distribution. Verify the team's identity. If it sounds too good to be true, it usually is.</p>
+    </div>
+
+    <div class="term-card blue" id="kyc">
+      <div class="term-name">KYC (Know Your Customer)</div>
+      <div class="term-aka">// Identity verification required by exchanges</div>
+      <p>KYC is the process of verifying your identity when you sign up for a centralized exchange. You typically submit a government ID, proof of address, and sometimes a selfie. This is required by law in most countries.</p>
+      <p>KYC exists to prevent money laundering, fraud, and illegal activity. Decentralized exchanges (DEXs) usually don't require KYC, which is one reason some people prefer them.</p>
+    </div>
+
+    <div class="term-card" id="dao">
+      <div class="term-name">DAO (Decentralized Autonomous Organization)</div>
+      <div class="term-aka">// Community-run organizations on the blockchain</div>
+      <p>A DAO is an organization governed by smart contracts and community votes instead of a CEO or board of directors. Token holders vote on proposals -- how funds are spent, which features get built, what direction the project takes.</p>
+      <p>The more tokens you hold, the more voting power you have. DAOs are used to govern DeFi protocols, investment funds, NFT communities, and more. It's a new model of organization where the community has direct control.</p>
+    </div>
+
+    <div class="term-card purple" id="yield-farming">
+      <div class="term-name">Yield Farming</div>
+      <div class="term-aka">// Earning high returns by lending or staking in DeFi</div>
+      <p>Yield farming is a DeFi strategy where you deposit your crypto into liquidity pools or lending protocols to earn rewards. The returns can be significantly higher than traditional savings -- but so are the risks.</p>
+      <p>You might earn 5%, 20%, or even higher APY depending on the platform and the risk involved. But your funds are exposed to smart contract bugs, impermanent loss, and the possibility that the token you're earning drops in value.</p>
+    </div>
+
+    <div class="term-card gold" id="gas-war">
+      <div class="term-name">Gas War</div>
+      <div class="term-aka">// When everyone competes to get their transaction through</div>
+      <p>A gas war happens when a popular NFT mint or token launch causes thousands of people to submit transactions at the same time. Everyone is competing for limited block space, so they keep increasing their gas fees to get their transaction processed first.</p>
+      <p>Gas wars can push fees to extreme levels -- sometimes hundreds of dollars per transaction. If you're not willing to pay the inflated gas, your transaction gets stuck or fails.</p>
+    </div>
+
+    <div class="term-card red" id="impermanent-loss">
+      <div class="term-name">Impermanent Loss</div>
+      <div class="term-aka">// A risk of providing liquidity in DeFi</div>
+      <p>Impermanent loss happens when you deposit two tokens into a liquidity pool and the price of one token changes significantly compared to the other. You end up with less value than if you had just held the tokens.</p>
+      <p>It's called "impermanent" because if the prices return to their original ratio, the loss disappears. But if you withdraw while the prices are imbalanced, the loss becomes permanent. This is one of the biggest risks in yield farming.</p>
+    </div>
+
+    <div class="term-card" id="whitepaper">
+      <div class="term-name">Whitepaper</div>
+      <div class="term-aka">// The blueprint of a crypto project</div>
+      <p>A whitepaper is a detailed document that explains what a crypto project is, how it works, what problem it solves, and how the token economics function. Bitcoin's whitepaper was published in 2008 by Satoshi Nakamoto -- it's only 9 pages long.</p>
+      <p>Before investing in any project, reading the whitepaper (or at least a summary) is a fundamental part of DYOR. If a project doesn't have a whitepaper, that's a red flag.</p>
+    </div>
+
+    <div class="term-card green" id="satoshi">
+      <div class="term-name">Satoshi</div>
+      <div class="term-aka">// The smallest unit of Bitcoin</div>
+      <p>A satoshi (or "sat") is the smallest unit of Bitcoin. 1 Bitcoin = 100,000,000 satoshis. Named after Bitcoin's creator, Satoshi Nakamoto.</p>
+      <p>You don't need to buy a whole Bitcoin. You can buy 0.001 BTC, 0.00001 BTC, or even just a few satoshis. This is important for beginners to understand -- you don't need thousands of dollars to start.</p>
+    </div>
+
+    <div class="term-card" id="fiat-vs-crypto">
+      <div class="term-name">Fiat vs Cryptocurrency</div>
+      <div class="term-aka">// Two systems of money — one old, one new</div>
+      <p><strong>Fiat money</strong> is the money you use every day — US dollars, euros, pounds. It's printed by governments and controlled by central banks. The word "fiat" means "by decree" — it has value because the government says it does. Fiat used to be backed by gold, but that ended in 1971 when the US went off the gold standard. Today, fiat is backed by trust in the government — nothing physical.</p>
+      <p><strong>Cryptocurrency</strong> is digital money that runs on blockchain technology. It's not controlled by any government or bank. Its value comes from the network, the code, the supply limit, and the people who use it. Bitcoin has a hard cap of 21 million — no one can print more.</p>
+      <p>Both systems require trust. With fiat, you trust the government not to print too much (they often do — that's inflation). With crypto, you trust the math, the code, and the decentralized network. Neither system is perfect, but crypto gives people an alternative when their government's money fails them.</p>
+
+      <!-- FIAT vs CRYPTO -->
+      <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:20px;margin:20px 0 10px;">
+        <div style="display:flex;gap:20px;flex-wrap:wrap;justify-content:center;">
+          <div style="flex:1;min-width:160px;text-align:center;padding:15px;border:1px solid rgba(255,209,102,0.3);border-radius:6px;background:rgba(255,209,102,0.05);">
+            <div style="font-family:var(--display);font-size:18px;color:var(--gold);">FIAT</div>
+            <div style="font-family:var(--mono);font-size:9px;color:var(--muted);margin:6px 0;">GOVERNMENT MONEY</div>
+            <div style="font-family:var(--mono);font-size:10px;color:var(--text);">Controlled by central banks</div>
+            <div style="font-family:var(--mono);font-size:10px;color:var(--text);">Unlimited supply (can print)</div>
+            <div style="font-family:var(--mono);font-size:10px;color:var(--text);">Not backed by gold since 1971</div>
+            <div style="font-family:var(--mono);font-size:10px;color:var(--text);">Loses value over time (inflation)</div>
+            <div style="font-family:var(--mono);font-size:10px;color:var(--text);">Requires trust in government</div>
+          </div>
+          <div style="flex:1;min-width:160px;text-align:center;padding:15px;border:1px solid rgba(0,255,225,0.3);border-radius:6px;background:rgba(0,255,225,0.05);">
+            <div style="font-family:var(--display);font-size:18px;color:var(--cyan);">CRYPTO</div>
+            <div style="font-family:var(--mono);font-size:9px;color:var(--muted);margin:6px 0;">DECENTRALIZED MONEY</div>
+            <div style="font-family:var(--mono);font-size:10px;color:var(--text);">No central authority</div>
+            <div style="font-family:var(--mono);font-size:10px;color:var(--text);">Fixed supply (BTC: 21 million)</div>
+            <div style="font-family:var(--mono);font-size:10px;color:var(--text);">Backed by math and code</div>
+            <div style="font-family:var(--mono);font-size:10px;color:var(--text);">Transparent on the blockchain</div>
+            <div style="font-family:var(--mono);font-size:10px;color:var(--text);">Requires trust in the network</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="term-card purple" id="real-use-xrp">
+      <div class="term-name">XRP (Ripple)</div>
+      <div class="term-aka">// Built for cross-border payments</div>
+      <p>XRP was designed by Ripple Labs to solve one problem: moving money across borders fast and cheap. Traditional international wire transfers take days and cost significant fees. XRP settles in 3-5 seconds with near-zero cost.</p>
+      <p>Banks and financial institutions are the target audience. Ripple has partnerships with hundreds of institutions worldwide. The XRP Ledger is being used for stablecoin settlement, tokenized real-world assets, and cross-border remittances. This isn't a meme coin — there are real developers and real enterprise clients building on it.</p>
+    </div>
+
+    <div class="term-card blue" id="real-use-solana">
+      <div class="term-name">Solana (SOL)</div>
+      <div class="term-aka">// High-speed blockchain for apps and DeFi</div>
+      <p>Solana is built for speed. It can process thousands of transactions per second at fractions of a penny per transaction. That makes it ideal for decentralized apps, DeFi, NFT marketplaces, and gaming.</p>
+      <p>Major asset managers like Franklin Templeton and BlackRock have started deploying tokenized financial products on Solana. Developer activity is one of the highest in crypto, with over $250 million in grants funding new projects. Solana isn't just hype — there's a massive ecosystem of builders and real infrastructure behind it.</p>
+    </div>
+
+    <div class="term-card gold" id="real-use-ada">
+      <div class="term-name">Cardano (ADA)</div>
+      <div class="term-aka">// Research-driven blockchain with real-world impact</div>
+      <p>Cardano was created by Charles Hoskinson (co-founder of Ethereum) with a focus on academic research, peer-reviewed development, and sustainability. Every upgrade goes through formal verification — meaning it's mathematically proven before it's deployed.</p>
+      <p>Cardano has been active in Africa, partnering with governments on digital identity systems and education verification. In Ethiopia, Cardano worked on a blockchain-based student credentialing system to give millions of students verifiable academic records. The goal is to bring blockchain technology to places that need it most — not just for trading, but for real infrastructure.</p>
+    </div>
+
+    <div class="term-card green" id="real-use-meme">
+      <div class="term-name">Meme Coins</div>
+      <div class="term-aka">// Started as jokes, some became movements</div>
+      <p>Meme coins like <strong>Dogecoin (DOGE)</strong> and <strong>Shiba Inu (SHIB)</strong> started as internet jokes. Dogecoin was literally created in 2013 as a parody of Bitcoin. But something unexpected happened — people built communities around them.</p>
+      <p>Dogecoin has been used for charitable causes, tipping content creators, and even accepted by some businesses as payment. It has a loyal community and recognizable brand. That said, meme coins are high-risk — most have no technology backing them and can lose value overnight. A few have real communities and utility, but most don't. <strong>Always DYOR.</strong></p>
+    </div>
+
+  </div>
+</section>
+
+<!-- WHY CRYPTO MATTERS -->
+<section>
+  <div class="wrap">
+    <div class="divider" style="background:linear-gradient(90deg,transparent,#00d4ff,transparent);"></div>
+    <div id="sec-good" class="section-label" style="color:#00d4ff;">// Why Crypto Matters</div>
+    <h2>The Good That Crypto Does in This World</h2>
+
+    <div style="background:rgba(0,212,255,0.04);border:1px solid rgba(0,212,255,0.15);border-radius:6px;padding:24px;margin-bottom:28px;">
+      <p style="font-size:15px;color:var(--text);line-height:1.8;margin:0;">A lot of people — especially from older generations — hear "cryptocurrency" and think scam, evil, fake money. That's understandable. The media focuses on the crashes, the scams, and the bad actors. But there's another side to this story that rarely gets told. Crypto is doing real, measurable good for real people around the world. Money is a tool — it's not good or evil by itself. We need money to live in this world. That's how it was designed. Crypto is just a new form of that tool — one that works for people who the old system left behind.</p>
+    </div>
+
+    <div class="term-card" id="good-remittances" style="border-color:rgba(0,212,255,0.3);">
+      <div class="term-name">Sending Money Home</div>
+      <div class="term-aka">// Remittances without the middleman</div>
+      <p>Millions of people work abroad and send money home to their families. Traditional remittance services charge 7% to 15% in fees, and transfers can take days. For someone sending $200, that's $15 to $30 lost to fees — money their family desperately needs.</p>
+      <p>With crypto, that same transfer happens in minutes with fees under $1. Nigeria alone processed over $56 billion in crypto transactions in 2025, with most of it being peer-to-peer transfers — real people sending real money to real families. Crypto isn't replacing banks for fun — it's replacing them because it works better for these people.</p>
+    </div>
+
+    <div class="term-card" id="good-inflation" style="border-color:rgba(0,212,255,0.3);">
+      <div class="term-name">Protection from Inflation</div>
+      <div class="term-aka">// When your government's money is failing you</div>
+      <p>In Argentina, annual inflation exceeded 200%. In Venezuela, the currency became nearly worthless. In Turkey, Lebanon, and many African nations, people watched their savings disappear as their government printed more and more money.</p>
+      <p>These people didn't have access to US dollars or Swiss bank accounts. But they had phones. Stablecoins like USDT gave them a way to hold digital dollars — protecting their savings from hyperinflation. For millions of people, crypto isn't an investment. It's survival. It's keeping food on the table when the local currency can't.</p>
+    </div>
+
+    <div class="term-card" id="good-banking" style="border-color:rgba(0,212,255,0.3);">
+      <div class="term-name">Banking the Unbanked</div>
+      <div class="term-aka">// Financial access for people who have none</div>
+      <p>Nearly half of all adults in Sub-Saharan Africa don't have a bank account. No savings account, no credit card, no way to receive or send money through traditional channels. The banking system simply doesn't serve them.</p>
+      <p>All you need to use crypto is a phone and an internet connection. No bank approval needed. No credit check. No minimum balance. Crypto gives people access to a financial system that doesn't care about your country, your credit score, or your income level. Africa is now one of the fastest-growing regions for crypto adoption — not because of speculation, but because people need it.</p>
+    </div>
+
+    <div class="term-card" id="good-trade" style="border-color:rgba(0,212,255,0.3);">
+      <div class="term-name">Cross-Border Trade in Africa</div>
+      <div class="term-aka">// Blockchain making business possible between nations</div>
+      <p>The African Continental Free Trade Area — representing 55 nations — has partnered with blockchain organizations to build digital trade infrastructure using stablecoins. The goal: instant cross-border payments, verifiable trade documents, and the elimination of paper-heavy processes that slow down commerce.</p>
+      <p>The projection is to unlock over $70 billion in new economic value and double trade between African nations. Stablecoins are at the center of this — providing instant settlement that traditional banking networks can't match. This is blockchain being used to build real economic infrastructure for an entire continent.</p>
+    </div>
+
+    <div class="term-card" id="good-identity" style="border-color:rgba(0,212,255,0.3);">
+      <div class="term-name">Digital Identity & Education</div>
+      <div class="term-aka">// Verifiable records that can't be faked</div>
+      <p>In Ethiopia, Cardano partnered on a project to give millions of students blockchain-based digital identity and academic records. In countries where paper records get lost, destroyed, or forged, this matters. A student's credentials live permanently on the blockchain — verifiable by any employer or university anywhere in the world.</p>
+      <p>Digital identity on blockchain can also help refugees, displaced people, and anyone who lost their physical documents prove who they are. This isn't about trading — it's about giving people proof of their existence and achievements.</p>
+    </div>
+
+    <div class="term-card" id="good-transparency" style="border-color:rgba(0,212,255,0.3);">
+      <div class="term-name">Transparency & Accountability</div>
+      <div class="term-aka">// Every transaction is public and permanent</div>
+      <p>One of crypto's most powerful features is transparency. Every transaction on a public blockchain is visible to anyone. You can trace where money goes, who sent it, and when. This is the opposite of the traditional financial system where money moves behind closed doors.</p>
+      <p>This transparency has been used to track charitable donations, verify supply chains, and hold organizations accountable. When you donate to a blockchain-based charity, you can see exactly where your money went. Try doing that with a traditional bank wire.</p>
+    </div>
+
+    <div class="term-card" id="good-ownership" style="border-color:rgba(0,212,255,0.3);">
+      <div class="term-name">True Ownership</div>
+      <div class="term-aka">// Your money, your control</div>
+      <p>When your money sits in a bank, the bank can freeze your account, limit your withdrawals, or even go bankrupt and take your savings with it. You don't truly own your money — you have an IOU from the bank.</p>
+      <p>With a personal crypto wallet, you own your money outright. No one can freeze it. No one can take it. No government can devalue it overnight. For people in unstable countries where banks have frozen accounts or imposed withdrawal limits, this level of control isn't a luxury — it's a necessity.</p>
+    </div>
+
+    <div style="background:rgba(0,212,255,0.04);border:1px solid rgba(0,212,255,0.15);border-radius:6px;padding:24px;margin-top:20px;">
+      <p style="font-size:14px;color:var(--text);line-height:1.8;margin:0;text-align:center;">Crypto isn't perfect. There are scams, volatility, and bad actors — just like in every financial system. But the technology itself is a tool. And like any tool, it's only as good or bad as the people using it. For millions of people around the world, crypto isn't about getting rich — it's about having access, having control, and having a chance at financial stability that the traditional system never gave them.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- CANDLE PATTERNS -->
+<section>
+  <div class="wrap">
+    <div class="divider" style="background:linear-gradient(90deg,transparent,var(--green),transparent);"></div>
+    <div id="sec-candles" class="section-label" style="color:var(--green);">// Candle Patterns</div>
+    <h2>Reading the Story Each Candle Tells</h2>
+
+    <div style="background:rgba(0,255,106,0.04);border:1px solid rgba(0,255,106,0.15);border-radius:6px;padding:24px;margin-bottom:28px;">
+      <p style="font-size:15px;color:var(--text);line-height:1.8;margin:0;">Candlestick patterns originated in 18th-century Japan, developed by rice traders to track market prices. Each pattern tells a story about the battle between buyers and sellers. Learning to recognize these patterns helps you anticipate what might happen next.</p>
+    </div>
+
+    <div class="term-card green" id="doji">
+      <div class="term-name">Doji</div>
+      <div class="term-aka">// Japanese: "same" · Indecision candle</div>
+      <p>A Doji forms when the open and close are at nearly the same price, creating a very thin or nonexistent body with wicks on both sides. It means neither buyers nor sellers won during that period — the market is undecided.</p>
+      <p>A Doji after a strong trend can signal that the trend is losing steam. It doesn't tell you direction — it tells you the market is pausing and something may be about to change.</p>
+      <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:20px;margin:15px 0 5px;display:flex;justify-content:center;">
+        <svg viewBox="0 0 60 120" width="60" height="120">
+          <line x1="30" y1="10" x2="30" y2="45" stroke="#b8e8e2" stroke-width="2"/>
+          <rect x="18" y="45" width="24" height="3" fill="#b8e8e2" rx="1"/>
+          <line x1="30" y1="48" x2="30" y2="100" stroke="#b8e8e2" stroke-width="2"/>
+          <text x="30" y="115" fill="#3d7070" font-family="Share Tech Mono" font-size="8" text-anchor="middle">DOJI</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="term-card" id="dragonfly">
+      <div class="term-name">Dragonfly Doji</div>
+      <div class="term-aka">// Bullish reversal signal at the bottom</div>
+      <p>A Dragonfly Doji has a long lower wick and no upper wick — the open, close, and high are all at the same level. Price dropped hard during the period but buyers fought back and pushed it all the way up to the open.</p>
+      <p>When it appears after a downtrend, it can signal a bullish reversal — sellers tried but failed to hold control.</p>
+      <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:20px;margin:15px 0 5px;display:flex;justify-content:center;">
+        <svg viewBox="0 0 60 120" width="60" height="120">
+          <rect x="18" y="20" width="24" height="3" fill="#00ff6a" rx="1"/>
+          <line x1="30" y1="23" x2="30" y2="100" stroke="#00ff6a" stroke-width="2"/>
+          <text x="30" y="115" fill="#00ff6a" font-family="Share Tech Mono" font-size="7" text-anchor="middle">DRAGONFLY</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="term-card red" id="gravestone">
+      <div class="term-name">Gravestone Doji</div>
+      <div class="term-aka">// Bearish reversal signal at the top</div>
+      <p>The opposite of the Dragonfly. A Gravestone Doji has a long upper wick and no lower wick — the open, close, and low are all at the same level. Buyers pushed price up hard but sellers took over and drove it all the way back down.</p>
+      <p>When it appears after an uptrend, it can signal a bearish reversal — buyers tried but failed.</p>
+      <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:20px;margin:15px 0 5px;display:flex;justify-content:center;">
+        <svg viewBox="0 0 60 120" width="60" height="120">
+          <line x1="30" y1="10" x2="30" y2="87" stroke="#ff5252" stroke-width="2"/>
+          <rect x="18" y="87" width="24" height="3" fill="#ff5252" rx="1"/>
+          <text x="30" y="115" fill="#ff5252" font-family="Share Tech Mono" font-size="7" text-anchor="middle">GRAVESTONE</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="term-card green" id="hammer">
+      <div class="term-name">Hammer</div>
+      <div class="term-aka">// Bullish reversal · Small body, long lower wick</div>
+      <p>A Hammer has a small body at the top and a long lower wick — at least twice the size of the body. It appears after a downtrend. Sellers pushed price down but buyers came in strong and pushed it back up near the open.</p>
+      <p>The long lower wick shows rejection of lower prices. Confirmation comes if the next candle closes higher.</p>
+      <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:20px;margin:15px 0 5px;display:flex;justify-content:center;">
+        <svg viewBox="0 0 60 120" width="60" height="120">
+          <line x1="30" y1="15" x2="30" y2="25" stroke="#00ff6a" stroke-width="2"/>
+          <rect x="20" y="25" width="20" height="15" fill="#00ff6a" rx="2"/>
+          <line x1="30" y1="40" x2="30" y2="100" stroke="#00ff6a" stroke-width="2"/>
+          <text x="30" y="115" fill="#00ff6a" font-family="Share Tech Mono" font-size="8" text-anchor="middle">HAMMER</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="term-card red" id="shooting-star">
+      <div class="term-name">Shooting Star</div>
+      <div class="term-aka">// Bearish reversal · Small body, long upper wick</div>
+      <p>A Shooting Star is the upside-down version of the Hammer. It has a small body at the bottom and a long upper wick. It appears after an uptrend. Buyers pushed price up high but sellers took over and drove it back down near the open.</p>
+      <p>The long upper wick shows rejection of higher prices. It's a warning that the uptrend may be ending.</p>
+      <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:20px;margin:15px 0 5px;display:flex;justify-content:center;">
+        <svg viewBox="0 0 60 120" width="60" height="120">
+          <line x1="30" y1="10" x2="30" y2="70" stroke="#ff5252" stroke-width="2"/>
+          <rect x="20" y="70" width="20" height="15" fill="#ff5252" rx="2"/>
+          <line x1="30" y1="85" x2="30" y2="95" stroke="#ff5252" stroke-width="2"/>
+          <text x="30" y="115" fill="#ff5252" font-family="Share Tech Mono" font-size="7" text-anchor="middle">SHOOTING STAR</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="term-card blue" id="engulfing">
+      <div class="term-name">Engulfing Pattern</div>
+      <div class="term-aka">// One candle completely swallows the previous one</div>
+      <p><strong>Bullish Engulfing</strong> — A small red candle followed by a larger green candle that completely covers the red one. Shows buyers overpowering sellers. Strongest when it appears at the bottom of a downtrend.</p>
+      <p><strong>Bearish Engulfing</strong> — A small green candle followed by a larger red candle that completely covers the green one. Shows sellers overpowering buyers. Strongest at the top of an uptrend.</p>
+      <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:20px;margin:15px 0 5px;display:flex;justify-content:center;gap:40px;">
+        <div style="text-align:center;">
+          <svg viewBox="0 0 70 100" width="70" height="100">
+            <rect x="25" y="30" width="14" height="30" fill="#ff5252" rx="2"/>
+            <rect x="18" y="20" width="28" height="55" fill="rgba(0,255,106,0.3)" stroke="#00ff6a" stroke-width="1.5" rx="2"/>
+          </svg>
+          <div style="font-family:var(--mono);font-size:8px;color:var(--green);">BULLISH</div>
+        </div>
+        <div style="text-align:center;">
+          <svg viewBox="0 0 70 100" width="70" height="100">
+            <rect x="25" y="30" width="14" height="30" fill="#00ff6a" rx="2"/>
+            <rect x="18" y="20" width="28" height="55" fill="rgba(255,82,82,0.3)" stroke="#ff5252" stroke-width="1.5" rx="2"/>
+          </svg>
+          <div style="font-family:var(--mono);font-size:8px;color:var(--red);">BEARISH</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="term-card gold" id="morning-evening-star">
+      <div class="term-name">Morning Star & Evening Star</div>
+      <div class="term-aka">// 3-candle reversal patterns</div>
+      <p><strong>Morning Star</strong> — A 3-candle bullish reversal. First candle is a long red (sellers in control). Second candle is a small body (indecision — the Doji star). Third candle is a long green that closes above the midpoint of the first candle. Buyers have taken over.</p>
+      <p><strong>Evening Star</strong> — The bearish version. Long green, small Doji, then a long red candle. Sellers have taken over at the top.</p>
+    </div>
+
+    <div class="term-card purple" id="marubozu">
+      <div class="term-name">Marubozu</div>
+      <div class="term-aka">// Japanese: "bald" · Full body, no wicks</div>
+      <p>A Marubozu has a large body with no upper or lower wicks — or very tiny ones. The open is the low and the close is the high (bullish), or the open is the high and the close is the low (bearish).</p>
+      <p>It represents total domination by one side. A green Marubozu means buyers controlled the entire session. A red Marubozu means sellers had full control. One of the strongest single-candle signals.</p>
+    </div>
+
+    <div class="term-card" id="spinning-top">
+      <div class="term-name">Spinning Top</div>
+      <div class="term-aka">// Small body, long wicks on both sides</div>
+      <p>A Spinning Top looks like a Doji but with a slightly larger body. Both upper and lower wicks are long. It shows that both buyers and sellers were active but neither side won convincingly. The market is indecisive. After a strong trend, a Spinning Top can signal a potential reversal or pause.</p>
+    </div>
+
+    <!-- HEIKIN ASHI -->
+    <div class="divider"></div>
+    <div class="section-label" style="color:var(--green);">// Candle Type</div>
+
+    <div class="term-card green" id="heikin-ashi" style="border-color:rgba(0,255,106,0.4);">
+      <div class="term-name">Heikin Ashi</div>
+      <div class="term-aka">// Japanese: "average bar" · Smoothed candles for trend trading</div>
+      <p>Heikin Ashi is not a pattern — it's a completely different way of displaying candles. Instead of using raw open, high, low, close data like regular candles, Heikin Ashi averages the values. This smooths out the noise and makes trends easier to see.</p>
+      <p>In an uptrend, Heikin Ashi candles stay green with no lower wicks. In a downtrend, they stay red with no upper wicks. When the candles start showing small bodies and wicks on both sides, the trend may be changing. This makes it excellent for swing trading and long-term holds — you stay in the trade longer without getting shaken out by small pullbacks.</p>
+      <p>Heikin Ashi doesn't show exact price levels like regular candles — it shows the trend. That's the tradeoff. Many traders use both: Heikin Ashi for direction and regular candles for precise entries.</p>
+
+      <!-- HEIKIN ASHI vs REGULAR COMPARISON -->
+      <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:20px;margin:20px 0 10px;">
+        <div style="display:flex;gap:20px;flex-wrap:wrap;justify-content:center;">
+          <!-- Regular candles (choppy) -->
+          <div style="flex:1;min-width:160px;text-align:center;">
+            <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:10px;">REGULAR CANDLES</div>
+            <svg viewBox="0 0 160 100" width="160" height="100">
+              <line x1="15" y1="15" x2="15" y2="85" stroke="#00ff6a" stroke-width="1.5"/><rect x="10" y="30" width="10" height="30" fill="#00ff6a" rx="1"/>
+              <line x1="35" y1="20" x2="35" y2="80" stroke="#ff5252" stroke-width="1.5"/><rect x="30" y="25" width="10" height="40" fill="#ff5252" rx="1"/>
+              <line x1="55" y1="10" x2="55" y2="70" stroke="#00ff6a" stroke-width="1.5"/><rect x="50" y="20" width="10" height="25" fill="#00ff6a" rx="1"/>
+              <line x1="75" y1="25" x2="75" y2="85" stroke="#ff5252" stroke-width="1.5"/><rect x="70" y="30" width="10" height="35" fill="#ff5252" rx="1"/>
+              <line x1="95" y1="15" x2="95" y2="75" stroke="#00ff6a" stroke-width="1.5"/><rect x="90" y="25" width="10" height="20" fill="#00ff6a" rx="1"/>
+              <line x1="115" y1="20" x2="115" y2="70" stroke="#ff5252" stroke-width="1.5"/><rect x="110" y="28" width="10" height="30" fill="#ff5252" rx="1"/>
+              <line x1="135" y1="10" x2="135" y2="65" stroke="#00ff6a" stroke-width="1.5"/><rect x="130" y="18" width="10" height="22" fill="#00ff6a" rx="1"/>
+            </svg>
+            <div style="font-family:var(--mono);font-size:9px;color:var(--red);margin-top:5px;">Choppy — hard to read trend</div>
+          </div>
+          <!-- Heikin Ashi (smooth) -->
+          <div style="flex:1;min-width:160px;text-align:center;">
+            <div style="font-family:var(--mono);font-size:10px;color:var(--green);letter-spacing:2px;margin-bottom:10px;">HEIKIN ASHI</div>
+            <svg viewBox="0 0 160 100" width="160" height="100">
+              <line x1="15" y1="60" x2="15" y2="85" stroke="#00ff6a" stroke-width="1.5"/><rect x="10" y="40" width="10" height="20" fill="#00ff6a" rx="1"/>
+              <line x1="35" y1="50" x2="35" y2="80" stroke="#00ff6a" stroke-width="1.5"/><rect x="30" y="35" width="10" height="18" fill="#00ff6a" rx="1"/>
+              <line x1="55" y1="40" x2="55" y2="72" stroke="#00ff6a" stroke-width="1.5"/><rect x="50" y="28" width="10" height="16" fill="#00ff6a" rx="1"/>
+              <line x1="75" y1="32" x2="75" y2="65" stroke="#00ff6a" stroke-width="1.5"/><rect x="70" y="22" width="10" height="14" fill="#00ff6a" rx="1"/>
+              <line x1="95" y1="25" x2="95" y2="55" stroke="#00ff6a" stroke-width="1.5"/><rect x="90" y="18" width="10" height="12" fill="#00ff6a" rx="1"/>
+              <line x1="115" y1="20" x2="115" y2="48" stroke="#00ff6a" stroke-width="1.5"/><rect x="110" y="15" width="10" height="10" fill="#00ff6a" rx="1"/>
+              <line x1="135" y1="15" x2="135" y2="40" stroke="#00ff6a" stroke-width="1.5"/><rect x="130" y="10" width="10" height="10" fill="#00ff6a" rx="1"/>
+            </svg>
+            <div style="font-family:var(--mono);font-size:9px;color:var(--green);margin-top:5px;">Smooth — trend is clear</div>
+          </div>
+        </div>
+        <p style="font-family:var(--mono);font-size:10px;color:var(--muted);text-align:center;margin-top:10px;">Same price data, different display. Heikin Ashi filters the noise so you see the trend.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SLANG TERMS -->
+<section>
+  <div class="wrap">
+    <div class="divider" style="background:linear-gradient(90deg,transparent,var(--yellow),transparent);"></div>
+    <div id="sec-slang" class="section-label" style="color:var(--yellow);">// Trading Slang</div>
+    <h2>Street Talk</h2>
+
+    <div style="background:rgba(255,215,64,0.04);border:1px solid rgba(255,215,64,0.15);border-radius:6px;padding:24px;margin-bottom:28px;">
+      <p style="font-size:15px;color:var(--text);line-height:1.8;margin:0;">Every industry has its slang. Trading is no different. These are the informal terms you'll hear in chat rooms, Discord servers, and social media. Knowing them helps you understand the conversation — and avoid looking lost.</p>
+    </div>
+
+    <div class="term-card gold" id="slang-dry-powder">
+      <div class="term-name">Dry Powder</div>
+      <div class="term-aka">// Cash you're holding, ready to deploy</div>
+      <p>Dry powder means liquid cash or assets you have on the side, waiting for the right opportunity. If the market crashes and you have dry powder, you can buy while others are panicking. If you're fully invested with no dry powder, you can only watch.</p>
+      <p>The term comes from the 1600s when soldiers had to keep their gunpowder dry so it would fire when they needed it. Same idea: keep some cash dry so you can fire when the opportunity hits. Smart traders always keep some dry powder.</p>
+    </div>
+
+    <div class="term-card" id="slang-diamond-hands">
+      <div class="term-name">Diamond Hands</div>
+      <div class="term-aka">// Holding through the pain without selling</div>
+      <p>Diamond hands means you hold your position no matter what — through dips, crashes, FUD, and panic. Your hands are made of diamond. You don't fold. The opposite of paper hands.</p>
+    </div>
+
+    <div class="term-card red" id="slang-paper-hands">
+      <div class="term-name">Paper Hands</div>
+      <div class="term-aka">// Selling at the first sign of trouble</div>
+      <p>Paper hands means you sell the moment things get scary. A 5% dip and you're out. Your hands are made of paper — they can't hold anything. Often used as an insult in crypto communities.</p>
+    </div>
+
+    <div class="term-card purple" id="slang-bag-holder">
+      <div class="term-name">Bag Holder</div>
+      <div class="term-aka">// Stuck holding a losing position</div>
+      <p>A bag holder is someone holding a position that has dropped significantly in value. They bought high, it crashed, and now they're "holding the bag" — stuck with losses and hoping it comes back. Often the result of FOMO buying at the top.</p>
+    </div>
+
+    <div class="term-card green" id="slang-moon">
+      <div class="term-name">To the Moon</div>
+      <div class="term-aka">// Price is about to skyrocket</div>
+      <p>"We're going to the moon!" means someone believes the price is about to rise dramatically. Sometimes it's based on real analysis. Most of the time it's pure hype. Take it with a grain of salt.</p>
+    </div>
+
+    <div class="term-card blue" id="slang-rekt">
+      <div class="term-name">Rekt</div>
+      <div class="term-aka">// Wrecked — suffered heavy losses</div>
+      <p>Getting rekt means you got destroyed on a trade. Lost a lot of money. Usually happens from overleveraging, not using a stop loss, or ignoring the data. "He got rekt on that short" = he lost big betting the price would go down.</p>
+    </div>
+
+    <div class="term-card" id="slang-ape">
+      <div class="term-name">Aping In</div>
+      <div class="term-aka">// Buying without doing any research</div>
+      <p>Aping in means throwing money at something without thinking. No research, no analysis, just "I saw someone post about it so I bought it." This is how people get rekt. The opposite of DYOR.</p>
+    </div>
+
+    <div class="term-card gold" id="slang-pump-dump">
+      <div class="term-name">Pump and Dump</div>
+      <div class="term-aka">// Artificially inflating price then selling</div>
+      <p>A pump and dump is when a group of people hype up a coin or stock to drive the price up (the pump), then sell all their holdings at the top (the dump), leaving everyone else with losses. This is illegal in traditional markets and considered a scam in crypto.</p>
+    </div>
+
+    <div class="term-card red" id="slang-dead-cat">
+      <div class="term-name">Dead Cat Bounce</div>
+      <div class="term-aka">// A temporary recovery during a downtrend</div>
+      <p>A dead cat bounce is a brief price recovery in a falling market before it continues to drop. The dark humor: even a dead cat bounces if it falls from high enough. Don't mistake a dead cat bounce for a real reversal.</p>
+    </div>
+
+    <div class="term-card" id="slang-sidelines">
+      <div class="term-name">On the Sidelines</div>
+      <div class="term-aka">// Not trading — sitting in cash, watching</div>
+      <p>Being on the sidelines means you're not in any trades. You're watching the market from the outside, waiting for a better setup. Sometimes the best trade is no trade. Also said as "keeping the powder dry."</p>
+    </div>
+
+    <div class="term-card blue" id="slang-whale-watching">
+      <div class="term-name">Whale Watching</div>
+      <div class="term-aka">// Tracking large wallet movements</div>
+      <p>Whale watching is the practice of monitoring large crypto wallets on the blockchain to see when whales move big amounts. If a whale sends 10,000 BTC to an exchange, they might be about to sell. If they move it to a cold wallet, they're holding. Some traders use whale alerts as part of their strategy.</p>
+    </div>
+
+    <div class="term-card green" id="slang-degen">
+      <div class="term-name">Degen</div>
+      <div class="term-aka">// Short for "degenerate" — high-risk trader</div>
+      <p>A degen is someone who takes extreme risks — overleveraging, aping into random tokens, gambling on 100x futures trades at 3am. In crypto culture, it's sometimes worn as a badge of honor. In reality, most degens get rekt. Don't be a degen. Be a student.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section>
+  <div class="wrap">
+    <div class="divider" style="background:linear-gradient(90deg,transparent,var(--purple),transparent);"></div>
+    <div id="sec-quiz" class="section-label" style="color:var(--purple);">// Test Yourself</div>
+    <h2>Trading Knowledge Quiz</h2>
+
+    <div id="quiz-container" style="background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:28px;">
+      <div id="quiz-question" style="font-family:var(--display);font-size:24px;color:#fff;margin-bottom:20px;"></div>
+      <div id="quiz-options" style="display:flex;flex-direction:column;gap:10px;"></div>
+      <div id="quiz-feedback" style="font-family:var(--mono);font-size:13px;margin-top:15px;min-height:20px;"></div>
+      <div id="quiz-progress" style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:15px;"></div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  const questions = [
+    {q:"What does a green candlestick mean?", opts:["Price went down","Price went up","Market is closed","No volume"], ans:1},
+    {q:"RSI above 70 is considered...", opts:["Oversold","Neutral","Overbought","Broken"], ans:2},
+    {q:"What does VWAP stand for?", opts:["Volume Weighted Average Price","Very Wide Ask Price","Volatile Weekly Average Pattern","None of these"], ans:0},
+    {q:"A Golden Cross is when...", opts:["Price hits all-time high","SMA 50 crosses below SMA 200","SMA 50 crosses above SMA 200","Volume doubles"], ans:2},
+    {q:"What is 'dry powder' in trading?", opts:["A technical indicator","Cash held on the side, ready to invest","A type of candle pattern","Gunpowder for cannons"], ans:1},
+    {q:"What does a Doji candle indicate?", opts:["Strong buyers","Strong sellers","Indecision","A breakout"], ans:2},
+    {q:"In Wyckoff's method, a 'Spring' is...", opts:["A bullish breakout","A fake breakdown to trap sellers","An indicator setting","A type of moving average"], ans:1},
+    {q:"What does HODL mean?", opts:["Hold On for Dear Life","High Order Daily Leverage","Hedge or Dump Liquidity","None of these"], ans:0},
+    {q:"What does 'rekt' mean?", opts:["Made huge profits","Suffered heavy losses","Reset your account","Reversed a trade"], ans:1},
+    {q:"Heikin Ashi candles are best used for...", opts:["Exact entry prices","Seeing the trend clearly","Volume analysis","Day trading only"], ans:1},
+    {q:"BTC Dominance measures...", opts:["Bitcoin's price","Bitcoin's share of total crypto market cap","How many people own Bitcoin","Bitcoin mining difficulty"], ans:1},
+    {q:"A rug pull is...", opts:["A trading strategy","A type of chart pattern","A scam where devs steal funds","A market correction"], ans:2},
+    {q:"What does 'aping in' mean?", opts:["Researching carefully before buying","Buying without doing any research","Setting a stop loss","Dollar cost averaging"], ans:1},
+    {q:"What is a seed phrase?", opts:["A crypto trading strategy","12 or 24 words that recover your wallet","Your exchange password","A type of token"], ans:1},
+    {q:"Compression (squeeze) means...", opts:["Price is trending strongly","Volatility is extremely low and a big move may come","The market is closed","Volume is very high"], ans:1}
+  ];
+  let current=0, score=0, answered=false;
+  const qEl=document.getElementById('quiz-question');
+  const oEl=document.getElementById('quiz-options');
+  const fEl=document.getElementById('quiz-feedback');
+  const pEl=document.getElementById('quiz-progress');
+  function load(){
+    if(current>=questions.length){
+      const pct=Math.round((score/questions.length)*100);
+      qEl.textContent='Quiz Complete!';
+      oEl.innerHTML='';
+      fEl.innerHTML='<span style="font-size:20px;color:'+(pct>=70?'#00ff6a':'#ff5252')+';">'+score+'/'+questions.length+' ('+pct+'%)</span><br><br>'+(pct>=70?'Solid knowledge. Keep learning and keep building.':'Keep studying — review the terms above and try again.');
+      pEl.textContent='';
+      const btn=document.createElement('button');
+      btn.textContent='RESTART QUIZ';
+      btn.style.cssText='font-family:var(--mono);font-size:12px;letter-spacing:2px;padding:12px 24px;background:#b44dff;color:#fff;border:none;border-radius:3px;cursor:pointer;margin-top:15px;';
+      btn.onclick=function(){current=0;score=0;answered=false;load();};
+      fEl.appendChild(btn);
+      return;
+    }
+    answered=false;
+    const q=questions[current];
+    qEl.textContent=(current+1)+'. '+q.q;
+    oEl.innerHTML='';
+    fEl.textContent='';
+    pEl.textContent='Question '+(current+1)+' of '+questions.length+' · Score: '+score;
+    q.opts.forEach(function(opt,i){
+      const btn=document.createElement('button');
+      btn.textContent=opt;
+      btn.style.cssText='font-family:var(--body);font-size:15px;padding:14px 18px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:4px;color:var(--text);cursor:pointer;text-align:left;transition:all 0.2s;';
+      btn.onmouseover=function(){if(!answered)btn.style.borderColor='var(--cyan)';};
+      btn.onmouseout=function(){if(!answered)btn.style.borderColor='var(--border)';};
+      btn.onclick=function(){
+        if(answered)return;
+        answered=true;
+        if(i===q.ans){score++;btn.style.background='rgba(0,255,106,0.15)';btn.style.borderColor='#00ff6a';btn.style.color='#00ff6a';fEl.innerHTML='<span style="color:#00ff6a;">Correct!</span>';}
+        else{btn.style.background='rgba(255,82,82,0.15)';btn.style.borderColor='#ff5252';btn.style.color='#ff5252';fEl.innerHTML='<span style="color:#ff5252;">Wrong.</span> The answer is: <strong style="color:#fff;">'+q.opts[q.ans]+'</strong>';oEl.children[q.ans].style.background='rgba(0,255,106,0.1)';oEl.children[q.ans].style.borderColor='#00ff6a';}
+        pEl.textContent='Question '+(current+1)+' of '+questions.length+' · Score: '+score;
+        setTimeout(function(){current++;load();},1800);
+      };
+      oEl.appendChild(btn);
+    });
+  }
+  load();
+})();
+</script>
+
+<!-- CTA -->
+<section>
+  <div class="wrap">
+    <div class="divider"></div>
+    <div style="text-align:center;margin-bottom:40px;">
+      <a href="index.html" class="btn btn-primary">← Back to Indicators</a>
+      <a href="getting-started.html" class="btn btn-outline" style="margin-left:12px;">New? Start Here</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <p>Not financial advice · Trade responsibly · <span>DuttyBookBag</span></p>
+    <p style="margin-top:8px;">© Uncle_E · Dutty Ashy Win_G Learning Center · All Rights Reserved</p>
+  </div>
+</footer>
+
+</body>
+</html>
