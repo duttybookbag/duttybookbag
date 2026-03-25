@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DuttyBookBag Fun Zone</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{--black:#000;--panel:#080f0f;--border:#0c3030;--cyan:#00ffe1;--green:#00ff6a;--blue:#4db8ff;--gold:#ffd166;--red:#ff5252;--yellow:#ffd740;--purple:#b44dff;--neon:#39ff14;--text:#b8e8e2;--muted:#3d7070;--mono:'Share Tech Mono',monospace;--display:'Bebas Neue',sans-serif;--body:'Rajdhani',sans-serif;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--black);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.7;overflow-x:hidden;}
+    .wrap{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:0 24px;}
+    .nav-back{padding:18px 24px 0;max-width:860px;margin:0 auto;display:flex;gap:20px;flex-wrap:wrap;}
+    .nav-back a{font-family:var(--mono);font-size:11px;letter-spacing:3px;color:var(--muted);text-decoration:none;text-transform:uppercase;}
+    .nav-back a:hover{color:var(--cyan);}
+    header{padding:40px 0 30px;text-align:center;}
+    .badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:5px;color:var(--neon);border:1px solid var(--neon);padding:5px 18px;margin-bottom:20px;text-transform:uppercase;}
+    h1{font-family:var(--display);font-size:clamp(36px,7vw,70px);letter-spacing:4px;line-height:0.95;color:#fff;text-transform:uppercase;}
+    h1 .accent{color:var(--neon);text-shadow:0 0 30px rgba(57,255,20,0.5);}
+    .divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);margin:40px 0;}
+    .section-label{font-family:var(--mono);font-size:10px;letter-spacing:5px;text-transform:uppercase;margin-bottom:14px;}
+    h2{font-family:var(--display);font-size:clamp(28px,5vw,48px);letter-spacing:3px;color:#fff;text-transform:uppercase;margin-bottom:20px;}
+    .game-nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:16px;background:var(--panel);border:1px solid var(--border);border-radius:6px;margin:20px 0;}
+    .game-nav a{font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--neon);text-decoration:none;padding:10px 20px;border:2px solid var(--neon);border-radius:4px;text-transform:uppercase;}
+    .game-nav a:hover{background:rgba(57,255,20,0.1);}
+    /* SHOOTER GAME */
+    #shooter-canvas{width:100%;max-width:500px;height:500px;background:#050d0d;border:1px solid var(--border);border-radius:6px;position:relative;overflow:hidden;margin:0 auto;display:block;touch-action:none;user-select:none;}
+    .shooter-controls{display:flex;gap:12px;justify-content:center;margin-top:12px;}
+    .ctrl-btn{font-family:var(--mono);font-size:18px;padding:16px 28px;background:rgba(57,255,20,0.1);border:2px solid var(--neon);border-radius:6px;color:var(--neon);cursor:pointer;user-select:none;-webkit-user-select:none;touch-action:manipulation;}
+    .ctrl-btn:active{background:rgba(57,255,20,0.3);}
+    .ctrl-btn.fire{background:rgba(255,82,82,0.2);border-color:var(--red);color:var(--red);}
+    .ctrl-btn.fire:active{background:rgba(255,82,82,0.4);}
+    /* BULL OR BEAR */
+    #bob-area{width:100%;max-width:500px;height:300px;background:#050d0d;border:1px solid var(--border);border-radius:6px;position:relative;margin:0 auto;display:flex;align-items:center;justify-content:center;}
+    .bob-btn{font-family:var(--display);font-size:28px;padding:20px 40px;border:2px solid;border-radius:6px;cursor:pointer;letter-spacing:3px;transition:all 0.15s;}
+    .bob-btn.bull{color:var(--green);border-color:var(--green);background:rgba(0,255,106,0.05);}
+    .bob-btn.bull:hover{background:rgba(0,255,106,0.15);}
+    .bob-btn.bear{color:var(--red);border-color:var(--red);background:rgba(255,82,82,0.05);}
+    .bob-btn.bear:hover{background:rgba(255,82,82,0.15);}
+    /* TERM MATCH */
+    .match-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:500px;margin:0 auto;}
+    @media(max-width:500px){.match-grid{grid-template-columns:repeat(3,1fr);}}
+    .match-card{aspect-ratio:1;background:var(--panel);border:2px solid var(--border);border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-family:var(--mono);font-size:10px;color:var(--text);text-align:center;padding:6px;transition:all 0.2s;user-select:none;}
+    .match-card.hidden{background:rgba(57,255,20,0.05);border-color:rgba(57,255,20,0.2);color:transparent;}
+    .match-card.matched{background:rgba(0,255,106,0.15);border-color:var(--green);color:var(--green);}
+    .match-card.wrong{background:rgba(255,82,82,0.15);border-color:var(--red);}
+    .score-display{font-family:var(--mono);font-size:14px;color:var(--neon);text-align:center;margin:12px 0;}
+    footer{border-top:1px solid var(--border);padding:40px 0 60px;text-align:center;color:var(--muted);font-family:var(--mono);font-size:11px;letter-spacing:2px;}
+    footer span{color:var(--cyan);}
+  </style>
+</head>
+<body>
+
+<div class="nav-back">
+  <a href="index.html">← Main Page</a>
+  <a href="dutty-learn-center.html">← Learning Center</a>
+  <a href="dbb-calculator.html">← Calculator</a>
+</div>
+
+<header>
+  <div class="wrap">
+    <!-- INVERTED MASCOT -->
+    <div style="display:flex;justify-content:center;margin-bottom:20px;">
+      <svg viewBox="0 0 120 140" width="100" height="116" style="filter:drop-shadow(0 0 20px rgba(57,255,20,0.3));">
+        <rect x="10" y="10" width="100" height="120" rx="14" fill="#080f0f" stroke="#1a3a3a" stroke-width="2"/>
+        <circle cx="42" cy="38" r="9" fill="#39ff14"><animate attributeName="opacity" values="1;1;1;0.1;1" dur="4s" repeatCount="indefinite"/></circle>
+        <circle cx="42" cy="38" r="4" fill="#fff" opacity="0.3"/>
+        <circle cx="78" cy="38" r="9" fill="#39ff14"><animate attributeName="opacity" values="1;1;1;0.1;1" dur="4s" repeatCount="indefinite"/></circle>
+        <circle cx="78" cy="38" r="4" fill="#fff" opacity="0.3"/>
+        <circle cx="33" cy="72" r="7" fill="#ff5252" opacity="0.35"/>
+        <circle cx="60" cy="72" r="7" fill="#ff5252" opacity="0.6"/>
+        <circle cx="87" cy="72" r="7" fill="#ff5252" opacity="0.35"/>
+        <circle cx="60" cy="102" r="8" fill="#ff5252" opacity="0.85"><animate attributeName="opacity" values="0.85;0.5;0.85" dur="2.5s" repeatCount="indefinite"/></circle>
+        <animateTransform attributeName="transform" type="translate" values="0,0;0,-2;0,0" dur="4s" repeatCount="indefinite"/>
+      </svg>
+    </div>
+    <div class="badge">DuttyBookBag · Games</div>
+    <h1>DuttyBookBag<br><span class="accent">Fun Zone</span></h1>
+  </div>
+</header>
+
+<section><div class="wrap">
+  <div class="game-nav">
+    <a href="#game-shooter">Space Shooter</a>
+    <a href="#game-bob">Bull or Bear</a>
+    <a href="#game-match">Term Match</a>
+    <a href="#game-quiz">Quiz</a>
+  </div>
+</div></section>
+
+<!-- ========== SPACE SHOOTER ========== -->
+<section id="game-shooter"><div class="wrap">
+  <div class="divider"></div>
+  <div class="section-label" style="color:var(--neon);">// Space Shooter Quiz</div>
+  <h2>Shoot the Right Answer</h2>
+  <p style="font-family:var(--mono);font-size:11px;color:var(--muted);text-align:center;margin-bottom:6px;">Move left/right. Shoot the correct answer!</p>
+  <div id="shooter-question" style="font-family:var(--display);font-size:20px;color:#fff;text-align:center;min-height:28px;margin-bottom:6px;"></div>
+  <div id="shooter-score" class="score-display">Score: 0 | Lives: 5</div>
+  <canvas id="shooter-canvas" width="300" height="280" style="width:100%;max-width:300px;height:280px;background:#050d0d;border:1px solid #0c3030;border-radius:6px;display:block;margin:0 auto;touch-action:none;"></canvas>
+  <div style="display:flex;gap:8px;justify-content:center;margin-top:8px;">
+    <button ontouchstart="shipDir=-1;event.preventDefault();" ontouchend="shipDir=0" onmousedown="shipDir=-1" onmouseup="shipDir=0" style="font-family:var(--mono);font-size:16px;padding:10px 20px;background:rgba(57,255,20,0.1);border:1px solid #39ff14;border-radius:4px;color:#39ff14;cursor:pointer;user-select:none;-webkit-user-select:none;touch-action:manipulation;">◀</button>
+    <button id="btn-start-pause" onclick="toggleShooter()" style="font-family:var(--mono);font-size:11px;padding:10px 18px;background:var(--neon);color:#000;border:none;border-radius:4px;cursor:pointer;letter-spacing:1px;">START</button>
+    <button onclick="fireShot()" ontouchstart="fireShot();event.preventDefault();" style="font-family:var(--mono);font-size:11px;padding:10px 18px;background:rgba(255,82,82,0.2);border:1px solid #ff5252;border-radius:4px;color:#ff5252;cursor:pointer;user-select:none;touch-action:manipulation;">FIRE</button>
+    <button ontouchstart="shipDir=1;event.preventDefault();" ontouchend="shipDir=0" onmousedown="shipDir=1" onmouseup="shipDir=0" style="font-family:var(--mono);font-size:16px;padding:10px 20px;background:rgba(57,255,20,0.1);border:1px solid #39ff14;border-radius:4px;color:#39ff14;cursor:pointer;user-select:none;-webkit-user-select:none;touch-action:manipulation;">▶</button>
+  </div>
+  <div id="sound-toggle" style="text-align:center;margin-top:8px;">
+    <button onclick="toggleSound()" id="snd-btn" style="font-family:var(--mono);font-size:9px;padding:6px 14px;background:transparent;border:1px solid #3d7070;border-radius:3px;color:#3d7070;cursor:pointer;">SOUND: OFF</button>
+  </div>
+</div></section>
+
+<!-- ========== BULL OR BEAR ========== -->
+<section id="game-bob"><div class="wrap">
+  <div class="divider"></div>
+  <div class="section-label" style="color:var(--green);">// Bull or Bear</div>
+  <h2>Quick Fire Round</h2>
+  <p style="font-family:var(--mono);font-size:12px;color:var(--muted);text-align:center;margin-bottom:12px;">A term flashes on screen. Is it bullish or bearish? How fast can you go?</p>
+  <div id="bob-score" class="score-display">Streak: 0 | Best: 0</div>
+  <div id="bob-term" style="font-family:var(--display);font-size:32px;color:#fff;text-align:center;min-height:50px;margin-bottom:12px;"></div>
+  <div style="display:flex;gap:20px;justify-content:center;margin-bottom:20px;">
+    <button class="bob-btn bull" onclick="bobAnswer('bull')">BULL</button>
+    <button class="bob-btn bear" onclick="bobAnswer('bear')">BEAR</button>
+  </div>
+  <div id="bob-feedback" style="font-family:var(--mono);font-size:14px;text-align:center;min-height:24px;"></div>
+  <div style="text-align:center;margin-top:10px;">
+    <button onclick="startBob()" style="font-family:var(--mono);font-size:12px;padding:10px 24px;background:var(--green);color:#000;border:none;border-radius:4px;cursor:pointer;letter-spacing:2px;">START</button>
+  </div>
+</div></section>
+
+<!-- ========== TERM MATCH ========== -->
+<section id="game-match"><div class="wrap">
+  <div class="divider"></div>
+  <div class="section-label" style="color:var(--purple);">// Term Match</div>
+  <h2>Memory Match</h2>
+  <p style="font-family:var(--mono);font-size:12px;color:var(--muted);text-align:center;margin-bottom:12px;">Flip cards and match the term to its definition. Find all pairs to win!</p>
+  <div id="match-score" class="score-display">Pairs: 0/6 | Flips: 0</div>
+  <div class="match-grid" id="match-grid"></div>
+  <div style="text-align:center;margin-top:12px;">
+    <button onclick="startMatch()" style="font-family:var(--mono);font-size:12px;padding:10px 24px;background:var(--purple);color:#fff;border:none;border-radius:4px;cursor:pointer;letter-spacing:2px;">NEW GAME</button>
+  </div>
+</div></section>
+
+<!-- ========== REGULAR QUIZ ========== -->
+<section id="game-quiz"><div class="wrap">
+  <div class="divider"></div>
+  <div class="section-label" style="color:var(--gold);">// Classic Quiz</div>
+  <h2>Knowledge Quiz</h2>
+  <div style="background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:28px;">
+    <div id="fz-quiz-question" style="font-family:var(--display);font-size:24px;color:#fff;margin-bottom:20px;"></div>
+    <div id="fz-quiz-options" style="display:flex;flex-direction:column;gap:10px;"></div>
+    <div id="fz-quiz-feedback" style="font-family:var(--mono);font-size:13px;margin-top:15px;min-height:20px;"></div>
+    <div id="fz-quiz-progress" style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:15px;"></div>
+  </div>
+</div></section>
+
+<!-- FOOTER -->
+<footer><div class="wrap">
+  <div style="display:flex;justify-content:center;margin-bottom:20px;">
+    <svg viewBox="0 0 80 80" width="60" height="60" style="opacity:0.8;">
+      <circle cx="40" cy="15" r="6" fill="#ff5252"/>
+      <circle cx="23" cy="40" r="6" fill="#39ff14"/>
+      <circle cx="40" cy="40" r="6" fill="#ff5252"/>
+      <circle cx="57" cy="40" r="6" fill="#39ff14"/>
+      <circle cx="23" cy="62" r="6" fill="#39ff14"/>
+      <circle cx="57" cy="62" r="6" fill="#39ff14"/>
+    </svg>
+  </div>
+  <p>For entertainment only · <span>DuttyBookBag</span></p>
+  <p style="margin-top:8px;">© Uncle_E · DuttyBookBag Fun Zone · All Rights Reserved</p>
+</div></footer>
+
+<script>
+// ===== AUDIO CONTEXT =====
+let audioCtx;
+let soundOn=false;
+function initAudio(){try{if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();}catch(e){}}
+function playTone(freq,dur,type){if(!soundOn)return;try{initAudio();const o=audioCtx.createOscillator();const g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);o.type=type||'square';o.frequency.value=freq;g.gain.value=0.08;o.start();g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+dur);o.stop(audioCtx.currentTime+dur);}catch(e){}}
+function sndCorrect(){playTone(523,0.1,'square');setTimeout(()=>playTone(659,0.1,'square'),100);setTimeout(()=>playTone(784,0.15,'square'),200);}
+function sndWrong(){playTone(200,0.3,'sawtooth');}
+function sndShoot(){playTone(1200,0.08,'square');setTimeout(()=>playTone(800,0.05,'square'),50);}
+function sndExplode(){playTone(100,0.3,'sawtooth');playTone(80,0.4,'triangle');}
+function sndGameOverBad(){playTone(400,0.2,'square');setTimeout(()=>playTone(300,0.2,'square'),200);setTimeout(()=>playTone(200,0.3,'square'),400);setTimeout(()=>playTone(100,0.5,'sawtooth'),600);}
+function sndGameOverGood(){playTone(523,0.15,'square');setTimeout(()=>playTone(659,0.15,'square'),150);setTimeout(()=>playTone(784,0.15,'square'),300);setTimeout(()=>playTone(1047,0.3,'square'),450);}
+
+// ===== QUESTION POOL =====
+const pool=[
+  // CANDLESTICKS
+  {q:"Green candle means?",opts:["Price down","Price up","No change","Market closed"],ans:1},
+  {q:"Red candle means?",opts:["Price up","Price down","No volume","Squeeze"],ans:1},
+  {q:"Candle body shows?",opts:["High and low","Open and close","Volume","Time"],ans:1},
+  {q:"Long wicks mean?",opts:["Strong trend","Price got rejected","Low volume","Breakout"],ans:1},
+  {q:"Doji means?",opts:["Strong trend","Indecision","Breakout","Reversal"],ans:1},
+  {q:"Dragonfly Doji?",opts:["Bearish signal","Bullish reversal","No signal","Squeeze"],ans:1},
+  {q:"Gravestone Doji?",opts:["Bullish signal","Bearish reversal","Indecision","Support"],ans:1},
+  {q:"Hammer candle?",opts:["Bearish top","Bullish reversal","Doji variant","Marubozu"],ans:1},
+  {q:"Shooting Star?",opts:["Bullish signal","Bearish reversal","A Doji","Breakout"],ans:1},
+  {q:"Engulfing pattern?",opts:["One candle","Candle swallows previous","Volume spike","Gap fill"],ans:1},
+  {q:"Morning Star?",opts:["1-candle bearish","3-candle bullish reversal","A Doji type","Breakout"],ans:1},
+  {q:"Evening Star?",opts:["Bullish reversal","3-candle bearish reversal","Support bounce","Squeeze"],ans:1},
+  {q:"Marubozu means?",opts:["Indecision","Full body no wicks","Long wicks","Reversal"],ans:1},
+  {q:"Spinning Top?",opts:["Strong trend","Indecision small body","Breakout","Reversal"],ans:1},
+  {q:"Heikin Ashi?",opts:["Exact prices","Smoothed trend candles","Volume bars","Tick chart"],ans:1},
+  // INDICATORS
+  {q:"RSI above 70?",opts:["Oversold","Overbought","Neutral","Broken"],ans:1},
+  {q:"RSI below 30?",opts:["Overbought","Oversold","Neutral","Trending"],ans:1},
+  {q:"RSI at 50?",opts:["Overbought","Oversold","Neutral","Squeeze"],ans:2},
+  {q:"What is VWAP?",opts:["Vol Weighted Avg Price","Very Wide Ask","Volatile Weekly Avg","None"],ans:0},
+  {q:"Price above VWAP?",opts:["Sellers control","Buyers control","No signal","Squeeze"],ans:1},
+  {q:"Price below VWAP?",opts:["Buyers control","Sellers control","Breakout","Neutral"],ans:1},
+  {q:"SMA stands for?",opts:["Simple Moving Avg","Standard Market Avg","Slow Market Adj","Smart Moving"],ans:0},
+  {q:"EMA stands for?",opts:["Exact Market Avg","Exponential Moving Avg","Extended Market","None"],ans:1},
+  {q:"EMA vs SMA?",opts:["EMA is slower","EMA reacts faster","Same thing","SMA is faster"],ans:1},
+  {q:"SAR dots below price?",opts:["Bearish","Bullish","Neutral","Squeeze"],ans:1},
+  {q:"SAR dots above price?",opts:["Bullish","Bearish","Breakout","Neutral"],ans:1},
+  {q:"SAR stands for?",opts:["Stop And Reverse","Standard Average Rate","Simple Auto Range","None"],ans:0},
+  {q:"Bollinger Bands tight?",opts:["Big move happened","Big move coming","No signal","Trending"],ans:1},
+  {q:"Bollinger Bands wide?",opts:["Squeeze active","Big move just happened","No volume","Reversal"],ans:1},
+  // ADVANCED
+  {q:"Golden Cross?",opts:["SMA50 above SMA200","SMA50 below SMA200","Price at ATH","Volume spike"],ans:0},
+  {q:"Death Cross?",opts:["SMA50 below SMA200","Price at zero","Bear candle","Volume crash"],ans:0},
+  {q:"Support is?",opts:["A ceiling","A floor","An indicator","A candle"],ans:1},
+  {q:"Resistance is?",opts:["A floor","A ceiling","A volume bar","A candle"],ans:1},
+  {q:"Compression?",opts:["Low volatility squeeze","High volume","Strong trend","A candle"],ans:0},
+  {q:"Supply and demand?",opts:["An indicator","Force that moves markets","A candle pattern","A blockchain"],ans:1},
+  {q:"More demand than supply?",opts:["Price drops","Price rises","No change","Squeeze"],ans:1},
+  {q:"Order blocks?",opts:["Exchange orders","Zones of large orders","A candle type","A wallet"],ans:1},
+  {q:"Confluence means?",opts:["One signal","Multiple signals agree","Divergence","A pattern"],ans:1},
+  {q:"Mitigation means?",opts:["Zone is fresh","Zone has been used up","Breakout","Reversal"],ans:1},
+  {q:"Divergence means?",opts:["Price and indicator agree","Price and indicator disagree","Breakout","Squeeze"],ans:1},
+  {q:"Pullback is?",opts:["Permanent reversal","Temporary dip in a trend","Breakdown","Squeeze"],ans:1},
+  {q:"Breakout is?",opts:["Price stuck in range","Price pushes past key level","A candle","Low volume"],ans:1},
+  {q:"ATR measures?",opts:["Trend direction","Average price movement range","Volume","RSI"],ans:1},
+  // WYCKOFF
+  {q:"Spring in Wyckoff?",opts:["Fake breakdown","Real breakout","Distribution","Markup"],ans:0},
+  {q:"Upthrust in Wyckoff?",opts:["Real breakout","Fake breakout trap","Accumulation","Spring"],ans:1},
+  {q:"Accumulation?",opts:["Selling at top","Smart money buying at bottom","A breakout","Markup"],ans:1},
+  {q:"Distribution?",opts:["Buying at bottom","Smart money selling at top","A spring","Markdown"],ans:1},
+  {q:"Wyckoff 4 phases?",opts:["Buy Sell Hold Wait","Accum Markup Distrib Markdown","ABCD","1234"],ans:1},
+  {q:"Composite Operator?",opts:["A computer","Market as one big player","An exchange","A wallet"],ans:1},
+  {q:"Selling Climax?",opts:["Start of downtrend","Panic selling exhaustion","A breakout","Markup"],ans:1},
+  {q:"Buying Climax?",opts:["Start of uptrend","Greed buying exhaustion","Accumulation","Spring"],ans:1},
+  {q:"Effort vs Result?",opts:["Price = volume","High effort low result = warning","A candle","ATR"],ans:1},
+  // CRYPTO
+  {q:"What is crypto?",opts:["Physical coins","Digital money on blockchain","Bank accounts","Stocks"],ans:1},
+  {q:"BTC max supply?",opts:["Unlimited","100M","21M","1B"],ans:2},
+  {q:"What is blockchain?",opts:["An exchange","Permanent digital ledger","A wallet","A token"],ans:1},
+  {q:"What is Ethereum?",opts:["A stablecoin","Smart contract platform","A wallet","Bitcoin fork"],ans:1},
+  {q:"Altcoin means?",opts:["Fake coin","Any crypto not Bitcoin","Stablecoin only","Meme coin"],ans:1},
+  {q:"Stablecoin?",opts:["Volatile crypto","Pegged to USD","Bitcoin fork","Mining coin"],ans:1},
+  {q:"Cold wallet?",opts:["Online wallet","Offline secure storage","Exchange account","Paper money"],ans:1},
+  {q:"Hot wallet?",opts:["Offline device","Online connected wallet","Paper wallet","USB drive"],ans:1},
+  {q:"Seed phrase?",opts:["Exchange password","12-24 recovery words","A token name","API key"],ans:1},
+  {q:"Gas fees?",opts:["Electricity cost","Blockchain transaction fee","Mining hardware","A token"],ans:1},
+  {q:"Staking?",opts:["Selling crypto","Locking for rewards","Day trading","Converting"],ans:1},
+  {q:"Market cap?",opts:["Max price","Price x supply","Volume","Holders count"],ans:1},
+  {q:"BTC Dominance?",opts:["BTC price","BTC share of total market","BTC volume","BTC miners"],ans:1},
+  {q:"What is DeFi?",opts:["Centralized banking","Decentralized finance","A token","An exchange"],ans:1},
+  {q:"What is a DEX?",opts:["Centralized exchange","Decentralized exchange","A wallet","A miner"],ans:1},
+  {q:"Rug pull?",opts:["Real profit","Devs steal funds","Market crash","A pattern"],ans:1},
+  {q:"What is KYC?",opts:["Keep Your Coins","Know Your Customer","A blockchain","A token"],ans:1},
+  {q:"What is a DAO?",opts:["A company","Community-run organization","A wallet","An exchange"],ans:1},
+  {q:"Fiat money?",opts:["Crypto","Government issued currency","Gold","Stablecoin"],ans:1},
+  {q:"Fiat backed by gold?",opts:["Yes always","Not since 1971","Only in US","Only Bitcoin"],ans:1},
+  // SLANG
+  {q:"Dry powder?",opts:["Cash on the side","An indicator","A candle pattern","A blockchain"],ans:0},
+  {q:"HODL means?",opts:["Hold On for Dear Life","Sell quickly","Buy the dip","Trade daily"],ans:0},
+  {q:"FOMO?",opts:["Fear Of Missing Out","First Order Market Open","A token","A pattern"],ans:0},
+  {q:"FUD?",opts:["Fast Unified Data","Fear Uncertainty Doubt","A token","A candle"],ans:1},
+  {q:"Diamond hands?",opts:["Selling fast","Holding through pain","A pattern","A wallet"],ans:1},
+  {q:"Paper hands?",opts:["Strong holder","Sells at first dip","A pattern","A candle"],ans:1},
+  {q:"Bag holder?",opts:["Rich trader","Stuck with losses","A wallet type","An exchange"],ans:1},
+  {q:"Rekt means?",opts:["Big profits","Heavy losses","Neutral","A pattern"],ans:1},
+  {q:"Aping in?",opts:["Research first","Buy without research","Sell everything","Hold forever"],ans:1},
+  {q:"Dead cat bounce?",opts:["Real recovery","Temp bounce before more drop","Bullish signal","Breakout"],ans:1},
+  {q:"Degen means?",opts:["Smart trader","High-risk gambler","A token","An exchange"],ans:1},
+  {q:"To the moon?",opts:["Price crashing","Price skyrocketing","Sideways","Squeeze"],ans:1},
+  {q:"Whale?",opts:["Small trader","Huge crypto holder","An exchange","A pattern"],ans:1},
+  {q:"Pump and dump?",opts:["Real growth","Inflate then sell scam","A pattern","DCA strategy"],ans:1},
+  {q:"DYOR means?",opts:["Do Your Own Research","Daily Yield On Returns","A token","A strategy"],ans:0}
+];
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+// ===== SPACE SHOOTER =====
+const canvas=document.getElementById('shooter-canvas');
+const ctx=canvas.getContext('2d');
+let shipX=150,shipDir=0,bullets=[],answers=[],shScore=0,shLives=5,shQuestion=null,shActive=false,shPaused=false,shQuestions=[];
+function toggleSound(){soundOn=!soundOn;document.getElementById('snd-btn').textContent='SOUND: '+(soundOn?'ON':'OFF');document.getElementById('snd-btn').style.color=soundOn?'#39ff14':'#3d7070';if(soundOn)initAudio();}
+function safeSound(fn){try{fn();}catch(e){}}
+
+function toggleShooter(){
+  const btn=document.getElementById('btn-start-pause');
+  if(!shActive){startShooter();btn.textContent='PAUSE';return;}
+  if(shPaused){shPaused=false;btn.textContent='PAUSE';requestAnimationFrame(shooterLoop);}
+  else{shPaused=true;btn.textContent='RESUME';}
+}
+function startShooter(){
+  shScore=0;shLives=5;shActive=true;shPaused=false;
+  shQuestions=shuffle([...pool]);shipX=150;bullets=[];answers=[];
+  document.getElementById('btn-start-pause').textContent='PAUSE';
+  document.getElementById('shooter-score').textContent='Score: 0 | Lives: 5';
+  nextShooterQ();requestAnimationFrame(shooterLoop);
+}
+function nextShooterQ(){
+  shQuestion=pool[Math.floor(Math.random()*pool.length)];
+  document.getElementById('shooter-question').textContent=shQuestion.q;
+  answers=[];
+  const positions=shuffle([25,95,165,235]);
+  shQuestion.opts.forEach((opt,i)=>{answers.push({x:positions[i]-20,y:-25-(i*35),w:60,h:26,text:opt,correct:i===shQuestion.ans,speed:0.4+Math.random()*0.2,hit:false});});
+}
+function fireShot(){if(!shActive||shPaused)return;safeSound(sndShoot);bullets.push({x:shipX,y:245,speed:5});}
+function shooterLoop(){
+  if(!shActive||shPaused)return;
+  ctx.clearRect(0,0,300,280);
+  shipX+=shipDir*4;if(shipX<20)shipX=20;if(shipX>320)shipX=320;
+  // Ship - EXACT logo: row1=red center, row2=green/red/green horizontal, row3=2 green aligned with outer
+  ctx.save();ctx.translate(shipX,255);
+  ctx.fillStyle='#ff5252';ctx.beginPath();ctx.arc(0,-14,3.5,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle='#39ff14';ctx.beginPath();ctx.arc(-11,-4,3.5,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle='#ff5252';ctx.beginPath();ctx.arc(0,-4,3.5,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle='#39ff14';ctx.beginPath();ctx.arc(11,-4,3.5,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle='#39ff14';ctx.beginPath();ctx.arc(-11,6,3.5,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle='#39ff14';ctx.beginPath();ctx.arc(11,6,3.5,0,Math.PI*2);ctx.fill();
+  ctx.restore();
+  for(let i=bullets.length-1;i>=0;i--){bullets[i].y-=bullets[i].speed;ctx.fillStyle='#39ff14';ctx.fillRect(bullets[i].x-1,bullets[i].y,3,8);if(bullets[i].y<-10)bullets.splice(i,1);}
+  let allGone=true;
+  for(let a of answers){if(a.hit)continue;a.y+=a.speed;if(a.y<360)allGone=false;if(a.y>360)continue;ctx.fillStyle='rgba(0,255,225,0.08)';ctx.strokeStyle='#0c3030';ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(a.x,a.y,a.w,a.h,3);ctx.fill();ctx.stroke();ctx.fillStyle='#00d4ff';ctx.font='bold 9px Share Tech Mono';ctx.textAlign='center';const w=a.text.split(' ');if(w.length>2){ctx.fillText(w.slice(0,2).join(' '),a.x+a.w/2,a.y+10);ctx.fillText(w.slice(2).join(' '),a.x+a.w/2,a.y+19);}else{ctx.fillText(a.text,a.x+a.w/2,a.y+14);}}
+  for(let bi=bullets.length-1;bi>=0;bi--){for(let a of answers){if(!a.hit&&bullets[bi]&&bullets[bi].x>a.x&&bullets[bi].x<a.x+a.w&&bullets[bi].y>a.y&&bullets[bi].y<a.y+a.h){a.hit=true;bullets.splice(bi,1);if(a.correct){shScore++;safeSound(sndCorrect);}else{shLives--;safeSound(sndWrong);}document.getElementById('shooter-score').textContent='Score: '+shScore+' | Lives: '+shLives;if(shLives<=0){shActive=false;document.getElementById('shooter-question').textContent='GAME OVER! Score: '+shScore;document.getElementById('btn-start-pause').textContent='START';if(shScore>=5){safeSound(sndGameOverGood);}else{safeSound(sndGameOverBad);}return;}setTimeout(nextShooterQ,800);break;}}}
+  if(allGone&&answers.length>0)setTimeout(nextShooterQ,300);
+  if(shActive&&!shPaused)requestAnimationFrame(shooterLoop);
+}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')shipDir=-1;if(e.key==='ArrowRight')shipDir=1;if(e.key===' '||e.key==='ArrowUp'){e.preventDefault();fireShot();}});
+document.addEventListener('keyup',e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight')shipDir=0;});
+
+// ===== BULL OR BEAR =====
+const bobTerms=[
+  {term:"Golden Cross",ans:"bull"},{term:"Death Cross",ans:"bear"},{term:"Hammer Candle",ans:"bull"},{term:"Shooting Star",ans:"bear"},
+  {term:"Bullish Engulfing",ans:"bull"},{term:"Bearish Engulfing",ans:"bear"},{term:"Morning Star",ans:"bull"},{term:"Evening Star",ans:"bear"},
+  {term:"Spring (Wyckoff)",ans:"bull"},{term:"Upthrust (Wyckoff)",ans:"bear"},{term:"Accumulation",ans:"bull"},{term:"Distribution",ans:"bear"},
+  {term:"Dragonfly Doji",ans:"bull"},{term:"Gravestone Doji",ans:"bear"},{term:"FOMO Buy",ans:"bull"},{term:"Panic Sell",ans:"bear"},
+  {term:"Buying Climax",ans:"bear"},{term:"Selling Climax",ans:"bull"},{term:"Higher Highs",ans:"bull"},{term:"Lower Lows",ans:"bear"},
+  {term:"Breakout Above Resistance",ans:"bull"},{term:"Breakdown Below Support",ans:"bear"},{term:"RSI Above 70",ans:"bear"},{term:"RSI Below 30",ans:"bull"},
+  {term:"Price Above VWAP",ans:"bull"},{term:"Price Below VWAP",ans:"bear"},{term:"Three White Soldiers",ans:"bull"},{term:"Three Black Crows",ans:"bear"}
+];
+let bobStreak=0,bobBest=0,bobCurrent=null,bobActive=false;
+function startBob(){initAudio();bobStreak=0;bobActive=true;nextBob();}
+function nextBob(){bobCurrent=bobTerms[Math.floor(Math.random()*bobTerms.length)];document.getElementById('bob-term').textContent=bobCurrent.term;document.getElementById('bob-feedback').textContent='';}
+function bobAnswer(ans){
+  if(!bobActive||!bobCurrent)return;
+  if(ans===bobCurrent.ans){bobStreak++;if(bobStreak>bobBest)bobBest=bobStreak;sndCorrect();document.getElementById('bob-feedback').innerHTML='<span style="color:#00ff6a">Correct!</span>';document.getElementById('bob-term').style.color='#00ff6a';}
+  else{bobStreak=0;sndWrong();document.getElementById('bob-feedback').innerHTML='<span style="color:#ff5252">Wrong! It was '+bobCurrent.ans.toUpperCase()+'</span>';document.getElementById('bob-term').style.color='#ff5252';}
+  document.getElementById('bob-score').textContent='Streak: '+bobStreak+' | Best: '+bobBest;
+  setTimeout(()=>{document.getElementById('bob-term').style.color='#fff';nextBob();},1000);
+}
+
+// ===== TERM MATCH =====
+const matchPairs=[
+  {term:"HODL",def:"Hold On for Dear Life"},{term:"FOMO",def:"Fear Of Missing Out"},{term:"Rekt",def:"Suffered heavy losses"},
+  {term:"Doji",def:"Indecision candle"},{term:"Whale",def:"Huge crypto holder"},{term:"FUD",def:"Fear Uncertainty Doubt"},
+  {term:"DCA",def:"Dollar Cost Average"},{term:"ATH",def:"All-Time High"},{term:"Dry Powder",def:"Cash on the side"},
+  {term:"Rug Pull",def:"Devs steal funds"},{term:"Aping In",def:"Buy without research"},{term:"Moon",def:"Price skyrockets"}
+];
+let matchCards=[],matchFlipped=[],matchMatched=0,matchFlips=0,matchLocked=false;
+function startMatch(){
+  initAudio();matchMatched=0;matchFlips=0;matchLocked=false;
+  const pairs=shuffle([...matchPairs]).slice(0,6);
+  matchCards=[];
+  pairs.forEach((p,i)=>{matchCards.push({id:i,text:p.term,pairId:i,type:'term'});matchCards.push({id:i,text:p.def,pairId:i,type:'def'});});
+  matchCards=shuffle(matchCards);
+  renderMatch();
+}
+function renderMatch(){
+  const grid=document.getElementById('match-grid');
+  grid.innerHTML='';
+  matchCards.forEach((c,i)=>{
+    const div=document.createElement('div');
+    div.className='match-card hidden';
+    div.textContent='?';
+    div.dataset.idx=i;
+    div.onclick=()=>flipCard(i,div);
+    if(c.matched){div.className='match-card matched';div.textContent=c.text;}
+    grid.appendChild(div);
+  });
+  document.getElementById('match-score').textContent='Pairs: '+matchMatched+'/6 | Flips: '+matchFlips;
+}
+function flipCard(idx,el){
+  if(matchLocked||matchCards[idx].matched)return;
+  if(matchFlipped.length>=2)return;
+  if(matchFlipped.some(f=>f.idx===idx))return;
+  matchCards[idx].shown=true;
+  el.className='match-card';el.textContent=matchCards[idx].text;
+  matchFlipped.push({idx,el});matchFlips++;
+  document.getElementById('match-score').textContent='Pairs: '+matchMatched+'/6 | Flips: '+matchFlips;
+  if(matchFlipped.length===2){
+    matchLocked=true;
+    const a=matchCards[matchFlipped[0].idx],b=matchCards[matchFlipped[1].idx];
+    if(a.pairId===b.pairId&&a.type!==b.type){
+      a.matched=true;b.matched=true;matchMatched++;
+      matchFlipped[0].el.className='match-card matched';matchFlipped[1].el.className='match-card matched';
+      sndCorrect();matchFlipped=[];matchLocked=false;
+      document.getElementById('match-score').textContent='Pairs: '+matchMatched+'/6 | Flips: '+matchFlips;
+      if(matchMatched===6){setTimeout(()=>{sndCorrect();document.getElementById('match-score').textContent='YOU WIN! '+matchFlips+' flips!';},300);}
+    }else{
+      matchFlipped[0].el.className='match-card wrong';matchFlipped[1].el.className='match-card wrong';
+      sndWrong();
+      setTimeout(()=>{matchFlipped[0].el.className='match-card hidden';matchFlipped[0].el.textContent='?';matchFlipped[1].el.className='match-card hidden';matchFlipped[1].el.textContent='?';matchFlipped=[];matchLocked=false;},800);
+    }
+  }
+}
+startMatch();
+
+// ===== REGULAR QUIZ (duplicate) =====
+(function(){
+  const qPool=shuffle([...pool]);const questions=qPool.slice(0,15);
+  let current=0,score=0,answered=false;
+  const qEl=document.getElementById('fz-quiz-question'),oEl=document.getElementById('fz-quiz-options'),fEl=document.getElementById('fz-quiz-feedback'),pEl=document.getElementById('fz-quiz-progress');
+  function load(){
+    if(current>=questions.length){const pct=Math.round((score/questions.length)*100);qEl.textContent='Quiz Complete!';oEl.innerHTML='';fEl.innerHTML='<span style="font-size:20px;color:'+(pct>=70?'#00ff6a':'#ff5252')+';">'+score+'/'+questions.length+' ('+pct+'%)</span>';pEl.textContent='';const btn=document.createElement('button');btn.textContent='NEW QUIZ';btn.style.cssText='font-family:var(--mono);font-size:12px;padding:12px 24px;background:#b44dff;color:#fff;border:none;border-radius:3px;cursor:pointer;margin-top:15px;';btn.onclick=function(){const nq=shuffle([...pool]).slice(0,15);questions.length=0;questions.push(...nq);current=0;score=0;answered=false;load();};fEl.appendChild(btn);return;}
+    answered=false;const q=questions[current];qEl.textContent=(current+1)+'. '+q.q;oEl.innerHTML='';fEl.textContent='';pEl.textContent='Question '+(current+1)+'/'+questions.length+' · Score: '+score;
+    q.opts.forEach(function(opt,i){const btn=document.createElement('button');btn.textContent=opt;btn.style.cssText='font-family:var(--body);font-size:15px;padding:14px 18px;background:rgba(255,255,255,0.03);border:1px solid #0c3030;border-radius:4px;color:#b8e8e2;cursor:pointer;text-align:left;';btn.onclick=function(){if(answered)return;answered=true;initAudio();if(i===q.ans){score++;btn.style.background='rgba(0,255,106,0.15)';btn.style.borderColor='#00ff6a';btn.style.color='#00ff6a';fEl.innerHTML='<span style="color:#00ff6a">Correct!</span>';sndCorrect();}else{btn.style.background='rgba(255,82,82,0.15)';btn.style.borderColor='#ff5252';btn.style.color='#ff5252';fEl.innerHTML='<span style="color:#ff5252">Wrong.</span> Answer: <strong style="color:#fff">'+q.opts[q.ans]+'</strong>';sndWrong();}pEl.textContent='Question '+(current+1)+'/'+questions.length+' · Score: '+score;setTimeout(function(){current++;load();},1800);};oEl.appendChild(btn);});
+  }
+  load();
+})();
+</script>
+
+</body>
+</html>
