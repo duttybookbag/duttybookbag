@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nerd Geek Life — DuttyBookBag</title>
+  <meta name="description" content="Linux, old PC revival, free software, terminal basics — the techy side of DuttyBookBag. Everything you need to run a trading-ready machine without spending on a new computer." />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --black:#000000;--dark:#050d0d;--panel:#080f0f;--border:#0c3030;
+      --cyan:#00ffe1;--green:#00ff6a;--blue:#4db8ff;--gold:#ffd166;
+      --red:#ff5252;--purple:#c792ea;--orange:#ff9f43;--pink:#ff6ec7;
+      --text:#b8e8e2;--muted:#3d7070;
+      --mono:'Share Tech Mono',monospace;--display:'Bebas Neue',sans-serif;--body:'Rajdhani',sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--black);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.7;overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,255,225,0.012) 3px,rgba(0,255,225,0.012) 4px);pointer-events:none;z-index:999;}
+    body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,255,225,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,225,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0;}
+    .wrap{position:relative;z-index:1;max-width:960px;margin:0 auto;padding:0 24px;}
+
+    /* NAV */
+    .site-nav{position:sticky;top:0;z-index:100;background:rgba(0,0,0,0.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:0 24px;}
+    .site-nav .wrap{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;padding:0;max-width:960px;margin:0 auto;}
+    .site-nav a{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--muted);text-decoration:none;text-transform:uppercase;padding:14px 16px;transition:color 0.2s;white-space:nowrap;}
+    .site-nav a:hover{color:var(--cyan);}
+    .site-nav a.nav-highlight{color:var(--gold);font-weight:700;}
+    .site-nav a.nav-highlight:hover{color:#fff;}
+    .site-nav a.active{color:var(--green);text-shadow:0 0 8px rgba(0,255,106,0.4);}
+    @media(max-width:580px){.site-nav a{font-size:10px;padding:10px 8px;letter-spacing:1px;}}
+
+    /* HEADER + LOGO */
+    header{position:relative;padding:60px 0 40px;text-align:center;overflow:hidden;}
+    .glow-orb{position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(0,255,106,0.08) 0%,transparent 70%);pointer-events:none;}
+
+    /* GLOWING LOGO (from wisdom.html) */
+    .logo-block{text-align:center;margin-bottom:40px;position:relative;z-index:2;}
+    .logo{
+      display:grid;
+      grid-template-columns:repeat(3, 44px);
+      grid-template-rows:repeat(3, 44px);
+      gap:12px;
+      justify-content:center;
+      margin:0 auto 24px;
+      width:max-content;
+    }
+    .dot{
+      width:44px;height:44px;border-radius:50%;
+      animation:pulse 2.8s ease-in-out infinite;
+    }
+    .dot.green{background:#00ff44;box-shadow:0 0 15px #00ff44, 0 0 30px #00ff44;}
+    .dot.red{background:#ff1a1a;box-shadow:0 0 15px #ff1a1a, 0 0 30px #ff1a1a;}
+    .d1{grid-column:2;grid-row:1;}
+    .d2{grid-column:1;grid-row:2;}
+    .d3{grid-column:2;grid-row:2;}
+    .d4{grid-column:3;grid-row:2;}
+    .d5{grid-column:1;grid-row:3;}
+    .d6{grid-column:3;grid-row:3;}
+    @keyframes pulse{
+      0%,100%{opacity:0.55;transform:scale(0.92);}
+      50%{opacity:1;transform:scale(1.08);}
+    }
+
+    .badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:5px;color:var(--green);border:1px solid var(--green);padding:5px 18px;margin-bottom:20px;text-transform:uppercase;}
+    h1{font-family:var(--display);font-size:clamp(44px,8vw,80px);letter-spacing:4px;line-height:0.95;color:#fff;text-transform:uppercase;}
+    h1 .accent{color:var(--green);text-shadow:0 0 30px rgba(0,255,106,0.5);}
+    .tagline{margin:22px auto 0;font-size:18px;color:var(--text);max-width:640px;line-height:1.65;}
+    .tagline strong{color:#fff;}
+
+    /* SECTIONS */
+    .divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--green),transparent);margin:40px 0;}
+    .section-label{font-family:var(--mono);font-size:10px;letter-spacing:5px;color:var(--green);text-transform:uppercase;margin-bottom:14px;}
+    h2{font-family:var(--display);font-size:clamp(26px,5vw,44px);letter-spacing:3px;color:#fff;text-transform:uppercase;margin-bottom:20px;}
+    h3{font-family:var(--display);font-size:22px;letter-spacing:2px;color:var(--cyan);text-transform:uppercase;margin-bottom:10px;}
+    p{margin-bottom:14px;}
+    .lead{font-size:17px;color:var(--text);margin-bottom:24px;}
+
+    /* CARD GRID */
+    .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin:20px 0;}
+    .card{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:24px;transition:border-color 0.25s,box-shadow 0.25s,transform 0.25s;}
+    .card:hover{border-color:var(--cyan);box-shadow:0 0 24px rgba(0,255,225,0.08);transform:translateY(-2px);}
+    .card .tag{display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:2px;padding:3px 8px;border-radius:3px;margin-bottom:10px;text-transform:uppercase;}
+    .tag.green{color:var(--green);border:1px solid var(--green);}
+    .tag.blue{color:var(--blue);border:1px solid var(--blue);}
+    .tag.gold{color:var(--gold);border:1px solid var(--gold);}
+    .tag.purple{color:var(--purple);border:1px solid var(--purple);}
+    .tag.orange{color:var(--orange);border:1px solid var(--orange);}
+    .tag.muted{color:var(--muted);border:1px solid var(--muted);}
+    .card h3{margin-bottom:8px;}
+    .card p{font-size:15px;color:var(--text);margin-bottom:10px;}
+    .card a.card-link{color:var(--cyan);text-decoration:none;font-family:var(--mono);font-size:12px;letter-spacing:2px;text-transform:uppercase;}
+    .card a.card-link:hover{text-shadow:0 0 10px rgba(0,255,225,0.6);}
+
+    /* DISTRO CARDS */
+    .distro-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin:20px 0;}
+    .distro{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:22px;border-left:4px solid var(--green);}
+    .distro.mint{border-left-color:#87ceeb;}
+    .distro.ubuntu{border-left-color:#e95420;}
+    .distro.pop{border-left-color:#48b9c7;}
+    .distro.fedora{border-left-color:#3c6eb4;}
+    .distro.debian{border-left-color:#a81d33;}
+    .distro.arch{border-left-color:#1793d1;}
+    .distro.zorin{border-left-color:#15a6f0;}
+    .distro.mx{border-left-color:#f76c1d;}
+    .distro h3{font-size:20px;letter-spacing:2px;margin-bottom:6px;}
+    .distro .best-for{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:10px;}
+    .distro p{font-size:14px;margin-bottom:8px;}
+    .distro a{color:var(--cyan);text-decoration:none;font-family:var(--mono);font-size:12px;}
+    .distro a:hover{text-shadow:0 0 8px rgba(0,255,225,0.6);}
+
+    /* CALLOUT BOX */
+    .callout{background:rgba(0,255,106,0.05);border:1px solid rgba(0,255,106,0.3);border-left:4px solid var(--green);border-radius:6px;padding:22px 26px;margin:24px 0;}
+    .callout.cyan{background:rgba(0,255,225,0.05);border-color:rgba(0,255,225,0.3);border-left-color:var(--cyan);}
+    .callout.gold{background:rgba(255,209,102,0.05);border-color:rgba(255,209,102,0.3);border-left-color:var(--gold);}
+    .callout.red{background:rgba(255,82,82,0.05);border-color:rgba(255,82,82,0.3);border-left-color:var(--red);}
+    .callout h3{color:var(--green);margin-bottom:10px;}
+    .callout.cyan h3{color:var(--cyan);}
+    .callout.gold h3{color:var(--gold);}
+    .callout.red h3{color:var(--red);}
+    .callout p{font-size:15px;margin-bottom:8px;}
+    .callout p:last-child{margin-bottom:0;}
+
+    /* FEATURED LINK BLOCK */
+    .featured-link{background:linear-gradient(135deg,rgba(0,255,106,0.08),rgba(0,255,225,0.05));border:1px solid rgba(0,255,106,0.4);border-radius:8px;padding:30px;margin:24px 0;text-align:center;transition:all 0.25s;text-decoration:none;display:block;color:inherit;}
+    .featured-link:hover{border-color:var(--green);box-shadow:0 0 30px rgba(0,255,106,0.15);transform:translateY(-2px);}
+    .featured-link .fl-label{font-family:var(--mono);font-size:11px;letter-spacing:3px;color:var(--green);text-transform:uppercase;margin-bottom:10px;}
+    .featured-link h3{font-family:var(--display);font-size:28px;letter-spacing:3px;color:#fff;margin-bottom:10px;}
+    .featured-link p{font-size:15px;color:var(--text);margin-bottom:12px;}
+    .featured-link .fl-arrow{font-family:var(--mono);font-size:13px;color:var(--cyan);letter-spacing:2px;}
+
+    /* CODE BLOCK */
+    code,pre{font-family:var(--mono);}
+    pre{background:#020808;border:1px solid var(--border);border-left:3px solid var(--cyan);border-radius:4px;padding:14px 18px;overflow-x:auto;font-size:13px;color:var(--text);margin:12px 0;line-height:1.6;}
+    p code{background:#020808;border:1px solid var(--border);padding:2px 6px;border-radius:3px;color:var(--cyan);font-size:13px;}
+
+    /* TERMINAL TIPS */
+    .term-tip{display:flex;gap:14px;align-items:flex-start;background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:16px 20px;margin-bottom:12px;}
+    .term-tip .num{font-family:var(--mono);font-size:14px;color:#000;background:var(--cyan);width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:700;}
+    .term-tip .content{flex:1;}
+    .term-tip h4{font-family:var(--display);font-size:18px;letter-spacing:2px;color:#fff;margin-bottom:4px;text-transform:uppercase;}
+    .term-tip p{font-size:14px;margin-bottom:6px;}
+
+    /* LIST */
+    ul.clean{list-style:none;padding:0;margin:12px 0;}
+    ul.clean li{padding:8px 0 8px 24px;position:relative;font-size:15px;}
+    ul.clean li::before{content:'▸';position:absolute;left:0;color:var(--green);}
+
+    /* COMING SOON */
+    .coming-soon{background:var(--panel);border:1px dashed var(--muted);border-radius:6px;padding:22px;opacity:0.7;}
+    .coming-soon h3{color:var(--muted);}
+
+    /* FOOTER */
+    footer{border-top:1px solid var(--border);padding:40px 0 30px;margin-top:60px;text-align:center;background:#010505;}
+    footer .foot-logo{display:grid;grid-template-columns:repeat(3, 20px);grid-template-rows:repeat(3, 20px);gap:6px;justify-content:center;margin:0 auto 16px;width:max-content;}
+    footer .foot-dot{width:20px;height:20px;border-radius:50%;animation:pulse 2.8s ease-in-out infinite;}
+    footer .foot-green{background:#00ff44;box-shadow:0 0 8px #00ff44;}
+    footer .foot-red{background:#ff1a1a;box-shadow:0 0 8px #ff1a1a;}
+    footer p{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:6px;}
+    footer a{color:var(--green);text-decoration:none;}
+    footer a:hover{text-shadow:0 0 8px rgba(0,255,106,0.5);}
+    .disclaimer{max-width:700px;margin:16px auto 0;font-size:11px;color:var(--muted);font-style:italic;line-height:1.5;padding:12px;border:1px solid var(--border);border-radius:4px;text-align:left;}
+
+    section.block{padding:30px 0;}
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="site-nav">
+  <div class="wrap">
+    <a href="index.html">Home</a>
+    <a href="getting-started.html#tradingview" class="nav-highlight">What Is TradingView?</a>
+    <a href="getting-started.html#gumroad" class="nav-highlight">What Is Gumroad?</a>
+    <a href="dutty-learn-center.html" class="nav-highlight">Learning Center</a>
+    <a href="dbb-calculator.html" class="nav-highlight">Calculator</a>
+    <a href="dbb-funzone.html" class="nav-highlight">Fun Zone</a>
+    <a href="dbb-nerd-geek-life.html" class="active">Nerd Geek Life</a>
+    <a href="dbb-nerd-commands.html" class="nav-highlight">Commands</a>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<header>
+  <div class="glow-orb"></div>
+  <div class="wrap">
+    <div class="logo-block">
+      <div class="logo">
+        <div class="dot red d1"></div>
+        <div class="dot green d2"></div>
+        <div class="dot red d3"></div>
+        <div class="dot green d4"></div>
+        <div class="dot green d5"></div>
+        <div class="dot green d6"></div>
+      </div>
+      <div class="badge">// DuttyBookBag · Techy Side</div>
+      <h1>NERD <span class="accent">GEEK</span> LIFE</h1>
+      <p class="tagline"><strong>You don't need a new computer to start trading.</strong> Dust off that old laptop, install Linux, and get a trading-ready machine that runs faster than most $500 Windows boxes. This is the techy side of DuttyBookBag — everything the nerds and geeks need.</p>
+    </div>
+  </div>
+</header>
+
+<!-- WHAT IS THIS PAGE -->
+<section class="block">
+  <div class="wrap">
+    <div class="section-label">// The Idea</div>
+    <h2>Why This Page Exists</h2>
+    <p class="lead">A lot of people want to start trading but say "I can't afford a new computer." Here's the thing — you probably don't need one. That 8-year-old laptop collecting dust? It can run TradingView, multiple charts, and crypto wallets just fine. All it needs is the right operating system.</p>
+    <p class="lead">Nerd Geek Life is where DuttyBookBag shows you <strong>the cheap path</strong> — Linux, free software, old PC revival, terminal basics, and all the techy stuff that saves you money and gives you more control.</p>
+
+    <div class="callout cyan">
+      <h3>Who This Is For</h3>
+      <p>✓ Traders who want a cheap, reliable trading machine</p>
+      <p>✓ People sitting on old laptops or desktops they thought were dead</p>
+      <p>✓ Anyone tired of Windows slowing down and wanting to try something free</p>
+      <p>✓ Curious minds who want to learn how computers actually work</p>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- WHAT IS LINUX -->
+<section class="block">
+  <div class="wrap">
+    <div class="section-label">// Start Here</div>
+    <h2>What Is Linux?</h2>
+    <p>Linux is a <strong>free</strong> operating system — like Windows or macOS, but it doesn't cost a penny and nobody owns it. It was started in 1991 by a student named Linus Torvalds and has been built by thousands of volunteers ever since. Today it runs on almost everything: Android phones, web servers, supercomputers, smart TVs, ATMs, cars — and yes, regular desktop computers.</p>
+    <p>Here's the important part for you: <strong>Linux will take your old, "slow" computer and make it fast again.</strong> It uses way less memory than Windows, doesn't come loaded with bloatware, and won't randomly restart to install updates in the middle of your trading session.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="tag green">Free</span>
+        <h3>Costs $0</h3>
+        <p>No license, no subscription, no trial. Download it, install it, keep it forever. No activation keys.</p>
+      </div>
+      <div class="card">
+        <span class="tag blue">Fast</span>
+        <h3>Runs on Old Hardware</h3>
+        <p>A 10-year-old laptop with 4GB of RAM can run Linux smoothly. Windows 11 needs 4x that to feel responsive.</p>
+      </div>
+      <div class="card">
+        <span class="tag gold">Secure</span>
+        <h3>Virus-Resistant</h3>
+        <p>Almost all PC viruses are written for Windows. Linux is so different, most of that stuff won't run on it.</p>
+      </div>
+      <div class="card">
+        <span class="tag purple">Private</span>
+        <h3>No Telemetry</h3>
+        <p>Linux doesn't track what you do, send your data to Microsoft, or show you ads in the start menu.</p>
+      </div>
+      <div class="card">
+        <span class="tag orange">Yours</span>
+        <h3>You're In Control</h3>
+        <p>No forced updates. No "you must upgrade to Windows 12." Your computer works the way you want it.</p>
+      </div>
+      <div class="card">
+        <span class="tag green">Open</span>
+        <h3>Open Source</h3>
+        <p>The code is public. Anyone can read it, audit it, improve it. No hidden surprises.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- DISTROS -->
+<section class="block">
+  <div class="wrap">
+    <div class="section-label">// Choose Your Flavor</div>
+    <h2>The Major Linux Distros</h2>
+    <p class="lead">Linux isn't one single thing — it comes in "distributions" (distros), which are different flavors built for different people. All of them are free. Here are the ones worth knowing:</p>
+
+    <div class="distro-grid">
+
+      <div class="distro mint">
+        <h3>Linux Mint</h3>
+        <div class="best-for">Best for: Beginners · Windows switchers</div>
+        <p>The easiest distro to switch to if you've only ever used Windows. Looks familiar, works out of the box, plays music and video without messing around. This is the one DuttyBookBag recommends first.</p>
+        <a href="https://linuxmint.com" target="_blank">linuxmint.com →</a>
+      </div>
+
+      <div class="distro ubuntu">
+        <h3>Ubuntu</h3>
+        <div class="best-for">Best for: General use · Huge community</div>
+        <p>The most popular Linux distro on Earth. Tons of tutorials, tons of support, works with almost anything. A little different visually from Windows but still friendly.</p>
+        <a href="https://ubuntu.com" target="_blank">ubuntu.com →</a>
+      </div>
+
+      <div class="distro pop">
+        <h3>Pop!_OS</h3>
+        <div class="best-for">Best for: Developers · Gamers · NVIDIA users</div>
+        <p>Built by System76. Clean, modern, handles NVIDIA graphics cards better than most. Has a version with the drivers pre-installed so gaming works out of the box.</p>
+        <a href="https://pop.system76.com" target="_blank">pop.system76.com →</a>
+      </div>
+
+      <div class="distro fedora">
+        <h3>Fedora</h3>
+        <div class="best-for">Best for: Power users · Latest software</div>
+        <p>Always has the newest versions of everything. Slightly more advanced but rock solid. Used by Linus Torvalds himself (the guy who invented Linux).</p>
+        <a href="https://fedoraproject.org" target="_blank">fedoraproject.org →</a>
+      </div>
+
+      <div class="distro debian">
+        <h3>Debian</h3>
+        <div class="best-for">Best for: Stability · Servers · Patience</div>
+        <p>The granddaddy of many other distros (Ubuntu and Mint are both built on Debian). Super stable, used on servers everywhere. A bit less flashy but extremely reliable.</p>
+        <a href="https://debian.org" target="_blank">debian.org →</a>
+      </div>
+
+      <div class="distro zorin">
+        <h3>Zorin OS</h3>
+        <div class="best-for">Best for: Windows refugees · Non-techy users</div>
+        <p>Designed to look almost exactly like Windows. If you're handing a computer to a parent or grandparent, this is the one. Free version is excellent.</p>
+        <a href="https://zorin.com/os" target="_blank">zorin.com/os →</a>
+      </div>
+
+      <div class="distro mx">
+        <h3>MX Linux</h3>
+        <div class="best-for">Best for: Old / weak computers</div>
+        <p>Lightweight and fast. Runs great on machines with only 2-4GB of RAM. If you've got an ancient laptop, this will bring it back to life.</p>
+        <a href="https://mxlinux.org" target="_blank">mxlinux.org →</a>
+      </div>
+
+      <div class="distro arch">
+        <h3>Arch Linux</h3>
+        <div class="best-for">Best for: Advanced users · Tinkerers</div>
+        <p>Built from scratch by you, piece by piece. Not for beginners — but if you want to really understand Linux, this is the school. "I use Arch, btw" is a meme for a reason.</p>
+        <a href="https://archlinux.org" target="_blank">archlinux.org →</a>
+      </div>
+
+    </div>
+
+    <div class="callout gold">
+      <h3>DuttyBookBag's Pick: Start With Linux Mint</h3>
+      <p>If you've never touched Linux before, don't overthink it. Install <strong>Linux Mint Cinnamon</strong>. It's the easiest landing pad, looks like Windows, plays media out of the box, and there's a full install-and-setup guide on this site waiting for you.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- FEATURED LINK TO COMMANDS LIBRARY -->
+<section class="block">
+  <div class="wrap">
+    <a href="dbb-nerd-commands.html" class="featured-link">
+      <div class="fl-label">⚡ The Full Command Library</div>
+      <h3>Nerd Commands — Universal Linux Reference</h3>
+      <p>Every install command, every distro family, all in one place. Bootable USB tutorials (Rufus, Etcher, Ventoy, dd) · GRUB fix for dual boot when Windows disappears · System updates · Codecs · Wine · VirtualBox · Backups · SSD health · And way more. Tagged by distro family with copy buttons on every command.</p>
+      <div class="fl-arrow">OPEN THE COMMAND LIBRARY →</div>
+    </a>
+
+    <a href="linux-mint-ultimate-final.html" class="featured-link" style="margin-top:16px;">
+      <div class="fl-label">📘 Linux Mint Specific</div>
+      <h3>Linux Mint — The Complete Setup Guide</h3>
+      <p>The original Mint-specific guide with the one-click mega install block, drag-and-drop checksum verifier, and the full crypto wallet directory.</p>
+      <div class="fl-arrow">OPEN THE MINT GUIDE →</div>
+    </a>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- OLD PC REVIVAL -->
+<section class="block">
+  <div class="wrap">
+    <div class="section-label">// Save Money</div>
+    <h2>Old PC Revival</h2>
+    <p class="lead">That laptop you stopped using because it got too slow? It's not broken. It's just running an operating system that outgrew it. Here's how to bring it back.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="tag green">Step 1</span>
+        <h3>Check What You've Got</h3>
+        <p>Any laptop or desktop from the last 12 years with at least <strong>4GB of RAM</strong> is a candidate. 2GB will work with a lightweight distro like MX Linux or Lubuntu.</p>
+      </div>
+      <div class="card">
+        <span class="tag green">Step 2</span>
+        <h3>Upgrade the Storage (Optional but Huge)</h3>
+        <p>If it still has a spinning hard drive, swap it for a cheap <strong>SSD</strong> ($20-30 on Amazon). This alone will make the machine 10x faster before you even install Linux.</p>
+      </div>
+      <div class="card">
+        <span class="tag green">Step 3</span>
+        <h3>Add RAM If You Can</h3>
+        <p>Most old laptops have a RAM upgrade slot. Going from 4GB to 8GB is cheap and makes a big difference for multiple browser tabs / charts.</p>
+      </div>
+      <div class="card">
+        <span class="tag green">Step 4</span>
+        <h3>Install Linux</h3>
+        <p>Follow the Mint guide on this site. Turns a "dead" machine into a snappy trading station in about 45 minutes.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <h3>Real Talk: What Old Machine Can Do</h3>
+      <p>A 2013 ThinkPad with an SSD and 8GB of RAM running Linux Mint can open TradingView in a browser, run multiple charts, handle Electrum for Bitcoin, edit video in Kdenlive, and stream YouTube — all at the same time, smoothly. That laptop costs $80 used. A new Windows laptop that does the same thing costs $600+.</p>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- FREE SOFTWARE -->
+<section class="block">
+  <div class="wrap">
+    <div class="section-label">// Free Software</div>
+    <h2>Free Alternatives You Should Know</h2>
+    <p class="lead">You don't have to pirate anything. For almost every paid program out there, someone has built a free, legal, open-source version that's just as good — sometimes better.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="tag blue">Office</span>
+        <h3>LibreOffice → Microsoft Office</h3>
+        <p>Word, Excel, PowerPoint equivalents. Opens and saves .docx, .xlsx, .pptx. Free forever. Ships with almost every Linux distro.</p>
+      </div>
+      <div class="card">
+        <span class="tag blue">Photo Editing</span>
+        <h3>GIMP → Photoshop</h3>
+        <p>Full-featured image editor. Layers, masks, filters, the works. Steeper learning curve but $0 instead of $35/mo.</p>
+      </div>
+      <div class="card">
+        <span class="tag blue">Vector Art</span>
+        <h3>Inkscape → Illustrator</h3>
+        <p>Logos, icons, SVG artwork. Professional grade. Used by designers who don't want an Adobe subscription.</p>
+      </div>
+      <div class="card">
+        <span class="tag blue">Video</span>
+        <h3>Kdenlive / Shotcut → Premiere</h3>
+        <p>Timeline-based video editors. Multi-track, effects, transitions. Used for real YouTube channels, not just hobby projects.</p>
+      </div>
+      <div class="card">
+        <span class="tag blue">Browser</span>
+        <h3>Firefox / Brave → Chrome</h3>
+        <p>Faster, more private, block ads without extensions. Brave has built-in Tor for maximum privacy.</p>
+      </div>
+      <div class="card">
+        <span class="tag blue">Screen Record</span>
+        <h3>OBS Studio → Camtasia</h3>
+        <p>Streaming, recording, multi-scene production. What most Twitch streamers actually use. Free.</p>
+      </div>
+      <div class="card">
+        <span class="tag blue">Passwords</span>
+        <h3>KeePassXC → LastPass</h3>
+        <p>Password manager that stores everything locally on your machine. No cloud, no monthly fee, no data breaches.</p>
+      </div>
+      <div class="card">
+        <span class="tag blue">PDF</span>
+        <h3>Okular / Xournal → Acrobat Pro</h3>
+        <p>Read PDFs, annotate, sign, fill forms, highlight. Everything the paid version does, without the subscription.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- TERMINAL BASICS -->
+<section class="block">
+  <div class="wrap">
+    <div class="section-label">// The Scary Black Box</div>
+    <h2>Terminal Basics — Don't Be Afraid</h2>
+    <p class="lead">The terminal is just a way to type instructions to your computer instead of clicking. It looks scary at first but it's the fastest way to do almost anything in Linux. Here are the commands you'll actually use:</p>
+
+    <div class="term-tip">
+      <div class="num">1</div>
+      <div class="content">
+        <h4>See Where You Are</h4>
+        <p>Shows the folder you're currently in.</p>
+        <pre>pwd</pre>
+      </div>
+    </div>
+
+    <div class="term-tip">
+      <div class="num">2</div>
+      <div class="content">
+        <h4>List Files</h4>
+        <p>Shows everything in the current folder. Add <code>-la</code> to see hidden files and details.</p>
+        <pre>ls
+ls -la</pre>
+      </div>
+    </div>
+
+    <div class="term-tip">
+      <div class="num">3</div>
+      <div class="content">
+        <h4>Change Folder</h4>
+        <p>Move into a folder. Use <code>cd ..</code> to go back up one level.</p>
+        <pre>cd Downloads
+cd ..</pre>
+      </div>
+    </div>
+
+    <div class="term-tip">
+      <div class="num">4</div>
+      <div class="content">
+        <h4>Update Your System</h4>
+        <p>The one command you'll type every week. Keeps everything patched and current.</p>
+        <pre>sudo apt update && sudo apt upgrade -y</pre>
+      </div>
+    </div>
+
+    <div class="term-tip">
+      <div class="num">5</div>
+      <div class="content">
+        <h4>Install a Program</h4>
+        <p>Install software by name. Replace <code>firefox</code> with whatever you want.</p>
+        <pre>sudo apt install firefox</pre>
+      </div>
+    </div>
+
+    <div class="term-tip">
+      <div class="num">6</div>
+      <div class="content">
+        <h4>Check Disk Space</h4>
+        <p>See how much room you have left on your drive.</p>
+        <pre>df -h</pre>
+      </div>
+    </div>
+
+    <div class="term-tip">
+      <div class="num">7</div>
+      <div class="content">
+        <h4>Check Memory Use</h4>
+        <p>See how much RAM is being used right now.</p>
+        <pre>free -h</pre>
+      </div>
+    </div>
+
+    <div class="term-tip">
+      <div class="num">8</div>
+      <div class="content">
+        <h4>Reboot / Shutdown</h4>
+        <p>Restart or power off from the terminal.</p>
+        <pre>sudo reboot
+sudo shutdown now</pre>
+      </div>
+    </div>
+
+    <div class="callout cyan">
+      <h3>Pro Tip</h3>
+      <p>You don't have to type the full name of a file or folder. Type the first few letters and press <strong>TAB</strong> — Linux will finish it for you. If there's more than one match, press TAB twice to see the options. This single habit makes you 5x faster in the terminal.</p>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- COMING SOON -->
+<section class="block">
+  <div class="wrap">
+    <div class="section-label">// Room to Grow</div>
+    <h2>Coming Soon</h2>
+    <p class="lead">Nerd Geek Life is just getting started. More guides being built. If there's a specific tech topic you want covered, send it.</p>
+
+    <div class="card-grid">
+      <div class="coming-soon">
+        <span class="tag muted">Soon</span>
+        <h3>Dual Booting</h3>
+        <p>Run Windows and Linux on the same computer. Pick which one to boot into on startup.</p>
+      </div>
+      <div class="coming-soon">
+        <span class="tag muted">Soon</span>
+        <h3>Running a Home Server</h3>
+        <p>Turn an old machine into a file server, media server, or always-on trading bot host.</p>
+      </div>
+      <div class="coming-soon">
+        <span class="tag muted">Soon</span>
+        <h3>Privacy & Security Hardening</h3>
+        <p>Firewalls, VPNs, Tor, encrypted drives, and locking your system down properly.</p>
+      </div>
+      <div class="coming-soon">
+        <span class="tag muted">Soon</span>
+        <h3>Bash Scripting 101</h3>
+        <p>Write simple scripts to automate your setup, your backups, and your daily tasks.</p>
+      </div>
+      <div class="coming-soon">
+        <span class="tag muted">Soon</span>
+        <h3>Raspberry Pi Projects</h3>
+        <p>$35 computer. Run it as a trading dashboard, a price ticker, a home VPN, whatever you want.</p>
+      </div>
+      <div class="coming-soon">
+        <span class="tag muted">Soon</span>
+        <h3>Self-Hosting Your Tools</h3>
+        <p>Stop depending on cloud services. Host your own cloud storage, your own notes, your own everything.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-logo">
+      <div class="foot-dot foot-red" style="grid-column:2;grid-row:1;"></div>
+      <div class="foot-dot foot-green" style="grid-column:1;grid-row:2;"></div>
+      <div class="foot-dot foot-red" style="grid-column:2;grid-row:2;"></div>
+      <div class="foot-dot foot-green" style="grid-column:3;grid-row:2;"></div>
+      <div class="foot-dot foot-green" style="grid-column:1;grid-row:3;"></div>
+      <div class="foot-dot foot-green" style="grid-column:3;grid-row:3;"></div>
+    </div>
+    <p>DuttyBookBag · Nerd Geek Life</p>
+    <p><a href="index.html">← Back to Home</a> · <a href="linux-mint-ultimate-final.html">Linux Mint Guide</a> · <a href="dutty-learn-center.html">Learning Center</a></p>
+    <div class="disclaimer">
+      The information on this page is for educational purposes. Linux distributions are free and open-source software maintained by their respective communities. Always back up your data before installing a new operating system. Not financial advice — these tools support your workflow, not your trade decisions.
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
