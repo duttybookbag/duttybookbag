@@ -38,6 +38,7 @@
     animation:pulse 8s ease-in-out infinite alternate;
   }
   @keyframes pulse { 0%{opacity:0.6} 100%{opacity:1} }
+  @keyframes dbbPulse { 0%,100%{opacity:0.55;transform:scale(0.92);} 50%{opacity:1;transform:scale(1.08);} }
   .hero h1 {
     font-size:3.2rem; font-weight:900; letter-spacing:-2px; position:relative;
     background:linear-gradient(135deg,var(--green),var(--cyan),var(--blue));
@@ -172,14 +173,14 @@
 
 <div class="hero">
   <div style="display:flex;justify-content:center;margin-bottom:20px;position:relative">
-    <svg width="52" height="52" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="27" cy="13" r="8" fill="#ff3030"/>
-      <circle cx="11" cy="27" r="8" fill="#00ff5e"/>
-      <circle cx="27" cy="27" r="8" fill="#ff3030"/>
-      <circle cx="43" cy="27" r="8" fill="#00ff5e"/>
-      <circle cx="11" cy="41" r="8" fill="#00ff5e"/>
-      <circle cx="43" cy="41" r="8" fill="#00ff5e"/>
-    </svg>
+    <div style="display:grid;grid-template-columns:repeat(3,42px);grid-template-rows:repeat(3,42px);gap:12px;justify-content:center;width:max-content;">
+      <div style="grid-column:2;grid-row:1;width:42px;height:42px;border-radius:50%;background:#ff1a1a;box-shadow:0 0 15px #ff1a1a,0 0 30px #ff1a1a;animation:dbbPulse 2.8s ease-in-out infinite;"></div>
+      <div style="grid-column:1;grid-row:2;width:42px;height:42px;border-radius:50%;background:#00ff44;box-shadow:0 0 15px #00ff44,0 0 30px #00ff44;animation:dbbPulse 2.8s ease-in-out infinite;"></div>
+      <div style="grid-column:2;grid-row:2;width:42px;height:42px;border-radius:50%;background:#ff1a1a;box-shadow:0 0 15px #ff1a1a,0 0 30px #ff1a1a;animation:dbbPulse 2.8s ease-in-out infinite;"></div>
+      <div style="grid-column:3;grid-row:2;width:42px;height:42px;border-radius:50%;background:#00ff44;box-shadow:0 0 15px #00ff44,0 0 30px #00ff44;animation:dbbPulse 2.8s ease-in-out infinite;"></div>
+      <div style="grid-column:1;grid-row:3;width:42px;height:42px;border-radius:50%;background:#00ff44;box-shadow:0 0 15px #00ff44,0 0 30px #00ff44;animation:dbbPulse 2.8s ease-in-out infinite;"></div>
+      <div style="grid-column:3;grid-row:3;width:42px;height:42px;border-radius:50%;background:#00ff44;box-shadow:0 0 15px #00ff44,0 0 30px #00ff44;animation:dbbPulse 2.8s ease-in-out infinite;"></div>
+    </div>
   </div>
   <h1>LINUX MINT ULTIMATE SETUP</h1>
   <div class="subtitle">Complete Post-Install Command Reference</div>
