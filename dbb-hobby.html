@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rocket Stove Dimensions Calculator</title>
+    <style>
+        /* Custom Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap');
+        
+        /* CSS Variables */
+        :root {
+            --primary-bg: #0a0a0a;
+            --secondary-bg: #1a1a1a;
+            --accent-bg: #252525;
+            --primary-text: #00ff88;
+            --secondary-text: #66ccff;
+            --accent-text: #ff6b35;
+            --warning-text: #ffaa00;
+            --border: #333;
+            --glow: #00ff8844;
+            --shadow: rgba(0, 255, 136, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary-bg) 0%, #111111 50%, var(--primary-bg) 100%);
+            font-family: 'Rajdhani', monospace;
+            color: var(--secondary-text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background Pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(102, 204, 255, 0.1) 0%, transparent 50%);
+            animation: backgroundPulse 8s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes backgroundPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { text-shadow: 0 0 20px var(--shadow); }
+            50% { text-shadow: 0 0 30px var(--shadow), 0 0 40px var(--shadow); }
+        }
+
+        h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 900;
+            color: var(--primary-text);
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--accent-text);
+            font-weight: 300;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-text), var(--accent-text), var(--secondary-text));
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .card:hover::before {
+            transform: translateX(0);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 12px 40px rgba(0, 0, 0, 0.6),
+                0 0 20px var(--glow);
+        }
+
+        .card-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            color: var(--primary-text);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-title::before {
+            content: '▶';
+            color: var(--accent-text);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--secondary-text);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--accent-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--primary-text);
+            font-family: 'Rajdhani', monospace;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--primary-text);
+            box-shadow: 0 0 10px var(--glow);
+            transform: scale(1.02);
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, var(--primary-text), var(--secondary-text));
+            border: none;
+            border-radius: 10px;
+            color: var(--primary-bg);
+            font-family: 'Orbitron', monospace;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.4);
+        }
+
+        .calculate-btn:active {
+            transform: translateY(0);
+        }
+
+        .results {
+            background: var(--secondary-bg);
+            border: 1px solid var(--primary-text);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 20px;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                0 0 20px var(--glow);
+        }
+
+        .results h3 {
+            font-family: 'Orbitron', monospace;
+            color: var(--primary-text);
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .result-item {
+            background: var(--accent-bg);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid var(--accent-text);
+            transition: all 0.3s ease;
+        }
+
+        .result-item:hover {
+            transform: translateX(5px);
+            border-left-color: var(--primary-text);
+        }
+
+        .result-label {
+            color: var(--secondary-text);
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            font-weight: 400;
+        }
+
+        .result-value {
+            color: var(--primary-text);
+            font-size: 1.3rem;
+            font-weight: 600;
+            font-family: 'Orbitron', monospace;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .info-card {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            border-left: 4px solid var(--accent-text);
+        }
+
+        .info-title {
+            color: var(--accent-text);
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .info-text {
+            color: var(--secondary-text);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .warning {
+            background: rgba(255, 170, 0, 0.1);
+            border: 1px solid var(--warning-text);
+            color: var(--warning-text);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .result-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border);
+            border-top: 2px solid var(--primary-text);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>ROCKET STOVE CALCULATOR</h1>
+            <p class="subtitle">Precision Engineering for Optimal Combustion</p>
+        </header>
+
+        <div class="main-grid">
+            <div class="card">
+                <h3 class="card-title">Input Parameters</h3>
+                
+                <div class="form-group">
+                    <label for="stoveType">Rocket Stove Type</label>
+                    <select id="stoveType" onchange="updateDiagram()">
+                        <option value="j-tube">J-Tube (Standard Horizontal Feed)</option>
+                        <option value="l-tube">L-Tube (Direct Feed)</option>
+                        <option value="k-style">K-Style (Middle Angled Feed)</option>
+                        <option value="cooking">Cooking Stove (Optimized)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputDimension">Primary Dimension Input</label>
+                    <select id="inputDimension">
+                        <option value="heat-riser">Heat Riser Length (Trunk/Chimney)</option>
+                        <option value="combustion-diameter">Combustion Chamber Diameter</option>
+                        <option value="feed-tube">Feed Tube Length</option>
+                        <option value="burn-tunnel">Burn Tunnel Length</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="dimensionValue">Dimension Value (inches)</label>
+                    <input type="number" id="dimensionValue" placeholder="Enter dimension in inches" min="1" max="50" step="0.5">
+                    <div style="background: var(--accent-bg); padding: 10px; border-radius: 5px; margin-top: 8px; border-left: 3px solid var(--warning-text);">
+                        <p style="color: var(--warning-text); font-size: 0.85rem; margin: 0; font-weight: bold;">📏 MEASUREMENT REFERENCE POINTS:</p>
+                        <p style="color: var(--secondary-text); font-size: 0.8rem; margin: 5px 0 0 0; line-height: 1.4;">
+                            <strong>Heat Riser Length:</strong> Total height from bottom to top of vertical chimney<br>
+                            <strong>Burn Tunnel Length:</strong> Can measure from cylinder back OR total length - specify your method<br>
+                            <strong>Feed Tube:</strong> Length of the feeding section<br>
+                            <strong>Chamber Diameter:</strong> Internal width of combustion chamber
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="materialType">Construction Material</label>
+                    <select id="materialType">
+                        <option value="steel">Steel Plate (1/4" thick recommended)</option>
+                        <option value="steel-thin">Steel Plate (1/8" thin - budget)</option>
+                        <option value="square-tube">Square Steel Tubing</option>
+                        <option value="round-pipe">Round Steel Pipe</option>
+                        <option value="stove-pipe">Stove Pipe (thin wall)</option>
+                        <option value="fire-brick">Fire Brick</option>
+                        <option value="cast-refractory">Cast Refractory</option>
+                    </select>
+                </div>
+
+                <button class="calculate-btn" onclick="calculateDimensions()">
+                    Calculate Dimensions
+                </button>
+            </div>
+
+            <div class="card">
+                <h3 class="card-title">Design Notes</h3>
+                <div class="info-text">
+                    <p><strong>Ratios Used:</strong></p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li><strong>J-Tube:</strong> 1:2:4 (Feed:Burn:Riser)</li>
+                        <li><strong>L-Tube:</strong> 1:1.5:3 ratios</li>
+                        <li><strong>K-Style:</strong> Modified for angled feed</li>
+                        <li><strong>Cooking:</strong> Optimized for cooking height</li>
+                    </ul>
+                    
+                    <p style="margin-top: 15px;"><strong>Key Principles:</strong></p>
+                    <ul style="margin-left: 20px; margin-top: 5px;">
+                        <li>Combustion chamber 7-8x taller than wide</li>
+                        <li>Air intake 20-30% of chamber cross-section</li>
+                        <li>Heat riser matches chamber diameter</li>
+                        <li>Insulation critical for efficiency</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dynamic Diagram Section -->
+        <div class="card" style="margin-bottom: 30px;">
+            <h3 class="card-title">Rocket Stove Parts Diagram</h3>
+            <div class="diagram-container">
+                
+                <!-- K-Style Diagram (Default) -->
+                <div id="k-style-diagram" class="stove-diagram" style="display: none;">
+                    <h4 style="color: var(--primary-text); margin-bottom: 15px;">K-Style Rocket Stove - Middle Angled Feed</h4>
+                    <svg width="800" height="600" viewBox="0 0 800 600" style="width: 100%; height: auto; background: #1a1a1a; border-radius: 10px;">
+                        <!-- Heat Riser (Vertical) -->
+                        <rect x="350" y="100" width="80" height="280" fill="none" stroke="#00ff88" stroke-width="3" rx="5"/>
+                        <text x="440" y="120" fill="#66ccff" font-family="Arial, sans-serif" font-size="14" font-weight="bold">HEAT RISER</text>
+                        <text x="440" y="135" fill="#66ccff" font-family="Arial, sans-serif" font-size="12">Height = 3.5x Base</text>
+                        
+                        <!-- Insulation -->
+                        <rect x="330" y="90" width="120" height="300" fill="none" stroke="#ff6b35" stroke-width="2" stroke-dasharray="5,5" rx="5"/>
+                        <text x="460" y="180" fill="#ff6b35" font-family="Arial, sans-serif" font-size="11">Insulation</text>
+                        
+                        <!-- Horizontal Burn Tunnel -->
+                        <rect x="150" y="350" width="200" height="40" fill="none" stroke="#00ff88" stroke-width="3" rx="5"/>
+                        <text x="155" y="335" fill="#66ccff" font-family="Arial, sans-serif" font-size="14" font-weight="bold">BURN TUNNEL</text>
+                        <text x="155" y="410" fill="#66ccff" font-family="Arial, sans-serif" font-size="12">Length = 2x Base</text>
+                        
+                        <!-- Angled Feed Tube in MIDDLE (creates K shape) -->
+                        <line x1="200" y1="280" x2="250" y2="350" stroke="#00ff88" stroke-width="20" stroke-linecap="round"/>
+                        <text x="120" y="270" fill="#66ccff" font-family="Arial, sans-serif" font-size="14" font-weight="bold">ANGLED FEED</text>
+                        <text x="120" y="285" fill="#66ccff" font-family="Arial, sans-serif" font-size="12">(Middle Position)</text>
+                        <text x="120" y="300" fill="#66ccff" font-family="Arial, sans-serif" font-size="12">Creates "K" Shape</text>
+                        <text x="120" y="315" fill="#66ccff" font-family="Arial, sans-serif" font-size="12">45° Angle</text>
+                        
+                        <!-- Air Intake at bottom -->
+                        <rect x="150" y="410" width="40" height="15" fill="none" stroke="#ffaa00" stroke-width="2" rx="3"/>
+                        <text x="80" y="430" fill="#ffaa00" font-family="Arial, sans-serif" font-size="12" font-weight="bold">AIR INTAKE</text>
+                        <text x="80" y="445" fill="#ffaa00" font-family="Arial, sans-serif" font-size="11">Bottom Air Entry</text>
+                        
+                        <!-- Wood sticks in angled feed -->
+                        <rect x="180" y="300" width="20" height="6" fill="#8B4513" stroke="#654321" stroke-width="1" rx="2" transform="rotate(35 190 303)"/>
+                        <rect x="185" y="310" width="20" height="6" fill="#8B4513" stroke="#654321" stroke-width="1" rx="2" transform="rotate(35 195 313)"/>
+                        <rect x="190" y="320" width="20" height="6" fill="#8B4513" stroke="#654321" stroke-width="1" rx="2" transform="rotate(35 200 323)"/>
+                        <text x="210" y="250" fill="#66ccff" font-family="Arial, sans-serif" font-size="11">Self-Feeding</text>
+                        <text x="210" y="265" fill="#66ccff" font-family="Arial, sans-serif" font-size="11">Wood Sticks</text>
+                        
+                        <!-- Fire -->
+                        <path d="M275 370 Q285 360 280 340 Q290 330 285 310 Q295 300 290 280" fill="none" stroke="#ff6b35" stroke-width="2"/>
+                        
+                        <!-- Cooking surface -->
+                        <ellipse cx="390" cy="85" rx="30" ry="15" fill="none" stroke="#666" stroke-width="2"/>
+                        <rect x="360" y="70" width="60" height="15" fill="none" stroke="#666" stroke-width="2" rx="3"/>
+                        
+                        <!-- Airflow arrows -->
+                        <path d="M130" y1="417" x2="145" y2="417" fill="none" stroke="#ffaa00" stroke-width="2" marker-end="url(#arrowhead)"/>
+                        <path d="M170" y1="410" x2="170" y2="390" fill="none" stroke="#ffaa00" stroke-width="2" marker-end="url(#arrowhead)"/>
+                        <path d="M190" y1="370" x2="340" y2="370" fill="none" stroke="#ffaa00" stroke-width="2" marker-end="url(#arrowhead)"/>
+                        <path d="M390" y1="390" x2="390" y2="370" fill="none" stroke="#ffaa00" stroke-width="2" marker-end="url(#arrowhead)"/>
+                        <path d="M390" y1="300" x2="390" y2="280" fill="none" stroke="#ffaa00" stroke-width="2" marker-end="url(#arrowhead)"/>
+                        <path d="M390" y1="200" x2="390" y2="180" fill="none" stroke="#ffaa00" stroke-width="2" marker-end="url(#arrowhead)"/>
+                        <path d="M390" y1="120" x2="390" y2="100" fill="none" stroke="#ffaa00" stroke-width="2" marker-end="url(#arrowhead)"/>
+                        
+                        <!-- Air from angled feed -->
+                        <path d="M190" y1="320" x2="210" y2="340" fill="none" stroke="#ffaa00" stroke-width="1" marker-end="url(#arrowhead)"/>
+                        
+                        <defs>
+                            <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                                <polygon points="0 0, 10 3.5, 0 7" fill="#ffaa00" />
+                            </marker>
+                        </defs>
+                        
+                        <!-- K-shape indicator -->
+                        <text x="20" y="30" fill="#00ff88" font-family="Orbitron, monospace" font-size="20" font-weight="bold">K-STYLE ROCKET STOVE</text>
+                        <text x="20" y="50" fill="#66ccff" font-family="Arial, sans-serif" font-size="14">Middle Angled Feed Design (1.2:2:3.5 Ratio)</text>
+                        
+                        <!-- Visual "K" shape outline -->
+                        <path d="M150 390 L350 390 L390 350 M250 350 L200 280" fill="none" stroke="#ffaa00" stroke-width="1" stroke-dasharray="3,3"/>
+                        <text x="270" y="450" fill="#ffaa00" font-family="Arial, sans-serif" font-size="12">Resembles Letter "K"</text>
+                        
+                        <!-- Benefits/Warnings -->
+                        <text x="500" y="450" fill="#00ff88" font-family="Arial, sans-serif" font-size="12" font-weight="bold">✓ BENEFITS:</text>
+                        <text x="500" y="470" fill="#66ccff" font-family="Arial, sans-serif" font-size="11">• Self-feeding design</text>
+                        <text x="500" y="485" fill="#66ccff" font-family="Arial, sans-serif" font-size="11">• Gravity assists feeding</text>
+                        <text x="500" y="500" fill="#66ccff" font-family="Arial, sans-serif" font-size="11">• Large fuel capacity</text>
+                        
+                        <text x="500" y="530" fill="#ffaa00" font-family="Arial, sans-serif" font-size="12" font-weight="bold">⚠ WARNINGS:</text>
+                        <text x="500" y="550" fill="#ffaa00" font-family="Arial, sans-serif" font-size="11">• Can jam with irregular sticks</text>
+                        <text x="500" y="565" fill="#ffaa00" font-family="Arial, sans-serif" font-size="11">• Needs uniform fuel size</text>
+                    </svg>
+                </div>
+
+                <!-- J-Tube Diagram (Default) -->
+                <div id="j-tube-diagram" class="stove-diagram">
+                    <h4 style="color: var(--primary-text); margin-bottom: 15px;">J-Tube Rocket Stove - Standard Design</h4>
+                    <svg width="800" height="600" viewBox="0 0 800 600" style="width: 100%; height: auto; background: #1a1a1a; border-radius: 10px;">
+                        <!-- Heat Riser -->
+                        <rect x="350" y="100" width="80" height="300" fill="none" stroke="#00ff88" stroke-width="3" rx="5"/>
+                        <text x="440" y="120" fill="#66ccff" font-family="Arial, sans-serif" font-size="14" font-weight="bold">HEAT RISER</text>
+                        <text x="440" y="135" fill="#66ccff" font-family="Arial, sans-serif" font-size="12">Height = 4x Base</text>
+                        
+                        <!-- Insulation -->
+                        <rect x="330" y="90" width="120" height="320" fill="none" stroke="#ff6b35" stroke-width="2" stroke-dasharray="5,5" rx="5"/>
+                        <text x="460" y="180" fill="#ff6b35" font-family="Arial, sans-serif" font-size="11">Insulation</text>
+                        
+                        <!-- Burn Tunnel -->
+                        <rect x="200" y="360" width="150" height="40" fill="none" stroke="#00ff88" stroke-width="3" rx="5"/>
+                        <text x="205" y="345" fill="#66ccff" font-family="Arial, sans-serif" font-size="14" font-weight="bold">BURN TUNNEL</text>
+                        <text x="205" y="420" fill="#66ccff" font-family="Arial, sans-serif" font-size="12">Length = 2x Base</text>
+                        
+                        <!-- Vertical Feed Tube -->
+                        <rect x="160" y="280" width="40" height="120" fill="none" stroke="#00ff88" stroke-width="3" rx="5"/>
+                        <text x="80" y="300" fill="#66ccff" font-family="Arial, sans-serif" font-size="14" font-weight="bold">FEED TUBE</text>
+                        <text x="80" y="315" fill="#66ccff" font-family="Arial, sans-serif" font-size="12">Vertical Feed</text>
+                        <text x="80" y="350" fill="#66ccff" font-family="Arial, sans-serif" font-size="12">Height = 1x Base</text>
+                        
+                        <!-- Air Intake -->
+                        <rect x="160" y="420" width="40" height="20" fill="none" stroke="#ffaa00" stroke-width="2" rx="3"/>
+                        <text x="80" y="440" fill="#ffaa00" font-family="Arial, sans-serif" font-size="12" font-weight="bold">AIR INTAKE</text>
+                        
+                        <!-- Wood sticks -->
+                        <rect x="165" y="290" width="30" height="8" fill="#8B4513" stroke="#654321" stroke-width="1" rx="2"/>
+                        <rect x="165" y="305" width="30" height="8" fill="#8B4513" stroke="#654321" stroke-width="1" rx="2"/>
+                        <rect x="165" y="320" width="30" height="8" fill="#8B4513" stroke="#654321" stroke-width="1" rx="2"/>
+                        
+                        <!-- Fire -->
+                        <path d="M275 380 Q285 370 280 350 Q290 340 285 320 Q295 310 290 290" fill="none" stroke="#ff6b35" stroke-width="2"/>
+                        
+                        <!-- Cooking surface -->
+                        <ellipse cx="390" cy="85" rx="30" ry="15" fill="none" stroke="#666" stroke-width="2"/>
+                        <rect x="360" y="70" width="60" height="15" fill="none" stroke="#666" stroke-width="2" rx="3"/>
+                        
+                        <!-- Airflow arrows -->
+                        <path d="M140 430 L155 430" fill="none" stroke="#ffaa00" stroke-width="2" marker-end="url(#arrowhead2)"/>
+                        <path d="M180 420 L180 400" fill="none" stroke="#ffaa00" stroke-width="2" marker-end="url(#arrowhead2)"/>
+                        <path d="M200 380 L340 380" fill="none" stroke="#ffaa00" stroke-width="2" marker-end="url(#arrowhead2)"/>
+                        <path d="M390 400 L390 380" fill="none" stroke="#ffaa00" stroke-width="2" marker-end="url(#arrowhead2)"/>
+                        <path d="M390 300 L390 280" fill="none" stroke="#ffaa00" stroke-width="2" marker-end="url(#arrowhead2)"/>
+                        <path d="M390 200 L390 180" fill="none" stroke="#ffaa00" stroke-width="2" marker-end="url(#arrowhead2)"/>
+                        <path d="M390 120 L390 100" fill="none" stroke="#ffaa00" stroke-width="2" marker-end="url(#arrowhead2)"/>
+                        
+                        <defs>
+                            <marker id="arrowhead2" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                                <polygon points="0 0, 10 3.5, 0 7" fill="#ffaa00" />
+                            </marker>
+                        </defs>
+                        
+                        <text x="20" y="30" fill="#00ff88" font-family="Orbitron, monospace" font-size="20" font-weight="bold">J-TUBE ROCKET STOVE</text>
+                        <text x="20" y="50" fill="#66ccff" font-family="Arial, sans-serif" font-size="14">Standard Design (1:2:4 Ratio)</text>
+                        
+                        <text x="500" y="450" fill="#00ff88" font-family="Arial, sans-serif" font-size="12" font-weight="bold">✓ BENEFITS:</text>
+                        <text x="500" y="470" fill="#66ccff" font-family="Arial, sans-serif" font-size="11">• Most proven design</text>
+                        <text x="500" y="485" fill="#66ccff" font-family="Arial, sans-serif" font-size="11">• Strong secondary burn</text>
+                        <text x="500" y="500" fill="#66ccff" font-family="Arial, sans-serif" font-size="11">• Best for heating</text>
+                        <text x="500" y="515" fill="#66ccff" font-family="Arial, sans-serif" font-size="11">• Works with any wood</text>
+                    </svg>
+                </div>
+
+                <!-- L-Tube Diagram -->
+                <div id="l-tube-diagram" class="stove-diagram" style="display: none;">
+                    <h4 style="color: var(--primary-text); margin-bottom: 15px;">L-Tube Rocket Stove - Direct Feed Design</h4>
+                    <svg width="800" height="600" viewBox="0 0 800 600" style="width: 100%; height: auto; background: #1a1a1a; border-radius: 10px;">
+                        <!-- Heat Riser -->
+                        <rect x="350" y="150" width="80" height="240" fill="none" stroke="#00ff88" stroke-width="3" rx="5"/>
+                        <text x="440" y="170" fill="#66ccff" font-family="Arial, sans-serif" font-size="14" font-weight="bold">HEAT RISER</text>
+                        <text x="440" y="185" fill="#66ccff" font-family="Arial, sans-serif" font-size="12">Height = 3x Base</text>
+                        <text x="440" y="200" fill="#66ccff" font-family="Arial, sans-serif" font-size="12">(Shorter for cooking)</text>
+                        
+                        <!-- Insulation -->
+                        <rect x="330" y="140" width="120" height="260" fill="none" stroke="#ff6b35" stroke-width="2" stroke-dasharray="5,5" rx="5"/>
+                        <text x="460" y="230" fill="#ff6b35" font-family="Arial, sans-serif" font-size="11">Insulation</text>
+                        
+                        <!-- Horizontal Burn Chamber (Extended) -->
+                        <rect x="120" y="360" width="230" height="40" fill="none" stroke="#00ff88" stroke-width="3" rx="5"/>
+                        <text x="125" y="345" fill="#66ccff" font-family="Arial, sans-serif" font-size="14" font-weight="bold">BURN CHAMBER</text>
+                        <text x="125" y="420" fill="#66ccff" font-family="Arial, sans-serif" font-size="12">Length = 1.5x Base (Direct feed)</text>
+                        
+                        <!-- Feed Opening (Left side) -->
+                        <rect x="80" y="360" width="40" height="40" fill="none" stroke="#00ff88" stroke-width="3" rx="5"/>
+                        <text x="20" y="350" fill="#66ccff" font-family="Arial, sans-serif" font-size="14" font-weight="bold">FEED</text>
+                        <text x="20" y="365" fill="#66ccff" font-family="Arial, sans-serif" font-size="12">OPENING</text>
+                        <text x="20" y="420" fill="#66ccff" font-family="Arial, sans-serif" font-size="12">Direct wood feed</text>
+                        
+                        <!-- Long wood pieces -->
+                        <rect x="90" y="365" width="80" height="8" fill="#8B4513" stroke="#654321" stroke-width="1" rx="2"/>
+                        <rect x="90" y="375" width="80" height="8" fill="#8B4513" stroke="#654321" stroke-width="1" rx="2"/>
+                        <rect x="90" y="385" width="80" height="8" fill="#8B4513" stroke="#654321" stroke-width="1" rx="2"/>
+                        <text x="85" y="455" fill="#66ccff" font-family="Arial, sans-serif" font-size="11">Long wood pieces</text>
+                        <text x="85" y="470" fill="#66ccff" font-family="Arial, sans-serif" font-size="11">push as they burn</text>
+                        
+                        <!-- Air Intake -->
+                        <rect x="120" y="420" width="60" height="15" fill="none" stroke="#ffaa00" stroke-width="2" rx="3"/>
+                        <text x="120" y="445" fill="#ffaa00" font-family="Arial, sans-serif" font-size="12" font-weight="bold">AIR INTAKE</text>
+                        
+                        <!-- Fire -->
+                        <path d="M275 380 Q285 370 280 350 Q290 340 285 320 Q295 310 290 280" fill="none" stroke="#ff6b35" stroke-width="2"/>
+                        
+                        <!-- Cooking surface -->
+                        <ellipse cx="390" cy="135" rx="30" ry="15" fill="none" stroke="#666" stroke-width="2"/>
+                        <rect x="360" y="120" width="60" height="15" fill="none" stroke="#666" stroke-width="2" rx="3"/>
+                        
+                        <!-- Airflow arrows -->
+                        <path d="M100 427 L115 427" fill="none" stroke="#ffaa00" stroke-width="2" marker-end="url(#arrowhead3)"/>
+                        <path d="M150 420 L150 400" fill="none" stroke="#ffaa00" stroke-width="2" marker-end="url(#arrowhead3)"/>
+                        <path d="M230 380 L340 380" fill="none" stroke="#ffaa00" stroke-width="2" marker-end="url(#arrowhead3)"/>
+                        <path d="M390 400 L390 380" fill="none" stroke="#ffaa00" stroke-width="2" marker-end="url(#arrowhead3)"/>
+                        <path d="M390 320 L390 300" fill="none" stroke="#ffaa00" stroke-width="2" marker-end="url(#arrowhead3)"/>
+                        <path d="M390 250 L390 230" fill="none" stroke="#ffaa00" stroke-width="2" marker-end="url(#arrowhead3)"/>
+                        <path d="M390 180 L390 160" fill="none" stroke="#ffaa00" stroke-width="2" marker-end="url(#arrowhead3)"/>
+                        
+                        <defs>
+                            <marker id="arrowhead3" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                                <polygon points="0 0, 10 3.5, 0 7" fill="#ffaa00" />
+                            </marker>
+                        </defs>
+                        
+                        <text x="20" y="30" fill="#00ff88" font-family="Orbitron, monospace" font-size="20" font-weight="bold">L-TUBE ROCKET STOVE</text>
+                        <text x="20" y="50" fill="#66ccff" font-family="Arial, sans-serif" font-size="14">Direct Feed Design (1:1.5:3 Ratio)</text>
+                        
+                        <text x="500" y="450" fill="#00ff88" font-family="Arial, sans-serif" font-size="12" font-weight="bold">✓ BENEFITS:</text>
+                        <text x="500" y="470" fill="#66ccff" font-family="Arial, sans-serif" font-size="11">• Perfect for cooking</text>
+                        <text x="500" y="485" fill="#66ccff" font-family="Arial, sans-serif" font-size="11">• Easy heat control</text>
+                        <text x="500" y="500" fill="#66ccff" font-family="Arial, sans-serif" font-size="11">• No smoke-back</text>
+                        <text x="500" y="515" fill="#66ccff" font-family="Arial, sans-serif" font-size="11">• Uses long wood</text>
+                    </svg>
+                </div>
+
+                <!-- Cooking Stove Diagram -->
+                <div id="cooking-diagram" class="stove-diagram" style="display: none;">
+                    <h4 style="color: var(--primary-text); margin-bottom: 15px;">Cooking Rocket Stove - Optimized Design</h4>
+                    <svg width="800" height="600" viewBox="0 0 800 600" style="width: 100%; height: auto; background: #1a1a1a; border-radius: 10px;">
+                        <!-- Heat Riser (Shorter) -->
+                        <rect x="350" y="200" width="80" height="200" fill="none" stroke="#00ff88" stroke-width="3" rx="5"/>
+                        <text x="440" y="220" fill="#66ccff" font-family="Arial, sans-serif" font-size="14" font-weight="bold">HEAT RISER</text>
+                        <text x="440" y="235" fill="#66ccff" font-family="Arial, sans-serif" font-size="12">Height = 2.5x Base</text>
+                        <text x="440" y="250" fill="#66ccff" font-family="Arial, sans-serif" font-size="12">(Cooking optimized)</text>
+                        
+                        <!-- Insulation -->
+                        <rect x="330" y="190" width="120" height="220" fill="none" stroke="#ff6b35" stroke-width="2" stroke-dasharray="5,5" rx="5"/>
+                        <text x="460" y="280" fill="#ff6b35" font-family="Arial, sans-serif" font-size="11">Insulation</text>
+                        
+                        <!-- Burn Tunnel -->
+                        <rect x="200" y="360" width="150" height="40" fill="none" stroke="#00ff88" stroke-width="3" rx="5"/>
+                        <text x="205" y="345" fill="#66ccff" font-family="Arial, sans-serif" font-size="14" font-weight="bold">BURN TUNNEL</text>
+                        <text x="205" y="420" fill="#66ccff" font-family="Arial, sans-serif" font-size="12">Length = 1.5x Base</text>
+                        
+                        <!-- Feed Tube -->
+                        <rect x="160" y="280" width="40" height="120" fill="none" stroke="#00ff88" stroke-width="3" rx="5"/>
+                        <text x="80" y="300" fill="#66ccff" font-family="Arial, sans-serif" font-size="14" font-weight="bold">FEED TUBE</text>
+                        <text x="80" y="315" fill="#66ccff" font-family="Arial, sans-serif" font-size="12">Standard Feed</text>
+                        <text x="80" y="350" fill="#66ccff" font-family="Arial, sans-serif" font-size="12">Height = 1x Base</text>
+                        
+                        <!-- Large cooking surface -->
+                        <ellipse cx="390" cy="180" rx="45" ry="20" fill="none" stroke="#666" stroke-width="3"/>
+                        <rect x="345" y="160" width="90" height="20" fill="none" stroke="#666" stroke-width="3" rx="5"/>
+                        <text x="300" y="140" fill="#66ccff" font-family="Arial, sans-serif" font-size="14" font-weight="bold">LARGE COOKING POT</text>
+                        
+                        <!-- Pot stand/grate -->
+                        <rect x="320" y="185" width="140" height="10" fill="none" stroke="#999" stroke-width="2" rx="2"/>
+                        <text x="450" y="200" fill="#999" font-family="Arial, sans-serif" font-size="11">Pot Stand/Grate</text>
+                        
+                        <!-- Air Intake -->
+                        <rect x="160" y="420" width="40" height="20" fill="none" stroke="#ffaa00" stroke-width="2" rx="3"/>
+                        <text x="80" y="440" fill="#ffaa00" font-family="Arial, sans-serif" font-size="12" font-weight="bold">AIR INTAKE</text>
+                        
+                        <!-- Wood sticks -->
+                        <rect x="165" y="290" width="30" height="8" fill="#8B4513" stroke="#654321" stroke-width="1" rx="2"/>
+                        <rect x="165" y="305" width="30" height="8" fill="#8B4513" stroke="#654321" stroke-width="1" rx="2"/>
+                        <rect x="165" y="320" width="30" height="8" fill="#8B4513" stroke="#654321" stroke-width="1" rx="2"/>
+                        
+                        <!-- Fire (contained) -->
+                        <path d="M275 380 Q285 370 280 350 Q290 340 285 320 Q295 310 290 290" fill="none" stroke="#ff6b35" stroke-width="2"/>
+                        <path d="M390 400 L390 380 L390 360 L390 340 L390 320 L390 300 L390 280 L390 260 L390 240 L390 220 L390 200" fill="none" stroke="#ff6b35" stroke-width="1" stroke-dasharray="3,3"/>
+                        <text x="400" y="310" fill="#ff6b35" font-family="Arial, sans-serif" font-size="11">Heat rises</text>
+                        <text x="400" y="325" fill="#ff6b35" font-family="Arial, sans-serif" font-size="11">to cooking</text>
+                        
+                        <!-- Airflow arrows -->
+                        <path d="M140 430 L155 430" fill="none" stroke="#ffaa00" stroke-width="2" marker-end="url(#arrowhead4)"/>
+                        <path d="M180 420 L180 400" fill="none" stroke="#ffaa00" stroke-width="2" marker-end="url(#arrowhead4)"/>
+                        <path d="M200 380 L340 380" fill="none" stroke="#ffaa00" stroke-width="2" marker-end="url(#arrowhead4)"/>
+                        <path d="M390 400 L390 380" fill="none" stroke="#ffaa00" stroke-width="2" marker-end="url(#arrowhead4)"/>
+                        <path d="M390 350 L390 330" fill="none" stroke="#ffaa00" stroke-width="2" marker-end="url(#arrowhead4)"/>
+                        <path d="M390 280 L390 260" fill="none" stroke="#ffaa00" stroke-width="2" marker-end="url(#arrowhead4)"/>
+                        <path d="M390 230 L390 210" fill="none" stroke="#ffaa00" stroke-width="2" marker-end="url(#arrowhead4)"/>
+                        
+                        <defs>
+                            <marker id="arrowhead4" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                                <polygon points="0 0, 10 3.5, 0 7" fill="#ffaa00" />
+                            </marker>
+                        </defs>
+                        
+                        <text x="20" y="30" fill="#00ff88" font-family="Orbitron, monospace" font-size="20" font-weight="bold">COOKING ROCKET STOVE</text>
+                        <text x="20" y="50" fill="#66ccff" font-family="Arial, sans-serif" font-size="14">Cooking Optimized Design (1:1.5:2.5 Ratio)</text>
+                        
+                        <text x="500" y="450" fill="#00ff88" font-family="Arial, sans-serif" font-size="12" font-weight="bold">✓ BENEFITS:</text>
+                        <text x="500" y="470" fill="#66ccff" font-family="Arial, sans-serif" font-size="11">• Perfect cooking height</text>
+                        <text x="500" y="485" fill="#66ccff" font-family="Arial, sans-serif" font-size="11">• Maximum heat to pot</text>
+                        <text x="500" y="500" fill="#66ccff" font-family="Arial, sans-serif" font-size="11">• Easy operation</text>
+                        <text x="500" y="515" fill="#66ccff" font-family="Arial, sans-serif" font-size="11">• Portable design</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div id="results" class="results" style="display: none;">
+            <h3>Calculated Dimensions</h3>
+            <div class="result-grid" id="resultGrid">
+                <!-- Results will be populated here -->
+            </div>
+        </div>
+
+        <!-- Pricing Information -->
+        <div class="card" style="margin-bottom: 30px;">
+            <h3 class="card-title">Material Cost Estimates</h3>
+            <div class="pricing-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                <div class="price-item">
+                    <h4 style="color: var(--accent-text); margin-bottom: 10px;">Square Steel Tubing</h4>
+                    <p style="color: var(--secondary-text); font-size: 0.9rem;">4"x4" x 1/4" wall: $45-65 per 20ft<br>
+                    6"x6" x 1/4" wall: $85-120 per 20ft<br>
+                    Good for beginners, easy welding</p>
+                </div>
+                <div class="price-item">
+                    <h4 style="color: var(--accent-text); margin-bottom: 10px;">Round Steel Pipe</h4>
+                    <p style="color: var(--secondary-text); font-size: 0.9rem;">4" Schedule 40: $35-50 per 20ft<br>
+                    6" Schedule 40: $65-90 per 20ft<br>
+                    Better airflow, harder to fabricate</p>
+                </div>
+                <div class="price-item">
+                    <h4 style="color: var(--accent-text); margin-bottom: 10px;">Stove Pipe</h4>
+                    <p style="color: var(--secondary-text); font-size: 0.9rem;">6" Single wall: $15-25 per 4ft<br>
+                    6" Double wall: $45-70 per 3ft<br>
+                    Temporary builds only</p>
+                </div>
+                <div class="price-item">
+                    <h4 style="color: var(--accent-text); margin-bottom: 10px;">Fire Bricks</h4>
+                    <p style="color: var(--secondary-text); font-size: 0.9rem;">Standard 2.5"x4.5"x9": $1.50-3 each<br>
+                    Need 30-50 bricks for small stove<br>
+                    Best longevity, excellent heat retention</p>
+                </div>
+                <div class="price-item">
+                    <h4 style="color: var(--accent-text); margin-bottom: 10px;">Insulation Materials</h4>
+                    <p style="color: var(--secondary-text); font-size: 0.9rem;">Perlite: $15-25 per bag<br>
+                    Vermiculite: $20-35 per bag<br>
+                    Ceramic fiber: $45-80 per roll</p>
+                </div>
+                <div class="price-item">
+                    <h4 style="color: var(--accent-text); margin-bottom: 10px;">Total Project Cost</h4>
+                    <p style="color: var(--primary-text); font-size: 1rem; font-weight: bold;">Square Tube: $150-300<br>
+                    Round Pipe: $120-250<br>
+                    Fire Brick: $200-400<br>
+                    <span style="color: var(--warning-text); font-size: 0.9rem;">Plus welding supplies & tools</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-grid">
+            <div class="info-card">
+                <h4 class="info-title">J-Tube Design</h4>
+                <p class="info-text">Standard rocket stove with horizontal feed tube, vertical burn tunnel, and heat riser. Uses 1:2:4 ratio. Best for general purpose heating and cooking. Requires proper draft for secondary combustion.</p>
+            </div>
+
+            <div class="info-card">
+                <h4 class="info-title">L-Tube Design</h4>
+                <p class="info-text">Simplified design with direct feed into burn tunnel. Uses 1:1.5:3 ratios. Better fuel control and less smoke-back risk. Ideal for cooking applications where heat control is important.</p>
+            </div>
+
+            <div class="info-card">
+                <h4 class="info-title">K-Style Design</h4>
+                <p class="info-text">Features angled feed chute for automatic stick feeding. Self-feeding design but can jam with irregular sticks. Good for continuous burning but requires uniform fuel size.</p>
+            </div>
+
+            <div class="info-card">
+                <h4 class="info-title">Material Considerations</h4>
+                <p class="info-text">Steel: 1/4" thick minimum for combustion chamber. Fire brick: 2-4" walls. Cast refractory: Best for permanent installations. Insulation is critical - use perlite, vermiculite, or ceramic fiber.</p>
+            </div>
+
+            <div class="info-card">
+                <h4 class="info-title">Air Intake Guidelines</h4>
+                <p class="info-text">Primary air should be 25-33% of system cross-sectional area. Secondary air can be added 5-7% of system size. Too much air cools combustion, too little creates smoke.</p>
+            </div>
+
+            <div class="info-card">
+                <h4 class="info-title">Safety & Performance</h4>
+                <p class="info-text">Proper ratios ensure clean combustion with minimal smoke. Metal systems need excellent insulation and will eventually wear out. Test outdoors first before permanent installation.</p>
+            </div>
+        </div>
+
+        <!-- Detailed Ratio Explanations -->
+        <div class="card" style="margin-top: 30px;">
+            <h3 class="card-title">Why These Ratios Work - The Science Behind Rocket Stoves</h3>
+            
+            <div style="margin-bottom: 25px;">
+                <h4 style="color: var(--accent-text); margin-bottom: 15px; font-size: 1.3rem;">The 1:2:4 J-Tube Ratio Explained</h4>
+                <div style="color: var(--secondary-text); line-height: 1.7;">
+                    <p style="margin-bottom: 15px;"><strong style="color: var(--primary-text);">Feed Tube (1x):</strong> This is your baseline dimension. It needs to be large enough for wood sticks to slide down easily, but small enough to prevent over-feeding. If too large, you get smoke-back into the room. If too small, constant feeding becomes annoying.</p>
+                    
+                    <p style="margin-bottom: 15px;"><strong style="color: var(--primary-text);">Burn Tunnel (2x):</strong> Double the feed tube length creates the perfect "mixing zone" where wood gases and air turbulently combine. This length gives enough time for primary combustion while maintaining velocity. Too short = incomplete burning. Too long = heat loss.</p>
+                    
+                    <p style="margin-bottom: 15px;"><strong style="color: var(--primary-text);">Heat Riser (4x):</strong> Four times the feed length creates powerful draft through the "chimney effect." Hot gases rise rapidly, pulling fresh air through the system. This height ensures secondary combustion burns all the smoke particles, giving you that clean, roaring flame.</p>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <h4 style="color: var(--accent-text); margin-bottom: 15px; font-size: 1.3rem;">Why L-Tube Uses 1:1.5:3 Ratios</h4>
+                <div style="color: var(--secondary-text); line-height: 1.7;">
+                    <p style="margin-bottom: 15px;"><strong style="color: var(--primary-text);">Shorter Burn Tunnel (1.5x):</strong> L-tubes feed wood directly into the combustion zone, so they need less horizontal mixing space. The 1.5x length prevents jamming while maintaining good airflow velocity.</p>
+                    
+                    <p style="margin-bottom: 15px;"><strong style="color: var(--primary-text);">Reduced Riser (3x):</strong> Since L-tubes are primarily for cooking, the shorter riser keeps the flame closer to your pot while still creating enough draft. Too tall and you waste heat up the chimney instead of into your food.</p>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <h4 style="color: var(--accent-text); margin-bottom: 15px; font-size: 1.3rem;">K-Style Modifications for Angled Feed</h4>
+                <div style="color: var(--secondary-text); line-height: 1.7;">
+                    <p style="margin-bottom: 15px;"><strong style="color: var(--primary-text);">Extended Feed (1.2x):</strong> The angled feed needs extra length to accommodate the slope and prevent sticks from jamming. However, this makes the feed tube less reliable with irregular wood.</p>
+                    
+                    <p style="margin-bottom: 15px;"><strong style="color: var(--primary-text);">Enhanced Riser (3.5x):</strong> K-style stoves often burn more continuously, so they need extra riser height to handle the increased gas flow and maintain clean combustion.</p>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <h4 style="color: var(--accent-text); margin-bottom: 15px; font-size: 1.3rem;">The Critical 7:1 Height-to-Width Rule</h4>
+                <div style="color: var(--secondary-text); line-height: 1.7;">
+                    <p style="margin-bottom: 15px;"><strong style="color: var(--primary-text);">Why 7-8 Times Taller:</strong> This ratio creates the ideal "chimney effect." Too short and you don't get enough draft - your fire becomes lazy and smoky. Too tall and you pull heat away from the combustion zone before gases can fully burn.</p>
+                    
+                    <p style="margin-bottom: 15px;"><strong style="color: var(--primary-text);">The Physics:</strong> Rising hot air creates negative pressure (suction) at the bottom. The taller the column, the stronger the pull. But there's a sweet spot - beyond 8:1, you start losing more heat than you gain in draft.</p>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <h4 style="color: var(--accent-text); margin-bottom: 15px; font-size: 1.3rem;">Air Intake Mathematics</h4>
+                <div style="color: var(--secondary-text); line-height: 1.7;">
+                    <p style="margin-bottom: 15px;"><strong style="color: var(--primary-text);">25-30% Rule:</strong> Primary air intake should be 25-30% of the combustion chamber's cross-sectional area. This provides enough oxygen for complete combustion without cooling the fire too much.</p>
+                    
+                    <p style="margin-bottom: 15px;"><strong style="color: var(--primary-text);">Why Not More Air?:</strong> Excess air acts like a heat sink, absorbing energy and lowering combustion temperatures. Lower temps = incomplete burning = smoke and creosote. It's better to burn hot and clean than cool and dirty.</p>
+                    
+                    <p style="margin-bottom: 15px;"><strong style="color: var(--primary-text);">Secondary Air (5-7%):</strong> This small amount of preheated air helps burn any remaining smoke particles in the heat riser. It's the difference between yellow flames (incomplete) and blue flames (complete combustion).</p>
+                </div>
+            </div>
+
+            <div style="background: var(--accent-bg); padding: 20px; border-radius: 10px; border-left: 4px solid var(--warning-text);">
+                <h4 style="color: var(--warning-text); margin-bottom: 10px;">Critical Success Factors</h4>
+                <ul style="color: var(--secondary-text); margin-left: 20px; line-height: 1.6;">
+                    <li><strong>Insulation is Everything:</strong> Without proper insulation around the heat riser, you'll never get secondary combustion. The gases need to stay hot (1400°F+) to burn completely.</li>
+                    <li><strong>Cross-Section Consistency:</strong> Keep the same internal diameter throughout the system. Any restrictions create turbulence and pressure drops.</li>
+                    <li><strong>Material Thickness:</strong> 1/4" steel minimum for the heat riser - thinner metal warps and fails quickly under the intense heat.</li>
+                    <li><strong>Draft Requirements:</strong> The system needs to "roar" like a jet engine when working properly. If it's quiet, something's wrong with the ratios or insulation.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculateDimensions() {
+            const stoveType = document.getElementById('stoveType').value;
+            const inputDimension = document.getElementById('inputDimension').value;
+            const dimensionValue = parseFloat(document.getElementById('dimensionValue').value);
+            const materialType = document.getElementById('materialType').value;
+            
+            if (!dimensionValue || dimensionValue <= 0) {
+                alert('Please enter a valid dimension value');
+                return;
+            }
+
+            let results = {};
+            
+            // Define ratios for different stove types
+            const ratios = {
+                'j-tube': { feed: 1, burn: 2, riser: 4 },
+                'l-tube': { feed: 1, burn: 1.5, riser: 3 },
+                'k-style': { feed: 1.2, burn: 2, riser: 3.5 },
+                'cooking': { feed: 1, burn: 1.5, riser: 2.5 }
+            };
+
+            const ratio = ratios[stoveType];
+            
+            // Calculate base dimension (combustion chamber diameter)
+            let baseDimension;
+            switch(inputDimension) {
+                case 'combustion-diameter':
+                    baseDimension = dimensionValue;
+                    break;
+                case 'feed-tube':
+                    baseDimension = dimensionValue / ratio.feed;
+                    break;
+                case 'burn-tunnel':
+                    baseDimension = dimensionValue / ratio.burn;
+                    break;
+                case 'heat-riser':
+                    baseDimension = dimensionValue / ratio.riser;
+                    break;
+            }
+
+            // Calculate all dimensions
+            results.combustionDiameter = baseDimension;
+            results.combustionHeight = baseDimension * 7.5; // 7-8x taller than wide
+            results.feedTubeLength = baseDimension * ratio.feed;
+            results.feedTubeHeight = baseDimension;
+            results.burnTunnelLength = baseDimension * ratio.burn;
+            results.burnTunnelHeight = baseDimension;
+            results.heatRiserHeight = baseDimension * ratio.riser;
+            results.heatRiserDiameter = baseDimension;
+            
+            // Air intake calculations
+            const crossSectionalArea = Math.PI * Math.pow(baseDimension / 2, 2);
+            results.primaryAirIntake = Math.sqrt(crossSectionalArea * 0.25 / Math.PI) * 2; // 25% of CSA
+            results.secondaryAirIntake = Math.sqrt(crossSectionalArea * 0.06 / Math.PI) * 2; // 6% of CSA
+            
+            // Material recommendations
+            const materialPricing = {
+                'steel': { thickness: '1/4"', cost: '$150-250', note: 'Welded plate construction' },
+                'steel-thin': { thickness: '1/8"', cost: '$100-180', note: 'Budget option, shorter life' },
+                'square-tube': { thickness: '1/4" wall', cost: '$150-300', note: 'Easy to work with' },
+                'round-pipe': { thickness: 'Sch 40', cost: '$120-250', note: 'Better airflow, harder to fabricate' },
+                'stove-pipe': { thickness: '24ga', cost: '$60-120', note: 'Temporary use only' },
+                'fire-brick': { thickness: '2-4"', cost: '$200-400', note: 'Best longevity' },
+                'cast-refractory': { thickness: '3-6"', cost: '$300-600', note: 'Professional grade' }
+            };
+            
+            results.steelThickness = materialPricing[materialType].thickness;
+            results.estimatedCost = materialPricing[materialType].cost;
+            results.materialNote = materialPricing[materialType].note;
+            results.insulationThickness = baseDimension < 6 ? '2"' : '3"';
+            
+            // Add measurement explanations to results
+            results.burnTunnelTotal = results.burnTunnelLength; // Total length
+            results.burnTunnelFromRiser = Math.round((results.burnTunnelLength * 0.6) * 10) / 10; // From cylinder back
+            results.totalStoveLength = Math.round((results.feedTubeLength + results.burnTunnelLength) * 10) / 10;
+            results.fuelSize = Math.round(results.feedTubeLength * 0.8 * 10) / 10; // 80% of feed tube length
+            results.potStandHeight = results.heatRiserHeight + 4; // 4" above riser
+            results.ashGrateSize = Math.round((baseDimension - 0.5) * 10) / 10; // Slightly smaller than chamber
+
+            displayResults(results, stoveType);
+        }
+
+        function updateDiagram() {
+            const stoveType = document.getElementById('stoveType').value;
+            
+            // Hide all diagrams
+            const diagrams = document.querySelectorAll('.stove-diagram');
+            diagrams.forEach(diagram => {
+                diagram.style.display = 'none';
+            });
+            
+            // Show selected diagram
+            const selectedDiagram = document.getElementById(stoveType + '-diagram');
+            if (selectedDiagram) {
+                selectedDiagram.style.display = 'block';
+            }
+        }
+
+        function displayResults(results, stoveType) {
+            const resultsDiv = document.getElementById('results');
+            const resultGrid = document.getElementById('resultGrid');
+            
+            // Clear previous results
+            resultGrid.innerHTML = '';
+            
+            // Define result items to display
+            const resultItems = [
+                { label: 'Combustion Chamber Diameter', value: results.combustionDiameter.toFixed(1) + '"', key: 'combustionDiameter' },
+                { label: 'Combustion Chamber Height', value: results.combustionHeight.toFixed(1) + '"', key: 'combustionHeight' },
+                { label: 'Feed Tube Length', value: results.feedTubeLength.toFixed(1) + '"', key: 'feedTubeLength' },
+                { label: 'Feed Tube Height', value: results.feedTubeHeight.toFixed(1) + '"', key: 'feedTubeHeight' },
+                { label: 'Burn Tunnel Length (Total)', value: results.burnTunnelTotal.toFixed(1) + '"', key: 'burnTunnelTotal' },
+                { label: 'Burn Tunnel (From Heat Riser)', value: results.burnTunnelFromRiser.toFixed(1) + '"', key: 'burnTunnelFromRiser' },
+                { label: 'Total Stove Length', value: results.totalStoveLength.toFixed(1) + '"', key: 'totalStoveLength' },
+                { label: 'Burn Tunnel Height', value: results.burnTunnelHeight.toFixed(1) + '"', key: 'burnTunnelHeight' },
+                { label: 'Heat Riser Height', value: results.heatRiserHeight.toFixed(1) + '"', key: 'heatRiserHeight' },
+                { label: 'Heat Riser Diameter', value: results.heatRiserDiameter.toFixed(1) + '"', key: 'heatRiserDiameter' },
+                { label: 'Primary Air Intake Diameter', value: results.primaryAirIntake.toFixed(1) + '"', key: 'primaryAirIntake' },
+                { label: 'Secondary Air Intake Diameter', value: results.secondaryAirIntake.toFixed(1) + '"', key: 'secondaryAirIntake' },
+                { label: 'Recommended Material Thickness', value: results.steelThickness, key: 'steelThickness' },
+                { label: 'Estimated Project Cost', value: results.estimatedCost, key: 'estimatedCost' },
+                { label: 'Material Notes', value: results.materialNote, key: 'materialNote' },
+                { label: 'Insulation Thickness', value: results.insulationThickness, key: 'insulationThickness' },
+                { label: 'Maximum Fuel Length', value: results.fuelSize + '"', key: 'fuelSize' },
+                { label: 'Pot Stand Height', value: results.potStandHeight.toFixed(1) + '"', key: 'potStandHeight' },
+                { label: 'Ash Grate Size', value: results.ashGrateSize + '" x ' + results.ashGrateSize + '"', key: 'ashGrateSize' }
+            ];
+
+            // Create result items
+            resultItems.forEach((item, index) => {
+                const resultItem = document.createElement('div');
+                resultItem.className = 'result-item';
+                resultItem.style.animationDelay = `${index * 0.1}s`;
+                resultItem.innerHTML = `
+                    <div class="result-label">${item.label}</div>
+                    <div class="result-value">${item.value}</div>
+                `;
+                resultGrid.appendChild(resultItem);
+            });
+
+            // Add warnings based on calculated dimensions
+            const warnings = [];
+            
+            if (results.combustionDiameter < 3) {
+                warnings.push('Warning: Chamber diameter under 3" may be difficult to clean and maintain.');
+            }
+            
+            if (results.combustionDiameter > 10) {
+                warnings.push('Warning: Large diameter systems generate extreme heat and may damage metal components quickly.');
+            }
+            
+            if (results.heatRiserHeight < 20) {
+                warnings.push('Warning: Heat riser under 20" may not create adequate draft for clean combustion.');
+            }
+            
+            if (stoveType === 'k-style') {
+                warnings.push('Note: K-style design may have feeding issues with irregular sticks at 45° angle.');
+            }
+
+            if (warnings.length > 0) {
+                const warningDiv = document.createElement('div');
+                warningDiv.className = 'warning';
+                warningDiv.innerHTML = warnings.join('<br>');
+                resultGrid.appendChild(warningDiv);
+            }
+
+            // Show results with animation
+            resultsDiv.style.display = 'block';
+            resultsDiv.style.opacity = '0';
+            setTimeout(() => {
+                resultsDiv.style.transition = 'opacity 0.5s ease-in-out';
+                resultsDiv.style.opacity = '1';
+            }, 100);
+        }
+
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show J-tube diagram by default
+            updateDiagram();
+            
+            // Add input validation
+            const dimensionInput = document.getElementById('dimensionValue');
+            
+            dimensionInput.addEventListener('input', function() {
+                if (this.value < 0) this.value = 0;
+                if (this.value > 50) this.value = 50;
+            });
+
+            // Add enter key support
+            dimensionInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    calculateDimensions();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
