@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Budget Calculator — DuttyBookBag Lifeline</title>
+  <meta name="description" content="Free budget calculator. Enter your income and expenses, see what's left, find where to cut. Print your results. DuttyBookBag Lifeline." />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --black:#000000;--panel:#080f0f;--panel2:#0a1414;--border:#0c3030;
+      --cyan:#00ffe1;--green:#00ff6a;--blue:#4db8ff;--gold:#ffd166;
+      --red:#ff5252;--purple:#c792ea;--orange:#ff9f43;--neon:#39ff14;
+      --text:#b8e8e2;--muted:#3d7070;
+      --mono:'Share Tech Mono',monospace;--display:'Bebas Neue',sans-serif;--body:'Rajdhani',sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--black);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.7;overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,255,225,0.012) 3px,rgba(0,255,225,0.012) 4px);pointer-events:none;z-index:999;}
+    .wrap{position:relative;z-index:1;max-width:700px;margin:0 auto;padding:0 24px;}
+
+    /* NAV */
+    .site-nav{position:sticky;top:0;z-index:100;background:rgba(0,0,0,0.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:0 24px;}
+    .site-nav .wrap{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;padding:0;max-width:700px;}
+    .site-nav a{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--muted);text-decoration:none;text-transform:uppercase;padding:14px 16px;transition:color 0.2s;white-space:nowrap;}
+    .site-nav a:hover{color:var(--cyan);}
+    .site-nav a.active{color:var(--green);text-shadow:0 0 8px rgba(0,255,106,0.4);}
+    @media(max-width:580px){.site-nav a{font-size:10px;padding:10px 8px;letter-spacing:1px;}}
+
+    header{padding:40px 0 20px;text-align:center;}
+    .badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:5px;color:var(--cyan);border:1px solid var(--cyan);padding:5px 18px;margin-bottom:18px;text-transform:uppercase;}
+    h1{font-family:var(--display);font-size:clamp(36px,7vw,60px);letter-spacing:4px;line-height:0.95;color:#fff;text-transform:uppercase;}
+    h1 .accent{color:var(--cyan);text-shadow:0 0 30px rgba(0,255,225,0.5);}
+    .tagline{margin:16px auto 0;font-size:16px;color:var(--text);max-width:600px;}
+
+    /* FORM STYLES */
+    .calc-section{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:24px;margin:20px 0;}
+    .calc-section h3{font-family:var(--display);font-size:22px;letter-spacing:2px;color:var(--cyan);text-transform:uppercase;margin-bottom:16px;}
+    .calc-section.income h3{color:var(--green);}
+    .calc-section.expenses h3{color:var(--red);}
+
+    .field{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap;}
+    .field label{font-family:var(--mono);font-size:13px;letter-spacing:1px;color:var(--text);flex:1;min-width:150px;}
+    .field input{background:#020808;border:1px solid var(--border);border-radius:4px;color:var(--cyan);font-family:var(--mono);font-size:15px;padding:10px 14px;width:140px;text-align:right;outline:none;transition:border-color 0.2s;}
+    .field input:focus{border-color:var(--cyan);box-shadow:0 0 10px rgba(0,255,225,0.15);}
+    .field input::placeholder{color:var(--muted);opacity:0.5;}
+    .field .prefix{color:var(--green);font-family:var(--mono);font-size:15px;font-weight:700;}
+
+    /* RESULTS */
+    .results{background:var(--panel);border:2px solid var(--border);border-radius:8px;padding:28px;margin:24px 0;text-align:center;}
+    .results.positive{border-color:var(--green);background:rgba(0,255,106,0.04);}
+    .results.negative{border-color:var(--red);background:rgba(255,82,82,0.04);}
+    .results.zero{border-color:var(--gold);background:rgba(255,209,102,0.04);}
+    .result-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);}
+    .result-row:last-child{border-bottom:none;}
+    .result-label{font-family:var(--mono);font-size:14px;letter-spacing:2px;color:var(--text);text-transform:uppercase;}
+    .result-val{font-family:var(--display);font-size:32px;letter-spacing:2px;}
+    .result-val.income-val{color:var(--green);}
+    .result-val.expense-val{color:var(--red);}
+    .result-val.left-val{color:var(--cyan);}
+    .result-val.left-val.negative{color:var(--red);}
+    .result-val.left-val.positive{color:var(--green);}
+    .result-msg{font-family:var(--mono);font-size:13px;margin-top:14px;padding:12px;border-radius:4px;}
+    .result-msg.good{background:rgba(0,255,106,0.08);color:var(--green);border:1px solid rgba(0,255,106,0.3);}
+    .result-msg.bad{background:rgba(255,82,82,0.08);color:var(--red);border:1px solid rgba(255,82,82,0.3);}
+    .result-msg.okay{background:rgba(255,209,102,0.08);color:var(--gold);border:1px solid rgba(255,209,102,0.3);}
+
+    /* BUTTONS */
+    .btn-row{display:flex;gap:12px;justify-content:center;margin:20px 0;flex-wrap:wrap;}
+    .btn{font-family:var(--display);font-size:20px;letter-spacing:3px;padding:14px 32px;border:2px solid;border-radius:6px;cursor:pointer;text-transform:uppercase;transition:all 0.2s;background:transparent;}
+    .btn-calc{color:var(--cyan);border-color:var(--cyan);}
+    .btn-calc:hover{background:var(--cyan);color:#000;}
+    .btn-print{color:var(--green);border-color:var(--green);}
+    .btn-print:hover{background:var(--green);color:#000;}
+    .btn-reset{color:var(--red);border-color:var(--border);font-size:16px;padding:10px 20px;}
+    .btn-reset:hover{border-color:var(--red);}
+
+    /* TIPS */
+    .tips{background:var(--panel);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:6px;padding:18px;margin:20px 0;display:none;}
+    .tips.show{display:block;}
+    .tips h3{color:var(--gold);font-size:18px;margin-bottom:10px;}
+    .tips p{font-size:14px;margin-bottom:6px;}
+
+    /* GLOWING DOT LOGO */
+    .dbb-logo{display:grid;grid-template-columns:repeat(3,20px);grid-template-rows:repeat(3,20px);gap:6px;justify-content:center;margin:0 auto;width:max-content;}
+    .dbb-logo .dot{width:20px;height:20px;border-radius:50%;animation:dbbPulse 2.8s ease-in-out infinite;}
+    .dbb-logo .green{background:#00ff44;box-shadow:0 0 6px #00ff44;}
+    .dbb-logo .red{background:#ff1a1a;box-shadow:0 0 6px #ff1a1a;}
+    .dbb-logo .d1{grid-column:2;grid-row:1;}.dbb-logo .d2{grid-column:1;grid-row:2;}.dbb-logo .d3{grid-column:2;grid-row:2;}
+    .dbb-logo .d4{grid-column:3;grid-row:2;}.dbb-logo .d5{grid-column:1;grid-row:3;}.dbb-logo .d6{grid-column:3;grid-row:3;}
+    @keyframes dbbPulse{0%,100%{opacity:0.55;transform:scale(0.92);}50%{opacity:1;transform:scale(1.08);}}
+
+    footer{border-top:1px solid var(--border);padding:30px 0;margin-top:40px;text-align:center;}
+    footer p{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:6px;}
+    footer a{color:var(--green);text-decoration:none;}
+    .disclaimer{max-width:660px;margin:14px auto 0;font-size:10px;color:var(--muted);font-style:italic;line-height:1.5;padding:12px;border:1px solid var(--border);border-radius:4px;text-align:left;}
+
+    /* PRINT STYLES */
+    @media print{
+      body{background:#fff!important;color:#000!important;}
+      body::before,body::after{display:none!important;}
+      .site-nav,.btn-row,.tips,.tagline,.badge{display:none!important;}
+      .wrap{max-width:100%;}
+      .calc-section,.results{background:#fff!important;border-color:#ccc!important;color:#000!important;}
+      .calc-section h3{color:#333!important;}
+      .field label{color:#333!important;}
+      .field input{color:#000!important;border-color:#ccc!important;background:#f9f9f9!important;}
+      .result-val{color:#000!important;}
+      .result-label{color:#333!important;}
+      h1{color:#000!important;}
+      h1 .accent{color:#006699!important;text-shadow:none!important;}
+      .dbb-logo,.disclaimer{display:none!important;}
+      .result-msg{border:1px solid #ccc!important;background:#f5f5f5!important;color:#333!important;}
+      header{padding:20px 0 10px!important;}
+      footer p{color:#999!important;}
+      #printLogo{display:block!important;}
+      #chartBox{border:1px solid #ccc!important;border-radius:6px!important;padding:16px!important;}
+      #chartBox h3{color:#333!important;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="site-nav">
+  <div class="wrap">
+    <a href="index.html">Home</a>
+    <a href="dbb-calculator.html">Trading Calculator</a>
+    <a href="dbb-budget-calculator.html" class="active">Budget Tool</a>
+    <a href="dbb-lifeline.html">Lifeline</a>
+  </div>
+</nav>
+<div style="text-align:center;padding:6px 0;background:rgba(0,0,0,0.8);border-bottom:1px solid #0c3030;position:relative;z-index:99;">
+  <div id="google_translate_element" style="display:inline-block;"></div>
+</div>
+<script>
+function googleTranslateElementInit(){new google.translate.TranslateElement({pageLanguage:'en',layout:google.translate.TranslateElement.InlineLayout.HORIZONTAL},'google_translate_element');}
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<style>.goog-te-banner-frame{display:none!important;}.goog-te-gadget{font-size:11px!important;color:#3d7070!important;}.goog-te-gadget .goog-te-combo{background:#080f0f;color:#b8e8e2;border:1px solid #0c3030;border-radius:4px;padding:4px 8px;font-family:'Share Tech Mono',monospace;font-size:11px;outline:none;}.goog-te-gadget>span{display:none!important;}body{top:0!important;}</style>
+
+<!-- HEADER -->
+<header>
+  <div class="wrap">
+    <div style="display:flex;justify-content:center;margin-bottom:16px;">
+      <svg viewBox="0 0 120 140" width="70" height="82" style="filter:drop-shadow(0 0 14px rgba(57,255,20,0.3));">
+        <rect x="10" y="10" width="100" height="120" rx="14" fill="#080f0f" stroke="#1a3a3a" stroke-width="2"/>
+        <circle cx="42" cy="38" r="9" fill="#39ff14"><animate attributeName="opacity" values="1;1;1;0.1;1" dur="4s" repeatCount="indefinite"/></circle>
+        <circle cx="42" cy="38" r="4" fill="#fff" opacity="0.3"/>
+        <circle cx="78" cy="38" r="9" fill="#39ff14"><animate attributeName="opacity" values="1;1;1;0.1;1" dur="4s" repeatCount="indefinite"/></circle>
+        <circle cx="78" cy="38" r="4" fill="#fff" opacity="0.3"/>
+        <circle cx="33" cy="72" r="7" fill="#ff5252" opacity="0.35"/>
+        <circle cx="60" cy="72" r="7" fill="#ff5252" opacity="0.6"/>
+        <circle cx="87" cy="72" r="7" fill="#ff5252" opacity="0.35"/>
+        <circle cx="60" cy="102" r="8" fill="#ff5252" opacity="0.85"><animate attributeName="opacity" values="0.85;0.5;0.85" dur="2.5s" repeatCount="indefinite"/></circle>
+        <animateTransform attributeName="transform" type="translate" values="0,0;0,-2;0,0" dur="4s" repeatCount="indefinite"/>
+      </svg>
+    </div>
+    <div class="badge">DuttyBookBag · Lifeline</div>
+    <h1>BUDGET <span class="accent">CALCULATOR</span></h1>
+    <p class="tagline">Enter your monthly income and expenses. See what's left. Find where to cut. Hit <strong>Print</strong> when done.</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- INCOME -->
+  <div class="calc-section income">
+    <h3>💵 Monthly Income</h3>
+    <div class="field"><label>Paycheck / Salary</label><span class="prefix">$</span><input type="number" id="i-paycheck" placeholder="0.00" min="0" step="0.01"></div>
+    <div class="field"><label>Second Job / Side Hustle</label><span class="prefix">$</span><input type="number" id="i-side" placeholder="0.00" min="0" step="0.01"></div>
+    <div class="field"><label>Government Benefits</label><span class="prefix">$</span><input type="number" id="i-benefits" placeholder="0.00" min="0" step="0.01"></div>
+    <div class="field"><label>Child Support / Alimony</label><span class="prefix">$</span><input type="number" id="i-support" placeholder="0.00" min="0" step="0.01"></div>
+    <div class="field"><label>Other Income</label><span class="prefix">$</span><input type="number" id="i-other" placeholder="0.00" min="0" step="0.01"></div>
+  </div>
+
+  <!-- EXPENSES -->
+  <div class="calc-section expenses">
+    <h3>📤 Monthly Expenses</h3>
+    <div class="field"><label>Rent / Mortgage</label><span class="prefix">$</span><input type="number" id="e-rent" placeholder="0.00" min="0" step="0.01"></div>
+    <div class="field"><label>Electricity / Power</label><span class="prefix">$</span><input type="number" id="e-electric" placeholder="0.00" min="0" step="0.01"></div>
+    <div class="field"><label>Water / Sewer</label><span class="prefix">$</span><input type="number" id="e-water" placeholder="0.00" min="0" step="0.01"></div>
+    <div class="field"><label>Internet / WiFi</label><span class="prefix">$</span><input type="number" id="e-internet" placeholder="0.00" min="0" step="0.01"></div>
+    <div class="field"><label>Phone Bill</label><span class="prefix">$</span><input type="number" id="e-phone" placeholder="0.00" min="0" step="0.01"></div>
+    <div class="field"><label>Food / Groceries</label><span class="prefix">$</span><input type="number" id="e-food" placeholder="0.00" min="0" step="0.01"></div>
+    <div class="field"><label>Gas / Transportation</label><span class="prefix">$</span><input type="number" id="e-transport" placeholder="0.00" min="0" step="0.01"></div>
+    <div class="field"><label>Car Payment</label><span class="prefix">$</span><input type="number" id="e-car" placeholder="0.00" min="0" step="0.01"></div>
+    <div class="field"><label>Car Insurance</label><span class="prefix">$</span><input type="number" id="e-carins" placeholder="0.00" min="0" step="0.01"></div>
+    <div class="field"><label>Health Insurance</label><span class="prefix">$</span><input type="number" id="e-health" placeholder="0.00" min="0" step="0.01"></div>
+    <div class="field"><label>Credit Card Payments</label><span class="prefix">$</span><input type="number" id="e-credit" placeholder="0.00" min="0" step="0.01"></div>
+    <div class="field"><label>Student Loans</label><span class="prefix">$</span><input type="number" id="e-loans" placeholder="0.00" min="0" step="0.01"></div>
+    <div class="field"><label>Subscriptions (Netflix, Spotify, etc.)</label><span class="prefix">$</span><input type="number" id="e-subs" placeholder="0.00" min="0" step="0.01"></div>
+    <div class="field"><label>Childcare / Daycare</label><span class="prefix">$</span><input type="number" id="e-childcare" placeholder="0.00" min="0" step="0.01"></div>
+    <div class="field"><label>Personal / Clothing</label><span class="prefix">$</span><input type="number" id="e-personal" placeholder="0.00" min="0" step="0.01"></div>
+    <div class="field"><label>Eating Out / Takeout</label><span class="prefix">$</span><input type="number" id="e-eating" placeholder="0.00" min="0" step="0.01"></div>
+    <div class="field"><label>Other Expenses</label><span class="prefix">$</span><input type="number" id="e-other" placeholder="0.00" min="0" step="0.01"></div>
+  </div>
+
+  <!-- BUTTONS -->
+  <div class="btn-row">
+    <button class="btn btn-calc" onclick="calculate()">Calculate</button>
+    <button class="btn btn-reset" onclick="resetAll()">Reset</button>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results" id="results" style="display:none;">
+    <div class="result-row">
+      <span class="result-label">Total Income</span>
+      <span class="result-val income-val" id="r-income">$0</span>
+    </div>
+    <div class="result-row">
+      <span class="result-label">Total Expenses</span>
+      <span class="result-val expense-val" id="r-expenses">$0</span>
+    </div>
+    <div class="result-row" style="border-top:2px solid var(--cyan);padding-top:14px;margin-top:6px;">
+      <span class="result-label" style="font-size:16px;">What's Left</span>
+      <span class="result-val left-val" id="r-left">$0</span>
+    </div>
+    <div class="result-msg" id="r-msg"></div>
+  </div>
+
+  <!-- PIE CHART -->
+  <div id="chartBox" style="display:none;margin:20px 0;text-align:center;">
+    <h3 style="font-family:var(--display);font-size:20px;letter-spacing:2px;color:var(--cyan);text-transform:uppercase;margin-bottom:14px;">Expense Breakdown</h3>
+    <canvas id="pieChart" width="320" height="320" style="max-width:100%;margin:0 auto;display:block;"></canvas>
+    <div id="chartLegend" style="margin-top:14px;font-family:var(--mono);font-size:11px;display:flex;flex-wrap:wrap;gap:8px 16px;justify-content:center;"></div>
+  </div>
+
+  <!-- PRINT-ONLY STATIC LOGO (hidden on screen, visible on paper) -->
+  <div id="printLogo" style="display:none;text-align:center;padding:20px 0;">
+    <div style="display:inline-grid;grid-template-columns:repeat(3,18px);grid-template-rows:repeat(3,18px);gap:6px;">
+      <div style="grid-column:2;grid-row:1;width:18px;height:18px;border-radius:50%;background:#cc0000;"></div>
+      <div style="grid-column:1;grid-row:2;width:18px;height:18px;border-radius:50%;background:#009933;"></div>
+      <div style="grid-column:2;grid-row:2;width:18px;height:18px;border-radius:50%;background:#cc0000;"></div>
+      <div style="grid-column:3;grid-row:2;width:18px;height:18px;border-radius:50%;background:#009933;"></div>
+      <div style="grid-column:1;grid-row:3;width:18px;height:18px;border-radius:50%;background:#009933;"></div>
+      <div style="grid-column:3;grid-row:3;width:18px;height:18px;border-radius:50%;background:#009933;"></div>
+    </div>
+    <p style="font-family:sans-serif;font-size:10px;color:#666;margin-top:8px;letter-spacing:2px;">DUTTYBOOKBAG</p>
+  </div>
+
+  <!-- TIPS -->
+  <div class="tips" id="tips">
+    <h3>💡 Quick Tips To Free Up Money</h3>
+    <p id="tip-subs" style="display:none;">📺 <strong>Subscriptions:</strong> You're spending <span id="tip-subs-amt"></span>/month on subscriptions. Cancel what you don't use daily. Even cutting one $15 service saves $180/year.</p>
+    <p id="tip-eating" style="display:none;">🍔 <strong>Eating Out:</strong> You're spending <span id="tip-eating-amt"></span>/month on takeout/restaurants. Cooking at home is 3-5x cheaper. Try meal prepping on Sundays.</p>
+    <p id="tip-credit" style="display:none;">💳 <strong>Credit Cards:</strong> You're paying <span id="tip-credit-amt"></span>/month on credit cards. Call your card company and ask for a hardship program — they can lower your rate or pause payments.</p>
+    <p id="tip-phone" style="display:none;">📱 <strong>Phone Bill:</strong> If your phone bill is over $50/month, look into prepaid carriers like Mint Mobile ($15/mo), Visible ($25/mo), or the free Lifeline program.</p>
+    <p>🏠 <strong>Need help with rent or bills?</strong> Visit our <a href="dbb-lifeline.html" style="color:var(--cyan);">Lifeline page</a> — free resources for food, rent, utilities, and more.</p>
+  </div>
+
+  <!-- PRINT BUTTON -->
+  <div class="btn-row" id="print-row" style="display:none;">
+    <button class="btn btn-print" onclick="window.print()">🖨 Print My Budget</button>
+  </div>
+
+</div>
+
+<!-- BOTTOM LOGO -->
+<section style="padding:30px 0;">
+  <div class="wrap" style="text-align:center;">
+    <div class="dbb-logo">
+      <div class="dot red d1"></div>
+      <div class="dot green d2"></div>
+      <div class="dot red d3"></div>
+      <div class="dot green d4"></div>
+      <div class="dot green d5"></div>
+      <div class="dot green d6"></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <p>DuttyBookBag · Budget Calculator</p>
+    <p><a href="dbb-lifeline.html">← Lifeline</a> · <a href="index.html">Home</a></p>
+    <div class="disclaimer">
+      This budget calculator is a simple educational tool. It does not store any data — everything you type stays on your device and disappears when you close the page. DuttyBookBag is not a financial advisor. This tool does not constitute financial advice. Always consult a qualified financial professional for important money decisions.
+    </div>
+  </div>
+</footer>
+
+<script>
+function v(id){ return parseFloat(document.getElementById(id).value) || 0; }
+function fmt(n){ return '$' + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,','); }
+
+function calculate(){
+  const income = v('i-paycheck') + v('i-side') + v('i-benefits') + v('i-support') + v('i-other');
+  const expenses = v('e-rent') + v('e-electric') + v('e-water') + v('e-internet') + v('e-phone')
+    + v('e-food') + v('e-transport') + v('e-car') + v('e-carins') + v('e-health')
+    + v('e-credit') + v('e-loans') + v('e-subs') + v('e-childcare') + v('e-personal')
+    + v('e-eating') + v('e-other');
+  const left = income - expenses;
+
+  document.getElementById('r-income').textContent = fmt(income);
+  document.getElementById('r-expenses').textContent = fmt(expenses);
+  
+  const leftEl = document.getElementById('r-left');
+  leftEl.textContent = fmt(left);
+  leftEl.classList.remove('positive','negative');
+  
+  const box = document.getElementById('results');
+  box.classList.remove('positive','negative','zero');
+  
+  const msg = document.getElementById('r-msg');
+  
+  if(left > 0){
+    leftEl.classList.add('positive');
+    box.classList.add('positive');
+    msg.className = 'result-msg good';
+    msg.textContent = 'You have money left over. Put it toward savings, debt payoff, or an emergency fund. Even $50/month adds up.';
+  } else if(left < 0){
+    leftEl.classList.add('negative');
+    box.classList.add('negative');
+    msg.className = 'result-msg bad';
+    msg.textContent = 'You are spending more than you earn. Check the tips below — and visit our Lifeline page for help with food, rent, and bills.';
+  } else {
+    box.classList.add('zero');
+    msg.className = 'result-msg okay';
+    msg.textContent = 'You are breaking even — every dollar is accounted for. Try to find even $25-50 to start a small emergency buffer.';
+  }
+  
+  box.style.display = 'block';
+  document.getElementById('print-row').style.display = 'flex';
+  
+  // TIPS
+  const tips = document.getElementById('tips');
+  let showTips = false;
+  
+  const subs = v('e-subs');
+  if(subs > 0){ document.getElementById('tip-subs').style.display='block'; document.getElementById('tip-subs-amt').textContent=fmt(subs); showTips=true; }
+  else { document.getElementById('tip-subs').style.display='none'; }
+  
+  const eating = v('e-eating');
+  if(eating > 0){ document.getElementById('tip-eating').style.display='block'; document.getElementById('tip-eating-amt').textContent=fmt(eating); showTips=true; }
+  else { document.getElementById('tip-eating').style.display='none'; }
+  
+  const credit = v('e-credit');
+  if(credit > 0){ document.getElementById('tip-credit').style.display='block'; document.getElementById('tip-credit-amt').textContent=fmt(credit); showTips=true; }
+  else { document.getElementById('tip-credit').style.display='none'; }
+  
+  const phone = v('e-phone');
+  if(phone > 50){ document.getElementById('tip-phone').style.display='block'; showTips=true; }
+  else { document.getElementById('tip-phone').style.display='none'; }
+  
+  if(left < 0) showTips = true;
+  tips.classList.toggle('show', showTips);
+  
+  // PIE CHART
+  drawPie();
+  
+  box.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+function drawPie(){
+  var items = [
+    {label:'Rent/Mortgage',val:v('e-rent'),color:'#00ffe1'},
+    {label:'Electricity',val:v('e-electric'),color:'#00ff6a'},
+    {label:'Water',val:v('e-water'),color:'#4db8ff'},
+    {label:'Internet',val:v('e-internet'),color:'#ffd166'},
+    {label:'Phone',val:v('e-phone'),color:'#ff5252'},
+    {label:'Food/Groceries',val:v('e-food'),color:'#c792ea'},
+    {label:'Gas/Transport',val:v('e-transport'),color:'#ff9f43'},
+    {label:'Car Payment',val:v('e-car'),color:'#39ff14'},
+    {label:'Car Insurance',val:v('e-carins'),color:'#48b9c7'},
+    {label:'Health Insurance',val:v('e-health'),color:'#ff6ec7'},
+    {label:'Credit Cards',val:v('e-credit'),color:'#e95420'},
+    {label:'Student Loans',val:v('e-loans'),color:'#1793d1'},
+    {label:'Subscriptions',val:v('e-subs'),color:'#ffe66d'},
+    {label:'Childcare',val:v('e-childcare'),color:'#73ba4b'},
+    {label:'Personal',val:v('e-personal'),color:'#b44dff'},
+    {label:'Eating Out',val:v('e-eating'),color:'#ff3030'},
+    {label:'Other',val:v('e-other'),color:'#3d7070'}
+  ];
+  var data = items.filter(function(i){return i.val > 0;});
+  var chartBox = document.getElementById('chartBox');
+  if(data.length === 0){chartBox.style.display='none';return;}
+  chartBox.style.display='block';
+  var total = 0;
+  for(var i=0;i<data.length;i++) total += data[i].val;
+  var canvas = document.getElementById('pieChart');
+  var ctx = canvas.getContext('2d');
+  var cx = canvas.width/2, cy = canvas.height/2, r = Math.min(cx,cy)-10;
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  var start = -Math.PI/2;
+  for(var i=0;i<data.length;i++){
+    var slice = (data[i].val/total)*Math.PI*2;
+    ctx.beginPath();
+    ctx.moveTo(cx,cy);
+    ctx.arc(cx,cy,r,start,start+slice);
+    ctx.closePath();
+    ctx.fillStyle=data[i].color;
+    ctx.fill();
+    ctx.strokeStyle='#000';
+    ctx.lineWidth=2;
+    ctx.stroke();
+    start+=slice;
+  }
+  // Center hole (donut)
+  ctx.beginPath();
+  ctx.arc(cx,cy,r*0.45,0,Math.PI*2);
+  ctx.fillStyle='#080f0f';
+  ctx.fill();
+  ctx.strokeStyle='#0c3030';
+  ctx.lineWidth=1;
+  ctx.stroke();
+  // Legend
+  var leg = document.getElementById('chartLegend');
+  var h='';
+  for(var i=0;i<data.length;i++){
+    var pct = ((data[i].val/total)*100).toFixed(1);
+    h+='<span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:'+data[i].color+';display:inline-block;"></span>'+data[i].label+' '+pct+'%</span>';
+  }
+  leg.innerHTML=h;
+}
+
+function resetAll(){
+  document.querySelectorAll('input[type=number]').forEach(i => i.value = '');
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('print-row').style.display = 'none';
+  document.getElementById('tips').classList.remove('show');
+  document.getElementById('chartBox').style.display = 'none';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+</script>
+
+</body>
+</html>

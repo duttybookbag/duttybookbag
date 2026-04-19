@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nerd Commands — Linux Universal Reference | DuttyBookBag</title>
+  <meta name="description" content="The complete Linux command library — organized by distro family. Debian/Ubuntu/Mint, Fedora, Arch, openSUSE. Bootable USB tutorials, GRUB fix for dual boot, free software installs. All with copy buttons." />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --black:#000000;--dark:#050d0d;--panel:#080f0f;--panel2:#0a1414;--border:#0c3030;
+      --cyan:#00ffe1;--green:#00ff6a;--blue:#4db8ff;--gold:#ffd166;
+      --red:#ff5252;--purple:#c792ea;--orange:#ff9f43;--pink:#ff6ec7;--yellow:#ffe66d;
+      --text:#b8e8e2;--muted:#3d7070;
+      --mono:'Share Tech Mono',monospace;--display:'Bebas Neue',sans-serif;--body:'Rajdhani',sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--black);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.7;overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,255,225,0.012) 3px,rgba(0,255,225,0.012) 4px);pointer-events:none;z-index:999;}
+    body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,255,225,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,225,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0;}
+    .wrap{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:0 24px;}
+
+    /* NAV */
+    .site-nav{position:sticky;top:0;z-index:100;background:rgba(0,0,0,0.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:0 24px;}
+    .site-nav .wrap{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;padding:0;max-width:1000px;margin:0 auto;}
+    .site-nav a{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--muted);text-decoration:none;text-transform:uppercase;padding:14px 16px;transition:color 0.2s;white-space:nowrap;}
+    .site-nav a:hover{color:var(--cyan);}
+    .site-nav a.nav-highlight{color:var(--gold);font-weight:700;}
+    .site-nav a.nav-highlight:hover{color:#fff;}
+    .site-nav a.active{color:var(--green);text-shadow:0 0 8px rgba(0,255,106,0.4);}
+    @media(max-width:580px){.site-nav a{font-size:10px;padding:10px 8px;letter-spacing:1px;}}
+
+    /* HEADER */
+    header{position:relative;padding:50px 0 30px;text-align:center;overflow:hidden;}
+    .glow-orb{position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(0,255,225,0.08) 0%,transparent 70%);pointer-events:none;}
+
+    /* GLOWING LOGO */
+    .logo{display:grid;grid-template-columns:repeat(3, 38px);grid-template-rows:repeat(3, 38px);gap:10px;justify-content:center;margin:0 auto 20px;width:max-content;position:relative;z-index:2;}
+    .dot{width:38px;height:38px;border-radius:50%;animation:pulse 2.8s ease-in-out infinite;}
+    .dot.green{background:#00ff44;box-shadow:0 0 12px #00ff44, 0 0 24px #00ff44;}
+    .dot.red{background:#ff1a1a;box-shadow:0 0 12px #ff1a1a, 0 0 24px #ff1a1a;}
+    .d1{grid-column:2;grid-row:1;} .d2{grid-column:1;grid-row:2;} .d3{grid-column:2;grid-row:2;}
+    .d4{grid-column:3;grid-row:2;} .d5{grid-column:1;grid-row:3;} .d6{grid-column:3;grid-row:3;}
+    @keyframes pulse{0%,100%{opacity:0.55;transform:scale(0.92);}50%{opacity:1;transform:scale(1.08);}}
+
+    .badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:5px;color:var(--cyan);border:1px solid var(--cyan);padding:5px 18px;margin-bottom:18px;text-transform:uppercase;}
+    h1{font-family:var(--display);font-size:clamp(38px,7vw,68px);letter-spacing:4px;line-height:0.95;color:#fff;text-transform:uppercase;}
+    h1 .accent{color:var(--cyan);text-shadow:0 0 30px rgba(0,255,225,0.5);}
+    .tagline{margin:18px auto 0;font-size:17px;color:var(--text);max-width:680px;line-height:1.6;}
+    .tagline strong{color:#fff;}
+
+    /* SECTIONS */
+    .divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);margin:30px 0;}
+    .section-label{font-family:var(--mono);font-size:10px;letter-spacing:5px;color:var(--green);text-transform:uppercase;margin-bottom:12px;}
+    h2{font-family:var(--display);font-size:clamp(24px,4.5vw,40px);letter-spacing:3px;color:#fff;text-transform:uppercase;margin-bottom:18px;}
+    h3{font-family:var(--display);font-size:20px;letter-spacing:2px;color:var(--cyan);text-transform:uppercase;margin-bottom:10px;}
+    p{margin-bottom:12px;}
+    .lead{font-size:16px;color:var(--text);margin-bottom:20px;}
+    section.block{padding:24px 0;}
+
+    /* TABLE OF CONTENTS */
+    .toc{background:var(--panel);border:1px solid var(--border);border-left:3px solid var(--cyan);border-radius:6px;padding:22px 24px;margin:20px 0;}
+    .toc h3{color:var(--cyan);margin-bottom:14px;font-size:16px;letter-spacing:3px;}
+    .toc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:6px 16px;}
+    .toc a{color:var(--text);text-decoration:none;font-size:14px;padding:4px 0;display:block;font-family:var(--mono);letter-spacing:1px;transition:color 0.2s;}
+    .toc a:hover{color:var(--cyan);text-shadow:0 0 8px rgba(0,255,225,0.5);}
+    .toc a::before{content:'▸ ';color:var(--green);}
+
+    /* DISTRO LEGEND */
+    .legend{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:20px;margin:20px 0;}
+    .legend h3{margin-bottom:12px;color:var(--gold);}
+    .legend-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;}
+    .legend-item{display:flex;gap:10px;align-items:center;font-size:13px;}
+    .distro-tag{display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:1.5px;padding:3px 8px;border-radius:3px;text-transform:uppercase;font-weight:700;white-space:nowrap;}
+    .tag-debian{background:rgba(233,84,32,0.15);color:#e95420;border:1px solid rgba(233,84,32,0.4);}
+    .tag-fedora{background:rgba(60,110,180,0.15);color:#5b8fce;border:1px solid rgba(60,110,180,0.4);}
+    .tag-arch{background:rgba(23,147,209,0.15);color:#1793d1;border:1px solid rgba(23,147,209,0.4);}
+    .tag-suse{background:rgba(115,186,75,0.15);color:#73ba4b;border:1px solid rgba(115,186,75,0.4);}
+    .tag-all{background:rgba(0,255,106,0.15);color:var(--green);border:1px solid rgba(0,255,106,0.4);}
+    .tag-windows{background:rgba(77,184,255,0.15);color:var(--blue);border:1px solid rgba(77,184,255,0.4);}
+    .tag-mac{background:rgba(199,146,234,0.15);color:var(--purple);border:1px solid rgba(199,146,234,0.4);}
+    .tag-warning{background:rgba(255,82,82,0.15);color:var(--red);border:1px solid rgba(255,82,82,0.4);}
+
+    /* SECTION CARDS */
+    .cmd-section{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:24px;margin-bottom:20px;}
+    .cmd-section .sec-head{display:flex;align-items:center;gap:14px;margin-bottom:8px;flex-wrap:wrap;}
+    .sec-icon{font-size:24px;line-height:1;}
+    .sec-title{font-family:var(--display);font-size:24px;letter-spacing:2px;color:#fff;text-transform:uppercase;}
+    .sec-desc{font-size:14px;color:var(--text);margin-bottom:16px;opacity:0.9;}
+
+    /* COMMAND BLOCK */
+    .cmd{background:var(--panel2);border:1px solid var(--border);border-radius:5px;padding:14px 16px;margin-bottom:10px;}
+    .cmd-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px;flex-wrap:wrap;}
+    .cmd-label{font-size:14px;color:var(--text);font-weight:600;flex:1;min-width:200px;}
+    .cmd-tags{display:flex;gap:5px;flex-wrap:wrap;}
+    .cmd-body{position:relative;background:#020808;border:1px solid var(--border);border-left:3px solid var(--cyan);border-radius:4px;padding:10px 50px 10px 14px;font-family:var(--mono);font-size:13px;color:var(--text);overflow-x:auto;line-height:1.6;}
+    .cmd-body::before{content:'$';color:var(--green);margin-right:8px;font-weight:700;}
+    .cmd-body.web::before{content:'🌐';margin-right:8px;}
+    .cmd-body.win::before{content:'>';color:var(--blue);margin-right:8px;font-weight:700;}
+    .cmd-body pre{display:inline;background:none;border:none;padding:0;color:var(--text);font-family:var(--mono);font-size:13px;white-space:pre-wrap;word-break:break-all;}
+    .copy-btn{position:absolute;top:8px;right:8px;background:rgba(0,255,225,0.1);border:1px solid var(--cyan);color:var(--cyan);font-family:var(--mono);font-size:10px;letter-spacing:1px;padding:4px 10px;border-radius:3px;cursor:pointer;text-transform:uppercase;transition:all 0.2s;}
+    .copy-btn:hover{background:var(--cyan);color:#000;}
+    .copy-btn.copied{background:var(--green);border-color:var(--green);color:#000;}
+
+    /* MULTI-DISTRO BLOCK */
+    .multi{background:var(--panel2);border:1px solid var(--border);border-radius:5px;padding:14px 16px;margin-bottom:10px;}
+    .multi .cmd-label{margin-bottom:10px;}
+    .multi-row{display:flex;gap:10px;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;}
+    .multi-row:last-child{margin-bottom:0;}
+    .multi-tag{flex-shrink:0;min-width:140px;}
+    .multi-cmd{flex:1;min-width:240px;background:#020808;border:1px solid var(--border);border-left:3px solid var(--cyan);border-radius:4px;padding:8px 50px 8px 14px;font-family:var(--mono);font-size:13px;color:var(--text);overflow-x:auto;position:relative;line-height:1.6;}
+    .multi-cmd::before{content:'$';color:var(--green);margin-right:8px;font-weight:700;}
+
+    /* CALLOUTS */
+    .callout{border-radius:5px;padding:14px 18px;margin:14px 0;border-left:3px solid;}
+    .callout.info{background:rgba(77,184,255,0.06);border-color:var(--blue);}
+    .callout.warn{background:rgba(255,209,102,0.06);border-color:var(--gold);}
+    .callout.danger{background:rgba(255,82,82,0.08);border-color:var(--red);}
+    .callout.success{background:rgba(0,255,106,0.06);border-color:var(--green);}
+    .callout strong{color:#fff;}
+    .callout p{font-size:14px;margin-bottom:6px;}
+    .callout p:last-child{margin-bottom:0;}
+    .callout code{background:#020808;color:var(--cyan);padding:2px 6px;border-radius:3px;font-family:var(--mono);font-size:12px;}
+
+    /* STEP LIST */
+    .steps{counter-reset:step;list-style:none;padding:0;margin:14px 0;}
+    .steps li{counter-increment:step;padding:8px 0 8px 38px;position:relative;font-size:14px;line-height:1.6;}
+    .steps li::before{content:counter(step);position:absolute;left:0;top:8px;background:var(--cyan);color:#000;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:12px;}
+    .steps strong{color:#fff;}
+
+    /* FOOTER */
+    footer{border-top:1px solid var(--border);padding:40px 0 30px;margin-top:50px;text-align:center;background:#010505;}
+    footer .foot-logo{display:grid;grid-template-columns:repeat(3, 18px);grid-template-rows:repeat(3, 18px);gap:5px;justify-content:center;margin:0 auto 14px;width:max-content;}
+    footer .foot-dot{width:18px;height:18px;border-radius:50%;animation:pulse 2.8s ease-in-out infinite;}
+    footer .foot-green{background:#00ff44;box-shadow:0 0 8px #00ff44;}
+    footer .foot-red{background:#ff1a1a;box-shadow:0 0 8px #ff1a1a;}
+    footer p{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:6px;}
+    footer a{color:var(--green);text-decoration:none;}
+    footer a:hover{text-shadow:0 0 8px rgba(0,255,106,0.5);}
+    .disclaimer{max-width:740px;margin:14px auto 0;font-size:11px;color:var(--muted);font-style:italic;line-height:1.5;padding:12px;border:1px solid var(--border);border-radius:4px;text-align:left;}
+
+    /* BACK TO TOP */
+    .to-top{position:fixed;bottom:24px;right:24px;background:var(--panel);border:1px solid var(--cyan);color:var(--cyan);width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;z-index:200;text-decoration:none;transition:all 0.2s;opacity:0;pointer-events:none;}
+    .to-top.show{opacity:1;pointer-events:auto;}
+    .to-top:hover{background:var(--cyan);color:#000;box-shadow:0 0 20px rgba(0,255,225,0.5);}
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="site-nav">
+  <div class="wrap">
+    <a href="index.html">Home</a>
+    <a href="getting-started.html#tradingview" class="nav-highlight">What Is TradingView?</a>
+    <a href="getting-started.html#gumroad" class="nav-highlight">What Is Gumroad?</a>
+    <a href="dutty-learn-center.html" class="nav-highlight">Learning Center</a>
+    <a href="dbb-calculator.html" class="nav-highlight">Calculator</a>
+    <a href="dbb-funzone.html" class="nav-highlight">Fun Zone</a>
+    <a href="dbb-nerd-geek-life.html" class="nav-highlight">Nerd Geek Life</a>
+    <a href="dbb-nerd-commands.html" class="active">Commands</a>
+  </div>
+</nav>
+<div style="text-align:center;padding:6px 0;background:rgba(0,0,0,0.8);border-bottom:1px solid #0c3030;position:relative;z-index:99;">
+  <div id="google_translate_element" style="display:inline-block;"></div>
+</div>
+<script>
+function googleTranslateElementInit(){new google.translate.TranslateElement({pageLanguage:'en',layout:google.translate.TranslateElement.InlineLayout.HORIZONTAL},'google_translate_element');}
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<style>.goog-te-banner-frame{display:none!important;}.goog-te-gadget{font-size:11px!important;color:#3d7070!important;}.goog-te-gadget .goog-te-combo{background:#080f0f;color:#b8e8e2;border:1px solid #0c3030;border-radius:4px;padding:4px 8px;font-family:'Share Tech Mono',monospace;font-size:11px;outline:none;}.goog-te-gadget>span{display:none!important;}body{top:0!important;}</style>
+
+<!-- HEADER -->
+<header>
+  <div class="glow-orb"></div>
+  <div class="wrap">
+    <div class="logo">
+      <div class="dot red d1"></div>
+      <div class="dot green d2"></div>
+      <div class="dot red d3"></div>
+      <div class="dot green d4"></div>
+      <div class="dot green d5"></div>
+      <div class="dot green d6"></div>
+    </div>
+    <div class="badge">// Universal Linux Reference</div>
+    <h1>NERD <span class="accent">COMMANDS</span></h1>
+    <p class="tagline"><strong>Every install command, every distro, all in one place.</strong> Tagged by which Linux family they work on. Click <code style="background:var(--panel);color:var(--cyan);padding:2px 6px;border-radius:3px;font-family:var(--mono);font-size:13px;">copy</code> on any block — paste straight into your terminal.</p>
+  </div>
+</header>
+
+<!-- LEGEND -->
+<section class="block">
+  <div class="wrap">
+    <div class="legend">
+      <h3>📖 Distro Family Legend</h3>
+      <div class="legend-grid">
+        <div class="legend-item"><span class="distro-tag tag-all">ALL DISTROS</span><span>Works on every Linux</span></div>
+        <div class="legend-item"><span class="distro-tag tag-debian">DEBIAN/UBUNTU</span><span>Mint, Ubuntu, Pop, Zorin, MX</span></div>
+        <div class="legend-item"><span class="distro-tag tag-fedora">FEDORA</span><span>Fedora, Rocky, AlmaLinux</span></div>
+        <div class="legend-item"><span class="distro-tag tag-arch">ARCH</span><span>Arch, Manjaro, EndeavourOS</span></div>
+        <div class="legend-item"><span class="distro-tag tag-suse">OPENSUSE</span><span>Leap, Tumbleweed</span></div>
+        <div class="legend-item"><span class="distro-tag tag-windows">WINDOWS</span><span>Run from Windows</span></div>
+        <div class="legend-item"><span class="distro-tag tag-mac">MAC</span><span>Run from macOS</span></div>
+        <div class="legend-item"><span class="distro-tag tag-warning">⚠ DANGER</span><span>Read carefully</span></div>
+      </div>
+    </div>
+
+    <div class="toc">
+      <h3>// JUMP TO SECTION</h3>
+      <div class="toc-grid">
+        <a href="#bootable-usb">Bootable USB Tutorials</a>
+        <a href="#grub-fix">GRUB Fix (Dual Boot)</a>
+        <a href="#system-update">System Update & Codecs</a>
+        <a href="#cpu-gpu">CPU & GPU Info</a>
+        <a href="#monitors">System Monitors</a>
+        <a href="#media">Media — Video & Audio</a>
+        <a href="#graphics">Graphics & Design</a>
+        <a href="#browsers">Web Browsers</a>
+        <a href="#trading">Trading & Crypto</a>
+        <a href="#appimages">AppImages</a>
+        <a href="#wine">Wine — Run Windows Apps</a>
+        <a href="#utilities">System Utilities</a>
+        <a href="#virtualbox">VirtualBox</a>
+        <a href="#backups">Backups & Snapshots</a>
+        <a href="#ssd">SSD Health & Cloning</a>
+        <a href="#checksum">Checksum Verification</a>
+        <a href="#quick-ref">Quick Reference</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== BOOTABLE USB =================== -->
+<section class="block">
+  <div class="wrap">
+    <div class="section-label">// Step Zero</div>
+    <h2 id="bootable-usb">🔥 Bootable USB Tutorials</h2>
+    <p class="lead">Before you can install Linux on any computer, you need a USB stick with the Linux installer on it. Here are all the ways to make one — from Windows, Mac, or another Linux machine.</p>
+
+    <div class="callout success">
+      <p><strong>You'll need:</strong> A USB stick at least 8GB (will be erased), an ISO file from your chosen distro's website, and one of the tools below.</p>
+    </div>
+
+    <div class="cmd-section">
+      <div class="sec-head">
+        <span class="sec-icon">🪟</span>
+        <span class="sec-title">Method 1 — Rufus (Windows)</span>
+      </div>
+      <p class="sec-desc">The fastest, most reliable USB flasher for Windows users. Free and open-source.</p>
+      <div class="cmd">
+        <div class="cmd-head">
+          <span class="cmd-label">Download Rufus (official site)</span>
+          <div class="cmd-tags"><span class="distro-tag tag-windows">Windows</span></div>
+        </div>
+        <div class="cmd-body web">https://rufus.ie/en/<button class="copy-btn">copy</button></div>
+      </div>
+      <ol class="steps">
+        <li>Download Rufus from the official site (single .exe file, no installer needed)</li>
+        <li>Plug in your USB stick (8GB+, will be erased)</li>
+        <li>Open Rufus — select your USB drive at the top</li>
+        <li>Click <strong>SELECT</strong> and choose the Linux ISO file you downloaded</li>
+        <li>Leave the partition scheme as <strong>GPT</strong> (for modern computers) or <strong>MBR</strong> (for older ones)</li>
+        <li>Click <strong>START</strong> — pick "Write in ISO Image mode" if asked</li>
+        <li>Wait for it to finish — about 5-10 minutes</li>
+      </ol>
+    </div>
+
+    <div class="cmd-section">
+      <div class="sec-head">
+        <span class="sec-icon">⚡</span>
+        <span class="sec-title">Method 2 — Balena Etcher (Works Everywhere)</span>
+      </div>
+      <p class="sec-desc">Same simple tool on Windows, Mac, and Linux. If you switch computers, you don't have to learn anything new.</p>
+      <div class="cmd">
+        <div class="cmd-head">
+          <span class="cmd-label">Download Balena Etcher</span>
+          <div class="cmd-tags">
+            <span class="distro-tag tag-windows">Windows</span>
+            <span class="distro-tag tag-mac">Mac</span>
+            <span class="distro-tag tag-all">Linux</span>
+          </div>
+        </div>
+        <div class="cmd-body web">https://etcher.balena.io/<button class="copy-btn">copy</button></div>
+      </div>
+      <ol class="steps">
+        <li>Download Etcher for your operating system</li>
+        <li>Install it (or just run the AppImage on Linux)</li>
+        <li>Open Etcher → click <strong>"Flash from file"</strong> → select your ISO</li>
+        <li>Click <strong>"Select target"</strong> → choose your USB drive</li>
+        <li>Click <strong>"Flash!"</strong> and wait until done</li>
+      </ol>
+    </div>
+
+    <div class="cmd-section">
+      <div class="sec-head">
+        <span class="sec-icon">📦</span>
+        <span class="sec-title">Method 3 — Ventoy (Multi-ISO USB)</span>
+      </div>
+      <p class="sec-desc">Game-changer. Install Ventoy on a USB <strong>once</strong> — then just drag-and-drop multiple ISO files onto it. At boot, you pick which one to install. Try 5 distros without re-flashing.</p>
+      <div class="cmd">
+        <div class="cmd-head">
+          <span class="cmd-label">Download Ventoy</span>
+          <div class="cmd-tags">
+            <span class="distro-tag tag-windows">Windows</span>
+            <span class="distro-tag tag-all">Linux</span>
+          </div>
+        </div>
+        <div class="cmd-body web">https://www.ventoy.net/en/download.html<button class="copy-btn">copy</button></div>
+      </div>
+      <ol class="steps">
+        <li>Download Ventoy for Windows or Linux</li>
+        <li>Run Ventoy2Disk → select your USB → click <strong>Install</strong> (one-time setup)</li>
+        <li>After install, the USB has a Ventoy partition — just <strong>copy ISO files</strong> directly onto it</li>
+        <li>Boot from the USB and you'll get a menu of all the ISOs on it</li>
+      </ol>
+    </div>
+
+    <div class="cmd-section">
+      <div class="sec-head">
+        <span class="sec-icon">⌨️</span>
+        <span class="sec-title">Method 4 — dd Command (Linux/Mac)</span>
+      </div>
+      <p class="sec-desc">No software needed. Built into every Linux and Mac. Fastest method but ZERO safety nets — wrong drive letter = wiped drive.</p>
+      <div class="cmd">
+        <div class="cmd-head">
+          <span class="cmd-label">Step 1 — Find your USB drive name</span>
+          <div class="cmd-tags"><span class="distro-tag tag-all">Linux</span><span class="distro-tag tag-mac">Mac</span></div>
+        </div>
+        <div class="cmd-body">lsblk<button class="copy-btn">copy</button></div>
+      </div>
+      <div class="cmd">
+        <div class="cmd-head">
+          <span class="cmd-label">Step 2 — Flash the ISO (replace sdX with your drive)</span>
+          <div class="cmd-tags"><span class="distro-tag tag-all">Linux</span><span class="distro-tag tag-warning">⚠ Triple Check</span></div>
+        </div>
+        <div class="cmd-body">sudo dd if=~/Downloads/yourfile.iso of=/dev/sdX bs=4M status=progress oflag=sync<button class="copy-btn">copy</button></div>
+      </div>
+      <div class="callout danger">
+        <p><strong>⚠ WARNING:</strong> Replace <code>sdX</code> with your actual USB drive (like <code>sdb</code>, never <code>sda</code> — that's usually your hard drive). Wrong drive = total data loss with no recovery. Always run <code>lsblk</code> first to confirm.</p>
+      </div>
+    </div>
+
+    <div class="cmd-section">
+      <div class="sec-head">
+        <span class="sec-icon">🐧</span>
+        <span class="sec-title">Method 5 — USB Image Writer (Linux Mint Built-In)</span>
+      </div>
+      <p class="sec-desc">If you're already on Linux Mint, this comes pre-installed. Easiest method on Mint.</p>
+      <ol class="steps">
+        <li>Open the <strong>Start Menu</strong></li>
+        <li>Search for <strong>"USB Image Writer"</strong></li>
+        <li>Click <strong>"Please select an image"</strong> → choose your ISO</li>
+        <li>Pick your USB drive from the dropdown</li>
+        <li>Click <strong>"Write"</strong> and enter your password</li>
+        <li>Wait for it to finish — don't unplug until the success message appears</li>
+      </ol>
+    </div>
+
+    <div class="callout info">
+      <p><strong>How to boot from your new USB:</strong></p>
+      <p>1. Plug in the USB stick</p>
+      <p>2. Restart the computer</p>
+      <p>3. Right as it starts, press <strong>F12</strong> (most computers), or <strong>F8 / F2 / DEL / ESC</strong> to open the boot menu</p>
+      <p>4. Select your USB drive from the list</p>
+      <p>5. The Linux installer will boot — try it live first or click Install</p>
+    </div>
+  </div>
+</section>
+
+<!-- =================== GRUB FIX =================== -->
+<section class="block">
+  <div class="wrap">
+    <div class="section-label">// Most Important Fix</div>
+    <h2 id="grub-fix">🔧 GRUB Fix — Restore Windows Boot Menu (Dual Boot)</h2>
+    <p class="lead">You installed Linux next to Windows. Everything was fine. Then a Windows update ran and now you boot straight into Windows with no Linux option — or vice versa, you boot straight into Linux and Windows seems to have vanished. <strong>Your operating systems are still there. The boot menu just got broken.</strong> Here's how to bring it back.</p>
+
+    <div class="callout warn">
+      <p><strong>What is GRUB?</strong> GRUB is the menu that shows up when you start your computer and lets you choose between Linux and Windows. After installing Linux Mint or Ubuntu, sometimes this menu breaks or disappears. Every fix below targets a different cause.</p>
+    </div>
+
+    <h3 style="margin-top:24px;color:var(--green);">Step 1 — Try This First (Works 90% of the Time)</h3>
+    <p>Boot into Linux, open a terminal, and run these three commands in order:</p>
+
+    <div class="multi">
+      <div class="cmd-label">Install os-prober — detects Windows on your drive</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install os-prober -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install os-prober -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S os-prober<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-suse">openSUSE</span></div><div class="multi-cmd">sudo zypper install os-prober<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="cmd">
+      <div class="cmd-head">
+        <span class="cmd-label">Enable os-prober in GRUB config</span>
+        <div class="cmd-tags"><span class="distro-tag tag-all">All Distros</span></div>
+      </div>
+      <div class="cmd-body">echo 'GRUB_DISABLE_OS_PROBER=false' | sudo tee -a /etc/default/grub<button class="copy-btn">copy</button></div>
+    </div>
+
+    <div class="multi">
+      <div class="cmd-label">Update GRUB — scans for Windows and rebuilds the menu</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo update-grub<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo grub2-mkconfig -o /boot/grub2/grub.cfg<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo grub-mkconfig -o /boot/grub/grub.cfg<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-suse">openSUSE</span></div><div class="multi-cmd">sudo grub2-mkconfig -o /boot/grub2/grub.cfg<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="callout info">
+      <p>After running the update, look for a line that says <strong>"Found Windows Boot Manager"</strong> or <strong>"Found Windows 10/11"</strong>. If you see that, reboot and Windows will be back in the boot menu.</p>
+    </div>
+
+    <h3 style="margin-top:24px;color:var(--green);">Step 2 — GRUB Menu Not Showing At All? Fix the Timeout</h3>
+    <p>Sometimes GRUB is set to timeout=0, which makes it boot straight into the default OS with no menu shown.</p>
+
+    <div class="cmd">
+      <div class="cmd-head">
+        <span class="cmd-label">Open GRUB config file to edit</span>
+        <div class="cmd-tags"><span class="distro-tag tag-all">All Distros</span></div>
+      </div>
+      <div class="cmd-body">sudo nano /etc/default/grub<button class="copy-btn">copy</button></div>
+    </div>
+
+    <div class="callout info">
+      <p>Inside the file, find and change these two lines:</p>
+      <p><code>GRUB_TIMEOUT_STYLE=hidden</code> → change to → <code>GRUB_TIMEOUT_STYLE=menu</code></p>
+      <p><code>GRUB_TIMEOUT=0</code> → change to → <code>GRUB_TIMEOUT=10</code></p>
+      <p>Then press <strong>Ctrl+S</strong> to save and <strong>Ctrl+X</strong> to exit nano. Then run the GRUB update command for your distro from Step 1.</p>
+    </div>
+
+    <h3 style="margin-top:24px;color:var(--green);">Step 3 — Windows Still Missing? Disable Fast Startup in Windows</h3>
+    <p>Windows Fast Startup locks the drive in a hibernation-like state and prevents GRUB from seeing Windows properly. Disable it.</p>
+    <ol class="steps">
+      <li>Boot into Windows (press F12 at startup and manually pick Windows)</li>
+      <li>Open <strong>Control Panel → Power Options</strong></li>
+      <li>Click <strong>"Choose what the power buttons do"</strong></li>
+      <li>Click <strong>"Change settings that are currently unavailable"</strong></li>
+      <li><strong>Uncheck "Turn on fast startup"</strong> and Save</li>
+      <li>Reboot back into Linux and run <code>sudo update-grub</code> again</li>
+    </ol>
+
+    <h3 style="margin-top:24px;color:var(--green);">Step 4 — Fix From Windows If Linux Won't Boot</h3>
+    <p>If you can boot Windows but Linux won't show up, open Windows <strong>Command Prompt as Administrator</strong> and run this to set GRUB as the default bootloader:</p>
+
+    <div class="cmd">
+      <div class="cmd-head">
+        <span class="cmd-label">Run in Windows CMD as Administrator — sets GRUB as default boot manager</span>
+        <div class="cmd-tags"><span class="distro-tag tag-windows">Windows CMD</span></div>
+      </div>
+      <div class="cmd-body win">bcdedit /set {bootmgr} path \EFI\ubuntu\grubx64.efi<button class="copy-btn">copy</button></div>
+    </div>
+    <div class="callout info">
+      <p>After running the above in Windows CMD, restart — GRUB menu should now appear with both Linux and Windows.</p>
+    </div>
+
+    <h3 style="margin-top:24px;color:var(--green);">Step 5 — Nuclear Option: Boot-Repair</h3>
+    <p>Boot-Repair automatically diagnoses and fixes nearly every GRUB problem.</p>
+    <div class="cmd">
+      <div class="cmd-head">
+        <span class="cmd-label">Install Boot-Repair</span>
+        <div class="cmd-tags"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div>
+      </div>
+      <div class="cmd-body">sudo add-apt-repository ppa:yannubuntu/boot-repair -y && sudo apt update && sudo apt install boot-repair -y<button class="copy-btn">copy</button></div>
+    </div>
+    <div class="cmd">
+      <div class="cmd-head">
+        <span class="cmd-label">Launch Boot-Repair</span>
+        <div class="cmd-tags"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div>
+      </div>
+      <div class="cmd-body">boot-repair<button class="copy-btn">copy</button></div>
+    </div>
+    <div class="callout warn">
+      <p>In Boot-Repair, click <strong>"Recommended repair"</strong> and let it run. It will fix GRUB and restore the Windows entry automatically.</p>
+      <p><strong>Also check in your BIOS/UEFI:</strong></p>
+      <p>• Disable <strong>Secure Boot</strong></p>
+      <p>• Set <strong>"ubuntu"</strong> or <strong>"Linux"</strong> as the first boot entry</p>
+      <p>• Disable <strong>Fast Boot</strong> in BIOS too if available</p>
+    </div>
+
+    <h3 style="margin-top:24px;color:var(--cyan);">Diagnostic Commands</h3>
+    <div class="cmd">
+      <div class="cmd-head"><span class="cmd-label">Check current UEFI boot order</span><div class="cmd-tags"><span class="distro-tag tag-all">All Distros</span></div></div>
+      <div class="cmd-body">efibootmgr -v<button class="copy-btn">copy</button></div>
+    </div>
+    <div class="cmd">
+      <div class="cmd-head"><span class="cmd-label">View current GRUB config</span><div class="cmd-tags"><span class="distro-tag tag-all">All Distros</span></div></div>
+      <div class="cmd-body">cat /etc/default/grub<button class="copy-btn">copy</button></div>
+    </div>
+    <div class="cmd">
+      <div class="cmd-head"><span class="cmd-label">Check what GRUB detected (look for Windows)</span><div class="cmd-tags"><span class="distro-tag tag-all">All Distros</span></div></div>
+      <div class="cmd-body">sudo os-prober<button class="copy-btn">copy</button></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- =================== SYSTEM UPDATE =================== -->
+<section class="block">
+  <div class="wrap">
+    <h2 id="system-update">⟳ System Update, Codecs & Firewall</h2>
+    <p class="lead">First commands you should run on any fresh Linux install. Update everything, install media codecs, enable the firewall.</p>
+
+    <div class="multi">
+      <div class="cmd-label">Update all packages (run weekly)</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt update && sudo apt upgrade -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf upgrade --refresh -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -Syu<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-suse">openSUSE</span></div><div class="multi-cmd">sudo zypper refresh && sudo zypper update<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="multi">
+      <div class="cmd-label">Full distribution upgrade (kernel & held-back packages)</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt dist-upgrade -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf distro-sync<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -Syyu<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="cmd">
+      <div class="cmd-head"><span class="cmd-label">Linux Mint multimedia codecs</span><div class="cmd-tags"><span class="distro-tag tag-debian">Mint Only</span></div></div>
+      <div class="cmd-body">sudo apt install mint-meta-codecs -y<button class="copy-btn">copy</button></div>
+    </div>
+
+    <div class="multi">
+      <div class="cmd-label">Extra codecs & multimedia libraries</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install libavcodec-extra libdvd-pkg gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly ubuntu-restricted-extras -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install gstreamer1-plugins-bad-\* gstreamer1-plugins-good-\* gstreamer1-plugins-base lame\* --exclude=gstreamer1-plugins-bad-free-devel<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S gstreamer gst-libav gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugly<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="multi">
+      <div class="cmd-label">Build tools (compile from source)</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install build-essential dkms linux-headers-$(uname -r) -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf groupinstall "Development Tools" && sudo dnf install kernel-devel kernel-headers<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S base-devel linux-headers<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="multi">
+      <div class="cmd-label">FUSE — required for AppImages</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install libfuse2 -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install fuse fuse-libs<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S fuse2<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="cmd">
+      <div class="cmd-head"><span class="cmd-label">Enable firewall (UFW)</span><div class="cmd-tags"><span class="distro-tag tag-debian">Debian/Ubuntu</span><span class="distro-tag tag-arch">Arch</span></div></div>
+      <div class="cmd-body">sudo ufw enable && sudo ufw status<button class="copy-btn">copy</button></div>
+    </div>
+    <div class="cmd">
+      <div class="cmd-head"><span class="cmd-label">Enable firewall (firewalld)</span><div class="cmd-tags"><span class="distro-tag tag-fedora">Fedora</span><span class="distro-tag tag-suse">openSUSE</span></div></div>
+      <div class="cmd-body">sudo systemctl enable --now firewalld<button class="copy-btn">copy</button></div>
+    </div>
+
+    <div class="multi">
+      <div class="cmd-label">Clean up orphaned packages</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt autoremove -y && sudo apt autoclean<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf autoremove && sudo dnf clean all<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -Rns $(pacman -Qtdq)<button class="copy-btn">copy</button></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- =================== CPU & GPU =================== -->
+<section class="block">
+  <div class="wrap">
+    <h2 id="cpu-gpu">⚡ CPU & GPU Information</h2>
+
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">Quick CPU summary</span><div class="cmd-tags"><span class="distro-tag tag-all">All Distros</span></div></div><div class="cmd-body">lscpu<button class="copy-btn">copy</button></div></div>
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">Full CPU info</span><div class="cmd-tags"><span class="distro-tag tag-all">All Distros</span></div></div><div class="cmd-body">cat /proc/cpuinfo<button class="copy-btn">copy</button></div></div>
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">View GPU hardware</span><div class="cmd-tags"><span class="distro-tag tag-all">All Distros</span></div></div><div class="cmd-body">sudo lshw -C display<button class="copy-btn">copy</button></div></div>
+
+    <div class="multi">
+      <div class="cmd-label">Hardware sensors — temps & fan speeds</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install lm-sensors -y && sudo sensors-detect<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install lm_sensors && sudo sensors-detect<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S lm_sensors && sudo sensors-detect<button class="copy-btn">copy</button></div></div>
+    </div>
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">Read sensor data</span><div class="cmd-tags"><span class="distro-tag tag-all">All Distros</span></div></div><div class="cmd-body">sensors<button class="copy-btn">copy</button></div></div>
+
+    <div class="multi">
+      <div class="cmd-label">inxi — full system overview (CPU, GPU, RAM, kernel)</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install inxi -y && inxi -Fxxxz<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install inxi && inxi -Fxxxz<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S inxi && inxi -Fxxxz<button class="copy-btn">copy</button></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- =================== MONITORS =================== -->
+<section class="block">
+  <div class="wrap">
+    <h2 id="monitors">◉ System Monitors</h2>
+    <div class="callout info"><p><strong>btop</strong> is the king of terminal monitors — CPU cores, memory, disk I/O, network and processes in one beautiful dashboard.</p></div>
+
+    <div class="multi">
+      <div class="cmd-label">btop — beautiful all-in-one monitor</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install btop -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install btop<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S btop<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="multi">
+      <div class="cmd-label">htop — classic interactive process viewer</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install htop -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install htop<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S htop<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="multi">
+      <div class="cmd-label">nvtop — GPU monitor for NVIDIA/AMD</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install nvtop -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install nvtop<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S nvtop<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="multi">
+      <div class="cmd-label">Psensor — GUI temperature monitor</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install psensor -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install psensor<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S psensor<button class="copy-btn">copy</button></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- =================== MEDIA =================== -->
+<section class="block">
+  <div class="wrap">
+    <h2 id="media">▶ Media — Video & Audio</h2>
+
+    <div class="multi">
+      <div class="cmd-label">VLC Media Player</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install vlc -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install vlc<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S vlc<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-suse">openSUSE</span></div><div class="multi-cmd">sudo zypper install vlc<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="multi">
+      <div class="cmd-label">MPV — lightweight media player</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install mpv -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install mpv<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S mpv<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="multi">
+      <div class="cmd-label">FFmpeg — video/audio conversion engine</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install ffmpeg -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install ffmpeg<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S ffmpeg<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="multi">
+      <div class="cmd-label">HandBrake — video transcoder</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install handbrake -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install HandBrake-gui<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S handbrake<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="multi">
+      <div class="cmd-label">OBS Studio — screen recording & streaming</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install obs-studio -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install obs-studio<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S obs-studio<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="multi">
+      <div class="cmd-label">Kdenlive — pro video editor</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install kdenlive -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install kdenlive<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S kdenlive<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="multi">
+      <div class="cmd-label">Audacity — audio editor & recorder</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install audacity -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install audacity<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S audacity<button class="copy-btn">copy</button></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- =================== GRAPHICS =================== -->
+<section class="block">
+  <div class="wrap">
+    <h2 id="graphics">✦ Graphics & Design</h2>
+
+    <div class="multi">
+      <div class="cmd-label">GIMP — image editor (Photoshop alternative)</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install gimp -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install gimp<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S gimp<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="multi">
+      <div class="cmd-label">Inkscape — vector graphics (Illustrator alternative)</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install inkscape -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install inkscape<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S inkscape<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="multi">
+      <div class="cmd-label">Blender — 3D modeling, animation & rendering</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install blender -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install blender<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S blender<button class="copy-btn">copy</button></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- =================== BROWSERS =================== -->
+<section class="block">
+  <div class="wrap">
+    <h2 id="browsers">◎ Web Browsers</h2>
+
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">Google Chrome — official .deb install</span><div class="cmd-tags"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div></div>
+      <div class="cmd-body">wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo gpg --dearmor -o /usr/share/keyrings/google-chrome.gpg && echo "deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list && sudo apt update && sudo apt install google-chrome-stable -y<button class="copy-btn">copy</button></div>
+    </div>
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">Google Chrome (Fedora)</span><div class="cmd-tags"><span class="distro-tag tag-fedora">Fedora</span></div></div>
+      <div class="cmd-body">sudo dnf install fedora-workstation-repositories && sudo dnf config-manager --set-enabled google-chrome && sudo dnf install google-chrome-stable<button class="copy-btn">copy</button></div>
+    </div>
+
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">Brave Browser — official repo</span><div class="cmd-tags"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div></div>
+      <div class="cmd-body">sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg && echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list && sudo apt update && sudo apt install brave-browser -y<button class="copy-btn">copy</button></div>
+    </div>
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">Brave Browser (Fedora)</span><div class="cmd-tags"><span class="distro-tag tag-fedora">Fedora</span></div></div>
+      <div class="cmd-body">curl -fsS https://dl.brave.com/install.sh | sh<button class="copy-btn">copy</button></div>
+    </div>
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">Brave Browser (Arch)</span><div class="cmd-tags"><span class="distro-tag tag-arch">Arch</span></div></div>
+      <div class="cmd-body">sudo pacman -S brave-browser<button class="copy-btn">copy</button></div>
+    </div>
+
+    <div class="multi">
+      <div class="cmd-label">Tor Browser Launcher</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install torbrowser-launcher -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install torbrowser-launcher<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S torbrowser-launcher<button class="copy-btn">copy</button></div></div>
+    </div>
+    <div class="callout info"><p>After install, open Tor Browser Launcher from your Start Menu — it downloads the official Tor Browser automatically on first launch.</p></div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- =================== TRADING =================== -->
+<section class="block">
+  <div class="wrap">
+    <h2 id="trading">₿ Trading & Cryptocurrency</h2>
+    <div class="callout warn"><p><strong>Webull:</strong> Go to <a href="https://www.webull.com/trading-platforms/desktop-app" target="_blank" style="color:var(--cyan);">webull.com/trading-platforms/desktop-app</a>, click the Linux penguin icon, download the .deb file, then run the command below.</p></div>
+
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">Webull — install downloaded .deb</span><div class="cmd-tags"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div></div>
+      <div class="cmd-body">sudo dpkg -i ~/Downloads/WebullDesktop*.deb && sudo apt install -f -y<button class="copy-btn">copy</button></div>
+    </div>
+
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">Electrum Bitcoin Wallet (via pip)</span><div class="cmd-tags"><span class="distro-tag tag-all">All Distros</span></div></div>
+      <div class="cmd-body">sudo apt install python3-pyqt5 libsecp256k1-dev python3-cryptography python3-pip -y && python3 -m pip install --user electrum<button class="copy-btn">copy</button></div>
+    </div>
+
+    <div class="callout info"><p><strong>TradingView:</strong> Runs in any browser — no install needed. Just open Chrome, Firefox, or Brave and go to <a href="https://www.tradingview.com" target="_blank" style="color:var(--cyan);">tradingview.com</a>. The DBB indicators work identically on Linux.</p></div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- =================== APPIMAGES =================== -->
+<section class="block">
+  <div class="wrap">
+    <h2 id="appimages">◈ AppImages — Universal Linux Apps</h2>
+    <div class="callout info"><p><strong>AppImages</strong> are single-file apps that run on any Linux distro without installation. Just download, mark executable, and run. No package manager needed.</p></div>
+
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">balenaEtcher AppImage — USB flasher</span><div class="cmd-tags"><span class="distro-tag tag-all">All Distros</span></div></div>
+      <div class="cmd-body">wget -O ~/Downloads/balenaEtcher.AppImage https://github.com/balena-io/etcher/releases/download/v1.19.21/balenaEtcher-1.19.21-x64.AppImage && chmod +x ~/Downloads/balenaEtcher.AppImage<button class="copy-btn">copy</button></div>
+    </div>
+
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">Ledger Live AppImage — crypto wallet manager</span><div class="cmd-tags"><span class="distro-tag tag-all">All Distros</span></div></div>
+      <div class="cmd-body">wget -O ~/Downloads/LedgerLive.AppImage https://download.live.ledger.com/latest/linux && chmod +x ~/Downloads/LedgerLive.AppImage<button class="copy-btn">copy</button></div>
+    </div>
+
+    <div class="callout success"><p>To run any AppImage: double-click it from your file manager, or in terminal: <code>~/Downloads/SomeApp.AppImage</code></p></div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- =================== WINE =================== -->
+<section class="block">
+  <div class="wrap">
+    <h2 id="wine">🍷 Wine — Run Windows Apps on Linux</h2>
+    <div class="callout info"><p><strong>Wine</strong> lets you run Windows .exe programs directly on Linux. Winetricks adds extra libraries that many Windows apps need.</p></div>
+
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">Enable 32-bit support (required for Wine)</span><div class="cmd-tags"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div></div>
+      <div class="cmd-body">sudo dpkg --add-architecture i386<button class="copy-btn">copy</button></div>
+    </div>
+
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">Add WineHQ official repo & key</span><div class="cmd-tags"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div></div>
+      <div class="cmd-body">sudo mkdir -pm755 /etc/apt/keyrings && sudo wget -O /etc/apt/keyrings/winehq-archive.key https://dl.winehq.org/wine-builds/winehq.key && sudo wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/ubuntu/dists/noble/winehq-noble.sources<button class="copy-btn">copy</button></div>
+    </div>
+
+    <div class="multi">
+      <div class="cmd-label">Install Wine stable</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt update && sudo apt install --install-recommends winehq-stable -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install wine<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S wine<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="multi">
+      <div class="cmd-label">Winetricks — extra Windows libraries</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install winetricks -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install winetricks<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S winetricks<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">Check Wine version</span><div class="cmd-tags"><span class="distro-tag tag-all">All Distros</span></div></div><div class="cmd-body">wine --version<button class="copy-btn">copy</button></div></div>
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">Run a Windows .exe with Wine</span><div class="cmd-tags"><span class="distro-tag tag-all">All Distros</span></div></div><div class="cmd-body">wine ~/Downloads/yourprogram.exe<button class="copy-btn">copy</button></div></div>
+
+    <div class="callout warn"><p><strong>Tip:</strong> For best compatibility, after installing Wine run <code>winetricks vcrun2019 dotnet48 corefonts</code> to install the most common Windows runtime libraries.</p></div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- =================== UTILITIES =================== -->
+<section class="block">
+  <div class="wrap">
+    <h2 id="utilities">⬡ System Essentials & Utilities</h2>
+
+    <div class="multi">
+      <div class="cmd-label">Common utilities — curl, wget, git, zip, neofetch</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install curl wget git zip unzip p7zip-full p7zip-rar software-properties-common apt-transport-https ca-certificates gnupg neofetch -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install curl wget git zip unzip p7zip p7zip-plugins ca-certificates gnupg neofetch<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S curl wget git zip unzip p7zip ca-certificates gnupg neofetch<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="multi">
+      <div class="cmd-label">BleachBit — system cleaner & junk remover</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install bleachbit -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install bleachbit<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S bleachbit<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="multi">
+      <div class="cmd-label">Synaptic — GUI package manager</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install synaptic -y<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="multi">
+      <div class="cmd-label">TLP — laptop battery & power optimization</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install tlp tlp-rdw -y && sudo tlp start<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install tlp tlp-rdw && sudo systemctl enable --now tlp<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S tlp tlp-rdw && sudo systemctl enable --now tlp<button class="copy-btn">copy</button></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- =================== VIRTUALBOX =================== -->
+<section class="block">
+  <div class="wrap">
+    <h2 id="virtualbox">□ VirtualBox — Run Windows Inside Linux</h2>
+
+    <div class="multi">
+      <div class="cmd-label">Install VirtualBox</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install virtualbox -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install VirtualBox<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S virtualbox virtualbox-host-modules-arch<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">Add your user to vboxusers group (USB passthrough)</span><div class="cmd-tags"><span class="distro-tag tag-all">All Distros</span></div></div>
+      <div class="cmd-body">sudo usermod -aG vboxusers $USER<button class="copy-btn">copy</button></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- =================== BACKUPS =================== -->
+<section class="block">
+  <div class="wrap">
+    <h2 id="backups">💾 Backups & Snapshots</h2>
+    <div class="callout success"><p><strong>Timeshift</strong> is the #1 recommended tool — system snapshots so you can roll back if something breaks. Set it up the day you install Linux.</p></div>
+
+    <div class="multi">
+      <div class="cmd-label">Timeshift — system snapshot & restore</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install timeshift -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install timeshift<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S timeshift<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">Launch Timeshift</span><div class="cmd-tags"><span class="distro-tag tag-all">All Distros</span></div></div><div class="cmd-body">sudo timeshift-gtk<button class="copy-btn">copy</button></div></div>
+
+    <div class="multi">
+      <div class="cmd-label">rsync — powerful command-line backup engine</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install rsync -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install rsync<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S rsync<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">rsync example — sync folder to external drive</span><div class="cmd-tags"><span class="distro-tag tag-all">All Distros</span></div></div>
+      <div class="cmd-body">rsync -avh --progress ~/Documents/ /media/yourUSB/backup/<button class="copy-btn">copy</button></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- =================== SSD =================== -->
+<section class="block">
+  <div class="wrap">
+    <h2 id="ssd">⬡ SSD Health & Disk Cloning</h2>
+    <div class="callout info"><p><strong>SSD TRIM</strong> is the garbage collector for SSDs — it keeps your SSD fast and healthy. Enable it right after installing Linux.</p></div>
+
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">Enable automatic SSD TRIM</span><div class="cmd-tags"><span class="distro-tag tag-all">All Distros</span></div></div>
+      <div class="cmd-body">sudo systemctl enable fstrim.timer && sudo systemctl start fstrim.timer<button class="copy-btn">copy</button></div>
+    </div>
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">Manually run TRIM right now</span><div class="cmd-tags"><span class="distro-tag tag-all">All Distros</span></div></div>
+      <div class="cmd-body">sudo fstrim -av<button class="copy-btn">copy</button></div>
+    </div>
+
+    <div class="multi">
+      <div class="cmd-label">smartmontools — SSD/HDD health monitoring</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install smartmontools -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install smartmontools<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S smartmontools<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">Check SSD health (replace sda with your drive)</span><div class="cmd-tags"><span class="distro-tag tag-all">All Distros</span></div></div>
+      <div class="cmd-body">sudo smartctl -a /dev/sda<button class="copy-btn">copy</button></div>
+    </div>
+
+    <div class="multi">
+      <div class="cmd-label">GParted — partition manager</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install gparted -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install gparted<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S gparted<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">Clone disk with dd (replace sda/sdb)</span><div class="cmd-tags"><span class="distro-tag tag-all">All Distros</span><span class="distro-tag tag-warning">⚠ Triple Check</span></div></div>
+      <div class="cmd-body">sudo dd if=/dev/sda of=/dev/sdb bs=4M status=progress conv=noerror<button class="copy-btn">copy</button></div>
+    </div>
+    <div class="callout danger"><p><strong>⚠ WARNING:</strong> dd will completely overwrite the destination drive with no confirmation. Triple-check drive letters with <code>lsblk</code> first.</p></div>
+
+    <h3 style="margin-top:24px;color:var(--cyan);">Bootable USB Cloning Tools (when your main drive is the source)</h3>
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">Clonezilla — most powerful Linux cloner</span><div class="cmd-tags"><span class="distro-tag tag-all">Bootable USB</span></div></div>
+      <div class="cmd-body web">https://clonezilla.org/downloads.php<button class="copy-btn">copy</button></div>
+    </div>
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">Rescuezilla — easier GUI alternative to Clonezilla</span><div class="cmd-tags"><span class="distro-tag tag-all">Bootable USB</span></div></div>
+      <div class="cmd-body web">https://rescuezilla.com/download<button class="copy-btn">copy</button></div>
+    </div>
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">GParted Live ISO</span><div class="cmd-tags"><span class="distro-tag tag-all">Bootable USB</span></div></div>
+      <div class="cmd-body web">https://gparted.org/download.php<button class="copy-btn">copy</button></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- =================== CHECKSUM =================== -->
+<section class="block">
+  <div class="wrap">
+    <h2 id="checksum">🔐 Checksum Verification</h2>
+    <p class="lead">After downloading any ISO file, verify it matches the official checksum. This proves the file wasn't corrupted during download or tampered with.</p>
+
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">Check SHA-256 of a file</span><div class="cmd-tags"><span class="distro-tag tag-all">All Distros</span></div></div>
+      <div class="cmd-body">sha256sum ~/Downloads/yourfile.iso<button class="copy-btn">copy</button></div>
+    </div>
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">Check SHA-512 of a file</span><div class="cmd-tags"><span class="distro-tag tag-all">All Distros</span></div></div>
+      <div class="cmd-body">sha512sum ~/Downloads/yourfile.iso<button class="copy-btn">copy</button></div>
+    </div>
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">Check MD5 of a file</span><div class="cmd-tags"><span class="distro-tag tag-all">All Distros</span></div></div>
+      <div class="cmd-body">md5sum ~/Downloads/yourfile.iso<button class="copy-btn">copy</button></div>
+    </div>
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">Check SHA-1 of a file</span><div class="cmd-tags"><span class="distro-tag tag-all">All Distros</span></div></div>
+      <div class="cmd-body">sha1sum ~/Downloads/yourfile.iso<button class="copy-btn">copy</button></div>
+    </div>
+
+    <div class="callout success"><p>For a graphical drag-and-drop checksum verifier with all 4 hash types at once, see the <a href="linux-mint-ultimate-final.html#s17" style="color:var(--cyan);">Linux Mint Guide → Checksum Verifier section</a> — runs 100% locally in your browser.</p></div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- =================== QUICK REFERENCE =================== -->
+<section class="block">
+  <div class="wrap">
+    <h2 id="quick-ref">≡ Quick Reference</h2>
+    <p class="lead">The commands you'll use the most. All work on every Linux distro.</p>
+
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">Check disk space</span><div class="cmd-tags"><span class="distro-tag tag-all">All Distros</span></div></div><div class="cmd-body">df -h<button class="copy-btn">copy</button></div></div>
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">Check RAM usage</span><div class="cmd-tags"><span class="distro-tag tag-all">All Distros</span></div></div><div class="cmd-body">free -h<button class="copy-btn">copy</button></div></div>
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">Check kernel version</span><div class="cmd-tags"><span class="distro-tag tag-all">All Distros</span></div></div><div class="cmd-body">uname -r<button class="copy-btn">copy</button></div></div>
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">List drives & partitions</span><div class="cmd-tags"><span class="distro-tag tag-all">All Distros</span></div></div><div class="cmd-body">lsblk<button class="copy-btn">copy</button></div></div>
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">List USB devices</span><div class="cmd-tags"><span class="distro-tag tag-all">All Distros</span></div></div><div class="cmd-body">lsusb<button class="copy-btn">copy</button></div></div>
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">List PCI devices (GPU, network)</span><div class="cmd-tags"><span class="distro-tag tag-all">All Distros</span></div></div><div class="cmd-body">lspci<button class="copy-btn">copy</button></div></div>
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">System info with ASCII art</span><div class="cmd-tags"><span class="distro-tag tag-all">All Distros</span></div></div><div class="cmd-body">neofetch<button class="copy-btn">copy</button></div></div>
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">Reboot</span><div class="cmd-tags"><span class="distro-tag tag-all">All Distros</span></div></div><div class="cmd-body">sudo reboot<button class="copy-btn">copy</button></div></div>
+    <div class="cmd"><div class="cmd-head"><span class="cmd-label">Shutdown now</span><div class="cmd-tags"><span class="distro-tag tag-all">All Distros</span></div></div><div class="cmd-body">sudo shutdown now<button class="copy-btn">copy</button></div></div>
+
+    <div class="multi">
+      <div class="cmd-label">Search for a package</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">apt search KEYWORD<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">dnf search KEYWORD<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">pacman -Ss KEYWORD<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="multi">
+      <div class="cmd-label">Remove a package completely</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt purge PACKAGE_NAME -y && sudo apt autoremove -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf remove PACKAGE_NAME && sudo dnf autoremove<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -Rns PACKAGE_NAME<button class="copy-btn">copy</button></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- BACK TO TOP -->
+<a href="#" class="to-top" id="toTop" title="Back to top">▲</a>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-logo">
+      <div class="foot-dot foot-red" style="grid-column:2;grid-row:1;"></div>
+      <div class="foot-dot foot-green" style="grid-column:1;grid-row:2;"></div>
+      <div class="foot-dot foot-red" style="grid-column:2;grid-row:2;"></div>
+      <div class="foot-dot foot-green" style="grid-column:3;grid-row:2;"></div>
+      <div class="foot-dot foot-green" style="grid-column:1;grid-row:3;"></div>
+      <div class="foot-dot foot-green" style="grid-column:3;grid-row:3;"></div>
+    </div>
+    <p>DuttyBookBag · Nerd Commands</p>
+    <p><a href="index.html">← Home</a> · <a href="dbb-nerd-geek-life.html">Nerd Geek Life Hub</a> · <a href="linux-mint-ultimate-final.html">Linux Mint Full Guide</a></p>
+    <div class="disclaimer">
+      All commands compiled from official documentation of each Linux distribution. Always read what a command does before running it. The dd command and any disk-cloning command can wipe drives — verify drive letters with <code>lsblk</code> first. The GRUB fix steps work on most setups but BIOS/UEFI behavior varies by manufacturer. Back up important data before making boot or partition changes. Not financial advice.
+    </div>
+  </div>
+</footer>
+
+<script>
+// Copy buttons
+document.querySelectorAll('.copy-btn').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const block = btn.closest('.cmd-body, .multi-cmd');
+    if (!block) return;
+    const text = block.textContent.replace('copy','').trim();
+    navigator.clipboard.writeText(text).then(() => {
+      const orig = btn.textContent;
+      btn.textContent = 'copied!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = orig;
+        btn.classList.remove('copied');
+      }, 1400);
+    }).catch(() => {
+      // Fallback for older browsers
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      btn.textContent = 'copied!';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'copy'; btn.classList.remove('copied'); }, 1400);
+    });
+  });
+});
+
+// Back to top button
+const toTop = document.getElementById('toTop');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 600) toTop.classList.add('show');
+  else toTop.classList.remove('show');
+});
+toTop.addEventListener('click', (e) => {
+  e.preventDefault();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+</script>
+
+</body>
+</html>
