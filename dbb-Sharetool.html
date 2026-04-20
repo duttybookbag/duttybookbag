@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Share Tool Pro X V5.1 FINAL</title>
+
+<style>
+body {background:#000;color:#fff;font-family:Arial;padding:20px;text-align:center;}
+.section {background:#111;border:1px solid #1e90ff;padding:12px;border-radius:10px;margin:10px 0;}
+button {width:100%;padding:14px;margin:6px 0;border:none;border-radius:10px;font-size:16px;cursor:pointer;}
+.sms{background:#007AFF;}
+.mms{background:#34C759;}
+.other{background:#888;}
+.reset{background:#ff3b30;}
+canvas{max-width:100%;border:1px solid #444;margin-top:10px;touch-action:none;}
+input,textarea{width:100%;padding:10px;margin:6px 0;background:#111;color:#fff;border:1px solid #1e90ff;border-radius:6px;}
+
+.dbb-logo{display:grid;justify-content:center;margin:10px auto;grid-template-columns:repeat(3,42px);grid-template-rows:repeat(3,42px);gap:12px;}
+.dot{border-radius:50%;animation:pulse 2.8s infinite;}
+.green{background:#00ff44;box-shadow:0 0 15px #00ff44,0 0 30px #00ff44;}
+.red{background:#ff1a1a;box-shadow:0 0 15px #ff1a1a,0 0 30px #ff1a1a;}
+@keyframes pulse{0%,100%{opacity:.6;transform:scale(.9);}50%{opacity:1;transform:scale(1.1);}}
+.d1{grid-column:2;grid-row:1;}
+.d2{grid-column:1;grid-row:2;}
+.d3{grid-column:2;grid-row:2;}
+.d4{grid-column:3;grid-row:2;}
+.d5{grid-column:1;grid-row:3;}
+.d6{grid-column:3;grid-row:3;}
+
+.footer-text{font-size:12px;color:#aaa;line-height:1.6;text-align:left;}
+</style>
+</head>
+
+<body>
+
+<div class="dbb-logo">
+<div class="dot red d1"></div>
+<div class="dot green d2"></div>
+<div class="dot red d3"></div>
+<div class="dot green d4"></div>
+<div class="dot green d5"></div>
+<div class="dot green d6"></div>
+</div>
+
+<h2>Share Tool Pro X V5.1 FINAL</h2>
+
+<div class="section">
+<button onclick="pick()">📁 Choose Image</button>
+<input type="file" id="file" hidden>
+<canvas id="c"></canvas>
+<p>🔴 Red box = preview only</p>
+</div>
+
+<div class="section">
+<label>Top</label><input type="range" id="t" min="0" max="100" value="0">
+<label>Bottom</label><input type="range" id="b" min="0" max="100" value="100">
+<label>Left</label><input type="range" id="l" min="0" max="100" value="0">
+<label>Right</label><input type="range" id="r" min="0" max="100" value="100">
+<button onclick="applyCrop()">✂️ Apply Crop</button>
+</div>
+
+<div class="section">
+<input id="text" placeholder="Watermark Text">
+<label>Size</label><input type="range" id="size" min="20" max="200" value="80">
+<label>Rotation</label><input type="range" id="rotate" min="0" max="360" value="0">
+<label>Opacity</label><input type="range" id="opacity" min="0" max="100" value="30">
+<button onclick="toggleWatermark()">💎 Apply Watermark</button>
+</div>
+
+<div class="section">
+<textarea id="msg" placeholder="Message"></textarea>
+<input id="link" placeholder="Link">
+</div>
+
+<div class="section">
+<button class="sms" onclick="shareSMS()">💬 SMS</button>
+<button class="mms" onclick="shareMMS()">📩 MMS</button>
+<button class="other" onclick="shareOther()">📤 Other Apps</button>
+<button class="reset" onclick="resetAll()">♻️ Reset All</button>
+</div>
+
+<div class="section footer-text">
+<b>📌 Instructions:</b><br>
+Use Chrome → Upload → Crop → Apply watermark → Share.<br><br>
+<b>⚠️ Disclaimer:</b><br>
+Use at your own risk. Creator not responsible for misuse or issues.<br><br>
+Created by <b>duttybookbag</b>
+</div>
+
+<div class="dbb-logo">
+<div class="dot red d1"></div>
+<div class="dot green d2"></div>
+<div class="dot red d3"></div>
+<div class="dot green d4"></div>
+<div class="dot green d5"></div>
+<div class="dot green d6"></div>
+</div>
+
+<script>
+let c=document.getElementById("c"),x=c.getContext("2d"),img=new Image();
+let crop={top:0,bottom:1,left:0,right:1};
+let wmOn=false;
+let pos={x:200,y:200};
+let dragging=false,offset={x:0,y:0};
+
+function pick(){file.click();}
+file.onchange=e=>{
+ let f=e.target.files[0]; if(!f)return;
+ let u=URL.createObjectURL(f);
+ img.onload=()=>{c.width=img.width;c.height=img.height;draw(true);};
+ img.src=u;
+};
+
+function draw(box=true){
+ x.clearRect(0,0,c.width,c.height);
+ x.drawImage(img,0,0);
+
+ if(wmOn && text.value){
+  x.save();
+  x.globalAlpha=opacity.value/100;
+  x.translate(pos.x,pos.y);
+  x.rotate(rotate.value*Math.PI/180);
+  x.font=size.value+"px Arial";
+  x.textAlign="center";
+  x.fillStyle="white";
+  x.fillText(text.value,0,0);
+  x.restore();
+ }
+
+ if(!box)return;
+
+ let sx=c.width*crop.left,sy=c.height*crop.top;
+ let sw=c.width*(crop.right-crop.left);
+ let sh=c.height*(crop.bottom-crop.top);
+
+ x.strokeStyle="red";x.lineWidth=3;
+ x.strokeRect(sx,sy,sw,sh);
+}
+
+[size,rotate,opacity,text].forEach(el=>el.oninput=()=>draw(true));
+
+c.onpointerdown=e=>{
+ let r=c.getBoundingClientRect();
+ offset.x=(e.clientX-r.left)-pos.x;
+ offset.y=(e.clientY-r.top)-pos.y;
+ dragging=true;
+};
+c.onpointermove=e=>{
+ if(!dragging)return;
+ let r=c.getBoundingClientRect();
+ pos.x=(e.clientX-r.left)-offset.x;
+ pos.y=(e.clientY-r.top)-offset.y;
+ draw(true);
+};
+c.onpointerup=()=>dragging=false;
+c.onpointerleave=()=>dragging=false;
+
+[t,b,l,r].forEach(el=>el.oninput=()=>{
+ crop={top:t.value/100,bottom:b.value/100,left:l.value/100,right:r.value/100};
+ draw(true);
+});
+
+function applyCrop(){
+ draw(false);
+ let sx=c.width*crop.left,sy=c.height*crop.top;
+ let sw=c.width*(crop.right-crop.left);
+ let sh=c.height*(crop.bottom-crop.top);
+ let tmp=document.createElement("canvas"),tx=tmp.getContext("2d");
+ tmp.width=sw;tmp.height=sh;
+ tx.drawImage(c,sx,sy,sw,sh,0,0,sw,sh);
+ c.width=sw;c.height=sh;
+ x.drawImage(tmp,0,0);
+ img.src=c.toDataURL();
+ crop={top:0,bottom:1,left:0,right:1};
+}
+
+function toggleWatermark(){wmOn=!wmOn;draw(true);}
+function resetAll(){location.reload();}
+
+function fullText(){return msg.value+(link.value?"\n"+link.value:"");}
+
+function exportImg(cb){
+ draw(false);
+ let tmp=document.createElement("canvas"),tx=tmp.getContext("2d");
+ tmp.width=c.width;tmp.height=c.height;
+ tx.drawImage(c,0,0);
+ tmp.toBlob(cb);
+ draw(true);
+}
+
+function shareSMS(){window.location.href="sms:?body="+encodeURIComponent(fullText());}
+
+function shareMMS(){
+ exportImg(async blob=>{
+  if(navigator.share){
+   await navigator.share({text:fullText(),files:[new File([blob],"image.png",{type:"image/png"})]});
+  }
+ });
+}
+
+function shareOther(){
+ exportImg(async blob=>{
+  if(navigator.share){
+   // ✅ FIX: include text + image (same as old WhatsApp behavior)
+   await navigator.share({
+     text: fullText(),
+     files: [new File([blob],"image.png",{type:"image/png"})]
+   });
+  }
+ });
+}
+</script>
+
+</body>
+</html>
