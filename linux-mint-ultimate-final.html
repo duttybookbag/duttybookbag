@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linux Mint — Ultimate Post-Install Setup</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #16161f;
+    --border: #1e1e2a;
+    --green: #00ff9d;
+    --blue: #00b4ff;
+    --cyan: #00e5ff;
+    --purple: #b388ff;
+    --orange: #ffab40;
+    --red: #ff5252;
+    --yellow: #ffd740;
+    --pink: #ff80ab;
+    --text: #e0e0e8;
+    --text-dim: #7a7a8e;
+    --text-muted: #4a4a5e;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:'Outfit',sans-serif; line-height:1.6; }
+  body::after {
+    content:''; position:fixed; top:0; left:0; right:0; bottom:0;
+    background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,255,157,0.008) 2px,rgba(0,255,157,0.008) 4px);
+    pointer-events:none; z-index:9999;
+  }
+  .hero { padding:60px 40px 40px; text-align:center; position:relative; overflow:hidden; border-bottom:1px solid var(--border); }
+  .hero::before {
+    content:''; position:absolute; top:-50%; left:-50%; width:200%; height:200%;
+    background:radial-gradient(circle at 50% 80%,rgba(0,255,157,0.06) 0%,transparent 50%),
+               radial-gradient(circle at 30% 20%,rgba(0,180,255,0.04) 0%,transparent 40%);
+    animation:pulse 8s ease-in-out infinite alternate;
+  }
+  @keyframes pulse { 0%{opacity:0.6} 100%{opacity:1} }
+  @keyframes dbbPulse { 0%,100%{opacity:0.55;transform:scale(0.92);} 50%{opacity:1;transform:scale(1.08);} }
+  .hero h1 {
+    font-size:3.2rem; font-weight:900; letter-spacing:-2px; position:relative;
+    background:linear-gradient(135deg,var(--green),var(--cyan),var(--blue));
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:8px;
+  }
+  .hero .subtitle { font-size:1rem; color:var(--text-dim); font-weight:300; letter-spacing:4px; text-transform:uppercase; position:relative; }
+  .hero .badge { display:inline-block; margin-top:16px; padding:4px 16px; border-radius:20px; font-size:0.75rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; background:rgba(0,255,157,0.1); border:1px solid rgba(0,255,157,0.25); color:var(--green); position:relative; }
+  .container { max-width:960px; margin:0 auto; padding:40px 24px 80px; }
+  .toc { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px 24px; margin-bottom:40px; }
+  .toc-title { font-size:0.75rem; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--text-muted); margin-bottom:12px; }
+  .toc-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:6px; }
+  .toc-item { font-size:0.85rem; color:var(--text-dim); text-decoration:none; padding:5px 10px; border-radius:6px; transition:all 0.15s; display:flex; align-items:center; gap:8px; }
+  .toc-item:hover { background:var(--surface2); color:var(--text); }
+  .toc-item .dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+  .dot.green{background:var(--green)} .dot.blue{background:var(--blue)} .dot.cyan{background:var(--cyan)}
+  .dot.purple{background:var(--purple)} .dot.orange{background:var(--orange)} .dot.red{background:var(--red)}
+  .dot.yellow{background:var(--yellow)} .dot.pink{background:var(--pink)}
+  .section { margin-bottom:48px; animation:fadeUp 0.6s ease-out both; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+  .section-header { display:flex; align-items:center; gap:14px; margin-bottom:20px; padding-bottom:12px; border-bottom:1px solid var(--border); }
+  .section-icon { width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.3rem; flex-shrink:0; }
+  .section-icon.green{background:rgba(0,255,157,0.1);border:1px solid rgba(0,255,157,0.2)}
+  .section-icon.blue{background:rgba(0,180,255,0.1);border:1px solid rgba(0,180,255,0.2)}
+  .section-icon.purple{background:rgba(179,136,255,0.1);border:1px solid rgba(179,136,255,0.2)}
+  .section-icon.orange{background:rgba(255,171,64,0.1);border:1px solid rgba(255,171,64,0.2)}
+  .section-icon.cyan{background:rgba(0,229,255,0.1);border:1px solid rgba(0,229,255,0.2)}
+  .section-icon.red{background:rgba(255,82,82,0.1);border:1px solid rgba(255,82,82,0.2)}
+  .section-icon.yellow{background:rgba(255,215,64,0.1);border:1px solid rgba(255,215,64,0.2)}
+  .section-icon.pink{background:rgba(255,128,171,0.1);border:1px solid rgba(255,128,171,0.2)}
+  .section-title{font-size:1.4rem;font-weight:700;letter-spacing:-0.5px}
+  .section-title.green{color:var(--green)} .section-title.blue{color:var(--blue)} .section-title.purple{color:var(--purple)}
+  .section-title.orange{color:var(--orange)} .section-title.cyan{color:var(--cyan)} .section-title.red{color:var(--red)}
+  .section-title.yellow{color:var(--yellow)} .section-title.pink{color:var(--pink)}
+  .cmd-block { background:var(--surface); border:1px solid var(--border); border-radius:10px; margin-bottom:14px; overflow:hidden; transition:border-color 0.2s; }
+  .cmd-block:hover { border-color:rgba(0,255,157,0.25); }
+  .cmd-label { padding:10px 16px; font-size:0.82rem; color:var(--text-dim); background:var(--surface2); border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+  .tag { font-size:0.65rem; padding:2px 8px; border-radius:4px; text-transform:uppercase; letter-spacing:1px; font-weight:700; flex-shrink:0; }
+  .tag.apt{background:rgba(0,255,157,0.12);color:var(--green)}
+  .tag.deb{background:rgba(255,171,64,0.12);color:var(--orange)}
+  .tag.info{background:rgba(0,229,255,0.12);color:var(--cyan)}
+  .tag.system{background:rgba(255,82,82,0.12);color:var(--red)}
+  .tag.appimg{background:rgba(255,215,64,0.12);color:var(--yellow)}
+  .tag.usb{background:rgba(179,136,255,0.12);color:var(--purple)}
+  .tag.mega{background:rgba(0,255,157,0.2);color:var(--green);border:1px solid rgba(0,255,157,0.3)}
+  .tag.wine{background:rgba(255,128,171,0.12);color:var(--pink)}
+  .cmd-code { padding:14px 16px; font-family:'JetBrains Mono',monospace; font-size:0.85rem; color:var(--green); position:relative; cursor:pointer; display:flex; align-items:flex-start; gap:12px; white-space:pre-wrap; word-break:break-all; }
+  .cmd-code .prompt{color:var(--text-muted);user-select:none;flex-shrink:0;padding-top:1px}
+  .cmd-code .command{flex:1}
+  .copy-btn { position:absolute; right:10px; top:10px; background:rgba(0,255,157,0.08); border:1px solid rgba(0,255,157,0.2); color:var(--green); padding:5px 12px; border-radius:6px; font-family:'JetBrains Mono',monospace; font-size:0.7rem; cursor:pointer; opacity:0; transition:all 0.2s; text-transform:uppercase; letter-spacing:1px; }
+  .cmd-block:hover .copy-btn{opacity:1}
+  .copy-btn:hover{background:rgba(0,255,157,0.15)}
+  .copy-btn.copied{color:var(--cyan);border-color:rgba(0,229,255,0.3);background:rgba(0,229,255,0.08)}
+  .note{padding:12px 16px;margin-bottom:14px;border-radius:8px;font-size:0.85rem;color:var(--text-dim);line-height:1.5}
+  .note.info{background:rgba(0,229,255,0.05);border-left:3px solid var(--cyan)}
+  .note.warn{background:rgba(255,171,64,0.05);border-left:3px solid var(--orange)}
+  .note.success{background:rgba(0,255,157,0.05);border-left:3px solid var(--green)}
+  .note.danger{background:rgba(255,82,82,0.05);border-left:3px solid var(--red)}
+  .note a{color:var(--cyan);text-decoration:none;border-bottom:1px dashed rgba(0,229,255,0.3)}
+  .note a:hover{border-bottom-color:var(--cyan)}
+  .note code{color:var(--green);font-family:'JetBrains Mono',monospace;font-size:0.82rem}
+  .note strong{color:var(--text)}
+  .divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:48px 0}
+  .mega-block{background:var(--surface);border:1px solid rgba(0,255,157,0.3);border-radius:12px;margin-bottom:14px;overflow:hidden;box-shadow:0 0 30px rgba(0,255,157,0.05)}
+  .mega-block .cmd-code{color:var(--cyan);font-size:0.8rem}
+
+  /* DISTRO CARDS */
+  .distro-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:20px}
+  .distro-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px;transition:all 0.2s;display:flex;flex-direction:column;gap:10px}
+  .distro-card:hover{border-color:rgba(0,255,157,0.25);transform:translateY(-2px)}
+  .distro-header{display:flex;align-items:center;gap:12px}
+  .distro-icon{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+  .distro-name{font-size:1rem;font-weight:700;color:var(--text)}
+  .distro-badge{font-size:0.65rem;padding:2px 8px;border-radius:4px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-top:2px;display:inline-block}
+  .badge-beginner{background:rgba(0,255,157,0.12);color:var(--green)}
+  .badge-privacy{background:rgba(0,229,255,0.12);color:var(--cyan)}
+  .badge-security{background:rgba(255,82,82,0.12);color:var(--red)}
+  .badge-creative{background:rgba(179,136,255,0.12);color:var(--purple)}
+  .badge-lightweight{background:rgba(255,215,64,0.12);color:var(--yellow)}
+  .badge-gaming{background:rgba(255,128,171,0.12);color:var(--pink)}
+  .badge-advanced{background:rgba(255,171,64,0.12);color:var(--orange)}
+  .distro-desc{font-size:0.83rem;color:var(--text-dim);line-height:1.55;flex:1}
+  .distro-footer{display:flex;align-items:center;justify-content:space-between;margin-top:4px}
+  .distro-difficulty{font-size:0.75rem;color:var(--text-muted);font-family:'JetBrains Mono',monospace}
+  .distro-link{display:inline-flex;align-items:center;gap:6px;font-size:0.8rem;font-weight:700;text-decoration:none;padding:6px 14px;border-radius:7px;border:1px solid;transition:all 0.15s}
+  .distro-link:hover{opacity:0.8}
+  .distro-link.green{color:var(--green);border-color:rgba(0,255,157,0.3);background:rgba(0,255,157,0.07)}
+  .distro-link.cyan{color:var(--cyan);border-color:rgba(0,229,255,0.3);background:rgba(0,229,255,0.07)}
+  .distro-link.red{color:var(--red);border-color:rgba(255,82,82,0.3);background:rgba(255,82,82,0.07)}
+  .distro-link.purple{color:var(--purple);border-color:rgba(179,136,255,0.3);background:rgba(179,136,255,0.07)}
+  .distro-link.yellow{color:var(--yellow);border-color:rgba(255,215,64,0.3);background:rgba(255,215,64,0.07)}
+  .distro-link.orange{color:var(--orange);border-color:rgba(255,171,64,0.3);background:rgba(255,171,64,0.07)}
+  .distro-link.pink{color:var(--pink);border-color:rgba(255,128,171,0.3);background:rgba(255,128,171,0.07)}
+  .distro-link.blue{color:var(--blue);border-color:rgba(0,180,255,0.3);background:rgba(0,180,255,0.07)}
+
+  /* CHECKSUM TOOL */
+  .checksum-tool{background:var(--surface);border:1px solid rgba(0,229,255,0.2);border-radius:12px;padding:24px;margin-bottom:20px}
+  .checksum-drop{border:1.5px dashed rgba(0,255,157,0.3);border-radius:10px;padding:28px;text-align:center;cursor:pointer;transition:all 0.2s;background:rgba(0,255,157,0.03);margin-bottom:16px}
+  .checksum-drop:hover,.checksum-drop.over{border-color:var(--green);background:rgba(0,255,157,0.07)}
+  .checksum-drop p{font-size:14px;color:var(--text-dim);margin-top:8px}
+  .checksum-drop span{color:var(--green);cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+  .hash-grid-tool{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+  .hash-row-tool{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:12px;transition:border-color 0.2s}
+  .hash-row-tool:hover{border-color:rgba(0,255,157,0.2)}
+  .hash-badge-tool{font-size:10px;font-weight:700;letter-spacing:0.06em;padding:3px 8px;border-radius:5px;background:rgba(0,255,157,0.1);color:var(--green);flex-shrink:0;font-family:'JetBrains Mono',monospace;min-width:58px;text-align:center}
+  .hash-val-tool{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-muted);flex:1;word-break:break-all;line-height:1.5}
+  .hash-val-tool.ready{color:var(--text)}
+  .hash-copy{background:transparent;border:1px solid var(--border);color:var(--text-dim);font-size:11px;padding:3px 8px;border-radius:5px;cursor:pointer;font-family:'JetBrains Mono',monospace;display:none;transition:all 0.15s;flex-shrink:0}
+  .hash-copy:hover{border-color:var(--green);color:var(--green)}
+  .hash-copy.copied{border-color:var(--cyan);color:var(--cyan)}
+  .verify-row{display:flex;gap:8px;align-items:center;margin-bottom:10px}
+  select,input[type=text]{background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:13px;padding:9px 12px;outline:none;transition:border-color 0.2s}
+  select:focus,input[type=text]:focus{border-color:var(--cyan)}
+  select{flex-shrink:0;cursor:pointer}
+  input[type=text]{flex:1}
+  input[type=text]::placeholder{color:var(--text-muted)}
+  .verify-result{display:none;border-radius:8px;padding:12px 16px;font-size:14px;font-weight:600;align-items:center;gap:10px}
+  .verify-result.match{display:flex;background:rgba(0,255,157,0.08);border:1px solid rgba(0,255,157,0.25);color:var(--green)}
+  .verify-result.fail{display:flex;background:rgba(255,82,82,0.08);border:1px solid rgba(255,82,82,0.25);color:var(--red)}
+  .file-pill{display:none;align-items:center;gap:10px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:9px 14px;margin-bottom:14px;font-size:13px}
+  .file-pill-name{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600}
+  .file-pill-size{color:var(--text-dim);font-family:'JetBrains Mono',monospace;font-size:12px;flex-shrink:0}
+  .progress-bar{display:none;height:2px;background:var(--border);border-radius:2px;margin-bottom:14px;overflow:hidden}
+  .progress-fill{height:100%;background:var(--green);border-radius:2px;width:0%;transition:width 0.3s ease;animation:pglow 1.5s ease-in-out infinite}
+  @keyframes pglow{0%,100%{opacity:1}50%{opacity:0.5}}
+  .privacy-warning{background:rgba(255,82,82,0.06);border:1px solid rgba(255,82,82,0.2);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--red);margin-bottom:14px;font-family:'JetBrains Mono',monospace}
+
+  .footer{text-align:center;padding:40px 20px;color:var(--text-muted);font-size:0.8rem;letter-spacing:2px;text-transform:uppercase;border-top:1px solid var(--border)}
+  @media(max-width:600px){.hero h1{font-size:2rem}.container{padding:24px 14px 60px}.cmd-code{font-size:0.75rem}.toc-grid{grid-template-columns:1fr}.distro-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div style="text-align:center;padding:6px 0;background:rgba(0,0,0,0.8);border-bottom:1px solid #0c3030;position:relative;z-index:99;">
+  <div id="google_translate_element" style="display:inline-block;"></div>
+</div>
+<script>
+function googleTranslateElementInit(){new google.translate.TranslateElement({pageLanguage:'en',layout:google.translate.TranslateElement.InlineLayout.HORIZONTAL},'google_translate_element');}
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<style>.goog-te-banner-frame{display:none!important;}.goog-te-gadget{font-size:11px!important;color:#3d7070!important;}.goog-te-gadget .goog-te-combo{background:#080f0f;color:#b8e8e2;border:1px solid #0c3030;border-radius:4px;padding:4px 8px;font-family:'Share Tech Mono',monospace;font-size:11px;outline:none;}.goog-te-gadget>span{display:none!important;}body{top:0!important;}</style>
+
+<div class="hero">
+  <div style="display:flex;justify-content:center;margin-bottom:20px;position:relative">
+    <div style="display:grid;grid-template-columns:repeat(3,42px);grid-template-rows:repeat(3,42px);gap:12px;justify-content:center;width:max-content;">
+      <div style="grid-column:2;grid-row:1;width:42px;height:42px;border-radius:50%;background:#ff1a1a;box-shadow:0 0 15px #ff1a1a,0 0 30px #ff1a1a;animation:dbbPulse 2.8s ease-in-out infinite;"></div>
+      <div style="grid-column:1;grid-row:2;width:42px;height:42px;border-radius:50%;background:#00ff44;box-shadow:0 0 15px #00ff44,0 0 30px #00ff44;animation:dbbPulse 2.8s ease-in-out infinite;"></div>
+      <div style="grid-column:2;grid-row:2;width:42px;height:42px;border-radius:50%;background:#ff1a1a;box-shadow:0 0 15px #ff1a1a,0 0 30px #ff1a1a;animation:dbbPulse 2.8s ease-in-out infinite;"></div>
+      <div style="grid-column:3;grid-row:2;width:42px;height:42px;border-radius:50%;background:#00ff44;box-shadow:0 0 15px #00ff44,0 0 30px #00ff44;animation:dbbPulse 2.8s ease-in-out infinite;"></div>
+      <div style="grid-column:1;grid-row:3;width:42px;height:42px;border-radius:50%;background:#00ff44;box-shadow:0 0 15px #00ff44,0 0 30px #00ff44;animation:dbbPulse 2.8s ease-in-out infinite;"></div>
+      <div style="grid-column:3;grid-row:3;width:42px;height:42px;border-radius:50%;background:#00ff44;box-shadow:0 0 15px #00ff44,0 0 30px #00ff44;animation:dbbPulse 2.8s ease-in-out infinite;"></div>
+    </div>
+  </div>
+  <h1>LINUX MINT ULTIMATE SETUP</h1>
+  <div class="subtitle">Complete Post-Install Command Reference</div>
+  <div class="badge">⚡ All-In-One Edition — Every App · Every Command · Every Distro</div>
+</div>
+
+<div class="container">
+
+  <!-- TOC -->
+  <div class="toc">
+    <div class="toc-title">Jump To Section</div>
+    <div class="toc-grid">
+      <a class="toc-item" href="#s1"><span class="dot green"></span>System Update & Codecs</a>
+      <a class="toc-item" href="#s2"><span class="dot cyan"></span>CPU & GPU Info</a>
+      <a class="toc-item" href="#s3"><span class="dot purple"></span>System Monitors</a>
+      <a class="toc-item" href="#s4"><span class="dot blue"></span>Media — Video & Audio</a>
+      <a class="toc-item" href="#s5"><span class="dot blue"></span>Graphics & Design</a>
+      <a class="toc-item" href="#s6"><span class="dot orange"></span>Web Browsers</a>
+      <a class="toc-item" href="#s7"><span class="dot yellow"></span>Trading & Crypto</a>
+      <a class="toc-item" href="#s8"><span class="dot yellow"></span>AppImages — Etcher & Ledger</a>
+      <a class="toc-item" href="#s9"><span class="dot pink"></span>Wine — Run Windows Apps</a>
+      <a class="toc-item" href="#s10"><span class="dot red"></span>System Utilities</a>
+      <a class="toc-item" href="#s11"><span class="dot red"></span>VirtualBox</a>
+      <a class="toc-item" href="#s12"><span class="dot cyan"></span>Backups & Snapshots</a>
+      <a class="toc-item" href="#s13"><span class="dot purple"></span>SSD Health & Cloning Tools</a>
+      <a class="toc-item" href="#s14"><span class="dot orange"></span>Bootable USB Guide</a>
+      <a class="toc-item" href="#s15"><span class="dot green"></span>⚡ MEGA Install Block</a>
+      <a class="toc-item" href="#s16"><span class="dot blue"></span>Linux Distributions Guide</a>
+      <a class="toc-item" href="#s17"><span class="dot cyan"></span>🔐 Checksum Verifier Tool</a>
+      <a class="toc-item" href="#s19"><span class="dot yellow"></span>₿ Crypto Wallets Guide</a>
+      <a class="toc-item" href="#s18"><span class="dot orange"></span>⊞ GRUB — Fix Windows Boot Menu</a>
+      <a class="toc-item" href="#sref"><span class="dot green"></span>Quick Reference</a>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 1: SYSTEM UPDATE ===== -->
+  <div class="section" id="s1" style="animation-delay:0.05s">
+    <div class="section-header">
+      <div class="section-icon green">⟳</div>
+      <div class="section-title green">System Update, Codecs &amp; Firewall</div>
+    </div>
+    <div class="cmd-block"><div class="cmd-label">Update &amp; upgrade all packages<span class="tag system">system</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt update && sudo apt upgrade -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Full distribution upgrade (kernel &amp; held-back packages)<span class="tag system">system</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt dist-upgrade -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Install Linux Mint multimedia codecs<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install mint-meta-codecs -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Install extra codecs &amp; multimedia libraries<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install libavcodec-extra libdvd-pkg gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly ubuntu-restricted-extras -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Install build tools<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install build-essential dkms linux-headers-$(uname -r) -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Install FUSE — required for AppImages<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install libfuse2 -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Enable firewall<span class="tag system">system</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo ufw enable && sudo ufw status</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Clean up orphaned packages<span class="tag system">system</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt autoremove -y && sudo apt autoclean</span><button class="copy-btn">copy</button></div></div>
+  </div>
+  <div class="divider"></div>
+
+  <!-- ===== SECTION 2: CPU/GPU ===== -->
+  <div class="section" id="s2" style="animation-delay:0.1s">
+    <div class="section-header"><div class="section-icon cyan">⚡</div><div class="section-title cyan">CPU &amp; GPU Information</div></div>
+    <div class="cmd-block"><div class="cmd-label">Quick CPU summary<span class="tag info">info</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">lscpu</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Full CPU info<span class="tag info">info</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">cat /proc/cpuinfo</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Install CPU Power GUI — frequency scaling manager<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install cpupower-gui -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">View GPU hardware<span class="tag info">info</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo lshw -C display</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Install hardware sensors — temps &amp; fan speeds<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install lm-sensors -y && sudo sensors-detect</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Read sensor data<span class="tag info">info</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sensors</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Full system overview — CPU, GPU, RAM, kernel<span class="tag info">info</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">inxi -Fxxxz</span><button class="copy-btn">copy</button></div></div>
+  </div>
+  <div class="divider"></div>
+
+  <!-- ===== SECTION 3: MONITORS ===== -->
+  <div class="section" id="s3" style="animation-delay:0.12s">
+    <div class="section-header"><div class="section-icon purple">◉</div><div class="section-title purple">System Monitors</div></div>
+    <div class="note info"><strong>btop</strong> is the king of terminal monitors — shows all CPU cores, memory, disk I/O, network and processes in one gorgeous dashboard.</div>
+    <div class="cmd-block"><div class="cmd-label">Install btop — beautiful all-in-one terminal monitor<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install btop -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Install htop — classic interactive process viewer<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install htop -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Install s-tui — CPU frequency &amp; stress test terminal UI<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install s-tui -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Install GNOME System Monitor — graphical GUI<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install gnome-system-monitor -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Install Psensor — GUI temperature &amp; fan monitor<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install psensor -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Install nvtop — GPU monitor for NVIDIA/AMD<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install nvtop -y</span><button class="copy-btn">copy</button></div></div>
+  </div>
+  <div class="divider"></div>
+
+  <!-- ===== SECTION 4: MEDIA ===== -->
+  <div class="section" id="s4" style="animation-delay:0.14s">
+    <div class="section-header"><div class="section-icon blue">▶</div><div class="section-title blue">Media — Video &amp; Audio</div></div>
+    <div class="cmd-block"><div class="cmd-label">VLC Media Player<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install vlc -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">MPV — lightweight media player<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install mpv -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">FFmpeg — video/audio conversion engine<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install ffmpeg -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">HandBrake — video transcoder/converter<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install handbrake -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">OBS Studio — screen recording &amp; streaming<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install obs-studio -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Kdenlive — professional video editor<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install kdenlive -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Shotcut — free video editor<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install shotcut -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Audacity — audio editor &amp; recorder<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install audacity -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">PulseAudio Volume Control — advanced audio mixer GUI<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install pavucontrol -y</span><button class="copy-btn">copy</button></div></div>
+  </div>
+  <div class="divider"></div>
+
+  <!-- ===== SECTION 5: GRAPHICS ===== -->
+  <div class="section" id="s5" style="animation-delay:0.16s">
+    <div class="section-header"><div class="section-icon blue">✦</div><div class="section-title blue">Graphics &amp; Design</div></div>
+    <div class="cmd-block"><div class="cmd-label">GIMP — image editor (Photoshop alternative)<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install gimp -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Inkscape — vector graphics (Illustrator alternative)<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install inkscape -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Blender — 3D modeling, animation &amp; rendering<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install blender -y</span><button class="copy-btn">copy</button></div></div>
+  </div>
+  <div class="divider"></div>
+
+  <!-- ===== SECTION 6: BROWSERS ===== -->
+  <div class="section" id="s6" style="animation-delay:0.18s">
+    <div class="section-header"><div class="section-icon orange">◎</div><div class="section-title orange">Web Browsers</div></div>
+    <div class="cmd-block"><div class="cmd-label">Google Chrome — official install<span class="tag deb">deb</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo gpg --dearmor -o /usr/share/keyrings/google-chrome.gpg && echo "deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list && sudo apt update && sudo apt install google-chrome-stable -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Brave Browser — official repo<span class="tag deb">deb</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg && echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list && sudo apt update && sudo apt install brave-browser -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Tor Browser — anonymous browsing through Tor network<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install torbrowser-launcher -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="note info">After installing Tor Browser Launcher, open it from your Start Menu — it downloads the official Tor Browser automatically on first launch.</div>
+  </div>
+  <div class="divider"></div>
+
+  <!-- ===== SECTION 7: TRADING ===== -->
+  <div class="section" id="s7" style="animation-delay:0.2s">
+    <div class="section-header"><div class="section-icon yellow">₿</div><div class="section-title yellow">Trading &amp; Cryptocurrency</div></div>
+    <div class="note warn"><strong>Webull:</strong> Go to <a href="https://www.webull.com/trading-platforms/desktop-app" target="_blank">webull.com/trading-platforms/desktop-app</a>, click the Linux penguin icon, download the .deb file, then run the command below.</div>
+    <div class="cmd-block"><div class="cmd-label">Webull — install downloaded .deb<span class="tag deb">deb</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo dpkg -i ~/Downloads/WebullDesktop*.deb && sudo apt install -f -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Electrum Bitcoin Wallet<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install python3-pyqt5 libsecp256k1-dev python3-cryptography python3-pip -y && python3 -m pip install --user electrum</span><button class="copy-btn">copy</button></div></div>
+  </div>
+  <div class="divider"></div>
+
+  <!-- ===== SECTION 8: APPIMAGES ===== -->
+  <div class="section" id="s8" style="animation-delay:0.22s">
+    <div class="section-header"><div class="section-icon yellow">◈</div><div class="section-title yellow">AppImages — Etcher &amp; Ledger Live</div></div>
+    <div class="cmd-block"><div class="cmd-label">Download &amp; set up balenaEtcher (USB flasher)<span class="tag appimg">appimage</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">wget -O ~/Downloads/balenaEtcher.AppImage https://github.com/balena-io/etcher/releases/download/v1.19.21/balenaEtcher-1.19.21-x64.AppImage && chmod +x ~/Downloads/balenaEtcher.AppImage && cp ~/Downloads/balenaEtcher.AppImage ~/Desktop/balenaEtcher.AppImage && cat > ~/.local/share/applications/balena-etcher.desktop << 'EOF'
+[Desktop Entry]
+Name=balenaEtcher
+Exec=/root/Desktop/balenaEtcher.AppImage
+Icon=drive-removable-media
+Type=Application
+Categories=Utility;
+EOF</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Download &amp; set up Ledger Live (crypto wallet manager)<span class="tag appimg">appimage</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">wget -O ~/Downloads/LedgerLive.AppImage https://download.live.ledger.com/latest/linux && chmod +x ~/Downloads/LedgerLive.AppImage && cp ~/Downloads/LedgerLive.AppImage ~/Desktop/LedgerLive.AppImage && cat > ~/.local/share/applications/ledger-live.desktop << 'EOF'
+[Desktop Entry]
+Name=Ledger Live
+Exec=/root/Desktop/LedgerLive.AppImage
+Icon=wallet
+Type=Application
+Categories=Finance;
+EOF</span><button class="copy-btn">copy</button></div></div>
+  </div>
+  <div class="divider"></div>
+
+  <!-- ===== SECTION 9: WINE ===== -->
+  <div class="section" id="s9" style="animation-delay:0.24s">
+    <div class="section-header"><div class="section-icon pink">🍷</div><div class="section-title pink">Wine — Run Windows Apps on Linux</div></div>
+    <div class="note info"><strong>Wine</strong> lets you run Windows .exe programs directly on Linux Mint. Winetricks adds extra libraries that many Windows apps need to work properly.</div>
+    <div class="cmd-block"><div class="cmd-label">Enable 32-bit support (required for Wine)<span class="tag system">system</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo dpkg --add-architecture i386</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Add WineHQ official repo &amp; key<span class="tag deb">deb</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo mkdir -pm755 /etc/apt/keyrings && sudo wget -O /etc/apt/keyrings/winehq-archive.key https://dl.winehq.org/wine-builds/winehq.key && sudo wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/ubuntu/dists/noble/winehq-noble.sources</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Install Wine stable<span class="tag wine">wine</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt update && sudo apt install --install-recommends winehq-stable -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Install Winetricks — extra Windows libraries &amp; components<span class="tag wine">wine</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install winetricks -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Check Wine version<span class="tag info">info</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">wine --version</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Run a Windows .exe with Wine<span class="tag wine">wine</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">wine ~/Downloads/yourprogram.exe</span><button class="copy-btn">copy</button></div></div>
+    <div class="note warn"><strong>Tip:</strong> For best compatibility with Windows apps, run <code>winetricks</code> after installing Wine and install common libraries like <code>winetricks vcrun2019 dotnet48 corefonts</code></div>
+  </div>
+  <div class="divider"></div>
+
+  <!-- ===== SECTION 10: UTILITIES ===== -->
+  <div class="section" id="s10" style="animation-delay:0.26s">
+    <div class="section-header"><div class="section-icon red">⬡</div><div class="section-title red">System Essentials &amp; Utilities</div></div>
+    <div class="cmd-block"><div class="cmd-label">Common utilities — curl, wget, git, zip etc.<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install curl wget git zip unzip p7zip-full p7zip-rar software-properties-common apt-transport-https ca-certificates gnupg neofetch -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">BleachBit — system cleaner &amp; junk remover<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install bleachbit -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Stacer — system optimizer &amp; monitor GUI<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install stacer -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">GDebi — .deb installer with dependency resolution<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install gdebi -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Synaptic — GUI package manager<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install synaptic -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">TLP — laptop battery &amp; power optimization<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install tlp tlp-rdw -y && sudo tlp start</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Preload — speeds up app launches by caching<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install preload -y</span><button class="copy-btn">copy</button></div></div>
+  </div>
+  <div class="divider"></div>
+
+  <!-- ===== SECTION 11: VIRTUALBOX ===== -->
+  <div class="section" id="s11" style="animation-delay:0.28s">
+    <div class="section-header"><div class="section-icon red">□</div><div class="section-title red">Virtualisation — VirtualBox</div></div>
+    <div class="cmd-block"><div class="cmd-label">Install VirtualBox — run Windows or other OS inside Linux<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install virtualbox -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Add your user to vboxusers group (required for USB passthrough)<span class="tag system">system</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo usermod -aG vboxusers $USER</span><button class="copy-btn">copy</button></div></div>
+  </div>
+  <div class="divider"></div>
+
+  <!-- ===== SECTION 12: BACKUPS ===== -->
+  <div class="section" id="s12" style="animation-delay:0.3s">
+    <div class="section-header"><div class="section-icon cyan">💾</div><div class="section-title cyan">Backups &amp; Snapshots</div></div>
+    <div class="note success"><strong>Timeshift</strong> is the #1 recommended tool for Linux Mint — it takes system snapshots so you can roll back if something breaks. Set it up right after install!</div>
+    <div class="cmd-block"><div class="cmd-label">Install Timeshift — system snapshot &amp; restore<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install timeshift -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Launch Timeshift to configure snapshots<span class="tag info">info</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo timeshift-gtk</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Install Déjà Dup — simple GUI file backup tool<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install deja-dup -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Install Back In Time — snapshot backup with history<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install backintime-qt -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Install rsync — powerful command-line backup engine<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install rsync -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">rsync backup example — sync folder to external drive<span class="tag info">info</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">rsync -avh --progress ~/Documents/ /media/yourUSB/backup/</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Install Vorta — GUI for Borg encrypted snapshots<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install borgbackup vorta -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="note info"><strong>Tip:</strong> Use Timeshift for system snapshots + Déjà Dup or rsync for personal files. Two different tools for two different jobs.</div>
+  </div>
+  <div class="divider"></div>
+
+  <!-- ===== SECTION 13: SSD & CLONING ===== -->
+  <div class="section" id="s13" style="animation-delay:0.32s">
+    <div class="section-header"><div class="section-icon purple">⬡</div><div class="section-title purple">SSD Health &amp; Disk Cloning Tools</div></div>
+
+    <div class="note info"><strong>SSD TRIM</strong> is the garbage collector for SSDs — it keeps your SSD fast and healthy. Enable it on Linux Mint right away.</div>
+    <div class="cmd-block"><div class="cmd-label">Enable automatic SSD TRIM (garbage collection)<span class="tag system">system</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo systemctl enable fstrim.timer && sudo systemctl start fstrim.timer</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Manually run TRIM right now<span class="tag system">system</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo fstrim -av</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Verify TRIM is working<span class="tag info">info</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo systemctl status fstrim.timer</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Install smartmontools — SSD/HDD SMART health monitoring<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install smartmontools -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Check SSD health (replace sda with your drive)<span class="tag info">info</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo smartctl -a /dev/sda</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Install hdparm — SSD/HDD info &amp; speed test<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install hdparm -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Test SSD read speed<span class="tag info">info</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo hdparm -tT /dev/sda</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Install GParted — partition manager &amp; disk cloner<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install gparted -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Clone disk with dd — terminal method (replace sda/sdb)<span class="tag info">info</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo dd if=/dev/sda of=/dev/sdb bs=4M status=progress conv=noerror</span><button class="copy-btn">copy</button></div></div>
+    <div class="note danger"><strong>⚠ WARNING:</strong> The dd command above will completely overwrite the destination drive with no confirmation. Triple-check your drive letters with <code>lsblk</code> first!</div>
+    <div class="cmd-block"><div class="cmd-label">List all drives to confirm which is which<span class="tag info">info</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">lsblk</span><button class="copy-btn">copy</button></div></div>
+
+    <div class="note info" style="margin-top:20px"><strong>Bootable USB Cloning Tools</strong> — These run from a USB stick (not inside Linux Mint). Flash them with Etcher, boot from USB, then clone your drive.</div>
+
+    <div class="cmd-block"><div class="cmd-label">Download Clonezilla ISO — the most powerful Linux cloner<span class="tag usb">bootable USB</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">🌐</span><span class="command">https://clonezilla.org/downloads.php</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Download Rescuezilla ISO — easier GUI alternative to Clonezilla<span class="tag usb">bootable USB</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">🌐</span><span class="command">https://rescuezilla.com/download</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Download GParted Live ISO — partition manager on USB<span class="tag usb">bootable USB</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">🌐</span><span class="command">https://gparted.org/download.php</span><button class="copy-btn">copy</button></div></div>
+    <div class="note warn">
+      <strong>How to use Clonezilla or Rescuezilla:</strong><br><br>
+      1. Download the ISO from the link above<br>
+      2. Flash it to a USB stick using balenaEtcher (already on your desktop)<br>
+      3. Reboot your computer and press F12 (or F2/DEL/ESC) to open the boot menu<br>
+      4. Select your USB drive from the boot menu<br>
+      5. Follow the on-screen wizard to clone your drive<br><br>
+      <strong>Rescuezilla</strong> is recommended for beginners — it has a friendly GUI just like a regular program. <strong>Clonezilla</strong> is text-based but more powerful and supports more options.
+    </div>
+  </div>
+  <div class="divider"></div>
+
+  <!-- ===== SECTION 14: BOOTABLE USB ===== -->
+  <div class="section" id="s14" style="animation-delay:0.34s">
+    <div class="section-header"><div class="section-icon orange">⚡</div><div class="section-title orange">Bootable USB — How to Flash ISO Files</div></div>
+    <div class="note info">Linux Mint comes with a built-in USB flasher. You also have balenaEtcher on your desktop. Here are all the methods:</div>
+
+    <div class="note success">
+      <strong>Method 1 — USB Image Writer (built into Linux Mint — EASIEST):</strong><br><br>
+      1. Open your <strong>Start Menu</strong><br>
+      2. Search for <strong>"USB Image Writer"</strong><br>
+      3. Click <strong>"Please select an image"</strong> → choose your ISO file<br>
+      4. Select your USB drive from the dropdown<br>
+      5. Click <strong>"Write"</strong> and enter your password<br>
+      6. Wait for it to finish — do not unplug the USB!
+    </div>
+
+    <div class="note success">
+      <strong>Method 2 — balenaEtcher (already on your Desktop):</strong><br><br>
+      1. Double-click <strong>balenaEtcher</strong> on your desktop<br>
+      2. Click <strong>"Flash from file"</strong> → select your ISO<br>
+      3. Click <strong>"Select target"</strong> → choose your USB drive<br>
+      4. Click <strong>"Flash!"</strong> and wait for it to finish
+    </div>
+
+    <div class="cmd-block"><div class="cmd-label">Method 3 — dd terminal method (fastest, most powerful)<span class="tag system">system</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command"># First find your USB drive name
+lsblk
+
+# Then flash the ISO (replace sdX and path to your ISO)
+sudo dd if=~/Downloads/yourfile.iso of=/dev/sdX bs=4M status=progress oflag=sync</span><button class="copy-btn">copy</button></div></div>
+    <div class="note danger"><strong>⚠ WARNING:</strong> Replace <code>sdX</code> with your actual USB drive (e.g. sdb). The wrong drive = data loss. Always run <code>lsblk</code> first to confirm!</div>
+
+    <div class="note info">
+      <strong>How to boot from USB:</strong><br><br>
+      1. Plug in your USB stick<br>
+      2. Restart your computer<br>
+      3. Press <strong>F12</strong> (most computers), <strong>F8</strong>, <strong>F2</strong>, <strong>DEL</strong> or <strong>ESC</strong> right as it starts to open the boot menu<br>
+      4. Select your USB drive from the list<br>
+      5. The ISO will boot — you can run it live or install it
+    </div>
+  </div>
+  <div class="divider"></div>
+
+  <!-- ===== SECTION 15: MEGA BLOCK ===== -->
+  <div class="section" id="s15" style="animation-delay:0.36s">
+    <div class="section-header"><div class="section-icon green" style="font-size:1.5rem">⚡</div><div class="section-title green" style="font-size:1.6rem">⚡ ONE-CLICK MEGA INSTALL BLOCK</div></div>
+    <div class="note success">Paste this single command right after your first system update. It installs everything at once. Browsers, Wine repo, Webull, Etcher &amp; Ledger are separate steps.</div>
+    <div class="mega-block">
+      <div class="cmd-label" style="background:rgba(0,255,157,0.06);border-bottom:1px solid rgba(0,255,157,0.15)">Install ALL apt packages in one shot<span class="tag mega">MEGA</span></div>
+      <div class="cmd-code" onclick="copyCmd(this)" style="color:var(--cyan);font-size:0.8rem">
+        <span class="prompt">$</span>
+        <span class="command">sudo apt install -y \
+  mint-meta-codecs libavcodec-extra libdvd-pkg \
+  gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly \
+  ubuntu-restricted-extras libfuse2 \
+  build-essential dkms linux-headers-$(uname -r) \
+  vlc mpv ffmpeg handbrake obs-studio \
+  kdenlive shotcut audacity pavucontrol \
+  gimp inkscape blender \
+  btop htop s-tui gnome-system-monitor psensor nvtop \
+  cpupower-gui lm-sensors \
+  torbrowser-launcher \
+  virtualbox \
+  timeshift deja-dup backintime-qt rsync borgbackup vorta \
+  bleachbit stacer preload gdebi synaptic tlp tlp-rdw \
+  smartmontools hdparm gparted \
+  curl wget git zip unzip p7zip-full p7zip-rar \
+  software-properties-common apt-transport-https \
+  ca-certificates gnupg neofetch winetricks && \
+sudo ufw enable && \
+sudo systemctl enable fstrim.timer && \
+sudo apt autoremove -y && sudo apt autoclean && \
+echo "" && \
+echo "============================================" && \
+echo "  APT INSTALLS COMPLETE!" && \
+echo "  Next steps:" && \
+echo "  1. Install Google Chrome (see Browsers section)" && \
+echo "  2. Install Brave (see Browsers section)" && \
+echo "  3. Install Wine (see Wine section)" && \
+echo "  4. Download Webull .deb from webull.com" && \
+echo "  5. Run Etcher + Ledger AppImage commands" && \
+echo "  6. sudo reboot" && \
+echo "============================================"</span>
+        <button class="copy-btn">copy</button>
+      </div>
+    </div>
+    <div class="note warn">
+      After the mega block finishes, do these in order:<br><br>
+      <strong>1. Chrome:</strong> see Browsers section above<br>
+      <strong>2. Brave:</strong> see Browsers section above<br>
+      <strong>3. Wine:</strong> see Wine section above (needs separate repo setup)<br>
+      <strong>4. Webull:</strong> download .deb from <a href="https://www.webull.com/trading-platforms/desktop-app" target="_blank">webull.com</a> then run <code>sudo dpkg -i ~/Downloads/WebullDesktop*.deb</code><br>
+      <strong>5. Etcher + Ledger:</strong> see AppImages section above<br>
+      <strong>6. Reboot:</strong> <code>sudo reboot</code>
+    </div>
+  </div>
+  <div class="divider"></div>
+
+  <!-- ===== SECTION 16: LINUX DISTROS ===== -->
+  <div class="section" id="s16" style="animation-delay:0.38s">
+    <div class="section-header"><div class="section-icon blue">🐧</div><div class="section-title blue">Linux Distributions Guide</div></div>
+    <div class="note info">Flash any of these ISOs to USB using balenaEtcher or USB Image Writer (both already on your system). Click the download button to go to the official site.</div>
+
+    <p style="font-size:0.75rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--text-muted);margin-bottom:14px">🟢 BEGINNER FRIENDLY</p>
+    <div class="distro-grid">
+      <div class="distro-card">
+        <div class="distro-header"><div class="distro-icon" style="background:rgba(0,255,157,0.1);border:1px solid rgba(0,255,157,0.2)">🌿</div><div><div class="distro-name">Linux Mint</div><span class="distro-badge badge-beginner">Beginner</span></div></div>
+        <div class="distro-desc">The one you're running right now. The most Windows-like Linux distro — familiar taskbar, Start Menu, and desktop. Rock solid, fast, and massive community support. Best choice for anyone switching from Windows.</div>
+        <div class="distro-footer"><span class="distro-difficulty">// level: beginner</span><a class="distro-link green" href="https://linuxmint.com/download.php" target="_blank">↗ Download</a></div>
+      </div>
+      <div class="distro-card">
+        <div class="distro-header"><div class="distro-icon" style="background:rgba(255,171,64,0.1);border:1px solid rgba(255,171,64,0.2)">🔶</div><div><div class="distro-name">Ubuntu</div><span class="distro-badge badge-beginner">Beginner</span></div></div>
+        <div class="distro-desc">The world's most popular Linux distro. Massive software support, huge community, and the base that Linux Mint is built on. Great for first-timers. Comes with GNOME desktop — modern and clean.</div>
+        <div class="distro-footer"><span class="distro-difficulty">// level: beginner</span><a class="distro-link orange" href="https://ubuntu.com/download/desktop" target="_blank">↗ Download</a></div>
+      </div>
+      <div class="distro-card">
+        <div class="distro-header"><div class="distro-icon" style="background:rgba(0,180,255,0.1);border:1px solid rgba(0,180,255,0.2)">🔷</div><div><div class="distro-name">Zorin OS</div><span class="distro-badge badge-beginner">Beginner</span></div></div>
+        <div class="distro-desc">Designed specifically for Windows switchers. You can toggle between a Windows 11 layout and macOS layout with one click. Polished, beautiful, and extremely easy. Great for non-technical users.</div>
+        <div class="distro-footer"><span class="distro-difficulty">// level: beginner</span><a class="distro-link blue" href="https://zorin.com/os/download/" target="_blank">↗ Download</a></div>
+      </div>
+      <div class="distro-card">
+        <div class="distro-header"><div class="distro-icon" style="background:rgba(255,128,171,0.1);border:1px solid rgba(255,128,171,0.2)">🚀</div><div><div class="distro-name">Pop!_OS</div><span class="distro-badge badge-beginner">Beginner / Dev</span></div></div>
+        <div class="distro-desc">Made by System76, built for developers and power users. Excellent NVIDIA driver support out of the box. Auto-tiling window manager, clean GNOME interface, and great for gaming. Highly recommended.</div>
+        <div class="distro-footer"><span class="distro-difficulty">// level: beginner+</span><a class="distro-link pink" href="https://pop.system76.com/" target="_blank">↗ Download</a></div>
+      </div>
+    </div>
+
+    <p style="font-size:0.75rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--text-muted);margin-bottom:14px;margin-top:24px">🔵 PRIVACY &amp; SECURITY</p>
+    <div class="distro-grid">
+      <div class="distro-card">
+        <div class="distro-header"><div class="distro-icon" style="background:rgba(0,229,255,0.1);border:1px solid rgba(0,229,255,0.2)">👻</div><div><div class="distro-name">Tails</div><span class="distro-badge badge-privacy">Privacy</span></div></div>
+        <div class="distro-desc">The ultimate anonymous OS. Runs entirely from a USB stick — leaves zero trace on the computer. All internet traffic routes through Tor automatically. Shuts down and wipes itself clean every session. Used by journalists and whistleblowers worldwide.</div>
+        <div class="distro-footer"><span class="distro-difficulty">// level: intermediate</span><a class="distro-link cyan" href="https://tails.boum.org/install/" target="_blank">↗ Download</a></div>
+      </div>
+      <div class="distro-card">
+        <div class="distro-header"><div class="distro-icon" style="background:rgba(179,136,255,0.1);border:1px solid rgba(179,136,255,0.2)">🧊</div><div><div class="distro-name">Qubes OS</div><span class="distro-badge badge-security">Security</span></div></div>
+        <div class="distro-desc">The "cubes" OS you were thinking of! Each app runs in its own isolated virtual machine called a "qube" — color coded by trust level. If malware infects your browser qube, your banking qube stays safe. Extremely powerful but has a learning curve.</div>
+        <div class="distro-footer"><span class="distro-difficulty">// level: advanced</span><a class="distro-link purple" href="https://www.qubes-os.org/downloads/" target="_blank">↗ Download</a></div>
+      </div>
+      <div class="distro-card">
+        <div class="distro-header"><div class="distro-icon" style="background:rgba(0,255,157,0.1);border:1px solid rgba(0,255,157,0.2)">🥷</div><div><div class="distro-name">Linux Kodachi</div><span class="distro-badge badge-privacy">Privacy</span></div></div>
+        <div class="distro-desc">The one you already know! Boots from USB, stores data in RAM, built-in VPN + Tor + DNSCrypt. Loaded with security tools, firewall, intrusion detection and encryption out of the box. The 777 edition is their latest hardened release.</div>
+        <div class="distro-footer"><span class="distro-difficulty">// level: intermediate</span><a class="distro-link green" href="https://www.digi77.com/linux-kodachi/" target="_blank">↗ Download</a></div>
+      </div>
+      <div class="distro-card">
+        <div class="distro-header"><div class="distro-icon" style="background:rgba(0,229,255,0.1);border:1px solid rgba(0,229,255,0.2)">🌐</div><div><div class="distro-name">Whonix</div><span class="distro-badge badge-privacy">Privacy</span></div></div>
+        <div class="distro-desc">Runs inside VirtualBox as two virtual machines — one routes all traffic through Tor, the other is your desktop. Your real IP is impossible to leak even if malware is present. Extremely strong anonymity for desktop use.</div>
+        <div class="distro-footer"><span class="distro-difficulty">// level: intermediate</span><a class="distro-link cyan" href="https://www.whonix.org/wiki/Download" target="_blank">↗ Download</a></div>
+      </div>
+      <div class="distro-card">
+        <div class="distro-header"><div class="distro-icon" style="background:rgba(0,229,255,0.1);border:1px solid rgba(0,229,255,0.2)">🦜</div><div><div class="distro-name">Parrot OS</div><span class="distro-badge badge-security">Security</span></div></div>
+        <div class="distro-desc">Security and privacy distro that's much more beginner-friendly than Kali. Comes in a Home edition (everyday privacy use) and Security edition (penetration testing). Lightweight, fast, and includes Tor, VPN tools and anonymization by default.</div>
+        <div class="distro-footer"><span class="distro-difficulty">// level: beginner+</span><a class="distro-link cyan" href="https://www.parrotsec.org/download/" target="_blank">↗ Download</a></div>
+      </div>
+      <div class="distro-card">
+        <div class="distro-header"><div class="distro-icon" style="background:rgba(255,82,82,0.1);border:1px solid rgba(255,82,82,0.2)">🔥</div><div><div class="distro-name">Kali Linux</div><span class="distro-badge badge-security">Security</span></div></div>
+        <div class="distro-desc">The industry standard for ethical hacking and penetration testing. Comes pre-loaded with 600+ security tools — network analysis, password cracking, forensics and more. Not for everyday use — designed for cybersecurity professionals and researchers.</div>
+        <div class="distro-footer"><span class="distro-difficulty">// level: advanced</span><a class="distro-link red" href="https://www.kali.org/get-kali/" target="_blank">↗ Download</a></div>
+      </div>
+    </div>
+
+    <p style="font-size:0.75rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--text-muted);margin-bottom:14px;margin-top:24px">🎨 CREATIVE &amp; MEDIA</p>
+    <div class="distro-grid">
+      <div class="distro-card">
+        <div class="distro-header"><div class="distro-icon" style="background:rgba(179,136,255,0.1);border:1px solid rgba(179,136,255,0.2)">🎬</div><div><div class="distro-name">Ubuntu Studio</div><span class="distro-badge badge-creative">Creative</span></div></div>
+        <div class="distro-desc">The ultimate Linux distro for content creators. Comes pre-loaded with audio production (Ardour, Audacity, JACK), video editing (Kdenlive, OBS), 3D (Blender), and graphics (GIMP, Inkscape). Uses a low-latency kernel for pro audio work.</div>
+        <div class="distro-footer"><span class="distro-difficulty">// level: beginner+</span><a class="distro-link purple" href="https://ubuntustudio.org/download/" target="_blank">↗ Download</a></div>
+      </div>
+    </div>
+
+    <p style="font-size:0.75rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--text-muted);margin-bottom:14px;margin-top:24px">⚡ LIGHTWEIGHT — OLD PCs</p>
+    <div class="distro-grid">
+      <div class="distro-card">
+        <div class="distro-header"><div class="distro-icon" style="background:rgba(255,215,64,0.1);border:1px solid rgba(255,215,64,0.2)">🪶</div><div><div class="distro-name">Lubuntu</div><span class="distro-badge badge-lightweight">Lightweight</span></div></div>
+        <div class="distro-desc">Ubuntu with the ultra-lightweight LXQt desktop. Uses barely any RAM — perfect for old computers that struggle with Windows 10/11. Fast, stable, and still gets full Ubuntu software support. Recommended for PCs with 1–2GB RAM.</div>
+        <div class="distro-footer"><span class="distro-difficulty">// level: beginner</span><a class="distro-link yellow" href="https://lubuntu.me/downloads/" target="_blank">↗ Download</a></div>
+      </div>
+      <div class="distro-card">
+        <div class="distro-header"><div class="distro-icon" style="background:rgba(255,215,64,0.1);border:1px solid rgba(255,215,64,0.2)">🐾</div><div><div class="distro-name">Puppy Linux</div><span class="distro-badge badge-lightweight">Lightweight</span></div></div>
+        <div class="distro-desc">Tiny and incredibly fast — the entire OS runs from RAM after booting. Works on computers as old as 15 years. Can run from a USB stick with no installation. Perfect for breathing life into ancient hardware that runs nothing else.</div>
+        <div class="distro-footer"><span class="distro-difficulty">// level: beginner</span><a class="distro-link yellow" href="https://puppylinux-woof-ce.github.io/install.html" target="_blank">↗ Download</a></div>
+      </div>
+    </div>
+  </div>
+  <div class="divider"></div>
+
+  <!-- ===== SECTION 17: CHECKSUM TOOL ===== -->
+  <div class="section" id="s17" style="animation-delay:0.4s">
+    <div class="section-header"><div class="section-icon cyan">🔐</div><div class="section-title cyan">Checksum Verifier — Verify Downloaded Files</div></div>
+    <div class="note info">After downloading any ISO or file, drag it into the tool below to instantly compute its MD5, SHA-1, SHA-256 and SHA-512 hashes. Paste the official checksum from the website to verify it matches. <strong>Everything runs locally — your file never leaves your computer.</strong></div>
+
+    <div class="checksum-tool">
+      <div class="privacy-warning">🔒 100% LOCAL — File never leaves your computer. No internet. No upload.</div>
+      <div class="checksum-drop" id="drop-zone">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin:0 auto 10px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        <p>Drop your downloaded file here or <span onclick="document.getElementById('file-inp').click()">browse to select</span></p>
+        <input type="file" id="file-inp" style="display:none">
+      </div>
+      <div class="file-pill" id="file-pill"><span id="pill-name" class="file-pill-name"></span><span id="pill-size" class="file-pill-size"></span></div>
+      <div class="progress-bar" id="prog-bar"><div class="progress-fill" id="prog-fill"></div></div>
+      <div class="hash-grid-tool">
+        <div class="hash-row-tool"><span class="hash-badge-tool">MD5</span><span class="hash-val-tool" id="h-md5">waiting for file…</span><button class="hash-copy" id="cp-md5" onclick="cpHash('h-md5',this)">copy</button></div>
+        <div class="hash-row-tool"><span class="hash-badge-tool">SHA-1</span><span class="hash-val-tool" id="h-sha1">waiting for file…</span><button class="hash-copy" id="cp-sha1" onclick="cpHash('h-sha1',this)">copy</button></div>
+        <div class="hash-row-tool"><span class="hash-badge-tool">SHA-256</span><span class="hash-val-tool" id="h-sha256">waiting for file…</span><button class="hash-copy" id="cp-sha256" onclick="cpHash('h-sha256',this)">copy</button></div>
+        <div class="hash-row-tool"><span class="hash-badge-tool">SHA-512</span><span class="hash-val-tool" id="h-sha512">waiting for file…</span><button class="hash-copy" id="cp-sha512" onclick="cpHash('h-sha512',this)">copy</button></div>
+      </div>
+      <p style="font-size:12px;color:var(--text-muted);margin-bottom:10px;font-family:'JetBrains Mono',monospace">// paste official checksum to verify:</p>
+      <div class="verify-row">
+        <select id="algo-sel" onchange="doVerify()">
+          <option value="MD5">MD5</option>
+          <option value="SHA-1">SHA-1</option>
+          <option value="SHA-256" selected>SHA-256</option>
+          <option value="SHA-512">SHA-512</option>
+        </select>
+        <input type="text" id="expected" placeholder="Paste expected checksum here…" oninput="doVerify()">
+      </div>
+      <div class="verify-result" id="verify-result">
+        <span id="v-icon" style="font-size:18px"></span>
+        <div><div id="v-text"></div><div id="v-sub" style="font-size:11px;font-weight:400;opacity:0.75;margin-top:3px;font-family:'JetBrains Mono',monospace"></div></div>
+      </div>
+    </div>
+
+    <div class="note info" style="margin-top:8px">
+      <strong>Terminal checksum commands — if you prefer the terminal:</strong>
+    </div>
+    <div class="cmd-block"><div class="cmd-label">Check SHA-256 of a file<span class="tag info">info</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sha256sum ~/Downloads/yourfile.iso</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Check SHA-512 of a file<span class="tag info">info</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sha512sum ~/Downloads/yourfile.iso</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Check MD5 of a file<span class="tag info">info</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">md5sum ~/Downloads/yourfile.iso</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Check SHA-1 of a file<span class="tag info">info</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sha1sum ~/Downloads/yourfile.iso</span><button class="copy-btn">copy</button></div></div>
+  </div>
+  <div class="divider"></div>
+
+  <!-- ===== CRYPTO WALLETS ===== -->
+  <div class="section" id="s19" style="animation-delay:0.4s">
+    <div class="section-header"><div class="section-icon yellow">₿</div><div class="section-title yellow">Cryptocurrency Wallets — Official Downloads</div></div>
+
+    <div class="note warn"><strong>⚠ Security Warning:</strong> Always download wallets from the official websites listed below. Never search for wallet downloads on Google — use these direct links only. Verify checksums after downloading using the Checksum Verifier tool above. <strong>Not your keys, not your crypto.</strong></div>
+
+    <div class="note info"><strong>XRP Toolkit</strong> is a browser-based interface — not a wallet itself. It connects to your hardware wallet (Ledger, Keystone) or Xaman app and lets you manage XRP, trade on the XRP Ledger DEX, set up escrows and more. Think of it as mission control for XRP.</div>
+
+    <p style="font-size:0.75rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--text-muted);margin-bottom:14px">🌐 XRP TOOLS &amp; INTERFACES</p>
+    <div class="distro-grid">
+      <div class="distro-card">
+        <div class="distro-header"><div class="distro-icon" style="background:rgba(0,229,255,0.1);border:1px solid rgba(0,229,255,0.2)">⚡</div><div><div class="distro-name">XRP Toolkit</div><span class="distro-badge badge-privacy">Web Interface</span></div></div>
+        <div class="distro-desc">The most powerful interface for the XRP Ledger. Connect your Ledger hardware wallet or Xaman app and access advanced features — DEX trading, escrows, trust lines, cross-currency payments. Non-custodial, no keys stored. Works in Chrome or Brave browser.</div>
+        <div class="distro-footer"><span class="distro-difficulty">// xrptoolkit.com</span><a class="distro-link cyan" href="https://www.xrptoolkit.com" target="_blank">↗ Open</a></div>
+      </div>
+      <div class="distro-card">
+        <div class="distro-header"><div class="distro-icon" style="background:rgba(0,229,255,0.1);border:1px solid rgba(0,229,255,0.2)">📱</div><div><div class="distro-name">Xaman (XUMM)</div><span class="distro-badge badge-privacy">XRP Mobile Wallet</span></div></div>
+        <div class="distro-desc">The official XRP Ledger mobile wallet app — made by XRPL Labs. The most secure and feature-rich way to manage XRP on your phone. Works alongside XRP Toolkit. Self-custodial — your keys never leave your device. Available on Android and iOS.</div>
+        <div class="distro-footer"><span class="distro-difficulty">// xaman.app</span><a class="distro-link cyan" href="https://xaman.app/" target="_blank">↗ Download</a></div>
+      </div>
+    </div>
+
+    <p style="font-size:0.75rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--text-muted);margin-bottom:14px;margin-top:24px">🔑 OFFICIAL COIN WALLETS — MADE BY THE DEVELOPERS</p>
+    <div class="distro-grid">
+      <div class="distro-card">
+        <div class="distro-header"><div class="distro-icon" style="background:rgba(255,171,64,0.1);border:1px solid rgba(255,171,64,0.2)">₿</div><div><div class="distro-name">Bitcoin Core</div><span class="distro-badge badge-advanced">Official — Full Node</span></div></div>
+        <div class="distro-desc">The original Bitcoin wallet made by the Bitcoin Core developers. Downloads the full blockchain — most secure and trustless option. Also runs a full Bitcoin node which supports the network. Heavy on storage (500GB+) but the gold standard for self-custody.</div>
+        <div class="distro-footer"><span class="distro-difficulty">// bitcoincore.org</span><a class="distro-link orange" href="https://bitcoincore.org/en/download/" target="_blank">↗ Download</a></div>
+      </div>
+      <div class="distro-card">
+        <div class="distro-header"><div class="distro-icon" style="background:rgba(255,171,64,0.1);border:1px solid rgba(255,171,64,0.2)">⚡</div><div><div class="distro-name">Electrum</div><span class="distro-badge badge-beginner">Bitcoin — Lightweight</span></div></div>
+        <div class="distro-desc">The most popular lightweight Bitcoin wallet — fast, no full blockchain download needed. Open source, battle tested since 2011, supports hardware wallets, multi-sig, and Lightning Network. Already in your mega install block. Linux native.</div>
+        <div class="distro-footer"><span class="distro-difficulty">// electrum.org</span><a class="distro-link orange" href="https://electrum.org/#download" target="_blank">↗ Download</a></div>
+      </div>
+      <div class="distro-card">
+        <div class="distro-header"><div class="distro-icon" style="background:rgba(255,215,64,0.1);border:1px solid rgba(255,215,64,0.2)">🐕</div><div><div class="distro-name">Dogecoin Core</div><span class="distro-badge badge-advanced">Official — Full Node</span></div></div>
+        <div class="distro-desc">The official Dogecoin wallet made by the Dogecoin developers. Full node wallet — downloads the complete Dogecoin blockchain. Most secure way to hold DOGE. Linux version available. Much secure, very official, wow.</div>
+        <div class="distro-footer"><span class="distro-difficulty">// dogecoin.com</span><a class="distro-link yellow" href="https://dogecoin.com/" target="_blank">↗ Download</a></div>
+      </div>
+      <div class="distro-card">
+        <div class="distro-header"><div class="distro-icon" style="background:rgba(179,136,255,0.1);border:1px solid rgba(179,136,255,0.2)">Ξ</div><div><div class="distro-name">MetaMask</div><span class="distro-badge badge-beginner">Ethereum — Browser</span></div></div>
+        <div class="distro-desc">The most popular Ethereum wallet — browser extension for Chrome and Brave. Supports all EVM chains (Ethereum, Polygon, BNB Chain, Arbitrum, Base, Avalanche and more). Essential for DeFi, NFTs and Web3. 100+ million users worldwide.</div>
+        <div class="distro-footer"><span class="distro-difficulty">// metamask.io</span><a class="distro-link purple" href="https://metamask.io/download/" target="_blank">↗ Download</a></div>
+      </div>
+      <div class="distro-card">
+        <div class="distro-header"><div class="distro-icon" style="background:rgba(0,255,157,0.1);border:1px solid rgba(0,255,157,0.2)">◎</div><div><div class="distro-name">Monero GUI</div><span class="distro-badge badge-privacy">Privacy Coin — Official</span></div></div>
+        <div class="distro-desc">The official Monero wallet made by the Monero developers. Monero is the most private cryptocurrency — transactions are completely untraceable. The GUI wallet is user friendly and available natively on Linux. Full node or lightweight mode.</div>
+        <div class="distro-footer"><span class="distro-difficulty">// getmonero.org</span><a class="distro-link green" href="https://www.getmonero.org/downloads/" target="_blank">↗ Download</a></div>
+      </div>
+      <div class="distro-card">
+        <div class="distro-header"><div class="distro-icon" style="background:rgba(0,180,255,0.1);border:1px solid rgba(0,180,255,0.2)">Ł</div><div><div class="distro-name">Litecoin Core</div><span class="distro-badge badge-advanced">Official — Full Node</span></div></div>
+        <div class="distro-desc">The official Litecoin wallet made by the Litecoin Foundation. Full node wallet for LTC — the silver to Bitcoin's gold. Faster transactions and lower fees than Bitcoin. Linux native download available on the official site.</div>
+        <div class="distro-footer"><span class="distro-difficulty">// litecoin.org</span><a class="distro-link blue" href="https://litecoin.org/" target="_blank">↗ Download</a></div>
+      </div>
+      <div class="distro-card">
+        <div class="distro-header"><div class="distro-icon" style="background:rgba(0,180,255,0.1);border:1px solid rgba(0,180,255,0.2)">◈</div><div><div class="distro-name">Phantom</div><span class="distro-badge badge-beginner">Solana — Official</span></div></div>
+        <div class="distro-desc">The most popular Solana wallet — browser extension and mobile app. Supports SOL, SPL tokens, NFTs, DeFi. Also supports Ethereum, Bitcoin, Base and Polygon. Clean design, very easy to use. The go-to wallet for the Solana ecosystem.</div>
+        <div class="distro-footer"><span class="distro-difficulty">// phantom.com</span><a class="distro-link blue" href="https://phantom.com/download" target="_blank">↗ Download</a></div>
+      </div>
+      <div class="distro-card">
+        <div class="distro-header"><div class="distro-icon" style="background:rgba(255,128,171,0.1);border:1px solid rgba(255,128,171,0.2)">🦊</div><div><div class="distro-name">Exodus</div><span class="distro-badge badge-beginner">Multi-Coin — Linux</span></div></div>
+        <div class="distro-desc">Beautiful multi-coin desktop wallet with Linux support. Supports Bitcoin, Ethereum, XRP, Solana, Dogecoin, Litecoin and thousands more in one app. Great UI, built-in swap, portfolio tracker. Not fully open source but very popular for everyday use.</div>
+        <div class="distro-footer"><span class="distro-difficulty">// exodus.com</span><a class="distro-link pink" href="https://www.exodus.com/download/" target="_blank">↗ Download</a></div>
+      </div>
+    </div>
+
+    <div class="note info" style="margin-top:8px">
+      <strong>After downloading any wallet:</strong> Always verify the checksum using the tool in Section 17 above before installing. Compare the SHA-256 hash against the one posted on the official website. If they don't match — delete the file and re-download.
+    </div>
+  </div>
+  <div class="divider"></div>
+
+  <!-- ===== GRUB DUAL BOOT FIX ===== -->
+  <div class="section" id="s18" style="animation-delay:0.41s">
+    <div class="section-header"><div class="section-icon orange">⊞</div><div class="section-title orange">GRUB Fix — Restore Windows Boot Menu (Dual Boot)</div></div>
+
+    <div class="note warn"><strong>What is GRUB?</strong> GRUB is the boot menu that appears when you start your computer and lets you choose between Linux Mint and Windows. Sometimes after installing Linux Mint, it boots straight into Mint with no menu — Windows seems to disappear. This section fixes that.</div>
+
+    <div class="note success">
+      <strong>Step 1 — Try this first (works 90% of the time):</strong><br><br>
+      Boot into Linux Mint, open a terminal and run these two commands in order:
+    </div>
+
+    <div class="cmd-block"><div class="cmd-label">Install os-prober — detects other operating systems like Windows<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt install os-prober -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Enable os-prober in GRUB config<span class="tag system">system</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">echo 'GRUB_DISABLE_OS_PROBER=false' | sudo tee -a /etc/default/grub</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Update GRUB — scans for Windows and rebuilds the boot menu<span class="tag system">system</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo update-grub</span><button class="copy-btn">copy</button></div></div>
+    <div class="note info">After running <code>sudo update-grub</code> you should see a line that says <strong>"Found Windows Boot Manager"</strong> or <strong>"Found Windows 10/11"</strong>. If you see that — reboot and your Windows option will be back in the boot menu!</div>
+
+    <div class="cmd-block"><div class="cmd-label">Reboot to test the boot menu<span class="tag system">system</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo reboot</span><button class="copy-btn">copy</button></div></div>
+
+    <div class="note success" style="margin-top:20px">
+      <strong>Step 2 — GRUB menu not showing at all? Fix the timeout:</strong><br><br>
+      Sometimes GRUB is set to timeout=0 so it boots instantly with no menu shown.
+    </div>
+
+    <div class="cmd-block"><div class="cmd-label">Open GRUB config file to edit it<span class="tag system">system</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo nano /etc/default/grub</span><button class="copy-btn">copy</button></div></div>
+
+    <div class="note info">
+      Inside the file, find and change these two lines:<br><br>
+      <code>GRUB_TIMEOUT_STYLE=hidden</code> → change to → <code>GRUB_TIMEOUT_STYLE=menu</code><br>
+      <code>GRUB_TIMEOUT=0</code> → change to → <code>GRUB_TIMEOUT=10</code><br><br>
+      Then press <strong>Ctrl+S</strong> to save and <strong>Ctrl+X</strong> to exit nano.
+    </div>
+
+    <div class="cmd-block"><div class="cmd-label">Apply the changes after editing the file<span class="tag system">system</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo update-grub && sudo reboot</span><button class="copy-btn">copy</button></div></div>
+
+    <div class="note success" style="margin-top:20px">
+      <strong>Step 3 — Windows still missing? Disable Fast Startup in Windows first:</strong><br><br>
+      Windows Fast Startup locks the drive and prevents GRUB from seeing Windows. You must disable it.<br><br>
+      Boot into Windows (press F12 at startup and manually select Windows), then:<br>
+      1. Open <strong>Control Panel → Power Options</strong><br>
+      2. Click <strong>"Choose what the power buttons do"</strong><br>
+      3. Click <strong>"Change settings that are currently unavailable"</strong><br>
+      4. <strong>Uncheck "Turn on fast startup"</strong><br>
+      5. Save changes, reboot back into Linux Mint and run <code>sudo update-grub</code> again
+    </div>
+
+    <div class="note success" style="margin-top:20px">
+      <strong>Step 4 — Fix from Windows using Command Prompt (if you can still boot Windows):</strong><br><br>
+      Open Windows Command Prompt as Administrator and run this command to set GRUB as the default bootloader:
+    </div>
+
+    <div class="cmd-block"><div class="cmd-label">Run this in Windows CMD as Administrator — sets GRUB as default boot manager<span class="tag system">system</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">&gt;</span><span class="command">bcdedit /set {bootmgr} path \EFI\ubuntu\grubx64.efi</span><button class="copy-btn">copy</button></div></div>
+    <div class="note info">After running the above in Windows CMD, restart the computer — GRUB menu should now appear with both Linux Mint and Windows as options.</div>
+
+    <div class="note success" style="margin-top:20px">
+      <strong>Step 5 — Nuclear option: Boot-Repair (if nothing else works):</strong><br><br>
+      Boot-Repair is a tool that automatically diagnoses and fixes all GRUB problems.
+    </div>
+
+    <div class="cmd-block"><div class="cmd-label">Install Boot-Repair<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo add-apt-repository ppa:yannubuntu/boot-repair -y && sudo apt update && sudo apt install boot-repair -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Launch Boot-Repair<span class="tag system">system</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">boot-repair</span><button class="copy-btn">copy</button></div></div>
+    <div class="note warn">
+      In Boot-Repair, click <strong>"Recommended repair"</strong> and let it do its thing. It will automatically fix GRUB and restore the Windows entry.<br><br>
+      <strong>Also check in your BIOS/UEFI:</strong><br>
+      • Disable <strong>Secure Boot</strong><br>
+      • Set boot order so <strong>"ubuntu"</strong> or <strong>"Linux Mint"</strong> is first (GRUB will then show the menu with Windows as an option)<br>
+      • Disable <strong>Fast Boot</strong> in BIOS as well if available
+    </div>
+
+    <div class="cmd-block"><div class="cmd-label">Check current GRUB boot order (UEFI systems)<span class="tag info">info</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">efibootmgr -v</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">View current GRUB config<span class="tag info">info</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">cat /etc/default/grub</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Check what GRUB detected (look for Windows lines)<span class="tag info">info</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo os-prober</span><button class="copy-btn">copy</button></div></div>
+  </div>
+  <div class="divider"></div>
+
+  <!-- ===== QUICK REFERENCE ===== -->
+  <div class="section" id="sref" style="animation-delay:0.42s">
+    <div class="section-header"><div class="section-icon green">≡</div><div class="section-title green">Quick Reference Commands</div></div>
+    <div class="cmd-block"><div class="cmd-label">Check disk space<span class="tag info">info</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">df -h</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Check RAM usage<span class="tag info">info</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">free -h</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Check kernel version<span class="tag info">info</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">uname -r</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">List all drives &amp; partitions<span class="tag info">info</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">lsblk</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">List USB devices<span class="tag info">info</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">lsusb</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">List PCI devices (GPU, network etc.)<span class="tag info">info</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">lspci</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Search for a package<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">apt search KEYWORD</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Remove a package completely<span class="tag apt">apt</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo apt purge PACKAGE_NAME -y && sudo apt autoremove -y</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Show system info with ASCII art<span class="tag info">info</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">neofetch</span><button class="copy-btn">copy</button></div></div>
+    <div class="cmd-block"><div class="cmd-label">Reboot<span class="tag system">system</span></div><div class="cmd-code" onclick="copyCmd(this)"><span class="prompt">$</span><span class="command">sudo reboot</span><button class="copy-btn">copy</button></div></div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <!-- DBB LOGO SVG -->
+  <div style="display:flex;justify-content:center;margin-bottom:24px">
+    <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- top red dot -->
+      <circle cx="27" cy="13" r="8" fill="#ff3030"/>
+      <!-- middle row: green, red, green -->
+      <circle cx="11" cy="27" r="8" fill="#00ff5e"/>
+      <circle cx="27" cy="27" r="8" fill="#ff3030"/>
+      <circle cx="43" cy="27" r="8" fill="#00ff5e"/>
+      <!-- bottom row: green, green (no center) -->
+      <circle cx="11" cy="41" r="8" fill="#00ff5e"/>
+      <circle cx="43" cy="41" r="8" fill="#00ff5e"/>
+    </svg>
+  </div>
+
+  <div style="margin-bottom:10px;font-size:1rem;font-weight:700;letter-spacing:2px;color:#e0e0e8">
+    DUTTYBOOKBAG
+  </div>
+
+  <div style="margin-bottom:20px;font-size:0.8rem;color:#7a7a8e;letter-spacing:1px">
+    This guide was researched, compiled &amp; designed by
+    <a href="https://duttybookbag.github.io/duttybookbag/" target="_blank"
+       style="color:#00ff9d;text-decoration:none;border-bottom:1px dashed rgba(0,255,157,0.4)">
+      DuttyBookBag
+    </a>
+    — TradingView Indicators &amp; Tools
+  </div>
+
+  <div style="max-width:680px;margin:0 auto 24px;padding:16px 20px;background:rgba(255,171,64,0.05);border:1px solid rgba(255,171,64,0.15);border-radius:8px;font-size:0.72rem;color:#7a7a8e;line-height:1.7;letter-spacing:0.5px;text-align:left">
+    <strong style="color:#ffab40;display:block;margin-bottom:6px;letter-spacing:2px;font-size:0.7rem">⚠ DISCLAIMER &amp; TERMS OF USE</strong>
+    This HTML guide is provided for <strong style="color:#e0e0e8">educational and informational purposes only</strong>. The information contained herein is compiled from publicly available sources and community documentation. DuttyBookBag makes no representations or warranties of any kind, express or implied, regarding the accuracy, completeness, reliability, or suitability of any commands, software, links, or information presented in this document.<br><br>
+    By using this guide you agree that: <strong style="color:#e0e0e8">(1)</strong> You use all commands and software entirely at your own risk. <strong style="color:#e0e0e8">(2)</strong> DuttyBookBag is not responsible for any data loss, system damage, hardware failure, financial loss, or any other damages arising from the use of this guide. <strong style="color:#e0e0e8">(3)</strong> Nothing in this guide constitutes financial, investment, legal, or professional advice of any kind. <strong style="color:#e0e0e8">(4)</strong> All cryptocurrency wallet and trading information is provided for reference only — always conduct your own research (DYOR) before making any financial decisions. <strong style="color:#e0e0e8">(5)</strong> Third-party software links are provided as a convenience — DuttyBookBag is not affiliated with, endorsed by, or responsible for any third-party products or services listed herein. <strong style="color:#e0e0e8">(6)</strong> Always verify checksums and download software only from official sources. DuttyBookBag is not liable for any tampered, malicious, or compromised software you may download.<br><br>
+    All trademarks, product names, and company names mentioned in this guide are the property of their respective owners. This guide is not affiliated with Linux Mint, Canonical, or any other organization mentioned herein.
+  </div>
+
+  <div style="font-size:0.72rem;color:#4a4a5e;letter-spacing:2px;text-transform:uppercase">
+    © 2026 DuttyBookBag · All Rights Reserved ·
+    <a href="https://duttybookbag.github.io/duttybookbag/" target="_blank"
+       style="color:#4a4a5e;text-decoration:none">duttybookbag.github.io</a>
+  </div>
+</div>
+
+<script>
+// ===== COPY CMD =====
+function copyCmd(el) {
+  const cmd = el.querySelector('.command').textContent.trim();
+  navigator.clipboard.writeText(cmd).then(() => {
+    const btn = el.querySelector('.copy-btn');
+    btn.textContent = 'copied!'; btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'copy'; btn.classList.remove('copied'); }, 1800);
+  });
+}
+
+// ===== SCROLL ANIMATION =====
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.style.animationPlayState='running'; });
+}, { threshold: 0.1 });
+document.querySelectorAll('.section').forEach(s => { s.style.animationPlayState='paused'; obs.observe(s); });
+
+// ===== CHECKSUM TOOL =====
+let computed = { MD5:null,'SHA-1':null,'SHA-256':null,'SHA-512':null };
+
+async function md5(buf) {
+  const bytes = new Uint8Array(buf);
+  const msg = Array.from(bytes);
+  const origLen = bytes.length * 8;
+  msg.push(0x80);
+  while(msg.length % 64 !== 56) msg.push(0);
+  for(let i=0;i<8;i++) msg.push((origLen/Math.pow(2,i*8))&0xFF);
+  const T=Array.from({length:64},(_,i)=>Math.floor(Math.abs(Math.sin(i+1))*4294967296));
+  const S=[7,12,17,22,7,12,17,22,7,12,17,22,7,12,17,22,5,9,14,20,5,9,14,20,5,9,14,20,5,9,14,20,4,11,16,23,4,11,16,23,4,11,16,23,4,11,16,23,6,10,15,21,6,10,15,21,6,10,15,21,6,10,15,21];
+  function rl(n,s){return(n<<s)|(n>>>(32-s))}
+  function add(x,y){return(x+y)&0xFFFFFFFF}
+  let a=1732584193,b=-271733879,c=-1732584194,d=271733878;
+  for(let i=0;i<msg.length;i+=64){
+    const w=[];
+    for(let j=0;j<16;j++) w[j]=(msg[i+j*4])|(msg[i+j*4+1]<<8)|(msg[i+j*4+2]<<16)|(msg[i+j*4+3]<<24);
+    let [A,B,C,D]=[a,b,c,d];
+    for(let j=0;j<64;j++){
+      let F,g;
+      if(j<16){F=(B&C)|((~B)&D);g=j}
+      else if(j<32){F=(D&B)|((~D)&C);g=(5*j+1)%16}
+      else if(j<48){F=B^C^D;g=(3*j+5)%16}
+      else{F=C^(B|(~D));g=(7*j)%16}
+      F=add(add(add(F,A),add(w[g]>>>0,T[j])),0);
+      A=D;D=C;C=B;B=add(B,rl(F,S[j]));
+    }
+    a=add(a,A);b=add(b,B);c=add(c,C);d=add(d,D);
+  }
+  return [a,b,c,d].map(n=>(((n&0xFF)<<24)|((n&0xFF00)<<8)|((n>>8)&0xFF00)|((n>>24)&0xFF))>>>0).map(n=>n.toString(16).padStart(8,'0')).join('');
+}
+
+async function hashBuf(buf,algo){
+  if(algo==='MD5') return md5(buf);
+  const h=await crypto.subtle.digest(algo,buf);
+  return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+function setLoading(id){
+  const el=document.getElementById(id);
+  el.textContent='computing…'; el.className='hash-val-tool';
+}
+
+function setHash(id,val,cpId){
+  const el=document.getElementById(id);
+  el.textContent=val; el.className='hash-val-tool ready';
+  document.getElementById(cpId).style.display='';
+}
+
+async function processFile(file){
+  Object.keys(computed).forEach(k=>computed[k]=null);
+  document.getElementById('verify-result').className='verify-result';
+  const pill=document.getElementById('file-pill');
+  pill.style.display='flex';
+  document.getElementById('pill-name').textContent=file.name;
+  const sz=file.size>1048576?(file.size/1048576).toFixed(2)+' MB':(file.size/1024).toFixed(1)+' KB';
+  document.getElementById('pill-size').textContent=sz;
+  const pb=document.getElementById('prog-bar'); pb.style.display='block';
+  const pf=document.getElementById('prog-fill');
+  ['h-md5','h-sha1','h-sha256','h-sha512'].forEach(id=>{setLoading(id);});
+  ['cp-md5','cp-sha1','cp-sha256','cp-sha512'].forEach(id=>{document.getElementById(id).style.display='none';});
+  const buf=await file.arrayBuffer();
+  pf.style.width='25%';
+  computed['MD5']=await hashBuf(buf,'MD5'); setHash('h-md5',computed['MD5'],'cp-md5'); pf.style.width='45%';
+  computed['SHA-1']=await hashBuf(buf,'SHA-1'); setHash('h-sha1',computed['SHA-1'],'cp-sha1'); pf.style.width='65%';
+  computed['SHA-256']=await hashBuf(buf,'SHA-256'); setHash('h-sha256',computed['SHA-256'],'cp-sha256'); pf.style.width='82%';
+  computed['SHA-512']=await hashBuf(buf,'SHA-512'); setHash('h-sha512',computed['SHA-512'],'cp-sha512'); pf.style.width='100%';
+  setTimeout(()=>{pb.style.display='none';},700);
+  doVerify();
+}
+
+function doVerify(){
+  const algo=document.getElementById('algo-sel').value;
+  const expected=document.getElementById('expected').value.trim().toLowerCase();
+  const res=document.getElementById('verify-result');
+  if(!expected||!computed[algo]){res.className='verify-result';return;}
+  const match=computed[algo]===expected;
+  res.className='verify-result '+(match?'match':'fail');
+  document.getElementById('v-icon').textContent=match?'✓':'✗';
+  document.getElementById('v-text').textContent=match?'Checksum matches — file is authentic!':'Checksum does NOT match — file may be corrupted or tampered!';
+  document.getElementById('v-sub').textContent=match?'Safe to use.':'Do NOT use this file. Re-download from the official source.';
+}
+
+function cpHash(id,btn){
+  navigator.clipboard.writeText(document.getElementById(id).textContent).then(()=>{
+    btn.textContent='copied!'; btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='copy';btn.classList.remove('copied');},1500);
+  });
+}
+
+const dz=document.getElementById('drop-zone');
+dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('over')});
+dz.addEventListener('dragleave',()=>dz.classList.remove('over'));
+dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('over');if(e.dataTransfer.files[0])processFile(e.dataTransfer.files[0]);});
+document.getElementById('file-inp').onchange=e=>{if(e.target.files[0])processFile(e.target.files[0]);};
+document.getElementById('algo-sel').onchange=doVerify;
+</script>
+</body>
+</html>
