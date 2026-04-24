@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Encouragement Center — Dutty Ashy Win_G Foundation</title>
+  <meta name="description" content="Daily encouragement from the Dutty Ashy Win_G Foundation. Motivational quotes and world wisdom to lift you up. We care about you." />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{--black:#000;--panel:#080f0f;--border:#0c3030;--cyan:#00ffe1;--green:#00ff6a;--blue:#4db8ff;--gold:#ffd166;--red:#ff5252;--purple:#c792ea;--orange:#ff9f43;--neon:#39ff14;--text:#b8e8e2;--muted:#3d7070;--mono:'Share Tech Mono',monospace;--display:'Bebas Neue',sans-serif;--body:'Rajdhani',sans-serif;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}
+    body{background:var(--black);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.7;overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,255,225,0.012) 3px,rgba(0,255,225,0.012) 4px);pointer-events:none;z-index:999;}
+    body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,255,225,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,225,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0;}
+    .wrap{position:relative;z-index:1;max-width:800px;margin:0 auto;padding:0 24px;}
+    .site-nav{position:sticky;top:0;z-index:100;background:rgba(0,0,0,0.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:0 24px;}
+    .site-nav .wrap{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;padding:0;max-width:800px;}
+    .site-nav a{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--muted);text-decoration:none;text-transform:uppercase;padding:14px 14px;transition:color 0.2s;white-space:nowrap;}
+    .site-nav a:hover{color:var(--cyan);}.site-nav a.active{color:var(--green);text-shadow:0 0 8px rgba(0,255,106,0.4);}.site-nav a.nav-highlight{color:var(--gold);font-weight:700;}
+    @media(max-width:580px){.site-nav a{font-size:10px;padding:10px 7px;letter-spacing:1px;}}
+    header{position:relative;padding:50px 0 30px;text-align:center;overflow:hidden;}
+    .glow-orb{position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:500px;height:500px;background:radial-gradient(circle,rgba(0,255,106,0.08) 0%,transparent 70%);pointer-events:none;}
+    .badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:5px;color:var(--cyan);border:1px solid var(--cyan);padding:5px 18px;margin-bottom:18px;text-transform:uppercase;}
+    h1{font-family:var(--display);font-size:clamp(38px,7vw,70px);letter-spacing:4px;line-height:0.95;color:#fff;text-transform:uppercase;}
+    h1 .accent{color:var(--cyan);text-shadow:0 0 30px rgba(0,255,225,0.5);}
+
+    /* ── DAILY ENCOURAGEMENT BOX ── */
+    .daily{background:linear-gradient(135deg,rgba(0,255,106,0.07),rgba(0,255,225,0.04));border:2px solid rgba(0,255,106,0.4);border-radius:10px;padding:40px 36px;margin:30px 0;text-align:center;position:relative;overflow:hidden;}
+    .daily::before{content:'';position:absolute;top:-40px;left:50%;transform:translateX(-50%);width:300px;height:300px;background:radial-gradient(circle,rgba(0,255,106,0.1),transparent 70%);pointer-events:none;}
+    .daily-label{font-family:var(--mono);font-size:11px;letter-spacing:5px;color:var(--green);text-transform:uppercase;margin-bottom:20px;position:relative;}
+    .daily-label span{display:inline-block;background:rgba(0,255,106,0.12);border:1px solid rgba(0,255,106,0.4);border-radius:3px;padding:2px 10px;margin-left:8px;font-size:9px;vertical-align:middle;}
+    .daily-quote{font-family:Georgia,'Times New Roman',serif;font-size:clamp(20px,4vw,28px);color:#89cff0;line-height:1.6;font-style:italic;margin-bottom:18px;position:relative;}
+    .daily-author{font-family:var(--mono);font-size:14px;letter-spacing:2px;color:var(--green);position:relative;}
+
+    /* ── WISDOM BOX ── */
+    .wisdom-box{background:linear-gradient(135deg,rgba(255,209,102,0.05),rgba(199,146,234,0.03));border:2px solid rgba(255,209,102,0.25);border-radius:10px;padding:32px 36px;margin:20px 0;text-align:center;position:relative;overflow:hidden;}
+    .wisdom-box::before{content:'';position:absolute;top:-40px;left:50%;transform:translateX(-50%);width:300px;height:300px;background:radial-gradient(circle,rgba(255,209,102,0.06),transparent 70%);pointer-events:none;}
+    .wisdom-label{font-family:var(--mono);font-size:11px;letter-spacing:5px;color:var(--gold);text-transform:uppercase;margin-bottom:16px;position:relative;}
+    .wisdom-label span{display:inline-block;background:rgba(255,209,102,0.1);border:1px solid rgba(255,209,102,0.35);border-radius:3px;padding:2px 10px;margin-left:8px;font-size:9px;vertical-align:middle;}
+    .wisdom-quote{font-family:Georgia,'Times New Roman',serif;font-size:clamp(17px,3.5vw,24px);color:#f0d080;line-height:1.6;font-style:italic;margin-bottom:14px;position:relative;}
+    .wisdom-author{font-family:var(--mono);font-size:13px;letter-spacing:2px;color:var(--gold);opacity:0.8;position:relative;}
+
+    /* ── SECTION DIVIDER ── */
+    .section-divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:30px 0;}
+    .section-title{font-family:var(--display);font-size:clamp(22px,4vw,36px);letter-spacing:3px;color:#fff;text-transform:uppercase;margin-bottom:6px;}
+    .section-sub{font-family:var(--mono);font-size:11px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:20px;}
+
+    /* ── BUTTONS ── */
+    .btn-row{display:flex;gap:12px;justify-content:center;margin:20px 0;flex-wrap:wrap;}
+    .btn{font-family:var(--display);font-size:18px;letter-spacing:3px;padding:12px 28px;border:2px solid;border-radius:6px;cursor:pointer;text-transform:uppercase;transition:all 0.2s;background:transparent;}
+    .btn-enc{color:var(--green);border-color:var(--green);}.btn-enc:hover{background:var(--green);color:#000;}
+    .btn-wis{color:var(--gold);border-color:var(--gold);}.btn-wis:hover{background:var(--gold);color:#000;}
+    .btn-browse{color:var(--cyan);border-color:var(--cyan);font-size:15px;padding:10px 22px;}.btn-browse:hover{background:var(--cyan);color:#000;}
+    .btn-filter{color:var(--muted);border-color:var(--border);font-size:13px;padding:7px 16px;letter-spacing:1px;}.btn-filter:hover{border-color:var(--cyan);color:var(--cyan);}.btn-filter.active-enc{background:rgba(0,255,106,0.12);border-color:var(--green);color:var(--green);}.btn-filter.active-wis{background:rgba(255,209,102,0.1);border-color:var(--gold);color:var(--gold);}.btn-filter.active-prv{background:rgba(199,146,234,0.1);border-color:var(--purple);color:var(--purple);}.btn-filter.active-all{background:rgba(0,255,225,0.08);border-color:var(--cyan);color:var(--cyan);}
+
+    /* ── BROWSE SECTION ── */
+    .browse{display:none;margin:20px 0;}.browse.show{display:block;}
+    .browse-count{font-family:var(--mono);font-size:12px;color:var(--muted);text-align:center;margin-bottom:16px;letter-spacing:2px;}
+    .q-card{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:18px 22px;margin-bottom:10px;transition:border-color 0.2s;position:relative;}
+    .q-card:hover{border-color:rgba(0,255,225,0.3);}
+    .q-card.type-enc{border-left:3px solid var(--green);}
+    .q-card.type-wis{border-left:3px solid var(--gold);}
+    .q-card.type-prv{border-left:3px solid var(--purple);}
+    .q-text{font-family:Georgia,serif;font-size:16px;color:#fff;font-style:italic;line-height:1.6;margin-bottom:8px;}
+    .q-author{font-family:var(--mono);font-size:12px;letter-spacing:1px;}
+    .q-author.enc{color:var(--green);}.q-author.wis{color:var(--gold);}.q-author.prv{color:var(--purple);}
+    .q-badge{position:absolute;top:14px;right:14px;font-family:var(--mono);font-size:9px;letter-spacing:1px;padding:2px 7px;border-radius:3px;text-transform:uppercase;}
+    .badge-enc{background:rgba(0,255,106,0.12);color:var(--green);border:1px solid rgba(0,255,106,0.3);}
+    .badge-wis{background:rgba(255,209,102,0.1);color:var(--gold);border:1px solid rgba(255,209,102,0.3);}
+    .badge-prv{background:rgba(199,146,234,0.1);color:var(--purple);border:1px solid rgba(199,146,234,0.3);}
+
+    /* ── CATEGORY EXPLAINER ── */
+    .cat-explain{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0;}
+    @media(max-width:580px){.cat-explain{grid-template-columns:1fr;}}
+    .cat-card{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:18px 16px;text-align:center;}
+    .cat-card.enc{border-top:3px solid var(--green);}.cat-card.wis{border-top:3px solid var(--gold);}.cat-card.prv{border-top:3px solid var(--purple);}
+    .cat-icon{font-size:24px;margin-bottom:8px;}
+    .cat-name{font-family:var(--display);font-size:18px;letter-spacing:2px;color:#fff;text-transform:uppercase;margin-bottom:4px;}
+    .cat-desc{font-size:13px;color:var(--muted);line-height:1.5;}
+
+    .message{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:24px;margin:30px 0;text-align:center;}
+    .message h3{font-family:var(--display);font-size:22px;letter-spacing:2px;color:var(--green);margin-bottom:12px;text-transform:uppercase;}
+    .message p{font-size:15px;max-width:600px;margin:0 auto 8px;}
+    .dbb-logo{display:grid;grid-template-columns:repeat(3,22px);grid-template-rows:repeat(3,22px);gap:7px;justify-content:center;margin:0 auto;width:max-content;}
+    .dbb-logo .dot{width:22px;height:22px;border-radius:50%;animation:p 2.8s ease-in-out infinite;}
+    .dbb-logo .green{background:#00ff44;box-shadow:0 0 7px #00ff44,0 0 14px #00ff44;}
+    .dbb-logo .red{background:#ff1a1a;box-shadow:0 0 7px #ff1a1a,0 0 14px #ff1a1a;}
+    .dbb-logo .d1{grid-column:2;grid-row:1;}.dbb-logo .d2{grid-column:1;grid-row:2;}.dbb-logo .d3{grid-column:2;grid-row:2;}.dbb-logo .d4{grid-column:3;grid-row:2;}.dbb-logo .d5{grid-column:1;grid-row:3;}.dbb-logo .d6{grid-column:3;grid-row:3;}
+    @keyframes p{0%,100%{opacity:0.55;transform:scale(0.92);}50%{opacity:1;transform:scale(1.08);}}
+    footer{border-top:1px solid var(--border);padding:30px 0;margin-top:40px;text-align:center;background:#010505;}
+    footer p{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:6px;}
+    footer a{color:var(--green);text-decoration:none;}
+    .disclaimer{max-width:700px;margin:14px auto 0;font-size:10px;color:var(--muted);font-style:italic;line-height:1.5;padding:10px;border:1px solid var(--border);border-radius:4px;text-align:left;}
+  </style>
+</head>
+<body>
+<nav class="site-nav"><div class="wrap"><a href="index.html">Home</a><a href="dbb-lifeline.html" class="nav-highlight">Lifeline</a><a href="dbb-encouragement-center.html" class="active">Encouragement</a></div></nav>
+<div style="text-align:center;padding:6px 0;background:rgba(0,0,0,0.8);border-bottom:1px solid #0c3030;position:relative;z-index:99;">
+  <div id="google_translate_element" style="display:inline-block;"></div>
+</div>
+<script>
+function googleTranslateElementInit(){new google.translate.TranslateElement({pageLanguage:'en',layout:google.translate.TranslateElement.InlineLayout.HORIZONTAL},'google_translate_element');}
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<style>.goog-te-banner-frame{display:none!important;}.goog-te-gadget{font-size:11px!important;color:#3d7070!important;}.goog-te-gadget .goog-te-combo{background:#080f0f;color:#b8e8e2;border:1px solid #0c3030;border-radius:4px;padding:4px 8px;font-family:'Share Tech Mono',monospace;font-size:11px;outline:none;}.goog-te-gadget>span{display:none!important;}body{top:0!important;}</style>
+
+<header><div class="glow-orb"></div><div class="wrap">
+  <div style="display:flex;justify-content:center;margin-bottom:18px;"><svg viewBox="0 0 120 140" width="90" height="105" style="filter:drop-shadow(0 0 18px rgba(57,255,20,0.3));"><rect x="10" y="10" width="100" height="120" rx="14" fill="#080f0f" stroke="#1a3a3a" stroke-width="2"/><circle cx="42" cy="38" r="9" fill="#39ff14"><animate attributeName="opacity" values="1;1;1;0.1;1" dur="4s" repeatCount="indefinite"/></circle><circle cx="42" cy="38" r="4" fill="#fff" opacity="0.3"/><circle cx="78" cy="38" r="9" fill="#39ff14"><animate attributeName="opacity" values="1;1;1;0.1;1" dur="4s" repeatCount="indefinite"/></circle><circle cx="78" cy="38" r="4" fill="#fff" opacity="0.3"/><circle cx="33" cy="72" r="7" fill="#ff5252" opacity="0.35"/><circle cx="60" cy="72" r="7" fill="#ff5252" opacity="0.6"/><circle cx="87" cy="72" r="7" fill="#ff5252" opacity="0.35"/><circle cx="60" cy="102" r="8" fill="#ff5252" opacity="0.85"><animate attributeName="opacity" values="0.85;0.5;0.85" dur="2.5s" repeatCount="indefinite"/></circle><animateTransform attributeName="transform" type="translate" values="0,0;0,-2;0,0" dur="4s" repeatCount="indefinite"/></svg></div>
+  <div class="badge">Dutty Ashy Win_G Foundation</div>
+  <h1>DUTTY ASHY WIN_G<br><span class="accent">ENCOURAGEMENT CENTER</span></h1>
+  <p style="margin-top:18px;font-size:16px;color:var(--text);max-width:600px;margin-left:auto;margin-right:auto;">The Dutty Ashy Win_G Foundation cares about your spirit, your mind, and your heart. Come here whenever you need a word. Every visit gives you a new one.</p>
+</div></header>
+
+<div class="wrap">
+
+  <!-- DAILY ENCOURAGEMENT BOX — FIRST THING THEY SEE -->
+  <div class="daily" id="dailyBox">
+    <div class="daily-label">// Today's Encouragement <span>💚 PURE UPLIFT</span></div>
+    <div class="daily-quote" id="dailyQuote"></div>
+    <div class="daily-author" id="dailyAuthor"></div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-enc" onclick="showRandomEnc()">Give Me Another 💚</button>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- CATEGORY EXPLAINER -->
+  <div class="cat-explain">
+    <div class="cat-card enc">
+      <div class="cat-icon">💚</div>
+      <div class="cat-name">Encouragement</div>
+      <div class="cat-desc">Pure upliftment. Words that lift you when you're down. "Keep going. You've got this."</div>
+    </div>
+    <div class="cat-card wis">
+      <div class="cat-icon">🧠</div>
+      <div class="cat-name">Wisdom</div>
+      <div class="cat-desc">Life lessons and smart advice. Things to think about and live by.</div>
+    </div>
+    <div class="cat-card prv">
+      <div class="cat-icon">🌍</div>
+      <div class="cat-name">World Proverbs</div>
+      <div class="cat-desc">Jamaican, Caribbean, African, and world proverbs. Old truths that still hold.</div>
+    </div>
+  </div>
+
+  <!-- DAILY WISDOM BOX -->
+  <div class="wisdom-box" id="wisdomBox">
+    <div class="wisdom-label">// Today's Wisdom <span>🧠 THINK ON THIS</span></div>
+    <div class="wisdom-quote" id="wisdomQuote"></div>
+    <div class="wisdom-author" id="wisdomAuthor"></div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-wis" onclick="showRandomWis()">New Wisdom 🧠</button>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- BROWSE ALL -->
+  <div style="text-align:center;margin-bottom:16px;">
+    <div class="section-sub">// Explore All Quotes</div>
+    <div class="btn-row" style="margin-top:0;">
+      <button class="btn btn-browse" onclick="toggleBrowse()">Browse All Quotes</button>
+    </div>
+  </div>
+
+  <div class="browse" id="browseSection">
+    <div class="btn-row" id="filterRow">
+      <button class="btn btn-filter active-all" onclick="filterQ('all',this,'active-all')">All</button>
+      <button class="btn btn-filter" onclick="filterQ('enc',this,'active-enc')">💚 Encouragement</button>
+      <button class="btn btn-filter" onclick="filterQ('wis',this,'active-wis')">🧠 Wisdom</button>
+      <button class="btn btn-filter" onclick="filterQ('prv',this,'active-prv')">🌍 World Proverbs</button>
+    </div>
+    <div class="browse-count" id="browseCount"></div>
+    <div id="browseList"></div>
+  </div>
+
+  <div class="message"><h3>The Foundation Cares About You</h3><p>We put this page together because words matter. When you're down, when life is heavy, when you feel like nobody sees you — <strong>we see you.</strong> Come back here anytime. There's always a new word waiting for you.</p><p style="color:var(--cyan);font-family:var(--mono);font-size:12px;letter-spacing:2px;margin-top:14px;">// DUTTY ASHY WIN_G FOUNDATION — WE CARE //</p></div>
+</div>
+
+<section style="padding:24px 0;"><div class="wrap" style="text-align:center;"><div class="dbb-logo"><div class="dot red d1"></div><div class="dot green d2"></div><div class="dot red d3"></div><div class="dot green d4"></div><div class="dot green d5"></div><div class="dot green d6"></div></div></div></section>
+
+<footer><div class="wrap"><p>Dutty Ashy Win_G Foundation · Encouragement Center</p><p style="color:var(--green);font-size:12px;letter-spacing:3px;margin-bottom:8px;">// WE CARE //</p><p><a href="index.html">Home</a> · <a href="dbb-lifeline.html">Lifeline</a></p><div class="disclaimer">The Dutty Ashy Win_G Foundation provides this Encouragement Center as a community resource for inspiration and upliftment. Quotes are attributed to their commonly recognized authors and are in the public domain. This page is not a substitute for professional counseling, therapy, or medical advice. If you are in crisis, please contact a professional crisis line — visit our <a href="dbb-lifeline.html" style="color:var(--cyan);">Lifeline page</a> for resources. The Foundation assumes no liability for the use of content on this page.</div></div></footer>
+
+<script>
+// ── PURE ENCOURAGEMENT — these lift you up when you're down ──
+var ENC = [
+  {t:"It does not matter how slowly you go as long as you do not stop.",a:"Confucius"},
+  {t:"Our greatest weakness lies in giving up. The most certain way to succeed is always to try just one more time.",a:"Thomas Edison"},
+  {t:"I have not failed. I've just found 10,000 ways that won't work.",a:"Thomas Edison"},
+  {t:"Keep your face always toward the sunshine — and shadows will fall behind you.",a:"Walt Whitman"},
+  {t:"Even the darkest night will end and the sun will rise.",a:"Victor Hugo"},
+  {t:"The harder the conflict, the more glorious the triumph.",a:"Thomas Paine"},
+  {t:"Optimism is the faith that leads to achievement. Nothing can be done without hope and confidence.",a:"Helen Keller"},
+  {t:"Walking with a friend in the dark is better than walking alone in the light.",a:"Helen Keller"},
+  {t:"Although the world is full of suffering, it is also full of the overcoming of it.",a:"Helen Keller"},
+  {t:"When one door of happiness closes, another opens; but often we look so long at the closed door that we do not see the one which has been opened for us.",a:"Helen Keller"},
+  {t:"It is during our darkest moments that we must focus to see the light.",a:"Aristotle"},
+  {t:"If you're going through hell, keep going.",a:"Winston Churchill"},
+  {t:"Never give in, never give in, never, never, never.",a:"Winston Churchill"},
+  {t:"Success is not final, failure is not fatal: it is the courage to continue that counts.",a:"Winston Churchill"},
+  {t:"Believe you can and you're halfway there.",a:"Theodore Roosevelt"},
+  {t:"In the middle of every difficulty lies opportunity.",a:"Albert Einstein"},
+  {t:"Life is like riding a bicycle. To keep your balance, you must keep moving.",a:"Albert Einstein"},
+  {t:"The future belongs to those who believe in the beauty of their dreams.",a:"Eleanor Roosevelt"},
+  {t:"You gain strength, courage, and confidence by every experience in which you really stop to look fear in the face.",a:"Eleanor Roosevelt"},
+  {t:"No one can make you feel inferior without your consent.",a:"Eleanor Roosevelt"},
+  {t:"Out of suffering have emerged the strongest souls; the most massive characters are seared with scars.",a:"Khalil Gibran"},
+  {t:"March on. Do not tarry. To go forward is to move toward perfection.",a:"Khalil Gibran"},
+  {t:"The only limit to our realization of tomorrow will be our doubts of today.",a:"Franklin D. Roosevelt"},
+  {t:"The only thing we have to fear is fear itself.",a:"Franklin D. Roosevelt"},
+  {t:"When you reach the end of your rope, tie a knot in it and hang on.",a:"Abraham Lincoln"},
+  {t:"The best thing about the future is that it comes only one day at a time.",a:"Abraham Lincoln"},
+  {t:"If you fell down yesterday, stand up today.",a:"H. G. Wells"},
+  {t:"In order to succeed, we must first believe that we can.",a:"Nikos Kazantzakis"},
+  {t:"Hope is the thing with feathers that perches in the soul.",a:"Emily Dickinson"},
+  {t:"Let everything happen to you: beauty and terror. Just keep going. No feeling is final.",a:"Rainer Maria Rilke"},
+  {t:"Tough times never last, but tough people do.",a:"Folk Wisdom"},
+  {t:"The darkest hour has only sixty minutes.",a:"Folk Wisdom"},
+  {t:"It is better to light a candle than curse the darkness.",a:"Folk Wisdom"},
+  {t:"Words of encouragement during a failure are worth more than an hour of praise after success.",a:"Folk Wisdom"},
+  {t:"Hardships often prepare ordinary people for an extraordinary destiny.",a:"C. S. Lewis"},
+  {t:"You can't go back and change the beginning, but you can start where you are and change the ending.",a:"C. S. Lewis"},
+  {t:"Start where you are. Use what you have. Do what you can.",a:"Arthur Ashe"},
+  {t:"If you want to lift yourself up, lift up someone else.",a:"Booker T. Washington"},
+  {t:"The soul that is within me no man can degrade.",a:"Frederick Douglass"},
+  {t:"Without struggle, there is no progress.",a:"Frederick Douglass"},
+  {t:"Without courage, wisdom bears no fruit.",a:"Baltasar Gracian"},
+  {t:"You are braver than you believe, stronger than you seem, and smarter than you think.",a:"A. A. Milne"},
+  {t:"With the new day comes new strength and new thoughts.",a:"Eleanor Roosevelt"},
+  {t:"It always seems impossible until it's done.",a:"Nelson Mandela"},
+  {t:"Do not go where the path may lead; go instead where there is no path and leave a trail.",a:"Ralph Waldo Emerson"},
+  {t:"What lies behind us and what lies before us are tiny matters compared to what lies within us.",a:"Ralph Waldo Emerson"},
+  {t:"The only person you are destined to become is the person you decide to be.",a:"Ralph Waldo Emerson"},
+  {t:"Go confidently in the direction of your dreams. Live the life you have imagined.",a:"Henry David Thoreau"},
+  {t:"It is never too late to be what you might have been.",a:"George Eliot"},
+  {t:"There is nothing impossible to him who will try.",a:"Alexander the Great"},
+  {t:"A river cuts through rock not because of its power but because of its persistence.",a:"Jim Watkins"},
+  {t:"Energy and persistence conquer all things.",a:"Benjamin Franklin"},
+  {t:"Good, better, best. Never let it rest. Till your good is better and your better is best.",a:"St. Jerome"},
+  {t:"He who has a why to live can bear almost any how.",a:"Friedrich Nietzsche"},
+  {t:"Problems are not stop signs, they are guidelines.",a:"Folk Wisdom"},
+  {t:"Not all that is faced can be changed, but nothing can be changed until it is faced.",a:"Folk Wisdom"},
+  {t:"He who would learn to fly one day must first learn to walk and run and climb.",a:"Friedrich Nietzsche"},
+  {t:"Vitality shows not only in the ability to persist but in the ability to start over.",a:"F. Scott Fitzgerald"},
+  {t:"Small deeds done are better than great deeds planned.",a:"Peter Marshall"},
+  {t:"Act as if what you do makes a difference. It does.",a:"William James"},
+  {t:"Perhaps all the dragons in our lives are princesses who are only waiting to see us act with beauty and courage.",a:"Rainer Maria Rilke"},
+  {t:"When everything seems to be going against you, remember that the airplane takes off against the wind, not with it.",a:"Henry Ford"},
+  {t:"It is not in the stars to hold our destiny but in ourselves.",a:"William Shakespeare"},
+  {t:"Though she be but little, she is fierce.",a:"William Shakespeare"},
+  {t:"Our doubts are traitors, and make us lose the good we oft might win, by fearing to attempt.",a:"William Shakespeare"},
+  {t:"In three words I can sum up everything I've learned about life: it goes on.",a:"Robert Frost"},
+  {t:"The best way out is always through.",a:"Robert Frost"},
+  {t:"The secret of getting ahead is getting started.",a:"Mark Twain"},
+  {t:"If you want to be happy, be.",a:"Leo Tolstoy"},
+  {t:"However long the night, the dawn will break.",a:"African Proverb"},
+  {t:"No matter how long the winter, spring is sure to follow.",a:"Guinean Proverb"},
+  {t:"Fall seven times, stand up eight.",a:"Japanese Proverb"},
+  {t:"Even a small star shines in the darkness.",a:"Finnish Proverb"},
+  {t:"After the rain, the earth hardens.",a:"Haitian Proverb"}
+];
+
+// ── WISDOM / ADVICE — things to think about and live by ──
+var WIS = [
+  {t:"Strength does not come from physical capacity. It comes from an indomitable will.",a:"Mahatma Gandhi"},
+  {t:"You must be the change you wish to see in the world.",a:"Mahatma Gandhi"},
+  {t:"The best way to find yourself is to lose yourself in the service of others.",a:"Mahatma Gandhi"},
+  {t:"In a gentle way, you can shake the world.",a:"Mahatma Gandhi"},
+  {t:"Live as if you were to die tomorrow. Learn as if you were to live forever.",a:"Mahatma Gandhi"},
+  {t:"Failure is simply the opportunity to begin again, this time more intelligently.",a:"Henry Ford"},
+  {t:"Whether you think you can or you think you can't, you're right.",a:"Henry Ford"},
+  {t:"Opportunity is missed by most people because it is dressed in overalls and looks like work.",a:"Thomas Edison"},
+  {t:"Many of life's failures are people who did not realize how close they were to success when they gave up.",a:"Thomas Edison"},
+  {t:"We are what we repeatedly do. Excellence, then, is not an act, but a habit.",a:"Aristotle"},
+  {t:"Knowing yourself is the beginning of all wisdom.",a:"Aristotle"},
+  {t:"The only true wisdom is in knowing you know nothing.",a:"Socrates"},
+  {t:"We make a living by what we get, but we make a life by what we give.",a:"Winston Churchill"},
+  {t:"Courage is what it takes to stand up and speak; courage is also what it takes to sit down and listen.",a:"Winston Churchill"},
+  {t:"Do what you can, with what you have, where you are.",a:"Theodore Roosevelt"},
+  {t:"The only man who never makes mistakes is the man who never does anything.",a:"Theodore Roosevelt"},
+  {t:"A person who never made a mistake never tried anything new.",a:"Albert Einstein"},
+  {t:"Imagination is more important than knowledge.",a:"Albert Einstein"},
+  {t:"Try not to become a man of success, but rather try to become a man of value.",a:"Albert Einstein"},
+  {t:"The best and most beautiful things in the world cannot be seen or even touched — they must be felt with the heart.",a:"Helen Keller"},
+  {t:"The greatest discovery of any generation is that a human being can alter his life by altering his attitude.",a:"William James"},
+  {t:"The purpose of life is not to be happy. It is to be useful, to be honorable, to be compassionate.",a:"Ralph Waldo Emerson"},
+  {t:"What we achieve inwardly will change outer reality.",a:"Plutarch"},
+  {t:"In the end, it's not the years in your life that count. It's the life in your years.",a:"Abraham Lincoln"},
+  {t:"Knowing is not enough; we must apply. Willing is not enough; we must do.",a:"Johann Wolfgang von Goethe"},
+  {t:"This above all: to thine own self be true.",a:"William Shakespeare"},
+  {t:"Everyone thinks of changing the world, but no one thinks of changing himself.",a:"Leo Tolstoy"},
+  {t:"Have patience with all things, but chiefly have patience with yourself.",a:"St. Francis de Sales"},
+  {t:"An investment in knowledge pays the best interest.",a:"Benjamin Franklin"},
+  {t:"By failing to prepare, you are preparing to fail.",a:"Benjamin Franklin"},
+  {t:"He that can have patience can have what he will.",a:"Benjamin Franklin"},
+  {t:"Never leave that till tomorrow which you can do today.",a:"Benjamin Franklin"},
+  {t:"Lost time is never found again.",a:"Benjamin Franklin"},
+  {t:"Well done is better than well said.",a:"Benjamin Franklin"},
+  {t:"Once you learn to read, you will be forever free.",a:"Frederick Douglass"},
+  {t:"It is easier to build strong children than to repair broken men.",a:"Frederick Douglass"},
+  {t:"Forever is composed of nows.",a:"Emily Dickinson"},
+  {t:"The only journey is the one within.",a:"Rainer Maria Rilke"},
+  {t:"Twenty years from now you will be more disappointed by the things you didn't do than by the things you did do.",a:"Mark Twain"},
+  {t:"Whenever you find yourself on the side of the majority, it is time to pause and reflect.",a:"Mark Twain"},
+  {t:"The two most important days in your life are the day you are born and the day you find out why.",a:"Mark Twain"},
+  {t:"Don't judge each day by the harvest you reap but by the seeds that you plant.",a:"Robert Louis Stevenson"},
+  {t:"It is not the strongest of the species that survives, nor the most intelligent, but the one most responsive to change.",a:"Charles Darwin"},
+  {t:"He that would have the fruit must climb the tree.",a:"Folk Wisdom"},
+  {t:"That which is bitter to endure may be sweet to remember.",a:"Folk Wisdom"},
+  {t:"A society grows great when old men plant trees whose shade they know they shall never sit in.",a:"Greek Proverb"},
+  {t:"Vision without action is a daydream. Action without vision is a nightmare.",a:"Japanese Proverb"},
+  {t:"Teachers open the door, but you must enter by yourself.",a:"Chinese Proverb"},
+  {t:"To know the road ahead, ask those coming back.",a:"Chinese Proverb"},
+  {t:"A gem cannot be polished without friction, nor a person perfected without trials.",a:"Chinese Proverb"},
+  {t:"We do not inherit the earth from our ancestors; we borrow it from our children.",a:"Native American Proverb"},
+  {t:"It takes a whole village to raise a child.",a:"African Proverb"},
+  {t:"Examine what is said, not who is speaking.",a:"African Proverb"},
+  {t:"Until the lion learns to write, every story will glorify the hunter.",a:"African Proverb"},
+  {t:"Knowledge without wisdom is like water in the sand.",a:"Guinean Proverb"}
+];
+
+// ── WORLD PROVERBS ──
+var PRV = [
+  {t:"A journey of a thousand miles begins with a single step.",a:"Chinese Proverb"},
+  {t:"Smooth seas do not make skillful sailors.",a:"African Proverb"},
+  {t:"The bamboo that bends is stronger than the oak that resists.",a:"Japanese Proverb"},
+  {t:"He who asks is a fool for five minutes, but he who does not ask remains a fool forever.",a:"Chinese Proverb"},
+  {t:"When the roots are deep, there is no reason to fear the wind.",a:"African Proverb"},
+  {t:"If you want to go fast, go alone. If you want to go far, go together.",a:"African Proverb"},
+  {t:"The best time to plant a tree was 20 years ago. The second best time is now.",a:"Chinese Proverb"},
+  {t:"Little by little, a little becomes a lot.",a:"Tanzanian Proverb"},
+  {t:"Where there is love, there is no darkness.",a:"Burundian Proverb"},
+  {t:"Do not look where you fell, but where you slipped.",a:"Liberian Proverb"},
+  {t:"Tomorrow belongs to the people who prepare for it today.",a:"African Proverb"},
+  {t:"A roaring lion kills no game.",a:"African Proverb"},
+  {t:"Not everyone who chased the zebra caught it, but he who caught it chased it.",a:"African Proverb"},
+  {t:"If you are building a house and a nail breaks, do you stop building or do you change the nail?",a:"Rwandan Proverb"},
+  {t:"Wisdom is like a baobab tree; no one individual can embrace it.",a:"African Proverb"},
+  {t:"Be a mountain or lean on one.",a:"Somali Proverb"},
+  {t:"Birds sing not because they have answers but because they have songs.",a:"African Proverb"},
+  {t:"It is crooked wood that shows the best sculptor.",a:"African Proverb"},
+  {t:"We desire to bequeath two things to our children: roots and wings.",a:"Sudanese Proverb"},
+  {t:"A child who asks questions does not become a fool.",a:"Ghanaian Proverb"},
+  {t:"Let not what you cannot do tear you from what you can do.",a:"Ghanaian Proverb"},
+  {t:"You must act as if it is impossible to fail.",a:"Ghanaian Proverb"},
+  {t:"Only a fool tests the depth of a river with both feet.",a:"African Proverb"},
+  {t:"The lion does not turn around when a small dog barks.",a:"African Proverb"},
+  {t:"An army of sheep led by a lion can defeat an army of lions led by a sheep.",a:"African Proverb"},
+  {t:"Patience is the mother of a beautiful child.",a:"Bantu Proverb"},
+  {t:"When the music changes, so does the dance.",a:"African Proverb"},
+  {t:"Sticks in a bundle are unbreakable.",a:"Kenyan Proverb"},
+  {t:"A single bracelet does not jingle.",a:"Congolese Proverb"},
+  {t:"However far the stream flows, it never forgets its source.",a:"Nigerian Proverb"},
+  {t:"By trying often, the monkey learns to jump from the tree.",a:"Cameroonian Proverb"},
+  {t:"No matter how hot your anger is, it cannot cook yams.",a:"Nigerian Proverb"},
+  {t:"He who learns, teaches.",a:"Ethiopian Proverb"},
+  {t:"When there is no enemy within, the enemies outside cannot hurt you.",a:"African Proverb"},
+  {t:"The child who is not embraced by the village will burn it down to feel its warmth.",a:"African Proverb"},
+  {t:"Worry often gives a small thing a big shadow.",a:"Swedish Proverb"},
+  {t:"A stumble may prevent a fall.",a:"English Proverb"},
+  {t:"The one who moves a mountain begins by carrying away small stones.",a:"Chinese Proverb"},
+  {t:"When the wind of change blows, some build walls while others build windmills.",a:"Chinese Proverb"},
+  {t:"Be not afraid of growing slowly, be afraid only of standing still.",a:"Chinese Proverb"},
+  {t:"With time and patience the mulberry leaf becomes a silk gown.",a:"Chinese Proverb"},
+  {t:"The day you decide to do it is your lucky day.",a:"Japanese Proverb"},
+  {t:"Starting is easy, continuing is hard.",a:"Japanese Proverb"},
+  {t:"Even monkeys fall from trees.",a:"Japanese Proverb"},
+  {t:"After the storm comes the calm.",a:"Spanish Proverb"},
+  {t:"He who does not risk cannot win.",a:"French Proverb"},
+  {t:"Patience is bitter, but its fruit is sweet.",a:"French Proverb"},
+  {t:"What does not kill you makes you stronger.",a:"German Proverb"},
+  {t:"No road is long with good company.",a:"Turkish Proverb"},
+  {t:"The world is a rose; smell it and pass it to your friends.",a:"Persian Proverb"},
+  {t:"Out of old fields comes new grain.",a:"Jamaican Proverb"},
+  {t:"Every mickle mek a muckle.",a:"Jamaican Proverb"},
+  {t:"Trouble don't set up like rain.",a:"Jamaican Proverb"},
+  {t:"One hand can't clap.",a:"Jamaican Proverb"},
+  {t:"The higher the monkey climb, the more him expose.",a:"Jamaican Proverb"},
+  {t:"Stone at the bottom of the river don't know sun hot.",a:"Jamaican Proverb"},
+  {t:"Who feels it, knows it.",a:"Jamaican Proverb"},
+  {t:"One one coco full basket.",a:"Jamaican Proverb"},
+  {t:"What sweet nanny goat run him belly.",a:"Jamaican Proverb"},
+  {t:"New broom sweep clean, but old broom know corners.",a:"Caribbean Proverb"},
+  {t:"You never miss the water until the well runs dry.",a:"Caribbean Proverb"},
+  {t:"Time longer than rope.",a:"Caribbean Proverb"},
+  {t:"When yuh hand in lion mouth, tek time draw it out.",a:"Jamaican Proverb"},
+  {t:"What is fi yuh, cyaan be un-fi-yuh.",a:"Jamaican Proverb"},
+  {t:"Every day bucket go a well, one day di bottom must drop out.",a:"Jamaican Proverb"},
+  {t:"Nuh care how donkey run, him bound fi stop.",a:"Jamaican Proverb"},
+  {t:"If you cannot bite, never show your teeth.",a:"Caribbean Proverb"},
+  {t:"Crab nuh walk, crab nuh get fat.",a:"Jamaican Proverb"},
+  {t:"Doh let rain stop yuh from reaching where yuh going.",a:"Caribbean Proverb"},
+  {t:"Moon run till day ketch am.",a:"Caribbean Proverb"},
+  {t:"River never run and hide when sea come.",a:"Caribbean Proverb"},
+  {t:"If your only tool is a hammer, you will see every problem as a nail.",a:"Gambian Proverb"},
+  {t:"When you show the moon to a child, it sees only your finger.",a:"Zambian Proverb"},
+  {t:"You cannot build a house for last year's summer.",a:"Ethiopian Proverb"},
+  {t:"A child is a child of everyone.",a:"Sudanese Proverb"},
+  {t:"A wise person will always find a way.",a:"Tanzanian Proverb"},
+  {t:"If you cannot serve, you cannot lead.",a:"Caribbean Proverb"},
+  {t:"The coconut does not fall far from the tree.",a:"Caribbean Proverb"},
+  {t:"Where there is a will, there is a way.",a:"English Proverb"},
+  {t:"Great oaks from little acorns grow.",a:"English Proverb"}
+];
+
+function getDI(arr){var d=new Date();return(d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate())%arr.length;}
+
+// Show daily encouragement on load
+(function(){
+  var q=ENC[getDI(ENC)];
+  document.getElementById('dailyQuote').textContent='\u201C'+q.t+'\u201D';
+  document.getElementById('dailyAuthor').textContent='\u2014 '+q.a;
+  // Show daily wisdom too
+  var w=WIS[getDI(WIS)];
+  document.getElementById('wisdomQuote').textContent='\u201C'+w.t+'\u201D';
+  document.getElementById('wisdomAuthor').textContent='\u2014 '+w.a;
+})();
+
+function showRandomEnc(){
+  var q=ENC[Math.floor(Math.random()*ENC.length)];
+  document.getElementById('dailyQuote').textContent='\u201C'+q.t+'\u201D';
+  document.getElementById('dailyAuthor').textContent='\u2014 '+q.a;
+  document.getElementById('dailyBox').scrollIntoView({behavior:'smooth',block:'center'});
+}
+function showRandomWis(){
+  var q=WIS[Math.floor(Math.random()*WIS.length)];
+  document.getElementById('wisdomQuote').textContent='\u201C'+q.t+'\u201D';
+  document.getElementById('wisdomAuthor').textContent='\u2014 '+q.a;
+  document.getElementById('wisdomBox').scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+var browseOpen=false, currentFilter='all';
+function toggleBrowse(){
+  browseOpen=!browseOpen;
+  document.getElementById('browseSection').classList.toggle('show',browseOpen);
+  if(browseOpen) renderBrowse();
+}
+function filterQ(f,btn,cls){
+  currentFilter=f;
+  var btns=document.querySelectorAll('.btn-filter');
+  for(var i=0;i<btns.length;i++) btns[i].className='btn btn-filter';
+  btn.className='btn btn-filter '+cls;
+  renderBrowse();
+}
+function renderBrowse(){
+  var all=[];
+  ENC.forEach(function(q){all.push({q:q,c:'enc'});});
+  WIS.forEach(function(q){all.push({q:q,c:'wis'});});
+  PRV.forEach(function(q){all.push({q:q,c:'prv'});});
+  var filtered = currentFilter==='all' ? all : all.filter(function(item){return item.c===currentFilter;});
+  filtered.sort(function(){return Math.random()-0.5;});
+  document.getElementById('browseCount').textContent='Showing '+filtered.length+' quotes';
+  var h='';
+  var labels={enc:'💚 Encouragement',wis:'🧠 Wisdom',prv:'🌍 Proverb'};
+  filtered.forEach(function(item){
+    h+='<div class="q-card type-'+item.c+'">';
+    h+='<span class="q-badge badge-'+item.c+'">'+labels[item.c]+'</span>';
+    h+='<div class="q-text">\u201C'+item.q.t+'\u201D</div>';
+    h+='<div class="q-author '+item.c+'">\u2014 '+item.q.a+'</div>';
+    h+='</div>';
+  });
+  document.getElementById('browseList').innerHTML=h;
+}
+</script>
+</body>
+</html>

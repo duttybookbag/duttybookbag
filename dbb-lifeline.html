@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DuttyBookBag Lifeline — Real Help, Real Resources</title>
+  <meta name="description" content="Free financial help, mental health support, credit relief, job training, and emergency resources worldwide. DuttyBookBag Lifeline — because everyone deserves a way forward." />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --black:#000000;--dark:#050d0d;--panel:#080f0f;--panel2:#0a1414;--border:#0c3030;
+      --cyan:#00ffe1;--green:#00ff6a;--blue:#4db8ff;--gold:#ffd166;
+      --red:#ff5252;--purple:#c792ea;--orange:#ff9f43;--pink:#ff6ec7;--yellow:#ffe66d;--neon:#39ff14;
+      --text:#b8e8e2;--muted:#3d7070;
+      --mono:'Share Tech Mono',monospace;--display:'Bebas Neue',sans-serif;--body:'Rajdhani',sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--black);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.7;overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,255,225,0.012) 3px,rgba(0,255,225,0.012) 4px);pointer-events:none;z-index:999;}
+    body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,255,225,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,225,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0;}
+    .wrap{position:relative;z-index:1;max-width:960px;margin:0 auto;padding:0 24px;}
+
+    /* NAV */
+    .site-nav{position:sticky;top:0;z-index:100;background:rgba(0,0,0,0.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:0 24px;}
+    .site-nav .wrap{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;padding:0;max-width:960px;margin:0 auto;}
+    .site-nav a{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--muted);text-decoration:none;text-transform:uppercase;padding:14px 16px;transition:color 0.2s;white-space:nowrap;}
+    .site-nav a:hover{color:var(--cyan);}
+    .site-nav a.nav-highlight{color:var(--gold);font-weight:700;}
+    .site-nav a.active{color:var(--green);text-shadow:0 0 8px rgba(0,255,106,0.4);}
+    @media(max-width:580px){.site-nav a{font-size:10px;padding:10px 8px;letter-spacing:1px;}}
+
+    /* HEADER */
+    header{position:relative;padding:50px 0 30px;text-align:center;overflow:hidden;}
+    .glow-orb{position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:500px;height:500px;background:radial-gradient(circle,rgba(0,255,106,0.08) 0%,transparent 70%);pointer-events:none;}
+    .badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:5px;color:var(--cyan);border:1px solid var(--cyan);padding:5px 18px;margin-bottom:20px;text-transform:uppercase;}
+    h1{font-family:var(--display);font-size:clamp(42px,8vw,80px);letter-spacing:4px;line-height:0.95;color:#fff;text-transform:uppercase;}
+    h1 .accent{color:var(--cyan);text-shadow:0 0 30px rgba(0,255,225,0.5);}
+    .tagline{margin:22px auto 0;font-size:17px;color:var(--text);max-width:640px;line-height:1.65;}
+    .tagline strong{color:#fff;}
+    section.block{padding:24px 0;}
+    .divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);margin:30px 0;}
+    .section-label{font-family:var(--mono);font-size:10px;letter-spacing:5px;color:var(--green);text-transform:uppercase;margin-bottom:12px;}
+    h2{font-family:var(--display);font-size:clamp(24px,4.5vw,40px);letter-spacing:3px;color:#fff;text-transform:uppercase;margin-bottom:18px;}
+    h3{font-family:var(--display);font-size:20px;letter-spacing:2px;color:var(--cyan);text-transform:uppercase;margin-bottom:10px;}
+    p{margin-bottom:12px;}
+    .lead{font-size:16px;color:var(--text);margin-bottom:20px;}
+
+    /* MESSAGE BOX */
+    .message{background:linear-gradient(135deg,rgba(0,255,106,0.06),rgba(0,255,225,0.04));border:1px solid rgba(0,255,106,0.3);border-radius:8px;padding:28px;margin:24px 0;text-align:center;}
+    .message h3{color:var(--green);font-size:24px;margin-bottom:14px;}
+    .message p{font-size:16px;line-height:1.8;max-width:700px;margin:0 auto 10px;}
+
+    /* CALLOUT */
+    .callout{border-radius:5px;padding:14px 18px;margin:14px 0;border-left:3px solid;}
+    .callout.info{background:rgba(77,184,255,0.06);border-color:var(--blue);}
+    .callout.warn{background:rgba(255,209,102,0.06);border-color:var(--gold);}
+    .callout.danger{background:rgba(255,82,82,0.08);border-color:var(--red);}
+    .callout.success{background:rgba(0,255,106,0.06);border-color:var(--green);}
+    .callout strong{color:#fff;}
+    .callout p{font-size:14px;margin-bottom:6px;}
+    .callout p:last-child{margin-bottom:0;}
+
+    /* TOC */
+    .toc{background:var(--panel);border:1px solid var(--border);border-left:3px solid var(--cyan);border-radius:6px;padding:22px 24px;margin:20px 0;}
+    .toc h3{color:var(--cyan);margin-bottom:14px;font-size:16px;letter-spacing:3px;}
+    .toc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:6px 16px;}
+    .toc a{color:var(--text);text-decoration:none;font-size:14px;padding:4px 0;display:block;font-family:var(--mono);letter-spacing:1px;transition:color 0.2s;}
+    .toc a:hover{color:var(--cyan);}
+    .toc a::before{content:'▸ ';color:var(--green);}
+
+    /* RESOURCE CARD */
+    .res-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin:16px 0;}
+    .res{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:20px;transition:border-color 0.2s;}
+    .res:hover{border-color:var(--cyan);}
+    .res h4{font-family:var(--display);font-size:18px;letter-spacing:2px;color:#fff;text-transform:uppercase;margin-bottom:6px;}
+    .res .res-tag{display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:1.5px;padding:2px 7px;border-radius:3px;text-transform:uppercase;margin-bottom:8px;}
+    .res p{font-size:14px;margin-bottom:8px;}
+    .res a{color:var(--cyan);text-decoration:none;font-family:var(--mono);font-size:12px;letter-spacing:1px;word-break:break-all;}
+    .res a:hover{text-shadow:0 0 8px rgba(0,255,225,0.5);}
+    .res .phone{color:var(--green);font-family:var(--mono);font-size:14px;font-weight:700;display:block;margin:6px 0;}
+
+    /* REGION TAGS */
+    .tag-us{background:rgba(77,184,255,0.15);color:var(--blue);border:1px solid rgba(77,184,255,0.4);}
+    .tag-uk{background:rgba(199,146,234,0.15);color:var(--purple);border:1px solid rgba(199,146,234,0.4);}
+    .tag-ca{background:rgba(255,82,82,0.15);color:var(--red);border:1px solid rgba(255,82,82,0.4);}
+    .tag-carib{background:rgba(255,209,102,0.15);color:var(--gold);border:1px solid rgba(255,209,102,0.4);}
+    .tag-global{background:rgba(0,255,106,0.15);color:var(--green);border:1px solid rgba(0,255,106,0.4);}
+    .tag-eu{background:rgba(0,255,225,0.15);color:var(--cyan);border:1px solid rgba(0,255,225,0.4);}
+    .tag-africa{background:rgba(255,159,67,0.15);color:var(--orange);border:1px solid rgba(255,159,67,0.4);}
+    .tag-asia{background:rgba(255,110,199,0.15);color:var(--pink);border:1px solid rgba(255,110,199,0.4);}
+    .tag-latam{background:rgba(255,215,64,0.15);color:var(--yellow);border:1px solid rgba(255,215,64,0.4);}
+    .tag-free{background:rgba(57,255,20,0.15);color:var(--neon);border:1px solid rgba(57,255,20,0.4);}
+
+    /* CRISIS BOX */
+    .crisis{background:rgba(255,82,82,0.08);border:2px solid rgba(255,82,82,0.5);border-radius:8px;padding:24px;margin:20px 0;text-align:center;}
+    .crisis h3{color:var(--red);font-size:26px;margin-bottom:14px;}
+    .crisis .big-num{font-family:var(--display);font-size:clamp(36px,6vw,56px);color:#fff;letter-spacing:4px;margin:10px 0;}
+    .crisis p{font-size:15px;}
+
+    /* CATEGORY NAV */
+    .cat-nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:16px;background:var(--panel);border:1px solid var(--border);border-radius:6px;margin:20px 0;}
+    .cat-nav a{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--cyan);text-decoration:none;padding:8px 16px;border:1px solid var(--border);border-radius:4px;text-transform:uppercase;transition:all 0.2s;}
+    .cat-nav a:hover{border-color:var(--cyan);background:rgba(0,255,225,0.06);}
+
+    /* GLOWING DOT LOGO (bottom) */
+    .dbb-logo{display:grid;grid-template-columns:repeat(3,24px);grid-template-rows:repeat(3,24px);gap:8px;justify-content:center;margin:0 auto;width:max-content;}
+    .dbb-logo .dot{width:24px;height:24px;border-radius:50%;animation:dbbPulse 2.8s ease-in-out infinite;}
+    .dbb-logo .green{background:#00ff44;box-shadow:0 0 8px #00ff44, 0 0 16px #00ff44;}
+    .dbb-logo .red{background:#ff1a1a;box-shadow:0 0 8px #ff1a1a, 0 0 16px #ff1a1a;}
+    .dbb-logo .d1{grid-column:2;grid-row:1;}.dbb-logo .d2{grid-column:1;grid-row:2;}.dbb-logo .d3{grid-column:2;grid-row:2;}
+    .dbb-logo .d4{grid-column:3;grid-row:2;}.dbb-logo .d5{grid-column:1;grid-row:3;}.dbb-logo .d6{grid-column:3;grid-row:3;}
+    @keyframes dbbPulse{0%,100%{opacity:0.55;transform:scale(0.92);}50%{opacity:1;transform:scale(1.08);}}
+
+    /* BACK TO TOP */
+    .to-top{position:fixed;bottom:24px;right:24px;background:var(--panel);border:1px solid var(--cyan);color:var(--cyan);width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;z-index:200;text-decoration:none;transition:all 0.2s;opacity:0;pointer-events:none;}
+    .to-top.show{opacity:1;pointer-events:auto;}
+    .to-top:hover{background:var(--cyan);color:#000;}
+
+    /* FOOTER */
+    footer{border-top:1px solid var(--border);padding:40px 0 30px;margin-top:50px;text-align:center;background:#010505;}
+    footer p{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:6px;}
+    footer a{color:var(--green);text-decoration:none;}
+    .disclaimer{max-width:800px;margin:16px auto 0;font-size:11px;color:var(--muted);font-style:italic;line-height:1.6;padding:14px;border:1px solid var(--border);border-radius:4px;text-align:left;}
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="site-nav">
+  <div class="wrap">
+    <a href="index.html">Home</a>
+    <a href="dutty-learn-center.html" class="nav-highlight">Learning Center</a>
+    <a href="dbb-nerd-geek-life.html" class="nav-highlight">Nerd Geek Life</a>
+    <a href="dbb-lifeline.html" class="active">Lifeline</a>
+    <a href="dbb-budget-calculator.html" class="nav-highlight">Budget Tool</a>
+    <a href="dbb-encouragement-center.html" class="nav-highlight">Encouragement</a>
+  </div>
+</nav>
+<div style="text-align:center;padding:6px 0;background:rgba(0,0,0,0.8);border-bottom:1px solid #0c3030;position:relative;z-index:99;">
+  <div id="google_translate_element" style="display:inline-block;"></div>
+</div>
+<script>
+function googleTranslateElementInit(){new google.translate.TranslateElement({pageLanguage:'en',layout:google.translate.TranslateElement.InlineLayout.HORIZONTAL},'google_translate_element');}
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<style>.goog-te-banner-frame{display:none!important;}.goog-te-gadget{font-size:11px!important;color:#3d7070!important;}.goog-te-gadget .goog-te-combo{background:#080f0f;color:#b8e8e2;border:1px solid #0c3030;border-radius:4px;padding:4px 8px;font-family:'Share Tech Mono',monospace;font-size:11px;outline:none;}.goog-te-gadget>span{display:none!important;}body{top:0!important;}</style>
+
+<!-- HEADER -->
+<header>
+  <div class="glow-orb"></div>
+  <div class="wrap">
+    <!-- MASCOT SVG -->
+    <div style="display:flex;justify-content:center;margin-bottom:20px;">
+      <svg viewBox="0 0 120 140" width="100" height="116" style="filter:drop-shadow(0 0 20px rgba(57,255,20,0.3));">
+        <rect x="10" y="10" width="100" height="120" rx="14" fill="#080f0f" stroke="#1a3a3a" stroke-width="2"/>
+        <circle cx="42" cy="38" r="9" fill="#39ff14"><animate attributeName="opacity" values="1;1;1;0.1;1" dur="4s" repeatCount="indefinite"/></circle>
+        <circle cx="42" cy="38" r="4" fill="#fff" opacity="0.3"/>
+        <circle cx="78" cy="38" r="9" fill="#39ff14"><animate attributeName="opacity" values="1;1;1;0.1;1" dur="4s" repeatCount="indefinite"/></circle>
+        <circle cx="78" cy="38" r="4" fill="#fff" opacity="0.3"/>
+        <circle cx="33" cy="72" r="7" fill="#ff5252" opacity="0.35"/>
+        <circle cx="60" cy="72" r="7" fill="#ff5252" opacity="0.6"/>
+        <circle cx="87" cy="72" r="7" fill="#ff5252" opacity="0.35"/>
+        <circle cx="60" cy="102" r="8" fill="#ff5252" opacity="0.85"><animate attributeName="opacity" values="0.85;0.5;0.85" dur="2.5s" repeatCount="indefinite"/></circle>
+        <animateTransform attributeName="transform" type="translate" values="0,0;0,-2;0,0" dur="4s" repeatCount="indefinite"/>
+      </svg>
+    </div>
+    <div class="badge">DuttyBookBag · Lifeline</div>
+    <h1>DUTTY ASHY WIN_G<br><span class="accent">LIFELINE</span></h1>
+    <p class="tagline"><strong>The Dutty Ashy Win_G Foundation cares about you.</strong> Times get hard — for everyone, everywhere. This page is here to connect you with real, free resources to help you get back on your feet. You are not alone.</p>
+  </div>
+</header>
+
+<!-- MESSAGE FROM DBB -->
+<section class="block">
+  <div class="wrap">
+    <div class="message">
+      <h3>Dutty Ashy Win_G Foundation Cares About You</h3>
+      <p>Life is hard. It doesn't matter where you live, what language you speak, or what your situation is — <strong>everybody goes through tough times.</strong> Bills pile up. Stress takes over. You feel stuck. We've been there. We understand.</p>
+      <p>The Dutty Ashy Win_G Foundation believes that <strong>no one should have to face it alone.</strong> This page exists because we care — not as a business move, not for attention, but because helping people get back on their feet is the whole reason this Foundation exists.</p>
+      <p><strong>We care about your mental health.</strong> We care about your family eating tonight. We care about your lights staying on. We care about you finding a path forward — no matter how small the first step is.</p>
+      <p>Every link on this page is free, verified, and here for you. No sign-ups, no ads, no catch. Just real help from people who genuinely want to see you win.</p>
+      <p style="color:var(--cyan);font-family:var(--mono);font-size:13px;letter-spacing:2px;margin-top:18px;">// THE DUTTY ASHY WIN_G FOUNDATION — WE CARE //</p>
+    </div>
+  </div>
+</section>
+
+<!-- CRISIS LINE - ALWAYS VISIBLE -->
+<section class="block">
+  <div class="wrap">
+    <div class="crisis">
+      <h3>⚠ If You Are In Crisis Right Now</h3>
+      <p>If you're thinking about hurting yourself or someone else, please reach out immediately:</p>
+      <div class="big-num">988</div>
+      <p><strong>Suicide & Crisis Lifeline</strong> — Call or text 988 (USA) — Free, 24/7, confidential</p>
+      <p style="margin-top:10px;font-family:var(--mono);font-size:12px;color:var(--muted);">UK: 116 123 (Samaritans) · Canada: 988 · Jamaica: 888-NEW-LIFE · International: <a href="https://findahelpline.com" target="_blank" style="color:var(--cyan);">findahelpline.com</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- TABLE OF CONTENTS -->
+<section class="block">
+  <div class="wrap">
+    <div class="toc">
+      <h3>// JUMP TO A SECTION</h3>
+      <div class="toc-grid">
+        <a href="#mental">Mental Health</a>
+        <a href="#emergency">Emergency Help (Food/Rent/Bills)</a>
+        <a href="#credit">Credit Card Relief</a>
+        <a href="#credit-repair">Credit Repair</a>
+        <a href="#benefits">Government Benefits</a>
+        <a href="#jobs">Free Job Training</a>
+        <a href="#earn">Make Money Now</a>
+        <a href="#education">Free Education</a>
+        <a href="#free-tools">Free Tools & Tech</a>
+        <a href="#caribbean">Caribbean & Jamaica</a>
+        <a href="#uk">United Kingdom</a>
+        <a href="#canada">Canada</a>
+        <a href="#europe">Europe</a>
+        <a href="#africa">Africa</a>
+        <a href="#asia">Asia & Pacific</a>
+        <a href="#latam">Latin America</a>
+        <a href="#budget">Budget Calculator</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- =================== MENTAL HEALTH =================== -->
+<section class="block">
+  <div class="wrap">
+    <div class="section-label">// Your Mind Matters</div>
+    <h2 id="mental">🧠 Mental Health — Free Support</h2>
+    <p class="lead">Financial stress destroys mental health. You can't fix money problems when your head isn't right. Start here. Every resource below is free or has a free option.</p>
+
+    <div class="res-grid">
+      <div class="res">
+        <span class="res-tag tag-us">USA</span>
+        <h4>988 Suicide & Crisis Lifeline</h4>
+        <span class="phone">Call or Text: 988</span>
+        <p>Free, 24/7, confidential. Trained counselors for anyone in emotional distress — not just suicidal thoughts.</p>
+        <a href="https://988lifeline.org" target="_blank">988lifeline.org →</a>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-us">USA</span>
+        <h4>Crisis Text Line</h4>
+        <span class="phone">Text HOME to 741741</span>
+        <p>Free 24/7 crisis counseling via text. If you can't talk on the phone, text instead.</p>
+        <a href="https://www.crisistextline.org" target="_blank">crisistextline.org →</a>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-us">USA</span>
+        <h4>NAMI Helpline</h4>
+        <span class="phone">1-800-950-NAMI (6264)</span>
+        <p>National Alliance on Mental Illness — free info, referrals, support groups. Monday–Friday 10am–10pm ET.</p>
+        <a href="https://www.nami.org/help" target="_blank">nami.org/help →</a>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-us">USA</span>
+        <h4>Open Path Collective</h4>
+        <p>Therapy sessions for $30-$80 (regular therapy costs $150-$250). Sliding scale based on income. Online or in-person.</p>
+        <a href="https://openpathcollective.org" target="_blank">openpathcollective.org →</a>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-free">Free</span>
+        <h4>7 Cups — Free Online Therapy Chat</h4>
+        <p>Free emotional support from trained listeners. Available 24/7 worldwide. No account needed to start.</p>
+        <a href="https://www.7cups.com" target="_blank">7cups.com →</a>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-uk">UK</span>
+        <h4>Samaritans</h4>
+        <span class="phone">Call: 116 123 (Free, 24/7)</span>
+        <p>Free emotional support for anyone struggling. Call, email, or visit a branch. Completely confidential.</p>
+        <a href="https://www.samaritans.org" target="_blank">samaritans.org →</a>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-uk">UK</span>
+        <h4>Mind</h4>
+        <span class="phone">0300 123 3393</span>
+        <p>Mental health charity. Free info, support groups, crisis help. Mon–Fri 9am–6pm.</p>
+        <a href="https://www.mind.org.uk" target="_blank">mind.org.uk →</a>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-global">Global</span>
+        <h4>Find A Helpline</h4>
+        <p>Search for free crisis helplines in <strong>any country</strong>. Covers 200+ countries, multiple languages.</p>
+        <a href="https://findahelpline.com" target="_blank">findahelpline.com →</a>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-global">Global</span>
+        <h4>Befrienders Worldwide</h4>
+        <p>International emotional support network. Find a crisis center in your country.</p>
+        <a href="https://www.befrienders.org" target="_blank">befrienders.org →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- =================== EMERGENCY HELP =================== -->
+<section class="block">
+  <div class="wrap">
+    <div class="section-label">// Right Now Help</div>
+    <h2 id="emergency">🆘 Emergency Help — Food, Rent, Bills</h2>
+    <p class="lead">Can't eat? Can't pay rent? Lights about to get cut? These resources exist specifically for people in your situation right now.</p>
+
+    <h3 style="color:var(--green);margin-top:20px;">🇺🇸 United States</h3>
+    <div class="res-grid">
+      <div class="res">
+        <span class="res-tag tag-us">USA</span>
+        <h4>211.org — Find Local Help</h4>
+        <span class="phone">Call: 211</span>
+        <p>The #1 resource for local help in America. Call 211 or go online. Food pantries, rent assistance, utility help, shelter — all in your zip code.</p>
+        <a href="https://www.211.org" target="_blank">211.org →</a>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-us">USA</span>
+        <h4>Feeding America — Food Banks</h4>
+        <p>Find your nearest food bank by zip code. No ID required at most locations.</p>
+        <a href="https://www.feedingamerica.org/find-your-local-foodbank" target="_blank">feedingamerica.org →</a>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-us">USA</span>
+        <h4>SNAP (Food Stamps)</h4>
+        <p>Apply for government food benefits online. Most states approve within 30 days. Emergency cases: 7 days.</p>
+        <a href="https://www.fns.usda.gov/snap/apply" target="_blank">fns.usda.gov/snap →</a>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-us">USA</span>
+        <h4>LIHEAP — Utility Bill Help</h4>
+        <p>Low Income Home Energy Assistance. Pays part or all of your electric/gas/heating bill. Apply by state.</p>
+        <a href="https://www.acf.hhs.gov/ocs/low-income-home-energy-assistance-program-liheap" target="_blank">acf.hhs.gov (LIHEAP) →</a>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-us">USA</span>
+        <h4>Salvation Army — Emergency Assistance</h4>
+        <p>Rent, utilities, food, clothing. Walk into your nearest location or call.</p>
+        <a href="https://www.salvationarmyusa.org/usn/provide-shelter" target="_blank">salvationarmyusa.org →</a>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-us">USA</span>
+        <h4>Lifeline — Free Phone</h4>
+        <p>Free government phone + monthly data for qualifying low-income individuals. Apply online.</p>
+        <a href="https://www.lifelinesupport.org" target="_blank">lifelinesupport.org →</a>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-us">USA</span>
+        <h4>WIC — Women, Infants & Children</h4>
+        <p>Free food, nutrition counseling, and healthcare referrals for pregnant women and children under 5.</p>
+        <a href="https://www.fns.usda.gov/wic" target="_blank">fns.usda.gov/wic →</a>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-us">USA</span>
+        <h4>FindHelp.org</h4>
+        <p>Search by zip code for food, housing, transit, financial help, healthcare. Covers all 50 states.</p>
+        <a href="https://www.findhelp.org" target="_blank">findhelp.org →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- =================== CREDIT CARD RELIEF =================== -->
+<section class="block">
+  <div class="wrap">
+    <div class="section-label">// Break Free From Debt</div>
+    <h2 id="credit">💳 Credit Card Relief & Debt Help</h2>
+    <p class="lead">Drowning in credit card debt? There are real programs — not scams — that can negotiate your debt down, set up payment plans, or even forgive portions of what you owe. <strong>Never pay someone upfront for debt relief.</strong></p>
+
+    <div class="callout warn">
+      <p><strong>⚠ Avoid Scams:</strong> Legitimate debt relief organizations will NEVER ask you to pay upfront. If someone says "pay us $500 and we'll erase your debt" — it's a scam. The resources below are verified nonprofits and government programs.</p>
+    </div>
+
+    <div class="res-grid">
+      <div class="res">
+        <span class="res-tag tag-us">USA</span>
+        <h4>NFCC — Free Credit Counseling</h4>
+        <span class="phone">1-800-388-2227</span>
+        <p>National Foundation for Credit Counseling. Free or low-cost sessions with certified counselors. They negotiate with your credit card companies directly.</p>
+        <a href="https://www.nfcc.org" target="_blank">nfcc.org →</a>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-us">USA</span>
+        <h4>Debt Management Plans (DMP)</h4>
+        <p>Through NFCC counselors — consolidate all credit cards into one lower monthly payment. Interest rates reduced. No loans needed.</p>
+        <a href="https://www.nfcc.org/what-we-do/debt-management-plans" target="_blank">nfcc.org/debt-management →</a>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-us">USA</span>
+        <h4>Credit Card Hardship Programs</h4>
+        <p>Call your credit card company directly and say "I'm experiencing financial hardship." Most have internal programs that lower your rate, waive fees, or pause payments for 3-12 months. <strong>You just have to ask.</strong></p>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-us">USA</span>
+        <h4>Consumer Financial Protection Bureau</h4>
+        <p>File complaints against credit card companies, learn your rights, get free debt advice from the government.</p>
+        <a href="https://www.consumerfinance.gov/consumer-tools/debt-collection" target="_blank">consumerfinance.gov →</a>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-uk">UK</span>
+        <h4>StepChange — Free Debt Advice</h4>
+        <span class="phone">0800 138 1111 (Free)</span>
+        <p>UK's leading debt charity. Free debt management plans, IVA advice, bankruptcy guidance.</p>
+        <a href="https://www.stepchange.org" target="_blank">stepchange.org →</a>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-uk">UK</span>
+        <h4>National Debtline</h4>
+        <span class="phone">0808 808 4000 (Free)</span>
+        <p>Free debt advice for England, Scotland, Wales. Phone, webchat, online tools.</p>
+        <a href="https://www.nationaldebtline.org" target="_blank">nationaldebtline.org →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- =================== CREDIT REPAIR =================== -->
+<section class="block">
+  <div class="wrap">
+    <div class="section-label">// Rebuild Your Score</div>
+    <h2 id="credit-repair">📊 Credit Repair — Free Tools</h2>
+
+    <div class="res-grid">
+      <div class="res">
+        <span class="res-tag tag-us">USA</span>
+        <h4>AnnualCreditReport.com</h4>
+        <p>Official site to get your credit report from all 3 bureaus (Equifax, Experian, TransUnion). <strong>100% free, once per year.</strong> This is the only legit free source.</p>
+        <a href="https://www.annualcreditreport.com" target="_blank">annualcreditreport.com →</a>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-free">Free</span>
+        <h4>Credit Karma</h4>
+        <p>Free credit score monitoring, alerts, tips to improve. No credit card required. Works with TransUnion and Equifax.</p>
+        <a href="https://www.creditkarma.com" target="_blank">creditkarma.com →</a>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-us">USA</span>
+        <h4>Dispute Errors on Your Report</h4>
+        <p>If something on your credit report is wrong (old debt, identity theft, wrong amount), you can dispute it for free directly with the bureaus. This alone can raise your score 50-100 points.</p>
+        <a href="https://www.consumerfinance.gov/consumer-tools/credit-reports-and-scores" target="_blank">CFPB Dispute Guide →</a>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-free">Free</span>
+        <h4>Chime — No-Fee Banking</h4>
+        <p>No monthly fees, no minimum balance, no overdraft fees. Free debit card. Helps rebuild credit with their secured card.</p>
+        <a href="https://www.chime.com" target="_blank">chime.com →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- =================== GOVERNMENT BENEFITS =================== -->
+<section class="block">
+  <div class="wrap">
+    <div class="section-label">// You Paid Into This</div>
+    <h2 id="benefits">🏛 Government Benefits — Apply Now</h2>
+
+    <div class="res-grid">
+      <div class="res">
+        <span class="res-tag tag-us">USA</span>
+        <h4>Benefits.gov — Find All Benefits</h4>
+        <p>Answer a few questions and it shows you every federal and state benefit you qualify for. Takes 10 minutes.</p>
+        <a href="https://www.benefits.gov" target="_blank">benefits.gov →</a>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-us">USA</span>
+        <h4>Unemployment Insurance</h4>
+        <p>Lost your job? Apply for unemployment benefits in your state. Pays a percentage of your previous salary.</p>
+        <a href="https://www.careeronestop.org/LocalHelp/UnemploymentBenefits/find-unemployment-benefits.aspx" target="_blank">careeronestop.org →</a>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-us">USA</span>
+        <h4>EITC — Earned Income Tax Credit</h4>
+        <p>If you work and earn under ~$60K, you might be owed $500-$7,000 from the IRS. Many people don't know they qualify. Free to claim on your taxes.</p>
+        <a href="https://www.irs.gov/credits-deductions/individuals/earned-income-tax-credit-eitc" target="_blank">irs.gov/eitc →</a>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-us">USA</span>
+        <h4>Medicaid / ACA Healthcare</h4>
+        <p>Free or low-cost health insurance. Income-based. Apply at healthcare.gov or your state's Medicaid office.</p>
+        <a href="https://www.healthcare.gov" target="_blank">healthcare.gov →</a>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-us">USA</span>
+        <h4>Unclaimed Money</h4>
+        <p>The government is holding money that belongs to you — old bank accounts, tax refunds, insurance. Search by name. Seriously, check.</p>
+        <a href="https://www.usa.gov/unclaimed-money" target="_blank">usa.gov/unclaimed-money →</a>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-uk">UK</span>
+        <h4>GOV.UK Benefits</h4>
+        <p>Universal Credit, housing benefit, council tax reduction, free prescriptions, Pension Credit — check what you're entitled to.</p>
+        <a href="https://www.gov.uk/browse/benefits" target="_blank">gov.uk/benefits →</a>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-ca">Canada</span>
+        <h4>Canada Benefits Finder</h4>
+        <p>Find federal and provincial benefits you qualify for. Employment Insurance, GST credit, child benefits, housing.</p>
+        <a href="https://benefitsfinder.services.gc.ca" target="_blank">benefitsfinder.services.gc.ca →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- =================== FREE JOB TRAINING =================== -->
+<section class="block">
+  <div class="wrap">
+    <div class="section-label">// Level Up For Free</div>
+    <h2 id="jobs">💼 Free Job Training & Certifications</h2>
+
+    <div class="res-grid">
+      <div class="res">
+        <span class="res-tag tag-global">Global</span>
+        <h4>Google Career Certificates</h4>
+        <p>IT Support, Data Analytics, UX Design, Project Management, Cybersecurity. $0 with Coursera financial aid (takes 5 min to apply). Recognized by top employers.</p>
+        <a href="https://grow.google/certificates" target="_blank">grow.google/certificates →</a>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-free">Free</span>
+        <h4>freeCodeCamp</h4>
+        <p>Learn web development, JavaScript, Python, APIs, databases — completely free. 10+ certifications. Used by millions worldwide.</p>
+        <a href="https://www.freecodecamp.org" target="_blank">freecodecamp.org →</a>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-free">Free</span>
+        <h4>Khan Academy</h4>
+        <p>Free courses in math, economics, computing, science, SAT prep. K-12 and adult. Available in 40+ languages.</p>
+        <a href="https://www.khanacademy.org" target="_blank">khanacademy.org →</a>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-free">Free</span>
+        <h4>Harvard CS50 — Intro to Computer Science</h4>
+        <p>Harvard's most famous course. Free. Teaches programming from zero. Certificate available.</p>
+        <a href="https://cs50.harvard.edu/x" target="_blank">cs50.harvard.edu →</a>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-us">USA</span>
+        <h4>CareerOneStop</h4>
+        <p>U.S. Department of Labor. Find free job training programs, apprenticeships, career centers in your area.</p>
+        <a href="https://www.careeronestop.org" target="_blank">careeronestop.org →</a>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-free">Free</span>
+        <h4>Coursera Financial Aid</h4>
+        <p>Any Coursera course — including paid ones — can be taken free with financial aid. Write a short paragraph explaining your situation. Approval in ~15 days.</p>
+        <a href="https://www.coursera.org/financial-aid" target="_blank">coursera.org/financial-aid →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- =================== MAKE MONEY NOW =================== -->
+<section class="block">
+  <div class="wrap">
+    <div class="section-label">// Start Earning Today</div>
+    <h2 id="earn">💰 Make Money Now — Gig Work & Freelancing</h2>
+
+    <div class="res-grid">
+      <div class="res"><h4>DoorDash</h4><p>Deliver food. Start in days. Use your car, bike, or scooter.</p><a href="https://www.doordash.com/dasher/signup" target="_blank">doordash.com/dasher →</a></div>
+      <div class="res"><h4>Uber / Uber Eats</h4><p>Drive people or deliver food. Flexible hours.</p><a href="https://www.uber.com/signup/drive" target="_blank">uber.com/signup →</a></div>
+      <div class="res"><h4>Instacart</h4><p>Shop groceries for people. Get paid weekly + tips.</p><a href="https://shoppers.instacart.com" target="_blank">shoppers.instacart.com →</a></div>
+      <div class="res"><h4>TaskRabbit</h4><p>Handyman work, furniture assembly, moving, cleaning. Set your own rates.</p><a href="https://www.taskrabbit.com/become-a-tasker" target="_blank">taskrabbit.com →</a></div>
+      <div class="res"><h4>Fiverr</h4><p>Sell any skill online — graphic design, writing, video editing, voice work, data entry. Start at $5/gig.</p><a href="https://www.fiverr.com" target="_blank">fiverr.com →</a></div>
+      <div class="res"><h4>Upwork</h4><p>Freelance marketplace for larger projects. Writing, programming, admin support, marketing.</p><a href="https://www.upwork.com" target="_blank">upwork.com →</a></div>
+      <div class="res"><h4>Rover</h4><p>Dog walking and pet sitting. If you love animals, this pays well.</p><a href="https://www.rover.com" target="_blank">rover.com →</a></div>
+      <div class="res"><h4>Facebook Marketplace / OfferUp</h4><p>Sell stuff you don't need anymore. Furniture, clothes, electronics — someone wants it.</p><a href="https://www.facebook.com/marketplace" target="_blank">facebook.com/marketplace →</a></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- =================== FREE EDUCATION =================== -->
+<section class="block">
+  <div class="wrap">
+    <div class="section-label">// Knowledge Is Free</div>
+    <h2 id="education">📚 Free Education — For Everyone</h2>
+
+    <div class="res-grid">
+      <div class="res"><span class="res-tag tag-free">Free</span><h4>Khan Academy</h4><p>Math, science, economics, computing, test prep. K-12 through college level. 40+ languages.</p><a href="https://www.khanacademy.org" target="_blank">khanacademy.org →</a></div>
+      <div class="res"><span class="res-tag tag-free">Free</span><h4>MIT OpenCourseWare</h4><p>Actual MIT course materials — lectures, problem sets, exams. Free forever.</p><a href="https://ocw.mit.edu" target="_blank">ocw.mit.edu →</a></div>
+      <div class="res"><span class="res-tag tag-free">Free</span><h4>Libby App (Library Card)</h4><p>Free ebooks and audiobooks from your local library. All you need is a free library card.</p><a href="https://libbyapp.com" target="_blank">libbyapp.com →</a></div>
+      <div class="res"><span class="res-tag tag-free">Free</span><h4>Duolingo</h4><p>Learn any language for free. Spanish, French, Haitian Creole, Japanese — 40+ languages.</p><a href="https://www.duolingo.com" target="_blank">duolingo.com →</a></div>
+      <div class="res"><span class="res-tag tag-free">Free</span><h4>edX</h4><p>Free courses from Harvard, MIT, Stanford. Audit any course for free. Pay only if you want a certificate.</p><a href="https://www.edx.org" target="_blank">edx.org →</a></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- =================== FREE TOOLS =================== -->
+<section class="block">
+  <div class="wrap">
+    <div class="section-label">// Don't Buy What's Free</div>
+    <h2 id="free-tools">🖥 Free Tools & Tech</h2>
+    <p class="lead">Can't afford a new computer? Don't need one. Can't afford Photoshop? Don't need it.</p>
+
+    <div class="res-grid">
+      <div class="res"><span class="res-tag tag-free">Free</span><h4>Linux — Free Operating System</h4><p>Turn your old slow laptop into a fast, working machine. Full guide on our site.</p><a href="dbb-nerd-geek-life.html">DuttyBookBag Nerd Geek Life →</a></div>
+      <div class="res"><span class="res-tag tag-free">Free</span><h4>LibreOffice</h4><p>Word, Excel, PowerPoint — all free. Opens Microsoft files. No subscription.</p><a href="https://www.libreoffice.org" target="_blank">libreoffice.org →</a></div>
+      <div class="res"><span class="res-tag tag-free">Free</span><h4>GIMP — Free Photoshop</h4><p>Professional image editing. Layers, masks, filters. $0 instead of $35/month.</p><a href="https://www.gimp.org" target="_blank">gimp.org →</a></div>
+      <div class="res"><span class="res-tag tag-free">Free</span><h4>Google Docs / Sheets / Slides</h4><p>Free online office suite. All you need is a Gmail account. Access from any device.</p><a href="https://docs.google.com" target="_blank">docs.google.com →</a></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- =================== CARIBBEAN =================== -->
+<section class="block">
+  <div class="wrap">
+    <div class="section-label">// Caribbean & Jamaica</div>
+    <h2 id="caribbean">🇯🇲 Caribbean & Island Nations</h2>
+
+    <div class="res-grid">
+      <div class="res">
+        <span class="res-tag tag-carib">Jamaica</span>
+        <h4>PATH — Programme of Advancement Through Health and Education</h4>
+        <p>Jamaica's government cash transfer programme for low-income families. Covers children, elderly, disabled, pregnant women.</p>
+        <a href="https://www.mlss.gov.jm/departments/path" target="_blank">mlss.gov.jm/path →</a>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-carib">Jamaica</span>
+        <h4>Jamaica Mental Health Helpline</h4>
+        <span class="phone">888-NEW-LIFE (888-639-5433)</span>
+        <p>Free mental health crisis line for Jamaica. Confidential.</p>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-carib">Jamaica</span>
+        <h4>HEART/NSTA Trust — Free Skills Training</h4>
+        <p>Free vocational training in IT, construction, hospitality, cosmetology, automotive and more. Government-funded.</p>
+        <a href="https://www.heart-nta.org" target="_blank">heart-nta.org →</a>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-carib">Trinidad & Tobago</span>
+        <h4>Social Welfare Division</h4>
+        <p>Food support, disability grants, public assistance. Apply at your nearest Social Welfare office.</p>
+        <a href="https://www.social.gov.tt" target="_blank">social.gov.tt →</a>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-carib">Trinidad & Tobago</span>
+        <h4>Lifeline TT — Crisis Support</h4>
+        <span class="phone">800-4357 (HELP)</span>
+        <p>Free crisis support hotline. Confidential. 24 hours.</p>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-carib">Barbados</span>
+        <h4>Barbados Welfare Department</h4>
+        <p>Food assistance, housing support, elderly care. Apply in person at the Welfare Department.</p>
+        <a href="https://www.gov.bb" target="_blank">gov.bb →</a>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-carib">Bahamas</span>
+        <h4>Department of Social Services</h4>
+        <p>Food assistance, emergency financial help, disability benefits. Nassau office and Family Islands.</p>
+        <a href="https://www.bahamas.gov.bs" target="_blank">bahamas.gov.bs →</a>
+      </div>
+      <div class="res">
+        <span class="res-tag tag-carib">Haiti</span>
+        <h4>World Food Programme — Haiti</h4>
+        <p>Emergency food assistance across Haiti. Works with local organizations.</p>
+        <a href="https://www.wfp.org/countries/haiti" target="_blank">wfp.org/countries/haiti →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- =================== UK =================== -->
+<section class="block">
+  <div class="wrap">
+    <h2 id="uk">🇬🇧 United Kingdom</h2>
+    <div class="res-grid">
+      <div class="res"><span class="res-tag tag-uk">UK</span><h4>Universal Credit</h4><p>Main welfare payment for working-age people. Apply online.</p><a href="https://www.gov.uk/universal-credit" target="_blank">gov.uk/universal-credit →</a></div>
+      <div class="res"><span class="res-tag tag-uk">UK</span><h4>Citizens Advice</h4><p>Free advice on benefits, debt, housing, employment rights. Online, phone, or in person.</p><a href="https://www.citizensadvice.org.uk" target="_blank">citizensadvice.org.uk →</a></div>
+      <div class="res"><span class="res-tag tag-uk">UK</span><h4>Trussell Trust — Food Banks</h4><p>UK's largest food bank network. Get a voucher from your GP, social worker, or Citizens Advice.</p><a href="https://www.trusselltrust.org" target="_blank">trusselltrust.org →</a></div>
+      <div class="res"><span class="res-tag tag-uk">UK</span><h4>Turn2Us — Benefits Calculator</h4><p>Check what benefits you're entitled to. Free online tool. Takes 10 minutes.</p><a href="https://www.turn2us.org.uk" target="_blank">turn2us.org.uk →</a></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- =================== CANADA =================== -->
+<section class="block">
+  <div class="wrap">
+    <h2 id="canada">🇨🇦 Canada</h2>
+    <div class="res-grid">
+      <div class="res"><span class="res-tag tag-ca">Canada</span><h4>988 Crisis Line</h4><span class="phone">Call or Text: 988</span><p>Canada's suicide and crisis lifeline. Free, 24/7, in English and French.</p><a href="https://988.ca" target="_blank">988.ca →</a></div>
+      <div class="res"><span class="res-tag tag-ca">Canada</span><h4>Food Banks Canada</h4><p>Find your nearest food bank by postal code.</p><a href="https://www.foodbankscanada.ca/find-a-food-bank" target="_blank">foodbankscanada.ca →</a></div>
+      <div class="res"><span class="res-tag tag-ca">Canada</span><h4>Employment Insurance (EI)</h4><p>Lost your job? Apply for EI benefits online through Service Canada.</p><a href="https://www.canada.ca/en/services/benefits/ei.html" target="_blank">canada.ca/ei →</a></div>
+      <div class="res"><span class="res-tag tag-ca">Canada</span><h4>211 Canada</h4><span class="phone">Call: 211</span><p>Connect to community services — food, shelter, mental health, benefits. Available in 150+ languages.</p><a href="https://211.ca" target="_blank">211.ca →</a></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- =================== EUROPE =================== -->
+<section class="block">
+  <div class="wrap">
+    <h2 id="europe">🇪🇺 Europe</h2>
+    <div class="res-grid">
+      <div class="res"><span class="res-tag tag-eu">EU</span><h4>European Emergency: 112</h4><span class="phone">112</span><p>Universal emergency number across all EU countries. Works from any phone.</p></div>
+      <div class="res"><span class="res-tag tag-eu">Germany</span><h4>Telefonseelsorge</h4><span class="phone">0800 111 0 111 (Free)</span><p>Free crisis hotline. 24/7. Also available online. German language.</p><a href="https://online.telefonseelsorge.de" target="_blank">telefonseelsorge.de →</a></div>
+      <div class="res"><span class="res-tag tag-eu">France</span><h4>3114 — Numéro National de Prévention du Suicide</h4><span class="phone">3114</span><p>France's national suicide prevention line. Free, 24/7.</p></div>
+      <div class="res"><span class="res-tag tag-eu">Netherlands</span><h4>113 Zelfmoordpreventie</h4><span class="phone">0900-0113 or 113</span><p>Dutch suicide prevention. Free chat and phone support.</p><a href="https://www.113.nl" target="_blank">113.nl →</a></div>
+      <div class="res"><span class="res-tag tag-eu">Spain</span><h4>Teléfono de la Esperanza</h4><span class="phone">717 003 717</span><p>24/7 crisis line. Free. Spanish language.</p></div>
+      <div class="res"><span class="res-tag tag-eu">Ireland</span><h4>Samaritans Ireland</h4><span class="phone">116 123 (Free)</span><p>Free 24/7 emotional support. Same as UK Samaritans.</p><a href="https://www.samaritans.org" target="_blank">samaritans.org →</a></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- =================== AFRICA =================== -->
+<section class="block">
+  <div class="wrap">
+    <h2 id="africa">🌍 Africa</h2>
+    <div class="res-grid">
+      <div class="res"><span class="res-tag tag-africa">Nigeria</span><h4>MHFA Nigeria</h4><span class="phone">0800-123-0800</span><p>Mental Health Foundation. Free helpline. Also WhatsApp support available.</p></div>
+      <div class="res"><span class="res-tag tag-africa">South Africa</span><h4>SADAG</h4><span class="phone">0800 567 567 (Free)</span><p>South African Depression and Anxiety Group. Free counseling, 24/7 crisis line.</p><a href="https://www.sadag.org" target="_blank">sadag.org →</a></div>
+      <div class="res"><span class="res-tag tag-africa">Kenya</span><h4>Befrienders Kenya</h4><span class="phone">+254 722 178 177</span><p>Crisis support and emotional assistance. Nairobi-based, serves nationwide.</p></div>
+      <div class="res"><span class="res-tag tag-africa">Ghana</span><h4>LEAP Programme</h4><p>Livelihood Empowerment Against Poverty. Government cash transfer for extreme poverty.</p><a href="https://www.mogcsp.gov.gh" target="_blank">mogcsp.gov.gh →</a></div>
+      <div class="res"><span class="res-tag tag-africa">Pan-African</span><h4>World Food Programme — Africa</h4><p>Emergency food assistance across African nations.</p><a href="https://www.wfp.org" target="_blank">wfp.org →</a></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- =================== ASIA =================== -->
+<section class="block">
+  <div class="wrap">
+    <h2 id="asia">🌏 Asia & Pacific</h2>
+    <div class="res-grid">
+      <div class="res"><span class="res-tag tag-asia">India</span><h4>iCall — Psychosocial Helpline</h4><span class="phone">9152987821</span><p>Free counseling. Mon–Sat, 8am–10pm IST. Multilingual support.</p><a href="https://icallhelpline.org" target="_blank">icallhelpline.org →</a></div>
+      <div class="res"><span class="res-tag tag-asia">India</span><h4>Vandrevala Foundation</h4><span class="phone">1860-2662-345 (24/7)</span><p>Free mental health helpline. English, Hindi, and regional languages.</p></div>
+      <div class="res"><span class="res-tag tag-asia">Philippines</span><h4>NCMH Crisis Hotline</h4><span class="phone">0966-351-4518</span><p>National Center for Mental Health. Free 24/7 crisis line.</p></div>
+      <div class="res"><span class="res-tag tag-asia">Australia</span><h4>Lifeline Australia</h4><span class="phone">13 11 14</span><p>Free 24/7 crisis support. Phone, text, online chat.</p><a href="https://www.lifeline.org.au" target="_blank">lifeline.org.au →</a></div>
+      <div class="res"><span class="res-tag tag-asia">New Zealand</span><h4>1737 — Need to Talk?</h4><span class="phone">Call or Text: 1737</span><p>Free 24/7 mental health support. Trained counselors.</p></div>
+      <div class="res"><span class="res-tag tag-asia">Japan</span><h4>TELL Lifeline</h4><span class="phone">03-5774-0992</span><p>Tokyo English Lifeline. Free support in English for mental health. 9am-11pm daily.</p><a href="https://telljp.com" target="_blank">telljp.com →</a></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- =================== LATIN AMERICA =================== -->
+<section class="block">
+  <div class="wrap">
+    <h2 id="latam">🌎 Latin America</h2>
+    <div class="res-grid">
+      <div class="res"><span class="res-tag tag-latam">Mexico</span><h4>SAPTEL</h4><span class="phone">55 5259-8121</span><p>Servicio de Atención Psicológica por Teléfono. Free 24/7 crisis counseling in Spanish.</p></div>
+      <div class="res"><span class="res-tag tag-latam">Brazil</span><h4>CVV — Centro de Valorização da Vida</h4><span class="phone">188</span><p>Free 24/7 emotional support. Phone, email, chat. Portuguese.</p><a href="https://www.cvv.org.br" target="_blank">cvv.org.br →</a></div>
+      <div class="res"><span class="res-tag tag-latam">Colombia</span><h4>Línea 106</h4><span class="phone">106</span><p>Free mental health crisis line. 24/7. Confidential. Spanish.</p></div>
+      <div class="res"><span class="res-tag tag-latam">Argentina</span><h4>Centro de Asistencia al Suicida</h4><span class="phone">(011) 5275-1135</span><p>Free crisis assistance. Buenos Aires-based, national reach.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- =================== MILITARY JOBS =================== -->
+<section class="block">
+  <div class="wrap">
+    <div class="section-label">// Career Lifeline</div>
+    <h2 id="military">🪖 Non-Combat Military Careers</h2>
+    <p class="lead">If you're looking for a way to get stable income, free training, healthcare, and housing — the military has paths that don't put you on a battlefield. About 80% of all military jobs are non-combat. You don't need to be infantry to serve.</p>
+
+    <div style="background:rgba(255,209,102,0.06);border:1px solid rgba(255,209,102,0.25);border-left:4px solid var(--gold);border-radius:6px;padding:18px 22px;margin:20px 0;">
+      <strong style="color:var(--gold);font-family:var(--mono);font-size:12px;letter-spacing:2px;">⚠ REALITY CHECK</strong>
+      <p style="margin-top:8px;font-size:15px;">Non-combat does NOT mean zero risk. All military personnel complete basic combat training, and support roles can deploy to forward operating bases. Their primary job isn't fighting — but danger can exist anywhere in a conflict zone. Go in with your eyes open.</p>
+    </div>
+
+    <div style="margin:24px 0;">
+      <!-- HEALTHCARE -->
+      <div style="background:var(--panel);border:1px solid var(--border);border-left:3px solid var(--cyan);border-radius:6px;padding:22px 24px;margin-bottom:14px;">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:3px;color:var(--cyan);text-transform:uppercase;margin-bottom:8px;">🏥 Healthcare</div>
+        <h4 style="font-family:var(--display);font-size:20px;letter-spacing:2px;color:#fff;text-transform:uppercase;margin-bottom:8px;">Medical, Dental & Mental Health</h4>
+        <p style="font-size:15px;color:var(--text);">The military operates a full healthcare system. Psychiatrists, nurses, dentists, pharmacy techs, mental health caseworkers, surgical techs — all branches need them. Mental health roles in the Air Force require 7.5 weeks Basic Training + 66 days technical school. Strong civilian salary potential after service.</p>
+        <div style="margin-top:10px;font-family:var(--mono);font-size:12px;color:var(--green);">Pay: $30K–$100K+ depending on role and rank · Free housing + benefits included</div>
+      </div>
+
+      <!-- IT / CYBER -->
+      <div style="background:var(--panel);border:1px solid var(--border);border-left:3px solid var(--cyan);border-radius:6px;padding:22px 24px;margin-bottom:14px;">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:3px;color:var(--cyan);text-transform:uppercase;margin-bottom:8px;">💻 IT & Cybersecurity</div>
+        <h4 style="font-family:var(--display);font-size:20px;letter-spacing:2px;color:#fff;text-transform:uppercase;margin-bottom:8px;">Information Technology</h4>
+        <p style="font-size:15px;color:var(--text);">One of the fastest-growing areas in all branches. Network administration, systems security, cybersecurity analysis, intelligence systems. The military will train you — and those skills translate directly to high-paying civilian jobs after service. Median civilian salary for info security analysts: $124,910.</p>
+        <div style="margin-top:10px;font-family:var(--mono);font-size:12px;color:var(--green);">Pay: $35K–$80K military · $80K–$150K+ civilian after service</div>
+      </div>
+
+      <!-- LOGISTICS -->
+      <div style="background:var(--panel);border:1px solid var(--border);border-left:3px solid var(--cyan);border-radius:6px;padding:22px 24px;margin-bottom:14px;">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:3px;color:var(--cyan);text-transform:uppercase;margin-bottom:8px;">📦 Logistics & Supply</div>
+        <h4 style="font-family:var(--display);font-size:20px;letter-spacing:2px;color:#fff;text-transform:uppercase;margin-bottom:8px;">Supply Chain & Logistics</h4>
+        <p style="font-size:15px;color:var(--text);">Every soldier needs food, fuel, parts, and gear. Logistics specialists manage all of it. Warehouse operations, supply chain management, transportation coordination, inventory control. These skills transfer directly to civilian logistics and operations careers at companies like Amazon, UPS, and FedEx.</p>
+        <div style="margin-top:10px;font-family:var(--mono);font-size:12px;color:var(--green);">Pay: $28K–$60K military · Strong civilian demand after service</div>
+      </div>
+
+      <!-- DRONE OPERATORS -->
+      <div style="background:var(--panel);border:1px solid var(--border);border-left:3px solid var(--green);border-radius:6px;padding:22px 24px;margin-bottom:14px;">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:3px;color:var(--green);text-transform:uppercase;margin-bottom:8px;">🚁 Drone Operations — HIGH DEMAND RIGHT NOW</div>
+        <h4 style="font-family:var(--display);font-size:20px;letter-spacing:2px;color:#fff;text-transform:uppercase;margin-bottom:8px;">UAV Operator — Army MOS 15W</h4>
+        <p style="font-size:15px;color:var(--text);">You operate unmanned aircraft from a control station — no battlefield required. Surveillance, reconnaissance, live data monitoring. The Army is moving hard toward drones as the future of warfare. In 2026–2027, the Army is cutting nearly 6,500 traditional manned helicopter jobs and shifting toward UAV roles. This means <strong style="color:var(--green);">drone operator positions are growing fast</strong> right now.</p>
+        <div style="background:rgba(0,255,106,0.05);border:1px solid rgba(0,255,106,0.2);border-radius:4px;padding:12px 16px;margin-top:12px;">
+          <div style="font-family:var(--mono);font-size:11px;color:var(--green);letter-spacing:2px;margin-bottom:6px;">REQUIREMENTS — MOS 15W</div>
+          <p style="font-size:14px;color:var(--text);">Normal color vision · Secret security clearance · No court-martial convictions · 10 weeks Basic Combat Training · Interest in remote/radio control vehicles helpful</p>
+        </div>
+        <div style="margin-top:10px;font-family:var(--mono);font-size:12px;color:var(--green);">Pay: $100K–$155K+ (experienced civilian/contractor) · Enlisted military starts lower with full benefits</div>
+      </div>
+
+      <!-- HELICOPTER PILOT -->
+      <div style="background:var(--panel);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:6px;padding:22px 24px;margin-bottom:14px;">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:8px;">🚁 Aviation — Warrant Officer Path</div>
+        <h4 style="font-family:var(--display);font-size:20px;letter-spacing:2px;color:#fff;text-transform:uppercase;margin-bottom:8px;">Helicopter Pilot</h4>
+        <p style="font-size:15px;color:var(--text);">Fly Black Hawks, Chinooks, Apaches. Requires the Warrant Officer program. Flight school is fully paid. 10-year service commitment. Note: The Army is reducing manned helicopter positions in 2026–2027 as it shifts toward UAVs, so these slots are becoming more competitive. Still a strong career if you can get in.</p>
+        <div style="margin-top:10px;font-family:var(--mono);font-size:12px;color:var(--gold);">Flight school: fully funded · 10-year commitment · Strong civilian airline/cargo career after</div>
+      </div>
+
+      <!-- FINANCE / ADMIN -->
+      <div style="background:var(--panel);border:1px solid var(--border);border-left:3px solid var(--cyan);border-radius:6px;padding:22px 24px;margin-bottom:14px;">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:3px;color:var(--cyan);text-transform:uppercase;margin-bottom:8px;">💼 Finance & Administration</div>
+        <h4 style="font-family:var(--display);font-size:20px;letter-spacing:2px;color:#fff;text-transform:uppercase;margin-bottom:8px;">Finance, HR & Legal</h4>
+        <p style="font-size:15px;color:var(--text);">Every base needs finance specialists, HR personnel, legal clerks, and administrative support. These are desk jobs with regular hours. The skills and clearances you build transfer directly to federal government jobs and civilian corporate roles after your service commitment ends.</p>
+        <div style="margin-top:10px;font-family:var(--mono);font-size:12px;color:var(--green);">Entry-level: $28K–$45K + free housing, food, healthcare, education benefits</div>
+      </div>
+    </div>
+
+    <!-- VACCINES -->
+    <div style="background:rgba(255,82,82,0.06);border:1px solid rgba(255,82,82,0.2);border-left:4px solid var(--red);border-radius:6px;padding:18px 22px;margin:20px 0;">
+      <strong style="color:var(--red);font-family:var(--mono);font-size:12px;letter-spacing:2px;">💉 VACCINE POLICY — AS OF 2025/2026</strong>
+      <p style="margin-top:8px;font-size:15px;">The COVID vaccine military mandate was rescinded in 2023. Seasonal flu shots may still be required depending on your role and branch — verify directly with a recruiter for current policy, as this changes. Always ask the specific question to your specific branch before signing.</p>
+    </div>
+
+    <!-- HOW TO START -->
+    <div style="background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:22px 24px;margin-top:20px;">
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:3px;color:var(--green);text-transform:uppercase;margin-bottom:12px;">// How to Start</div>
+      <p style="font-size:15px;color:var(--text);margin-bottom:10px;">1. Go to <strong style="color:#fff;">goarmy.com</strong>, <strong style="color:#fff;">airforce.com</strong>, or <strong style="color:#fff;">navy.com</strong> — each branch has a job finder tool</p>
+      <p style="font-size:15px;color:var(--text);margin-bottom:10px;">2. Take the <strong style="color:#fff;">ASVAB</strong> (Armed Services Vocational Aptitude Battery) — free test that qualifies you for specific jobs</p>
+      <p style="font-size:15px;color:var(--text);margin-bottom:10px;">3. Talk to a recruiter — ask specifically about non-combat MOS/AFSC/ratings and drone operator roles</p>
+      <p style="font-size:15px;color:var(--text);">4. For UAV/drone interest: ask about <strong style="color:#fff;">Army MOS 15W</strong> or <strong style="color:#fff;">Air Force RPA operator</strong> positions</p>
+    </div>
+  </div>
+</section>
+
+<!-- =================== BUDGET CALCULATOR LINK =================== -->
+<section class="block">
+  <div class="wrap">
+    <div class="section-label">// Take Control</div>
+    <h2 id="budget">📊 Budget Calculator</h2>
+    <p class="lead">Getting back on your feet starts with knowing where your money goes. Use our free budget tool — right here on this site. Enter your income and expenses, see what's left, find where to cut. Print your results and stick them on the fridge.</p>
+    <div style="text-align:center;margin:20px 0;">
+      <a href="dbb-budget-calculator.html" style="display:inline-block;font-family:var(--display);font-size:28px;letter-spacing:3px;color:#000;background:var(--cyan);padding:16px 40px;border-radius:6px;text-decoration:none;text-transform:uppercase;transition:all 0.2s;">Open Budget Calculator →</a>
+    </div>
+  </div>
+</section>
+
+<!-- BOTTOM GLOWING DOT LOGO -->
+<section style="padding:30px 0 40px;">
+  <div class="wrap" style="text-align:center;">
+    <div class="dbb-logo">
+      <div class="dot red d1"></div>
+      <div class="dot green d2"></div>
+      <div class="dot red d3"></div>
+      <div class="dot green d4"></div>
+      <div class="dot green d5"></div>
+      <div class="dot green d6"></div>
+    </div>
+  </div>
+</section>
+
+<!-- BACK TO TOP -->
+<a href="#" class="to-top" id="toTop" title="Back to top">▲</a>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <p>Dutty Ashy Win_G Foundation · DuttyBookBag Lifeline</p>
+    <p style="color:var(--green);font-size:12px;letter-spacing:3px;margin-bottom:10px;">// WE CARE //</p>
+    <p><a href="index.html">← Home</a> · <a href="dbb-nerd-geek-life.html">Nerd Geek Life</a> · <a href="dbb-budget-calculator.html">Budget Tool</a></p>
+    <div class="disclaimer">
+      <strong>IMPORTANT DISCLAIMER:</strong> The Dutty Ashy Win_G Foundation and DuttyBookBag Lifeline provide this page as a community resource directory — not as a licensed counseling service, financial advisor, legal representative, or government agency. The links, phone numbers, and resources on this page are provided for informational purposes only and are believed to be accurate at the time of publication. We do not guarantee the availability, accuracy, or quality of any third-party service listed here. We are not affiliated with, endorsed by, or partnered with any organization listed on this page. If you are in immediate danger, call your local emergency number (911 in the US, 999 in the UK, 112 in the EU, 000 in Australia). If you are experiencing a mental health crisis, please contact a professional crisis line. The Dutty Ashy Win_G Foundation and DuttyBookBag assume no liability for outcomes resulting from the use of any resource listed here. Always verify information directly with the organization before making decisions. This page does not constitute financial, legal, medical, or professional advice of any kind. All resources listed are third-party services governed by their own terms, privacy policies, and availability. By using this page, you acknowledge that we are simply pointing you toward publicly available resources as a community service — because we care.
+    </div>
+  </div>
+</footer>
+
+<script>
+const toTop = document.getElementById('toTop');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 600) toTop.classList.add('show');
+  else toTop.classList.remove('show');
+});
+toTop.addEventListener('click', (e) => {
+  e.preventDefault();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+</script>
+
+</body>
+</html>
