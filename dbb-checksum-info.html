@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checksum Tool — Know Your Limits | DuttyBookBag</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{--black:#000;--panel:#080f0f;--border:#0c3030;--cyan:#00ffe1;--green:#00ff6a;--gold:#ffd166;--red:#ff5252;--text:#b8e8e2;--muted:#3d7070;--mono:'Share Tech Mono',monospace;--display:'Bebas Neue',sans-serif;--body:'Rajdhani',sans-serif;}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{background:var(--black);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.7;overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,255,225,0.012) 3px,rgba(0,255,225,0.012) 4px);pointer-events:none;z-index:999;}
+    .wrap{max-width:760px;margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+    .site-nav{position:sticky;top:0;z-index:100;background:rgba(0,0,0,0.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:0 24px;}
+    .site-nav .inner{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;max-width:760px;margin:0 auto;}
+    .site-nav a{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--muted);text-decoration:none;text-transform:uppercase;padding:13px 14px;transition:color 0.2s;}
+    .site-nav a:hover{color:var(--cyan);}
+    .site-nav a.active{color:var(--green);}
+    header{padding:50px 0 30px;text-align:center;}
+    h1{font-family:var(--display);font-size:clamp(36px,7vw,66px);letter-spacing:3px;color:#fff;text-transform:uppercase;line-height:0.95;}
+    h1 span{color:var(--cyan);}
+    .badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:4px;color:var(--cyan);border:1px solid var(--cyan);padding:4px 16px;margin-bottom:16px;}
+    .card{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:24px 28px;margin:16px 0;}
+    .card.warn{border-left:4px solid var(--red);}
+    .card.good{border-left:4px solid var(--green);}
+    .card.info{border-left:4px solid var(--cyan);}
+    .card.gold{border-left:4px solid var(--gold);}
+    .label{font-family:var(--mono);font-size:11px;letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;}
+    .label.red{color:var(--red);}
+    .label.green{color:var(--green);}
+    .label.cyan{color:var(--cyan);}
+    .label.gold{color:var(--gold);}
+    h2{font-family:var(--display);font-size:28px;letter-spacing:2px;color:#fff;text-transform:uppercase;margin-bottom:10px;}
+    h3{font-family:var(--display);font-size:22px;letter-spacing:2px;color:#fff;text-transform:uppercase;margin:24px 0 10px;}
+    p{margin-bottom:10px;}
+    .size-table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:13px;margin:16px 0;}
+    .size-table th{text-align:left;color:var(--cyan);padding:8px 12px;border-bottom:1px solid var(--border);letter-spacing:2px;font-size:11px;}
+    .size-table td{padding:10px 12px;border-bottom:1px solid #0a2020;}
+    .size-table tr:last-child td{border-bottom:none;}
+    .dot-green{color:var(--green);}
+    .dot-gold{color:var(--gold);}
+    .dot-red{color:var(--red);}
+    code{background:rgba(0,255,225,0.06);border:1px solid var(--border);border-radius:4px;padding:2px 8px;font-family:var(--mono);font-size:14px;color:var(--cyan);}
+    .cmd-block{background:#030d0d;border:1px solid var(--border);border-radius:6px;padding:14px 18px;margin:10px 0;font-family:var(--mono);font-size:14px;color:var(--green);position:relative;}
+    .cmd-block .copy{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);font-family:var(--mono);font-size:10px;padding:4px 10px;border-radius:4px;cursor:pointer;letter-spacing:1px;}
+    .cmd-block .copy:hover{background:rgba(0,255,106,0.2);}
+    .divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:28px 0;}
+    footer{border-top:1px solid var(--border);padding:24px 0;margin-top:40px;text-align:center;}
+    footer p{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--muted);}
+    footer a{color:var(--green);text-decoration:none;}
+  </style>
+</head>
+<body>
+<nav class="site-nav">
+  <div class="inner">
+    <a href="index.html">Home</a>
+    <a href="dbb-nerd-geek-life.html">Nerd Geek Life</a>
+    <a href="linux-mint-ultimate-final.html">Linux Guide</a>
+    <a href="dbb-nerd-commands.html">Commands</a>
+    <a href="dbb-checksum-info.html" class="active">Checksum Info</a>
+  </div>
+</nav>
+
+<div style="text-align:center;padding:5px 0;background:rgba(0,0,0,0.8);border-bottom:1px solid #0c3030;position:relative;z-index:99;">
+  <div id="google_translate_element" style="display:inline-block;"></div>
+</div>
+<script>function googleTranslateElementInit(){new google.translate.TranslateElement({pageLanguage:'en',layout:google.translate.TranslateElement.InlineLayout.HORIZONTAL},'google_translate_element');}</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<style>.goog-te-banner-frame{display:none!important;}.goog-te-gadget{font-size:11px!important;color:#3d7070!important;}.goog-te-gadget .goog-te-combo{background:#080f0f;color:#b8e8e2;border:1px solid #0c3030;border-radius:4px;padding:4px 8px;font-family:'Share Tech Mono',monospace;font-size:11px;outline:none;}.goog-te-gadget>span{display:none!important;}body{top:0!important;}</style>
+
+<header>
+  <div class="wrap">
+    <div class="badge">// Know Before You Hash</div>
+    <h1>Checksum Tool<br><span>RAM Limitations</span></h1>
+    <p style="margin-top:16px;color:var(--text);max-width:580px;margin-left:auto;margin-right:auto;">The browser checksum tool is powerful — but your computer's RAM determines what it can handle. Read this before you drag a large ISO file in.</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- WHY IT MATTERS -->
+  <div class="card warn">
+    <div class="label red">⚠ Why Large Files Can Fail or Freeze</div>
+    <h2>The Browser Needs to Load the Whole File Into RAM</h2>
+    <p>When you drag a file into the checksum tool, your browser reads the <strong>entire file into your computer's memory (RAM)</strong> before it can calculate the hash. This is how all browser-based hash tools work.</p>
+    <p>If the file is larger than what your available RAM can hold, the browser will either:</p>
+    <p>— Freeze and show "computing…" forever<br>
+    — Crash the browser tab<br>
+    — Run extremely slowly (10+ minutes)</p>
+    <p>This is <strong>not a bug</strong>. It is a hardware limitation of your specific machine.</p>
+  </div>
+
+  <!-- SIZE GUIDE -->
+  <div class="divider"></div>
+  <h3>📊 File Size vs RAM Guide</h3>
+  <p>Use this table to know whether to use the browser tool or the terminal:</p>
+
+  <table class="size-table">
+    <thead>
+      <tr>
+        <th>File Size</th>
+        <th>RAM Needed</th>
+        <th>Browser Tool</th>
+        <th>Use Terminal Instead</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Under 200MB</td>
+        <td>~400MB RAM free</td>
+        <td class="dot-green">✅ Works great</td>
+        <td>Optional</td>
+      </tr>
+      <tr>
+        <td>200MB – 500MB</td>
+        <td>~1GB RAM free</td>
+        <td class="dot-green">✅ Works, takes 1-3 min</td>
+        <td>Optional</td>
+      </tr>
+      <tr>
+        <td>500MB – 1GB</td>
+        <td>~2GB RAM free</td>
+        <td class="dot-gold">⚠ Slow, may freeze</td>
+        <td>Recommended</td>
+      </tr>
+      <tr>
+        <td>1GB – 4GB</td>
+        <td>~4GB+ RAM free</td>
+        <td class="dot-red">✗ Will likely crash</td>
+        <td>Required</td>
+      </tr>
+      <tr>
+        <td>Over 4GB</td>
+        <td>Not feasible</td>
+        <td class="dot-red">✗ Do not try</td>
+        <td>Required</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- HOW TO CHECK RAM -->
+  <div class="card info">
+    <div class="label cyan">// How to Check Your Available RAM</div>
+    <p>On Linux Mint — open a terminal and run:</p>
+    <div class="cmd-block">free -h<button class="copy" onclick="navigator.clipboard.writeText('free -h')">copy</button></div>
+    <p>Look at the <strong style="color:#fff;">available</strong> column. That's how much RAM is free right now. If it's less than the table above requires for your file size — use the terminal method instead.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- TERMINAL METHOD -->
+  <h3>💻 Terminal Method — Works on Any File Size</h3>
+  <p>The terminal reads the file in small chunks — it doesn't need to load the whole thing into RAM. Use this for any ISO or large file. It's faster too.</p>
+
+  <div class="card good">
+    <div class="label green">// SHA-256 (most common — used by Linux Mint, Ubuntu)</div>
+    <div class="cmd-block">sha256sum filename.iso<button class="copy" onclick="navigator.clipboard.writeText('sha256sum filename.iso')">copy</button></div>
+  </div>
+
+  <div class="card good">
+    <div class="label green">// SHA-512</div>
+    <div class="cmd-block">sha512sum filename.iso<button class="copy" onclick="navigator.clipboard.writeText('sha512sum filename.iso')">copy</button></div>
+  </div>
+
+  <div class="card good">
+    <div class="label green">// MD5</div>
+    <div class="cmd-block">md5sum filename.iso<button class="copy" onclick="navigator.clipboard.writeText('md5sum filename.iso')">copy</button></div>
+  </div>
+
+  <div class="card good">
+    <div class="label green">// SHA-1</div>
+    <div class="cmd-block">sha1sum filename.iso<button class="copy" onclick="navigator.clipboard.writeText('sha1sum filename.iso')">copy</button></div>
+  </div>
+
+  <div class="card gold">
+    <div class="label gold">// Pro Tip — Navigate to your Downloads folder first</div>
+    <div class="cmd-block">cd ~/Downloads<button class="copy" onclick="navigator.clipboard.writeText('cd ~/Downloads')">copy</button></div>
+    <p style="margin-top:10px;font-size:15px;">Then run the hash command. Replace <code>filename.iso</code> with the actual name of your file. The terminal will print the hash — compare it to the hash on the official download page.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- WHAT IS A CHECKSUM -->
+  <div class="card info">
+    <div class="label cyan">// Why Verify at All?</div>
+    <h2>What Is a Checksum?</h2>
+    <p>A checksum is a unique fingerprint for a file. If even one byte of the file was changed — corrupted during download, tampered with, or damaged — the checksum will be completely different.</p>
+    <p>When you download a Linux ISO, the official site provides the expected checksum. You run the hash on your downloaded file and compare. If they match — your file is exactly what it should be. If they don't match — download again.</p>
+    <p>This protects you from corrupted installs and confirms nobody tampered with the file between the server and your computer.</p>
+  </div>
+
+  <div style="text-align:center;margin:30px 0;">
+    <a href="linux-mint-ultimate-final.html" style="font-family:var(--display);font-size:20px;letter-spacing:3px;color:var(--green);border:2px solid var(--green);padding:12px 28px;border-radius:6px;text-decoration:none;text-transform:uppercase;">← Back to Linux Guide</a>
+  </div>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <p>DuttyBookBag · <a href="index.html">Home</a> · <a href="linux-mint-ultimate-final.html">Linux Guide</a></p>
+  </div>
+</footer>
+</body>
+</html>

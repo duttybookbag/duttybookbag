@@ -716,6 +716,7 @@ echo "============================================"</span>
   <!-- ===== SECTION 17: CHECKSUM TOOL ===== -->
   <div class="section" id="s17" style="animation-delay:0.4s">
     <div class="section-header"><div class="section-icon cyan">🔐</div><div class="section-title cyan">Checksum Verifier — Verify Downloaded Files</div></div>
+    <div class="note info" style="font-size:13px;">Large file (over 500MB)? Browser tool may freeze. <a href="dbb-checksum-info.html" style="color:var(--cyan);font-weight:bold;">Read the RAM Limitations guide</a> and use the terminal method instead.</div>
     <div class="note info">After downloading any ISO or file, drag it into the tool below to instantly compute its MD5, SHA-1, SHA-256 and SHA-512 hashes. Paste the official checksum from the website to verify it matches. <strong>Everything runs locally — your file never leaves your computer.</strong></div>
 
     <div class="checksum-tool">
@@ -727,7 +728,7 @@ echo "============================================"</span>
 
       <!-- LOCAL FILE TAB -->
       <div id="pane-local">
-        <div class="privacy-warning">🔒 100% LOCAL — File never leaves your computer. No internet. No upload.</div>
+        <div style="font-family:var(--mono);font-size:12px;color:var(--muted);margin-bottom:12px;letter-spacing:1px;">// Drop your file below — hashes are computed in your browser. Large files (100MB+) may take 1-2 minutes.</div>
         <div class="checksum-drop" id="drop-zone">
           <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin:0 auto 10px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
           <p>Drop your downloaded file here or <span onclick="document.getElementById('file-inp').click()">browse to select</span></p>
@@ -1037,7 +1038,7 @@ async function fetchAndHash() {
   const url = document.getElementById('url-inp').value.trim();
   const status = document.getElementById('url-status');
   if (!url) { status.textContent = '⚠ Enter a URL first.'; status.style.color='#ffab40'; return; }
-  status.textContent = '⏳ Fetching file…'; status.style.color = '#3d7070';
+  status.textContent = '⏳ Fetching file… (large files take longer)'; status.style.color = '#3d7070';
   Object.keys(computed).forEach(k => computed[k] = null);
   ['h-md5','h-sha1','h-sha256','h-sha512'].forEach(id => setLoading(id));
   ['cp-md5','cp-sha1','cp-sha256','cp-sha512'].forEach(id => { document.getElementById(id).style.display='none'; });
@@ -1139,24 +1140,61 @@ function setHash(id,val,cpId){
 }
 
 async function processFile(file){
-  Object.keys(computed).forEach(k=>computed[k]=null);
-  document.getElementById('verify-result').className='verify-result';
-  const pill=document.getElementById('file-pill');
-  pill.style.display='flex';
-  document.getElementById('pill-name').textContent=file.name;
-  const sz=file.size>1048576?(file.size/1048576).toFixed(2)+' MB':(file.size/1024).toFixed(1)+' KB';
-  document.getElementById('pill-size').textContent=sz;
-  const pb=document.getElementById('prog-bar'); pb.style.display='block';
-  const pf=document.getElementById('prog-fill');
-  ['h-md5','h-sha1','h-sha256','h-sha512'].forEach(id=>{setLoading(id);});
-  ['cp-md5','cp-sha1','cp-sha256','cp-sha512'].forEach(id=>{document.getElementById(id).style.display='none';});
-  const buf=await file.arrayBuffer();
-  pf.style.width='25%';
-  computed['MD5']=await hashBuf(buf,'MD5'); setHash('h-md5',computed['MD5'],'cp-md5'); pf.style.width='45%';
-  computed['SHA-1']=await hashBuf(buf,'SHA-1'); setHash('h-sha1',computed['SHA-1'],'cp-sha1'); pf.style.width='65%';
-  computed['SHA-256']=await hashBuf(buf,'SHA-256'); setHash('h-sha256',computed['SHA-256'],'cp-sha256'); pf.style.width='82%';
-  computed['SHA-512']=await hashBuf(buf,'SHA-512'); setHash('h-sha512',computed['SHA-512'],'cp-sha512'); pf.style.width='100%';
-  setTimeout(()=>{pb.style.display='none';},700);
+  const statusEl = document.getElementById('prog-bar');
+  const fillEl = document.getElementById('prog-fill');
+  const pillEl = document.getElementById('file-pill');
+  const pillName = document.getElementById('pill-name');
+  const pillSize = document.getElementById('pill-size');
+
+  pillEl.style.display = 'flex';
+  pillName.textContent = file.name;
+  pillSize.textContent = (file.size / 1048576).toFixed(2) + ' MB';
+  statusEl.style.display = 'block';
+  fillEl.style.width = '5%';
+  fillEl.style.transition = 'width 0.3s';
+
+  // Set all to computing
+  ['h-md5','h-sha1','h-sha256','h-sha512'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el){ el.textContent = 'computing…'; el.classList.remove('ready'); }
+  });
+  ['cp-md5','cp-sha1','cp-sha256','cp-sha512'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.style.display = 'none';
+  });
+
+  // Read file as ArrayBuffer
+  const buf = await new Promise((res, rej) => {
+    const reader = new FileReader();
+    reader.onload = e => res(e.target.result);
+    reader.onerror = () => rej(new Error('File read failed'));
+    reader.readAsArrayBuffer(file);
+  });
+
+  fillEl.style.width = '20%';
+  document.getElementById('h-md5').textContent = 'hashing…';
+
+  const md5hash = await hashBuf(buf, 'MD5');
+  setHash('h-md5', md5hash, 'cp-md5');
+  computed['MD5'] = md5hash;
+  fillEl.style.width = '40%';
+
+  const sha1hash = await hashBuf(buf, 'SHA-1');
+  setHash('h-sha1', sha1hash, 'cp-sha1');
+  computed['SHA-1'] = sha1hash;
+  fillEl.style.width = '60%';
+
+  const sha256hash = await hashBuf(buf, 'SHA-256');
+  setHash('h-sha256', sha256hash, 'cp-sha256');
+  computed['SHA-256'] = sha256hash;
+  fillEl.style.width = '80%';
+
+  const sha512hash = await hashBuf(buf, 'SHA-512');
+  setHash('h-sha512', sha512hash, 'cp-sha512');
+  computed['SHA-512'] = sha512hash;
+  fillEl.style.width = '100%';
+
+  setTimeout(() => { statusEl.style.display = 'none'; }, 800);
   doVerify();
 }
 
