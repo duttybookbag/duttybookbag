@@ -230,8 +230,8 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
         <a href="#system-update">System Update & Codecs</a>
         <a href="#cpu-gpu">CPU & GPU Info</a>
         <a href="#monitors">System Monitors</a>
-        <a href="#media">Media — Video & Audio</a>
-        <a href="#graphics">Graphics & Design</a>
+        
+        
         <a href="#browsers">Web Browsers</a>
         <a href="#trading">Trading & Crypto</a>
         <a href="#appimages">AppImages</a>
@@ -496,6 +496,8 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
     <h3 style="margin-top:24px;color:var(--cyan);">Diagnostic Commands</h3>
     <div class="cmd">
       <div class="cmd-head"><span class="cmd-label">Check current UEFI boot order</span><div class="cmd-tags"><span class="distro-tag tag-all">All Distros</span></div></div>
+<div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch Boot-Repair</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">boot-repair<button class="copy-btn">copy</button></div></div>
+
       <div class="cmd-body">efibootmgr -v<button class="copy-btn">copy</button></div>
     </div>
     <div class="cmd">
@@ -590,6 +592,8 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
     <div class="multi">
       <div class="cmd-label">Hardware sensors — temps & fan speeds</div>
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install lm-sensors -y && sudo sensors-detect<button class="copy-btn">copy</button></div></div>
+<div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Run sensors — check temps</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">sensors<button class="copy-btn">copy</button></div></div>
+
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install lm_sensors && sudo sensors-detect<button class="copy-btn">copy</button></div></div>
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S lm_sensors && sudo sensors-detect<button class="copy-btn">copy</button></div></div>
     </div>
@@ -598,6 +602,8 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
     <div class="multi">
       <div class="cmd-label">inxi — full system overview (CPU, GPU, RAM, kernel)</div>
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install inxi -y && inxi -Fxxxz<button class="copy-btn">copy</button></div></div>
+<div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Run inxi — full system info</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">inxi -Fxxxz<button class="copy-btn">copy</button></div></div>
+
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install inxi && inxi -Fxxxz<button class="copy-btn">copy</button></div></div>
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S inxi && inxi -Fxxxz<button class="copy-btn">copy</button></div></div>
     </div>
@@ -615,28 +621,44 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
     <div class="multi">
       <div class="cmd-label">btop — beautiful all-in-one monitor</div>
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install btop -y<button class="copy-btn">copy</button></div></div>
+<div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch btop</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">btop<button class="copy-btn">copy</button></div></div>
+
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install btop<button class="copy-btn">copy</button></div></div>
+<div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch btop</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">btop<button class="copy-btn">copy</button></div></div>
+
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S btop<button class="copy-btn">copy</button></div></div>
     </div>
 
     <div class="multi">
       <div class="cmd-label">htop — classic interactive process viewer</div>
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install htop -y<button class="copy-btn">copy</button></div></div>
+<div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch htop</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">htop<button class="copy-btn">copy</button></div></div>
+
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install htop<button class="copy-btn">copy</button></div></div>
+<div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch htop</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">htop<button class="copy-btn">copy</button></div></div>
+
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S htop<button class="copy-btn">copy</button></div></div>
     </div>
 
     <div class="multi">
       <div class="cmd-label">nvtop — GPU monitor for NVIDIA/AMD</div>
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install nvtop -y<button class="copy-btn">copy</button></div></div>
+<div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch nvtop</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">nvtop<button class="copy-btn">copy</button></div></div>
+
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install nvtop<button class="copy-btn">copy</button></div></div>
+<div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch nvtop</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">nvtop<button class="copy-btn">copy</button></div></div>
+
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S nvtop<button class="copy-btn">copy</button></div></div>
     </div>
 
     <div class="multi">
       <div class="cmd-label">Psensor — GUI temperature monitor</div>
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install psensor -y<button class="copy-btn">copy</button></div></div>
+<div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch Psensor</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">psensor<button class="copy-btn">copy</button></div></div>
+
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install psensor<button class="copy-btn">copy</button></div></div>
+<div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch Psensor</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">psensor<button class="copy-btn">copy</button></div></div>
+
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S psensor<button class="copy-btn">copy</button></div></div>
     </div>
   </div>
@@ -646,106 +668,204 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
 
 <!-- =================== MEDIA =================== -->
 <section class="block">
-  <div class="wrap">
-    <h2 id="media">▶ Media — Video & Audio</h2>
-
-    <div class="multi">
-      <div class="cmd-label">VLC Media Player</div>
-      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install vlc -y<button class="copy-btn">copy</button></div></div>
-      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install vlc<button class="copy-btn">copy</button></div></div>
-      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S vlc<button class="copy-btn">copy</button></div></div>
-      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-suse">openSUSE</span></div><div class="multi-cmd">sudo zypper install vlc<button class="copy-btn">copy</button></div></div>
-    </div>
-
-    <div class="multi">
-      <div class="cmd-label">MPV — lightweight media player</div>
-      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install mpv -y<button class="copy-btn">copy</button></div></div>
-      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install mpv<button class="copy-btn">copy</button></div></div>
-      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S mpv<button class="copy-btn">copy</button></div></div>
-    </div>
-
-    <div class="multi">
-      <div class="cmd-label">FFmpeg — video/audio conversion engine</div>
-      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install ffmpeg -y<button class="copy-btn">copy</button></div></div>
-      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install ffmpeg<button class="copy-btn">copy</button></div></div>
-      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S ffmpeg<button class="copy-btn">copy</button></div></div>
-    </div>
-
-    <div class="multi">
-      <div class="cmd-label">HandBrake — video transcoder</div>
-      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install handbrake -y<button class="copy-btn">copy</button></div></div>
-      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install HandBrake-gui<button class="copy-btn">copy</button></div></div>
-      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S handbrake<button class="copy-btn">copy</button></div></div>
-    </div>
-
-    <div class="multi">
-      <div class="cmd-label">OBS Studio — screen recording & streaming</div>
-      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install obs-studio -y<button class="copy-btn">copy</button></div></div>
-      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install obs-studio<button class="copy-btn">copy</button></div></div>
-      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S obs-studio<button class="copy-btn">copy</button></div></div>
-    </div>
-
-    <div class="multi">
-      <div class="cmd-label">Kdenlive — pro video editor</div>
-      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install kdenlive -y<button class="copy-btn">copy</button></div></div>
-      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install kdenlive<button class="copy-btn">copy</button></div></div>
-      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S kdenlive<button class="copy-btn">copy</button></div></div>
-    </div>
-
-    <div class="multi">
-      <div class="cmd-label">Audacity — audio editor & recorder</div>
-      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install audacity -y<button class="copy-btn">copy</button></div></div>
-      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install audacity<button class="copy-btn">copy</button></div></div>
-      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S audacity<button class="copy-btn">copy</button></div></div>
-    </div>
-  </div>
-</section>
-
-<div class="wrap"><div class="divider"></div></div>
-
-<!-- =================== GRAPHICS =================== -->
+  <d<!-- =================== FILM BODEGA =================== -->
 <section class="block">
   <div class="wrap">
-    <h2 id="graphics">✦ Graphics & Design</h2>
+    <div class="section-label">// Creative Suite</div>
+    <h2 id="filmbodega">🎬 Film Bodega — Photo, Video & Audio</h2>
+    <p class="lead">Your neighborhood creative shop. Everything Adobe charges you $600/year for — free and open source. Photo editing, video editing, audio, 3D, conversion, streaming. All of it.</p>
+
+    <div class="callout info"><p><strong>Film Bodega replaces:</strong> Photoshop → GIMP · Lightroom → Darktable/RawTherapee · Adobe Bridge → digiKam · Premiere → Kdenlive/Shotcut/DaVinci · After Effects → Blender · Audition → Audacity · Encoder → HandBrake/FFmpeg · OBS for everything streaming</p></div>
+
+    <!-- ── PHOTO EDITING ── -->
+    <h3 style="font-family:var(--display);font-size:22px;letter-spacing:2px;color:var(--cyan);text-transform:uppercase;margin:24px 0 12px;border-bottom:1px solid var(--border);padding-bottom:8px;">📷 Photo Editing</h3>
 
     <div class="multi">
-      <div class="cmd-label">GIMP — image editor (Photoshop alternative)</div>
-      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install gimp -y<button class="copy-btn">copy</button></div></div>
+      <div class="cmd-label">GIMP — full photo editor (Photoshop alternative)<span style="font-size:11px;color:var(--muted);margin-left:8px;">replaces: Photoshop</span></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu/Mint</span></div><div class="multi-cmd">sudo apt install gimp -y<button class="copy-btn">copy</button></div></div>
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install gimp<button class="copy-btn">copy</button></div></div>
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S gimp<button class="copy-btn">copy</button></div></div>
+      <div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch GIMP</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">gimp<button class="copy-btn">copy</button></div></div>
     </div>
 
     <div class="multi">
-      <div class="cmd-label">Inkscape — vector graphics (Illustrator alternative)</div>
-      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install inkscape -y<button class="copy-btn">copy</button></div></div>
+      <div class="cmd-label">Darktable — RAW photo editor & color grading (Lightroom alternative)<span style="font-size:11px;color:var(--muted);margin-left:8px;">replaces: Lightroom</span></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu/Mint</span></div><div class="multi-cmd">sudo apt install darktable -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install darktable<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S darktable<button class="copy-btn">copy</button></div></div>
+      <div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch Darktable</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">darktable<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="multi">
+      <div class="cmd-label">RawTherapee — RAW processor & photo editor (Lightroom alternative)<span style="font-size:11px;color:var(--muted);margin-left:8px;">replaces: Lightroom/Camera Raw</span></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu/Mint</span></div><div class="multi-cmd">sudo apt install rawtherapee -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install rawtherapee<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S rawtherapee<button class="copy-btn">copy</button></div></div>
+      <div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch RawTherapee</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">rawtherapee<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="multi">
+      <div class="cmd-label">digiKam — photo organizer & manager (Adobe Bridge alternative)<span style="font-size:11px;color:var(--muted);margin-left:8px;">replaces: Adobe Bridge</span></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu/Mint</span></div><div class="multi-cmd">sudo apt install digikam -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install digikam<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S digikam<button class="copy-btn">copy</button></div></div>
+      <div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch digiKam</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">digikam<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="multi">
+      <div class="cmd-label">Krita — digital painting & illustration<span style="font-size:11px;color:var(--muted);margin-left:8px;">replaces: Photoshop (painting)</span></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu/Mint</span></div><div class="multi-cmd">sudo apt install krita -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install krita<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S krita<button class="copy-btn">copy</button></div></div>
+      <div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch Krita</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">krita<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="multi">
+      <div class="cmd-label">Inkscape — vector graphics editor (Illustrator alternative)<span style="font-size:11px;color:var(--muted);margin-left:8px;">replaces: Adobe Illustrator</span></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu/Mint</span></div><div class="multi-cmd">sudo apt install inkscape -y<button class="copy-btn">copy</button></div></div>
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install inkscape<button class="copy-btn">copy</button></div></div>
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S inkscape<button class="copy-btn">copy</button></div></div>
+      <div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch Inkscape</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">inkscape<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <!-- ── VIDEO EDITING ── -->
+    <h3 style="font-family:var(--display);font-size:22px;letter-spacing:2px;color:var(--cyan);text-transform:uppercase;margin:24px 0 12px;border-bottom:1px solid var(--border);padding-bottom:8px;">🎬 Video Editing</h3>
+
+    <div class="multi">
+      <div class="cmd-label">Kdenlive — professional video editor<span style="font-size:11px;color:var(--muted);margin-left:8px;">replaces: Premiere Pro</span></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu/Mint</span></div><div class="multi-cmd">sudo apt install kdenlive -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install kdenlive<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S kdenlive<button class="copy-btn">copy</button></div></div>
+      <div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch Kdenlive</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">kdenlive<button class="copy-btn">copy</button></div></div>
     </div>
 
     <div class="multi">
-      <div class="cmd-label">Blender — 3D modeling, animation & rendering</div>
-      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install blender -y<button class="copy-btn">copy</button></div></div>
+      <div class="cmd-label">Shotcut — free video editor<span style="font-size:11px;color:var(--muted);margin-left:8px;">replaces: Premiere (lighter)</span></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu/Mint</span></div><div class="multi-cmd">sudo apt install shotcut -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install shotcut<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S shotcut<button class="copy-btn">copy</button></div></div>
+      <div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch Shotcut</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">shotcut<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="multi">
+      <div class="cmd-label">OpenShot — beginner-friendly video editor<span style="font-size:11px;color:var(--muted);margin-left:8px;">replaces: iMovie/basic Premiere</span></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu/Mint</span></div><div class="multi-cmd">sudo apt install openshot-qt -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install openshot<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S openshot<button class="copy-btn">copy</button></div></div>
+      <div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch OpenShot</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">openshot-qt<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="multi">
+      <div class="cmd-label">DaVinci Resolve — professional color grading & editing (free version)<span style="font-size:11px;color:var(--muted);margin-left:8px;">replaces: Premiere Pro + After Effects</span></div>
+      <div class="callout warn" style="margin:8px 0;"><p style="font-size:13px;">DaVinci Resolve is not in apt — download the .deb installer free from <strong>blackmagicdesign.com</strong> then run the command below.</p></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu/Mint</span></div><div class="multi-cmd">sudo apt install ./DaVinci_Resolve*.deb -y<button class="copy-btn">copy</button></div></div>
+      <div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch DaVinci Resolve</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">davinci-resolve<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="multi">
+      <div class="cmd-label">Avidemux — quick video cutter & converter<span style="font-size:11px;color:var(--muted);margin-left:8px;">fast trimming, no re-encode needed</span></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu/Mint</span></div><div class="multi-cmd">sudo apt install avidemux-qt -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install avidemux<button class="copy-btn">copy</button></div></div>
+      <div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch Avidemux</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">avidemux3_qt5<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <!-- ── VIDEO CONVERSION ── -->
+    <h3 style="font-family:var(--display);font-size:22px;letter-spacing:2px;color:var(--cyan);text-transform:uppercase;margin:24px 0 12px;border-bottom:1px solid var(--border);padding-bottom:8px;">🔄 Video Conversion & Processing</h3>
+
+    <div class="multi">
+      <div class="cmd-label">HandBrake — video transcoder & format converter<span style="font-size:11px;color:var(--muted);margin-left:8px;">replaces: Adobe Media Encoder</span></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu/Mint</span></div><div class="multi-cmd">sudo apt install handbrake -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install HandBrake-gui<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S handbrake<button class="copy-btn">copy</button></div></div>
+      <div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch HandBrake</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">ghb<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="multi">
+      <div class="cmd-label">FFmpeg — command-line video/audio Swiss Army knife<span style="font-size:11px;color:var(--muted);margin-left:8px;">convert any format to any format</span></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu/Mint</span></div><div class="multi-cmd">sudo apt install ffmpeg -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install ffmpeg<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S ffmpeg<button class="copy-btn">copy</button></div></div>
+      <div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Convert mp4 → mp3 (example)</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">ffmpeg -i input.mp4 output.mp3<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <!-- ── STREAMING & RECORDING ── -->
+    <h3 style="font-family:var(--display);font-size:22px;letter-spacing:2px;color:var(--cyan);text-transform:uppercase;margin:24px 0 12px;border-bottom:1px solid var(--border);padding-bottom:8px;">📡 Streaming & Recording</h3>
+
+    <div class="multi">
+      <div class="cmd-label">OBS Studio — screen recorder & live streaming<span style="font-size:11px;color:var(--muted);margin-left:8px;">record desktop, webcam, game capture</span></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu/Mint</span></div><div class="multi-cmd">sudo apt install obs-studio -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install obs-studio<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S obs-studio<button class="copy-btn">copy</button></div></div>
+      <div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch OBS Studio</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">obs<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <!-- ── AUDIO ── -->
+    <h3 style="font-family:var(--display);font-size:22px;letter-spacing:2px;color:var(--cyan);text-transform:uppercase;margin:24px 0 12px;border-bottom:1px solid var(--border);padding-bottom:8px;">🎵 Audio</h3>
+
+    <div class="multi">
+      <div class="cmd-label">Audacity — audio editor & recorder<span style="font-size:11px;color:var(--muted);margin-left:8px;">replaces: Adobe Audition</span></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu/Mint</span></div><div class="multi-cmd">sudo apt install audacity -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install audacity<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S audacity<button class="copy-btn">copy</button></div></div>
+      <div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch Audacity</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">audacity<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="multi">
+      <div class="cmd-label">PulseAudio Volume Control — advanced audio mixer GUI</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu/Mint</span></div><div class="multi-cmd">sudo apt install pavucontrol -y<button class="copy-btn">copy</button></div></div>
+      <div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch PulseAudio Volume Control</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">pavucontrol<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <!-- ── MEDIA PLAYERS ── -->
+    <h3 style="font-family:var(--display);font-size:22px;letter-spacing:2px;color:var(--cyan);text-transform:uppercase;margin:24px 0 12px;border-bottom:1px solid var(--border);padding-bottom:8px;">▶ Media Players</h3>
+
+    <div class="multi">
+      <div class="cmd-label">VLC Media Player — plays everything</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu/Mint</span></div><div class="multi-cmd">sudo apt install vlc -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install vlc<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S vlc<button class="copy-btn">copy</button></div></div>
+      <div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch VLC</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">vlc<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <div class="multi">
+      <div class="cmd-label">MPV — lightweight terminal & GUI media player</div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu/Mint</span></div><div class="multi-cmd">sudo apt install mpv -y<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install mpv<button class="copy-btn">copy</button></div></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S mpv<button class="copy-btn">copy</button></div></div>
+      <div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch MPV</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">mpv<button class="copy-btn">copy</button></div></div>
+    </div>
+
+    <!-- ── 3D ── -->
+    <h3 style="font-family:var(--display);font-size:22px;letter-spacing:2px;color:var(--cyan);text-transform:uppercase;margin:24px 0 12px;border-bottom:1px solid var(--border);padding-bottom:8px;">🌐 3D Modeling & Animation</h3>
+
+    <div class="multi">
+      <div class="cmd-label">Blender — 3D modeling, animation, rendering & VFX<span style="font-size:11px;color:var(--muted);margin-left:8px;">replaces: Maya, Cinema 4D, After Effects</span></div>
+      <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu/Mint</span></div><div class="multi-cmd">sudo apt install blender -y<button class="copy-btn">copy</button></div></div>
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install blender<button class="copy-btn">copy</button></div></div>
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S blender<button class="copy-btn">copy</button></div></div>
+      <div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch Blender</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">blender<button class="copy-btn">copy</button></div></div>
     </div>
+
   </div>
 </section>
 
 <div class="wrap"><div class="divider"></div></div>
 
-<!-- =================== BROWSERS =================== -->
-<section class="block">
-  <div class="wrap">
+ <div class="wrap">
     <h2 id="browsers">◎ Web Browsers</h2>
 
     <div class="cmd"><div class="cmd-head"><span class="cmd-label">Google Chrome — official .deb install</span><div class="cmd-tags"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div></div>
       <div class="cmd-body">wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo gpg --dearmor -o /usr/share/keyrings/google-chrome.gpg && echo "deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list && sudo apt update && sudo apt install google-chrome-stable -y<button class="copy-btn">copy</button></div>
     </div>
     <div class="cmd"><div class="cmd-head"><span class="cmd-label">Google Chrome (Fedora)</span><div class="cmd-tags"><span class="distro-tag tag-fedora">Fedora</span></div></div>
+<div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch Google Chrome</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">google-chrome<button class="copy-btn">copy</button></div></div>
+
       <div class="cmd-body">sudo dnf install fedora-workstation-repositories && sudo dnf config-manager --set-enabled google-chrome && sudo dnf install google-chrome-stable<button class="copy-btn">copy</button></div>
     </div>
 
     <div class="cmd"><div class="cmd-head"><span class="cmd-label">Brave Browser — official repo</span><div class="cmd-tags"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div></div>
+<div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch Google Chrome</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">google-chrome<button class="copy-btn">copy</button></div></div>
+
       <div class="cmd-body">sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg && echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list && sudo apt update && sudo apt install brave-browser -y<button class="copy-btn">copy</button></div>
     </div>
     <div class="cmd"><div class="cmd-head"><span class="cmd-label">Brave Browser (Fedora)</span><div class="cmd-tags"><span class="distro-tag tag-fedora">Fedora</span></div></div>
@@ -758,7 +878,11 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
     <div class="multi">
       <div class="cmd-label">Tor Browser Launcher</div>
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install torbrowser-launcher -y<button class="copy-btn">copy</button></div></div>
+<div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch Tor Browser Launcher</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">torbrowser-launcher<button class="copy-btn">copy</button></div></div>
+
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install torbrowser-launcher<button class="copy-btn">copy</button></div></div>
+<div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch Tor Browser Launcher</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">torbrowser-launcher<button class="copy-btn">copy</button></div></div>
+
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S torbrowser-launcher<button class="copy-btn">copy</button></div></div>
     </div>
     <div class="callout info"><p>After install, open Tor Browser Launcher from your Start Menu — it downloads the official Tor Browser automatically on first launch.</p></div>
@@ -859,13 +983,19 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
     <div class="multi">
       <div class="cmd-label">BleachBit — system cleaner & junk remover</div>
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install bleachbit -y<button class="copy-btn">copy</button></div></div>
+<div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch BleachBit</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">bleachbit<button class="copy-btn">copy</button></div></div>
+
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install bleachbit<button class="copy-btn">copy</button></div></div>
+<div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch BleachBit</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">bleachbit<button class="copy-btn">copy</button></div></div>
+
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S bleachbit<button class="copy-btn">copy</button></div></div>
     </div>
 
     <div class="multi">
       <div class="cmd-label">Synaptic — GUI package manager</div>
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install synaptic -y<button class="copy-btn">copy</button></div></div>
+<div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch Synaptic</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">sudo synaptic<button class="copy-btn">copy</button></div></div>
+
     </div>
 
     <div class="multi">
@@ -887,7 +1017,11 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
     <div class="multi">
       <div class="cmd-label">Install VirtualBox</div>
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install virtualbox -y<button class="copy-btn">copy</button></div></div>
+<div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch VirtualBox</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">virtualbox<button class="copy-btn">copy</button></div></div>
+
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install VirtualBox<button class="copy-btn">copy</button></div></div>
+<div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch VirtualBox</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">virtualbox<button class="copy-btn">copy</button></div></div>
+
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S virtualbox virtualbox-host-modules-arch<button class="copy-btn">copy</button></div></div>
     </div>
 
@@ -908,7 +1042,11 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
     <div class="multi">
       <div class="cmd-label">Timeshift — system snapshot & restore</div>
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install timeshift -y<button class="copy-btn">copy</button></div></div>
+<div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch Timeshift GUI</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">sudo timeshift-gtk<button class="copy-btn">copy</button></div></div>
+
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install timeshift<button class="copy-btn">copy</button></div></div>
+<div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch Timeshift GUI</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">sudo timeshift-gtk<button class="copy-btn">copy</button></div></div>
+
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S timeshift<button class="copy-btn">copy</button></div></div>
     </div>
 
@@ -945,7 +1083,11 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
     <div class="multi">
       <div class="cmd-label">smartmontools — SSD/HDD health monitoring</div>
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install smartmontools -y<button class="copy-btn">copy</button></div></div>
+<div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Check SMART health (replace sda with your drive name)</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">sudo smartctl -a /dev/sda<button class="copy-btn">copy</button></div></div>
+
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install smartmontools<button class="copy-btn">copy</button></div></div>
+<div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Check SMART health (replace sda with your drive name)</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">sudo smartctl -a /dev/sda<button class="copy-btn">copy</button></div></div>
+
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S smartmontools<button class="copy-btn">copy</button></div></div>
     </div>
 
@@ -956,7 +1098,11 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
     <div class="multi">
       <div class="cmd-label">GParted — partition manager</div>
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-debian">Debian/Ubuntu</span></div><div class="multi-cmd">sudo apt install gparted -y<button class="copy-btn">copy</button></div></div>
+<div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch GParted</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">sudo gparted<button class="copy-btn">copy</button></div></div>
+
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-fedora">Fedora</span></div><div class="multi-cmd">sudo dnf install gparted<button class="copy-btn">copy</button></div></div>
+<div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch GParted</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">sudo gparted<button class="copy-btn">copy</button></div></div>
+
       <div class="multi-row"><div class="multi-tag"><span class="distro-tag tag-arch">Arch</span></div><div class="multi-cmd">sudo pacman -S gparted<button class="copy-btn">copy</button></div></div>
     </div>
 
@@ -1014,10 +1160,14 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
     <div class="callout warn"><p><strong>⚠ Can't boot at all?</strong> Boot from your Linux Mint USB drive, select "Try Linux Mint", open a terminal from the live session, and run the commands below. Boot-Repair works perfectly from a live USB session — you don't need to be inside your installed system.</p></div>
 
     <div class="cmd"><div class="cmd-head"><span class="cmd-label">Add the Boot-Repair repository</span><div class="cmd-tags"><span class="distro-tag tag-mint">Linux Mint</span><span class="distro-tag tag-ubuntu">Ubuntu</span></div></div><div class="cmd-body">sudo add-apt-repository ppa:yannubuntu/boot-repair -y<button class="copy-btn">copy</button></div></div>
+<div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch Boot-Repair</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">boot-repair<button class="copy-btn">copy</button></div></div>
+
     <div class="cmd"><div class="cmd-head"><span class="cmd-label">Update package list</span><div class="cmd-tags"><span class="distro-tag tag-all">All Distros</span></div></div><div class="cmd-body">sudo apt update<button class="copy-btn">copy</button></div></div>
     <div class="cmd"><div class="cmd-head"><span class="cmd-label">Install Boot-Repair</span><div class="cmd-tags"><span class="distro-tag tag-mint">Linux Mint</span><span class="distro-tag tag-ubuntu">Ubuntu</span></div></div><div class="cmd-body">sudo apt install -y boot-repair<button class="copy-btn">copy</button></div></div>
     <div class="cmd"><div class="cmd-head"><span class="cmd-label">Launch Boot-Repair</span><div class="cmd-tags"><span class="distro-tag tag-all">All Distros</span></div></div><div class="cmd-body">boot-repair<button class="copy-btn">copy</button></div></div>
     <div class="cmd"><div class="cmd-head"><span class="cmd-label">One-liner — add repo + install + launch in one shot</span><div class="cmd-tags"><span class="distro-tag tag-mint">Linux Mint</span><span class="distro-tag tag-ubuntu">Ubuntu</span></div></div><div class="cmd-body">sudo add-apt-repository ppa:yannubuntu/boot-repair -y && sudo apt update && sudo apt install -y boot-repair && boot-repair<button class="copy-btn">copy</button></div></div>
+<div class="cmd" style="border-left:3px solid var(--green);margin-top:4px;"><div class="cmd-head"><span class="cmd-label" style="color:var(--green);">▶ Launch Boot-Repair</span><div class="cmd-tags"><span class="distro-tag" style="background:rgba(0,255,106,0.1);border:1px solid rgba(0,255,106,0.3);color:var(--green);">launch</span></div></div><div class="cmd-body">boot-repair<button class="copy-btn">copy</button></div></div>
+
 
     <div class="callout success" style="margin-top:16px"><p><strong>Once it opens:</strong> Click <strong>"Recommended repair"</strong> — handles 95% of all boot problems automatically. It reinstalls/reconfigures GRUB, finds all your operating systems, and restores the boot menu. When done, reboot and remove your USB drive.</p></div>
 
