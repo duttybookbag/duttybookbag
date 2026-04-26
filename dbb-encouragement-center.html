@@ -748,67 +748,20 @@ function playBell() {
   if (!bellOn) return;
   try {
     var ctx = new (window.AudioContext || window.webkitAudioContext)();
-
-    // Deep medieval bell — heavy fundamental with inharmonic partials
-    // Real bells have inharmonic overtones that give that haunting quality
-    var bellPartials = [
-      // [frequency multiplier, gain, decay seconds]
-      [0.5,   0.6,  6.0],   // sub-fundamental — the deep BOOM
-      [1.0,   1.0,  5.5],   // fundamental
-      [1.183, 0.6,  4.0],   // minor third — gives the haunting quality
-      [1.502, 0.4,  3.5],   // perfect fifth
-      [2.0,   0.25, 3.0],   // octave
-      [2.756, 0.15, 2.0],   // major third above octave
-      [3.0,   0.1,  1.5],   // upper partial
-    ];
-
-    var fundamental = 58; // Low D — deep cathedral frequency
-
-    bellPartials.forEach(function(partial) {
-      var freq = fundamental * partial[0];
-      var gain = partial[1];
-      var decay = partial[2];
-
+    var frequencies = [110, 220, 330, 440, 550];
+    var gains = [0.5, 0.3, 0.15, 0.1, 0.05];
+    frequencies.forEach(function(freq, i) {
       var osc = ctx.createOscillator();
-      var gainNode = ctx.createGain();
-
-      // Add slight detune for that imperfect cast-iron bell character
+      var gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
       osc.type = "sine";
       osc.frequency.value = freq;
-      osc.detune.value = (Math.random() - 0.5) * 8;
-
-      osc.connect(gainNode);
-      gainNode.connect(ctx.destination);
-
-      // Sharp attack then exponential decay — the bell STRIKES then fades
-      gainNode.gain.setValueAtTime(0, ctx.currentTime);
-      gainNode.gain.linearRampToValueAtTime(gain * 0.8, ctx.currentTime + 0.004);
-      gainNode.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + decay);
-
+      gain.gain.setValueAtTime(gains[i], ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 4.5);
       osc.start(ctx.currentTime);
-      osc.stop(ctx.currentTime + decay + 0.1);
+      osc.stop(ctx.currentTime + 4.5);
     });
-
-    // Add a low rumble/thud for the physical strike of the clapper
-    var bufferSize = ctx.sampleRate * 0.15;
-    var buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-    var data = buffer.getChannelData(0);
-    for (var i = 0; i < bufferSize; i++) {
-      data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / bufferSize, 3);
-    }
-    var thud = ctx.createBufferSource();
-    thud.buffer = buffer;
-    var thudGain = ctx.createGain();
-    var thudFilter = ctx.createBiquadFilter();
-    thudFilter.type = "lowpass";
-    thudFilter.frequency.value = 120;
-    thud.connect(thudFilter);
-    thudFilter.connect(thudGain);
-    thudGain.connect(ctx.destination);
-    thudGain.gain.setValueAtTime(0.9, ctx.currentTime);
-    thudGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
-    thud.start(ctx.currentTime);
-
   } catch(e) {}
 }
 
