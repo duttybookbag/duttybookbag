@@ -199,17 +199,6 @@ body{top:0!important;}
 
   <div class="divider"></div>
 
-  <!-- CATEGORY INFO -->
-  <div class="cat-grid">
-    <div class="cat-card enc"><div class="cat-icon">&#128154;</div><div class="cat-name">Encouragement</div><div class="cat-desc">Pure uplift. Keep going. You've got this.</div></div>
-    <div class="cat-card wis"><div class="cat-icon">&#129504;</div><div class="cat-name">Wisdom</div><div class="cat-desc">Life lessons and smart advice to live by.</div></div>
-    <div class="cat-card sto"><div class="cat-icon">&#9876;&#65039;</div><div class="cat-name">Stoic Wisdom</div><div class="cat-desc">Marcus Aurelius, Epictetus, Seneca.</div></div>
-    <div class="cat-card prv"><div class="cat-icon">&#127758;</div><div class="cat-name">World Proverbs</div><div class="cat-desc">Jamaican, Caribbean, African, Native American.</div></div>
-    <div class="cat-card bib" style="grid-column:1/-1;"><div class="cat-icon">&#128214;</div><div class="cat-name">Biblical — KJV</div><div class="cat-desc">Proverbs, Psalms, and Scripture. King James Version — public domain.</div></div>
-  </div>
-
-  <div class="divider"></div>
-
   <!-- WISDOM -->
   <div class="qbox wis" id="box-wis">
     <div class="qlabel wis">// WISDOM <span class="tag">&#129504; THINK ON THIS</span></div>
@@ -258,6 +247,18 @@ body{top:0!important;}
   <div class="btn-row">
     <button class="btn bib" onclick="newQ('bib')">New Scripture &#128214;</button>
     <button class="btn bib sm" onclick="shareBox('box-bib')">&#128248; Share</button>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CATEGORY INFO — what each section is about -->
+  <div style="font-family:var(--mono);font-size:11px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;text-align:center;margin-bottom:14px;">// What Each Category Is</div>
+  <div class="cat-grid">
+    <div class="cat-card enc"><div class="cat-icon">&#128154;</div><div class="cat-name">Encouragement</div><div class="cat-desc">Pure uplift. Keep going. You've got this.</div></div>
+    <div class="cat-card wis"><div class="cat-icon">&#129504;</div><div class="cat-name">Wisdom</div><div class="cat-desc">Life lessons and smart advice to live by.</div></div>
+    <div class="cat-card sto"><div class="cat-icon">&#9876;&#65039;</div><div class="cat-name">Stoic Wisdom</div><div class="cat-desc">Marcus Aurelius, Epictetus, Seneca.</div></div>
+    <div class="cat-card prv"><div class="cat-icon">&#127758;</div><div class="cat-name">World Proverbs</div><div class="cat-desc">Jamaican, Caribbean, African, Native American.</div></div>
+    <div class="cat-card bib" style="grid-column:1/-1;"><div class="cat-icon">&#128214;</div><div class="cat-name">Biblical — KJV</div><div class="cat-desc">Proverbs, Psalms, and Scripture. King James Version — public domain.</div></div>
   </div>
 
   <div class="divider"></div>
@@ -744,18 +745,70 @@ function toggleBell() {
 }
 
 function playBell() {
+  if (!bellOn) return;
   try {
     var ctx = new (window.AudioContext || window.webkitAudioContext)();
-    [110, 220, 330, 440, 550].forEach(function(f, i) {
-      var o = ctx.createOscillator();
-      var g = ctx.createGain();
-      var v = [0.5, 0.3, 0.15, 0.1, 0.05][i];
-      o.connect(g); g.connect(ctx.destination);
-      o.type = "sine"; o.frequency.value = f;
-      g.gain.setValueAtTime(v, ctx.currentTime);
-      g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 4.5);
-      o.start(); o.stop(ctx.currentTime + 4.5);
+
+    // Deep medieval bell — heavy fundamental with inharmonic partials
+    // Real bells have inharmonic overtones that give that haunting quality
+    var bellPartials = [
+      // [frequency multiplier, gain, decay seconds]
+      [0.5,   0.6,  6.0],   // sub-fundamental — the deep BOOM
+      [1.0,   1.0,  5.5],   // fundamental
+      [1.183, 0.6,  4.0],   // minor third — gives the haunting quality
+      [1.502, 0.4,  3.5],   // perfect fifth
+      [2.0,   0.25, 3.0],   // octave
+      [2.756, 0.15, 2.0],   // major third above octave
+      [3.0,   0.1,  1.5],   // upper partial
+    ];
+
+    var fundamental = 58; // Low D — deep cathedral frequency
+
+    bellPartials.forEach(function(partial) {
+      var freq = fundamental * partial[0];
+      var gain = partial[1];
+      var decay = partial[2];
+
+      var osc = ctx.createOscillator();
+      var gainNode = ctx.createGain();
+
+      // Add slight detune for that imperfect cast-iron bell character
+      osc.type = "sine";
+      osc.frequency.value = freq;
+      osc.detune.value = (Math.random() - 0.5) * 8;
+
+      osc.connect(gainNode);
+      gainNode.connect(ctx.destination);
+
+      // Sharp attack then exponential decay — the bell STRIKES then fades
+      gainNode.gain.setValueAtTime(0, ctx.currentTime);
+      gainNode.gain.linearRampToValueAtTime(gain * 0.8, ctx.currentTime + 0.004);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + decay);
+
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + decay + 0.1);
     });
+
+    // Add a low rumble/thud for the physical strike of the clapper
+    var bufferSize = ctx.sampleRate * 0.15;
+    var buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+    var data = buffer.getChannelData(0);
+    for (var i = 0; i < bufferSize; i++) {
+      data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / bufferSize, 3);
+    }
+    var thud = ctx.createBufferSource();
+    thud.buffer = buffer;
+    var thudGain = ctx.createGain();
+    var thudFilter = ctx.createBiquadFilter();
+    thudFilter.type = "lowpass";
+    thudFilter.frequency.value = 120;
+    thud.connect(thudFilter);
+    thudFilter.connect(thudGain);
+    thudGain.connect(ctx.destination);
+    thudGain.gain.setValueAtTime(0.9, ctx.currentTime);
+    thudGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+    thud.start(ctx.currentTime);
+
   } catch(e) {}
 }
 
