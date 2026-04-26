@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DBB Stretch — Make Your Dollar Go Further</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#000;--panel:#080f0f;--border:#0c3030;
+  --cyan:#00ffe1;--green:#00ff6a;--gold:#ffd166;
+  --red:#ff5252;--orange:#ff9f43;--text:#b8e8e2;
+  --muted:#3d7070;--mono:"Share Tech Mono",monospace;
+  --display:"Bebas Neue",sans-serif;--body:"Rajdhani",sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--black);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.7;overflow-x:hidden;}
+body::before{content:"";position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,255,225,0.012) 3px,rgba(0,255,225,0.012) 4px);pointer-events:none;z-index:999;}
+.wrap{max-width:820px;margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+
+/* NAV */
+.site-nav{position:sticky;top:0;z-index:100;background:rgba(0,0,0,0.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:0 24px;}
+.site-nav .inner{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;max-width:820px;margin:0 auto;}
+.site-nav a{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--muted);text-decoration:none;text-transform:uppercase;padding:13px 14px;transition:color 0.2s;white-space:nowrap;}
+.site-nav a:hover{color:var(--cyan);}
+.site-nav a.hl{color:var(--gold);}
+.site-nav a.active{color:var(--green);text-shadow:0 0 8px rgba(0,255,106,0.5);}
+@media(max-width:580px){.site-nav a{font-size:10px;padding:10px 7px;}}
+
+/* HEADER */
+header{padding:44px 0 24px;text-align:center;}
+.badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:4px;color:var(--cyan);border:1px solid var(--cyan);padding:4px 16px;margin-bottom:14px;text-transform:uppercase;}
+h1{font-family:var(--display);font-size:clamp(42px,8vw,80px);letter-spacing:4px;color:#fff;text-transform:uppercase;line-height:0.9;}
+h1 span{color:var(--green);text-shadow:0 0 30px rgba(0,255,106,0.4);}
+.tagline{font-size:16px;color:var(--text);max-width:580px;margin:16px auto 0;}
+
+/* SECTION LABELS */
+.section-label{font-family:var(--mono);font-size:10px;letter-spacing:4px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;}
+h2{font-family:var(--display);font-size:clamp(28px,5vw,48px);letter-spacing:3px;color:#fff;text-transform:uppercase;margin-bottom:6px;}
+h3{font-family:var(--display);font-size:22px;letter-spacing:2px;color:var(--cyan);text-transform:uppercase;margin:20px 0 8px;}
+.lead{font-size:16px;color:var(--text);margin-bottom:18px;}
+
+/* DIVIDER */
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:30px 0;}
+
+/* CALLOUTS */
+.callout{border-radius:6px;padding:16px 20px;margin:14px 0;font-size:15px;}
+.callout.info{background:rgba(0,255,225,0.05);border-left:4px solid var(--cyan);color:var(--text);}
+.callout.warn{background:rgba(255,209,102,0.05);border-left:4px solid var(--gold);color:var(--text);}
+.callout.tip{background:rgba(0,255,106,0.05);border-left:4px solid var(--green);color:var(--text);}
+.callout.red{background:rgba(255,82,82,0.05);border-left:4px solid var(--red);color:var(--text);}
+.callout strong{color:#fff;}
+
+/* STORE CARDS */
+.store-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin:20px 0;}
+.store-card{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:20px;}
+.store-card.best{border-color:rgba(0,255,106,0.4);}
+.store-card.good{border-color:rgba(0,255,225,0.25);}
+.store-card.mid{border-color:rgba(255,209,102,0.25);}
+.store-name{font-family:var(--display);font-size:22px;letter-spacing:2px;color:#fff;text-transform:uppercase;margin-bottom:4px;}
+.store-tag{font-family:var(--mono);font-size:10px;letter-spacing:2px;padding:2px 8px;border-radius:3px;text-transform:uppercase;display:inline-block;margin-bottom:10px;}
+.tag-best{background:rgba(0,255,106,0.12);color:var(--green);border:1px solid rgba(0,255,106,0.3);}
+.tag-good{background:rgba(0,255,225,0.08);color:var(--cyan);border:1px solid rgba(0,255,225,0.2);}
+.tag-mid{background:rgba(255,209,102,0.08);color:var(--gold);border:1px solid rgba(255,209,102,0.2);}
+.store-card ul{list-style:none;font-size:14px;color:var(--text);}
+.store-card ul li{padding:3px 0;padding-left:14px;position:relative;}
+.store-card ul li::before{content:"▸";position:absolute;left:0;color:var(--green);font-size:12px;}
+.store-link{display:inline-block;margin-top:12px;font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--cyan);text-decoration:none;border:1px solid rgba(0,255,225,0.3);padding:4px 10px;border-radius:4px;}
+.store-link:hover{background:rgba(0,255,225,0.08);}
+
+/* PRICE TABLE */
+.price-table{width:100%;border-collapse:collapse;font-size:14px;margin:16px 0;}
+.price-table th{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--cyan);padding:10px 12px;border-bottom:1px solid var(--border);text-align:left;}
+.price-table td{padding:10px 12px;border-bottom:1px solid #0a1a1a;color:var(--text);}
+.price-table tr:last-child td{border-bottom:none;}
+.price-table .best-price{color:var(--green);font-weight:bold;}
+.price-table .store-col{color:#fff;}
+
+/* HACK CARDS */
+.hack-card{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:20px;margin-bottom:14px;}
+.hack-card.green{border-left:4px solid var(--green);}
+.hack-card.cyan{border-left:4px solid var(--cyan);}
+.hack-card.gold{border-left:4px solid var(--gold);}
+.hack-title{font-family:var(--display);font-size:20px;letter-spacing:2px;color:#fff;text-transform:uppercase;margin-bottom:6px;}
+.hack-save{font-family:var(--mono);font-size:11px;color:var(--green);letter-spacing:2px;margin-bottom:8px;}
+
+/* GPS BUTTONS */
+.gps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:20px 0;}
+.gps-btn{display:block;background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:16px 18px;text-decoration:none;transition:all 0.2s;text-align:center;}
+.gps-btn:hover{border-color:var(--cyan);background:rgba(0,255,225,0.04);}
+.gps-icon{font-size:26px;margin-bottom:6px;}
+.gps-label{font-family:var(--display);font-size:18px;letter-spacing:2px;color:#fff;text-transform:uppercase;}
+.gps-sub{font-family:var(--mono);font-size:10px;letter-spacing:1px;color:var(--muted);margin-top:3px;}
+
+/* FLAG TABS */
+.flag-tabs{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
+.flag-tab{font-family:var(--mono);font-size:11px;letter-spacing:2px;padding:8px 16px;border:1px solid var(--border);border-radius:4px;cursor:pointer;background:transparent;color:var(--muted);text-transform:uppercase;transition:all 0.2s;}
+.flag-tab.active{border-color:var(--cyan);color:var(--cyan);background:rgba(0,255,225,0.06);}
+.country-section{display:none;}.country-section.show{display:block;}
+
+/* MEAL CARDS */
+.meal-card{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:18px;margin-bottom:12px;display:flex;gap:16px;align-items:flex-start;}
+.meal-emoji{font-size:32px;flex-shrink:0;}
+.meal-info .meal-name{font-family:var(--display);font-size:20px;letter-spacing:2px;color:#fff;text-transform:uppercase;}
+.meal-info .meal-cost{font-family:var(--mono);font-size:12px;color:var(--green);letter-spacing:2px;margin:4px 0;}
+.meal-info p{font-size:14px;color:var(--text);}
+.meal-warn{font-family:var(--mono);font-size:10px;color:var(--gold);letter-spacing:1px;margin-top:6px;}
+
+/* LOGO */
+.dbb-logo{display:grid;grid-template-columns:repeat(3,22px);grid-template-rows:repeat(3,22px);gap:7px;justify-content:center;margin:0 auto;width:max-content;}
+.dbb-logo .dot{width:22px;height:22px;border-radius:50%;animation:pulse 2.8s ease-in-out infinite;}
+.dbb-logo .gr{background:#00ff44;box-shadow:0 0 7px #00ff44,0 0 14px #00ff44;}
+.dbb-logo .rd{background:#ff1a1a;box-shadow:0 0 7px #ff1a1a,0 0 14px #ff1a1a;}
+.dbb-logo .d1{grid-column:2;grid-row:1;}
+.dbb-logo .d2{grid-column:1;grid-row:2;}
+.dbb-logo .d3{grid-column:2;grid-row:2;}
+.dbb-logo .d4{grid-column:3;grid-row:2;}
+.dbb-logo .d5{grid-column:1;grid-row:3;}
+.dbb-logo .d6{grid-column:3;grid-row:3;}
+@keyframes pulse{0%,100%{opacity:0.55;transform:scale(0.92);}50%{opacity:1;transform:scale(1.08);}}
+
+footer{border-top:1px solid var(--border);padding:28px 0;margin-top:40px;text-align:center;background:#010505;}
+footer p{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:6px;}
+footer a{color:var(--green);text-decoration:none;}
+.disclaimer{max-width:700px;margin:14px auto 0;font-size:10px;color:var(--muted);font-style:italic;line-height:1.6;padding:12px;border:1px solid var(--border);border-radius:4px;text-align:left;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="site-nav">
+  <div class="inner">
+    <a href="index.html">Home</a>
+    <a href="dbb-lifeline.html" class="hl">Lifeline</a>
+    <a href="dbb-off-grid.html" class="hl">Off-Grid</a>
+    <a href="dbb-stretch.html" class="active">Stretch</a>
+    <a href="dbb-encouragement-center.html" class="hl">Encouragement</a>
+  </div>
+</nav>
+
+<!-- TRANSLATE -->
+<div style="text-align:center;padding:5px 0;background:rgba(0,0,0,0.8);border-bottom:1px solid #0c3030;position:relative;z-index:99;">
+  <div id="google_translate_element" style="display:inline-block;"></div>
+</div>
+<script>function googleTranslateElementInit(){new google.translate.TranslateElement({pageLanguage:"en",layout:google.translate.TranslateElement.InlineLayout.HORIZONTAL},"google_translate_element");}</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<style>.goog-te-banner-frame{display:none!important;}.goog-te-gadget{font-size:11px!important;color:#3d7070!important;}.goog-te-gadget .goog-te-combo{background:#080f0f;color:#b8e8e2;border:1px solid #0c3030;border-radius:4px;padding:4px 8px;font-family:"Share Tech Mono",monospace;font-size:11px;outline:none;}.goog-te-gadget>span{display:none!important;}body{top:0!important;}</style>
+
+<!-- HEADER -->
+<header>
+  <div class="wrap">
+    <!-- Glowing Logo -->
+    <div style="display:flex;justify-content:center;margin-bottom:18px;">
+      <svg viewBox="0 0 120 140" width="90" height="105" style="filter:drop-shadow(0 0 18px rgba(57,255,20,0.35));">
+        <rect x="10" y="10" width="100" height="120" rx="14" fill="#080f0f" stroke="#1a3a3a" stroke-width="2"/>
+        <circle cx="42" cy="38" r="9" fill="#39ff14"><animate attributeName="opacity" values="1;0.1;1" dur="4s" repeatCount="indefinite"/></circle>
+        <circle cx="42" cy="38" r="4" fill="#fff" opacity="0.3"/>
+        <circle cx="78" cy="38" r="9" fill="#39ff14"><animate attributeName="opacity" values="1;0.1;1" dur="4s" repeatCount="indefinite"/></circle>
+        <circle cx="78" cy="38" r="4" fill="#fff" opacity="0.3"/>
+        <circle cx="33" cy="72" r="7" fill="#ff5252" opacity="0.35"/>
+        <circle cx="60" cy="72" r="7" fill="#ff5252" opacity="0.6"/>
+        <circle cx="87" cy="72" r="7" fill="#ff5252" opacity="0.35"/>
+        <circle cx="60" cy="102" r="8" fill="#ff5252"><animate attributeName="opacity" values="0.85;0.4;0.85" dur="2.5s" repeatCount="indefinite"/></circle>
+      </svg>
+    </div>
+    <div class="badge">DuttyBookBag · Smart Living</div>
+    <h1>STRETCH<br><span>Your Dollar</span></h1>
+    <p class="tagline">Real talk about saving real money. Store comparisons, budget meals, home hacks, and smart shopping — for singles and families alike. USA &amp; UK.</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- JUMP NAV -->
+  <div style="background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:16px 20px;margin-bottom:24px;">
+    <div class="section-label">// Jump To A Section</div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;">
+      <a href="#stores" style="font-family:var(--mono);font-size:11px;color:var(--cyan);text-decoration:none;border:1px solid rgba(0,255,225,0.3);padding:4px 10px;border-radius:4px;">🏪 Store Comparisons</a>
+      <a href="#gas" style="font-family:var(--mono);font-size:11px;color:var(--cyan);text-decoration:none;border:1px solid rgba(0,255,225,0.3);padding:4px 10px;border-radius:4px;">⛽ Cheap Gas</a>
+      <a href="#findme" style="font-family:var(--mono);font-size:11px;color:var(--cyan);text-decoration:none;border:1px solid rgba(0,255,225,0.3);padding:4px 10px;border-radius:4px;">📍 Find Near Me</a>
+      <a href="#bulk" style="font-family:var(--mono);font-size:11px;color:var(--cyan);text-decoration:none;border:1px solid rgba(0,255,225,0.3);padding:4px 10px;border-radius:4px;">📦 Bulk Buying</a>
+      <a href="#meals" style="font-family:var(--mono);font-size:11px;color:var(--cyan);text-decoration:none;border:1px solid rgba(0,255,225,0.3);padding:4px 10px;border-radius:4px;">🍳 Budget Meals</a>
+      <a href="#vegprotein" style="font-family:var(--mono);font-size:11px;color:var(--cyan);text-decoration:none;border:1px solid rgba(0,255,225,0.3);padding:4px 10px;border-radius:4px;">🌱 Vegetarian Protein</a>
+      <a href="#hacks" style="font-family:var(--mono);font-size:11px;color:var(--cyan);text-decoration:none;border:1px solid rgba(0,255,225,0.3);padding:4px 10px;border-radius:4px;">💡 Home Hacks</a>
+      <a href="#uk" style="font-family:var(--mono);font-size:11px;color:var(--cyan);text-decoration:none;border:1px solid rgba(0,255,225,0.3);padding:4px 10px;border-radius:4px;">🇬🇧 UK Guide</a>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ===== STORE COMPARISONS USA ===== -->
+  <section id="stores">
+    <div class="section-label">// United States</div>
+    <h2>🏪 Store Comparisons</h2>
+    <p class="lead">Not all stores are equal. Knowing where to buy what can save a family $100–$300 a month without changing what you eat.</p>
+
+    <div class="callout tip"><strong>The Golden Rule:</strong> No single store wins everything. The smart move is to split your shopping — buy proteins and produce at one store, pantry staples at another, and household supplies at a third.</div>
+
+    <div class="store-grid">
+      <div class="store-card best">
+        <div class="store-name">Aldi</div>
+        <div class="store-tag tag-best">🏆 Cheapest Overall</div>
+        <ul>
+          <li>Consistently 20–40% cheaper than mainstream stores</li>
+          <li>Great for produce, dairy, eggs, bread, pantry staples</li>
+          <li>Store-brand quality rivals name brands</li>
+          <li>Bring your own bags — no free bags</li>
+          <li>Bring a quarter for the cart</li>
+        </ul>
+        <a href="https://www.aldi.us" target="_blank" class="store-link">aldi.us ↗</a>
+      </div>
+
+      <div class="store-card best">
+        <div class="store-name">Lidl</div>
+        <div class="store-tag tag-best">🏆 Strong Runner-Up</div>
+        <ul>
+          <li>Similar to Aldi — often neck and neck on price</li>
+          <li>Excellent bakery section — fresh bread cheap</li>
+          <li>Good meat deals especially on weekends</li>
+          <li>Middle aisle "LIDL Surprises" — random cheap finds</li>
+          <li>Not in all states — check if one is near you</li>
+        </ul>
+        <a href="https://www.lidl.com" target="_blank" class="store-link">lidl.com ↗</a>
+      </div>
+
+      <div class="store-card good">
+        <div class="store-name">Walmart</div>
+        <div class="store-tag tag-good">✅ Best for Variety</div>
+        <ul>
+          <li>Can't beat it for one-stop shopping</li>
+          <li>Great Value brand is legitimately cheap and decent</li>
+          <li>Best for: toiletries, cleaning supplies, canned goods</li>
+          <li>Pickup and delivery often cheaper than in-store impulse buys</li>
+          <li>Price match available on many items</li>
+        </ul>
+        <a href="https://www.walmart.com" target="_blank" class="store-link">walmart.com ↗</a>
+      </div>
+
+      <div class="store-card good">
+        <div class="store-name">Dollar Tree / Dollar General</div>
+        <div class="store-tag tag-good">✅ Household Staples</div>
+        <ul>
+          <li>Dollar Tree: everything $1.25 — cleaning supplies win here</li>
+          <li>Dish soap, sponges, laundry items — hard to beat</li>
+          <li>Dollar General: good for pantry staples in rural areas</li>
+          <li>Check expiry dates — turnover can be slow</li>
+          <li>Not always cheaper on food — compare first</li>
+        </ul>
+        <a href="https://www.dollartree.com" target="_blank" class="store-link">dollartree.com ↗</a>
+      </div>
+
+      <div class="store-card good">
+        <div class="store-name">Kroger / Winn-Dixie</div>
+        <div class="store-tag tag-good">✅ App Deals Are Key</div>
+        <ul>
+          <li>Regular prices are mid-range — nothing special</li>
+          <li>The app changes everything — digital coupons stack</li>
+          <li>Fuel points program saves real money on gas</li>
+          <li>Weekly deals on meat can be excellent</li>
+          <li>Download the app before you ever step inside</li>
+        </ul>
+        <a href="https://www.kroger.com" target="_blank" class="store-link">kroger.com ↗</a>
+      </div>
+
+      <div class="store-card mid">
+        <div class="store-name">Publix</div>
+        <div class="store-tag tag-mid">⚡ BOGO Only</div>
+        <ul>
+          <li>Regular prices are higher than most — do not shop full price</li>
+          <li>BOGO (Buy One Get One) deals are genuinely excellent</li>
+          <li>Best strategy: only buy Publix items when BOGO</li>
+          <li>Deli and bakery quality is high if budget allows</li>
+          <li>Clean stores, great customer service</li>
+        </ul>
+        <a href="https://www.publix.com" target="_blank" class="store-link">publix.com ↗</a>
+      </div>
+    </div>
+
+    <!-- PRICE COMPARISON TABLE -->
+    <h3>📊 Price Comparison — Common Items</h3>
+    <p style="font-size:14px;color:var(--muted);margin-bottom:10px;">Approximate prices based on national averages — your local prices may vary slightly.</p>
+    <div style="overflow-x:auto;">
+      <table class="price-table">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Aldi/Lidl</th>
+            <th>Walmart</th>
+            <th>Kroger</th>
+            <th>Publix</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Dozen Eggs</td><td class="best-price">~$1.99</td><td>~$2.50</td><td>~$2.79</td><td>~$3.49</td></tr>
+          <tr><td>Gallon Milk</td><td class="best-price">~$2.99</td><td>~$3.18</td><td>~$3.49</td><td>~$4.19</td></tr>
+          <tr><td>Loaf of Bread</td><td class="best-price">~$1.29</td><td>~$1.98</td><td>~$2.49</td><td>~$3.19</td></tr>
+          <tr><td>Chicken Breast (lb)</td><td class="best-price">~$2.49</td><td>~$2.98</td><td>~$3.49</td><td>~$4.99</td></tr>
+          <tr><td>Ground Beef (lb)</td><td class="best-price">~$3.99</td><td>~$4.48</td><td>~$4.99</td><td>~$5.99</td></tr>
+          <tr><td>Mac & Cheese (box)</td><td class="best-price">~$0.49</td><td>~$0.68</td><td>~$0.89</td><td>~$1.19</td></tr>
+          <tr><td>Pasta (16oz)</td><td class="best-price">~$0.89</td><td>~$1.18</td><td>~$1.49</td><td>~$1.79</td></tr>
+          <tr><td>Canned Beans</td><td class="best-price">~$0.59</td><td>~$0.78</td><td>~$0.99</td><td>~$1.29</td></tr>
+          <tr><td>Dish Soap</td><td>~$1.99</td><td>~$2.24</td><td>~$2.99</td><td class="best-price">Dollar Tree $1.25</td></tr>
+          <tr><td>Rice (5lb bag)</td><td class="best-price">~$2.99</td><td>~$3.48</td><td>~$3.99</td><td>~$4.99</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout warn"><strong>Note:</strong> Prices change frequently. These are general guides, not guarantees. Always compare in your area using the store apps.</div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===== GAS ===== -->
+  <section id="gas">
+    <div class="section-label">// Fuel</div>
+    <h2>⛽ Cheapest Gas — USA</h2>
+    <p class="lead">Gas prices vary by region but the patterns of who sells it cheapest stay consistent. Here is what the data shows.</p>
+
+    <div class="store-grid">
+      <div class="store-card best">
+        <div class="store-name">Costco Gas</div>
+        <div class="store-tag tag-best">🏆 Cheapest Per Gallon</div>
+        <ul>
+          <li>Consistently 10–25 cents cheaper per gallon than competitors</li>
+          <li>Requires Costco membership ($65/year) — pays for itself fast</li>
+          <li>Lines can be long — go early morning or weekday</li>
+          <li>Top Tier certified fuel — good for your engine</li>
+        </ul>
+        <a href="https://www.costco.com/gasoline.html" target="_blank" class="store-link">costco.com/gasoline ↗</a>
+      </div>
+
+      <div class="store-card best">
+        <div class="store-name">BJs / Sam's Club</div>
+        <div class="store-tag tag-best">🏆 Close Second</div>
+        <ul>
+          <li>Member gas — usually 5–15 cents below street price</li>
+          <li>BJs membership ~$55/year, Sam's Club ~$50/year</li>
+          <li>Use the app to check price before driving over</li>
+          <li>Stack with cashback credit cards for extra savings</li>
+        </ul>
+        <a href="https://www.bjs.com" target="_blank" class="store-link">bjs.com ↗</a>
+      </div>
+
+      <div class="store-card good">
+        <div class="store-name">Murphy USA</div>
+        <div class="store-tag tag-good">✅ No Membership Needed</div>
+        <ul>
+          <li>Located next to Walmart stores nationwide</li>
+          <li>Usually 5–10 cents cheaper than nearby stations</li>
+          <li>Murphy Drive Rewards app — earn points, save more</li>
+          <li>No membership required — open to everyone</li>
+        </ul>
+        <a href="https://www.murphyusa.com" target="_blank" class="store-link">murphyusa.com ↗</a>
+      </div>
+
+      <div class="store-card good">
+        <div class="store-name">Wawa / Racetrac / Buc-ee's</div>
+        <div class="store-tag tag-good">✅ Regional Champions</div>
+        <ul>
+          <li>Wawa (East Coast) — consistently competitive prices</li>
+          <li>Racetrac (Southeast) — often lowest in the area</li>
+          <li>Buc-ee's (South/Southeast) — huge volume = low price</li>
+          <li>All have rewards apps — always sign up</li>
+        </ul>
+        <a href="https://www.gasbuddy.com" target="_blank" class="store-link">Find local prices: GasBuddy ↗</a>
+      </div>
+    </div>
+
+    <h3>💳 Gas Saving Apps — Sign Up Links</h3>
+    <div class="store-grid">
+      <div class="store-card good">
+        <div class="store-name">GasBuddy</div>
+        <div class="store-tag tag-good">Free App</div>
+        <ul>
+          <li>Shows cheapest gas near you in real time</li>
+          <li>Community updated — very accurate</li>
+          <li>Pay with GasBuddy card — save up to 25¢/gallon</li>
+        </ul>
+        <a href="https://www.gasbuddy.com" target="_blank" class="store-link">gasbuddy.com ↗</a>
+      </div>
+      <div class="store-card good">
+        <div class="store-name">Upside</div>
+        <div class="store-tag tag-good">Free Cashback</div>
+        <ul>
+          <li>Earn real cashback on gas, groceries, restaurants</li>
+          <li>Claim an offer, fill up, get paid — simple</li>
+          <li>Transfers to PayPal, bank, or gift cards</li>
+        </ul>
+        <a href="https://www.upside.com" target="_blank" class="store-link">upside.com ↗</a>
+      </div>
+      <div class="store-card good">
+        <div class="store-name">Kroger Fuel Points</div>
+        <div class="store-tag tag-good">Grocery + Gas</div>
+        <ul>
+          <li>Earn points on grocery purchases</li>
+          <li>Redeem for up to $1.00 off per gallon</li>
+          <li>Works at Kroger, Shell, and partner stations</li>
+        </ul>
+        <a href="https://www.kroger.com/d/fuel-points-program" target="_blank" class="store-link">kroger.com/fuel-points ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===== FIND NEAR ME GPS ===== -->
+  <section id="findme">
+    <div class="section-label">// GPS Search</div>
+    <h2>📍 Find Cheap Stores Near You</h2>
+    <p class="lead">Tap any button below — it opens Google Maps and finds that store closest to your current location. Uses your phone GPS automatically.</p>
+
+    <div class="gps-grid">
+      <a href="https://www.google.com/maps/search/Aldi+near+me" target="_blank" class="gps-btn">
+        <div class="gps-icon">🛒</div>
+        <div class="gps-label">Aldi</div>
+        <div class="gps-sub">Find nearest Aldi</div>
+      </a>
+      <a href="https://www.google.com/maps/search/Lidl+near+me" target="_blank" class="gps-btn">
+        <div class="gps-icon">🛒</div>
+        <div class="gps-label">Lidl</div>
+        <div class="gps-sub">Find nearest Lidl</div>
+      </a>
+      <a href="https://www.google.com/maps/search/Walmart+near+me" target="_blank" class="gps-btn">
+        <div class="gps-icon">🏪</div>
+        <div class="gps-label">Walmart</div>
+        <div class="gps-sub">Find nearest Walmart</div>
+      </a>
+      <a href="https://www.google.com/maps/search/Dollar+Tree+near+me" target="_blank" class="gps-btn">
+        <div class="gps-icon">💲</div>
+        <div class="gps-label">Dollar Tree</div>
+        <div class="gps-sub">Find nearest Dollar Tree</div>
+      </a>
+      <a href="https://www.google.com/maps/search/Dollar+General+near+me" target="_blank" class="gps-btn">
+        <div class="gps-icon">💲</div>
+        <div class="gps-label">Dollar General</div>
+        <div class="gps-sub">Find nearest Dollar General</div>
+      </a>
+      <a href="https://www.google.com/maps/search/Costco+near+me" target="_blank" class="gps-btn">
+        <div class="gps-icon">🏢</div>
+        <div class="gps-label">Costco</div>
+        <div class="gps-sub">Find nearest Costco</div>
+      </a>
+      <a href="https://www.google.com/maps/search/BJs+Wholesale+near+me" target="_blank" class="gps-btn">
+        <div class="gps-icon">📦</div>
+        <div class="gps-label">BJ's</div>
+        <div class="gps-sub">Find nearest BJ's</div>
+      </a>
+      <a href="https://www.google.com/maps/search/Sam's+Club+near+me" target="_blank" class="gps-btn">
+        <div class="gps-icon">📦</div>
+        <div class="gps-label">Sam's Club</div>
+        <div class="gps-sub">Find nearest Sam's Club</div>
+      </a>
+      <a href="https://www.google.com/maps/search/Murphy+USA+gas+near+me" target="_blank" class="gps-btn">
+        <div class="gps-icon">⛽</div>
+        <div class="gps-label">Murphy USA Gas</div>
+        <div class="gps-sub">Cheap gas near Walmart</div>
+      </a>
+      <a href="https://www.google.com/maps/search/cheap+gas+station+near+me" target="_blank" class="gps-btn">
+        <div class="gps-icon">⛽</div>
+        <div class="gps-label">Cheapest Gas</div>
+        <div class="gps-sub">Any cheap station nearby</div>
+      </a>
+      <a href="https://www.google.com/maps/search/food+bank+near+me" target="_blank" class="gps-btn">
+        <div class="gps-icon">🤝</div>
+        <div class="gps-label">Food Bank</div>
+        <div class="gps-sub">Free food assistance nearby</div>
+      </a>
+      <a href="https://www.google.com/maps/search/farmers+market+near+me" target="_blank" class="gps-btn">
+        <div class="gps-icon">🌽</div>
+        <div class="gps-label">Farmers Market</div>
+        <div class="gps-sub">Fresh produce, often cheaper</div>
+      </a>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===== BULK BUYING ===== -->
+  <section id="bulk">
+    <div class="section-label">// Smart Buying</div>
+    <h2>📦 Bulk Buying — Worth It or Not?</h2>
+    <p class="lead">Bulk stores like Costco, BJ's, and Sam's Club are not always cheaper per unit. Here is what is actually worth buying in bulk versus what is a waste of money.</p>
+
+    <div class="callout tip"><strong>The Rule of Bulk:</strong> Bulk only saves money if you use it before it expires and you have the storage space. Buying 5 pounds of something you throw half of away is not saving — it is waste.</div>
+
+    <h3>✅ Always Buy in Bulk</h3>
+    <div class="hack-card green">
+      <p style="font-size:15px;">These items have long shelf lives, are used constantly, and the per-unit cost is significantly lower in bulk:</p>
+      <ul style="margin-top:10px;padding-left:20px;font-size:15px;color:var(--text);">
+        <li>Toilet paper and paper towels</li>
+        <li>Laundry detergent</li>
+        <li>Dish soap and hand soap</li>
+        <li>Cooking oil (olive, vegetable)</li>
+        <li>Rice and dried pasta</li>
+        <li>Canned goods — beans, tomatoes, tuna</li>
+        <li>Frozen chicken and meat (freeze immediately)</li>
+        <li>Coffee and tea</li>
+        <li>Batteries and light bulbs</li>
+        <li>Ziplock bags and aluminum foil</li>
+      </ul>
+    </div>
+
+    <h3>⚠️ Buy in Bulk With Caution</h3>
+    <div class="hack-card gold">
+      <ul style="padding-left:20px;font-size:15px;color:var(--text);">
+        <li>Bread — goes stale or moldy fast. Only bulk if you freeze it immediately</li>
+        <li>Fresh produce — only if you will use it all within days</li>
+        <li>Eggs — fine for families, too many for one person</li>
+        <li>Cheese — freeze in portions or it molds</li>
+        <li>Spices — bulk spices lose flavour within a year</li>
+      </ul>
+    </div>
+
+    <h3>❌ Do Not Buy in Bulk</h3>
+    <div class="hack-card cyan">
+      <ul style="padding-left:20px;font-size:15px;color:var(--text);">
+        <li>Sunscreen and medication — expire before you finish</li>
+        <li>Cooking spray — goes rancid</li>
+        <li>Flour and brown sugar — attract insects if stored poorly</li>
+        <li>Anything new you have not tried before — you might hate it</li>
+      </ul>
+    </div>
+
+    <h3>👨‍👩‍👧 Family vs Single Person</h3>
+    <div class="callout info">
+      <strong>Single person:</strong> Bulk is rarely worth the membership cost unless you split with a friend or family member. Focus on Aldi and Walmart for everyday shopping. Buy bulk only for non-perishables like toilet paper and cleaning supplies.<br><br>
+      <strong>Family of 3 or more:</strong> A Costco or BJ's membership pays for itself within the first few months on toilet paper, meat, and gas alone. Go on a list — the warehouse environment is designed to make you overspend on things you did not plan to buy.
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===== BUDGET MEALS ===== -->
+  <section id="meals">
+    <div class="section-label">// Pinch Mode</div>
+    <h2>🍳 Budget Meals — When Money Is Tight</h2>
+    <p class="lead">These are not luxury meals. These are real meals people eat when they need to stretch what little they have. No judgment — we have all been there.</p>
+
+    <div class="callout red"><strong>Important:</strong> These meals are for short-term tight situations only. Processed foods, hot dogs, and instant noodles are high in sodium and low in nutrition. They are a bridge, not a lifestyle. When things improve, get back to real food.</div>
+
+    <div class="meal-card">
+      <div class="meal-emoji">🌭</div>
+      <div class="meal-info">
+        <div class="meal-name">Hot Dogs + Mac & Cheese</div>
+        <div class="meal-cost">~$3–5 feeds 2–3 people</div>
+        <p>A pack of hot dogs (~$2.50 for 8 at Walmart) sliced into a box of mac and cheese (~$0.68). Add a little mustard or hot sauce. You get protein, carbs, and calories. Not glamorous — but it works. Kids eat it happily.</p>
+        <div class="meal-warn">⚠ High sodium. Not for every day. Drink water, not soda with this.</div>
+      </div>
+    </div>
+
+
+    <div class="meal-card">
+      <div class="meal-emoji">🍝</div>
+      <div class="meal-info">
+        <div class="meal-name">Macaroni + Sausage (No Box Required)</div>
+        <div class="meal-cost">~$2–3 feeds 3–4 people</div>
+        <p>Skip the mac and cheese box — buy plain elbow macaroni instead. Walmart Great Value elbow macaroni is around $1.18 for a 7oz bag. Slice up a pack of smoked sausage (~$2.50 at Walmart — Great Value or Hillshire Farm on sale) and pan-fry it until browned. Cook the macaroni, drain it, toss with the sausage. For sauce — ketchup works surprisingly well as a cheap tomato base, or a can of diced tomatoes (~$0.88) seasoned with garlic powder and black pepper. You get protein, carbs, and real flavour for under $3. Better than the box and more filling.</p>
+        <div class="meal-warn">💡 Tip: Great Value brand pasta at Walmart is consistently one of the cheapest per-ounce options nationally. Buy a few bags when you shop.</div>
+      </div>
+    </div>
+    <div class="meal-card">
+      <div class="meal-emoji">🥚</div>
+      <div class="meal-info">
+        <div class="meal-name">Eggs — The Budget Superfood</div>
+        <div class="meal-cost">~$2 for a dozen — 12 servings</div>
+        <p>Eggs are one of the most complete foods available at the lowest price. Scrambled, fried, boiled, or in a cheap tortilla as a breakfast burrito. They contain protein, healthy fats, vitamins B12, D, and choline. Yes they have cholesterol — but eaten in moderation they are far better than processed snacks.</p>
+        <div class="meal-warn">💡 Tip: One egg + two slices of toast + a banana = a complete nutritious meal for under $1.</div>
+      </div>
+    </div>
+
+    <div class="meal-card">
+      <div class="meal-emoji">🍚</div>
+      <div class="meal-info">
+        <div class="meal-name">Rice + Canned Beans</div>
+        <div class="meal-cost">~$1 feeds 2 people</div>
+        <p>A cup of rice (~$0.25) with a can of black or pinto beans (~$0.59–0.79) seasoned with garlic powder, cumin, and salt is a complete protein meal. Add hot sauce. Add a fried egg on top if you have one. This is eaten daily by millions of people worldwide and is genuinely nutritious.</p>
+        <div class="meal-warn">💡 Complete protein — rice and beans together contain all essential amino acids.</div>
+      </div>
+    </div>
+
+    <div class="meal-card">
+      <div class="meal-emoji">🍝</div>
+      <div class="meal-info">
+        <div class="meal-name">Pasta + Canned Tomatoes</div>
+        <div class="meal-cost">~$1.50 feeds a family</div>
+        <p>A pound of pasta (~$1.18 at Walmart) with a can of diced or crushed tomatoes (~$0.88), a little olive oil, garlic, and Italian seasoning. That is dinner for a family of four. Add ground beef or sausage if the budget allows for extra protein.</p>
+        <div class="meal-warn">💡 Make extra — pasta reheats well and is just as good the next day.</div>
+      </div>
+    </div>
+
+    <div class="meal-card">
+      <div class="meal-emoji">🥜</div>
+      <div class="meal-info">
+        <div class="meal-name">Peanut Butter on Bread</div>
+        <div class="meal-cost">~$0.25 per serving</div>
+        <p>Simple. A jar of store-brand peanut butter (~$3 at Aldi) lasts weeks. It has protein, healthy fat, and calories. On toast, on crackers, on a banana — it fills you up. When you are really in a pinch, peanut butter and bread is a legitimate meal, not a snack.</p>
+        <div class="meal-warn">💡 Add a banana for potassium and natural sugar — it turns this into a balanced mini-meal.</div>
+      </div>
+    </div>
+
+    <div class="meal-card">
+      <div class="meal-emoji">🫘</div>
+      <div class="meal-info">
+        <div class="meal-name">Lentil Soup</div>
+        <div class="meal-cost">~$1.50 feeds a family</div>
+        <p>A bag of dried lentils (~$1.50) makes a huge pot of soup. Add onion, garlic, cumin, a can of tomatoes, and salt. Lentils are high in protein, iron, and fibre. This is one of the most nutritious budget meals that exists. Takes about 30 minutes on the stove.</p>
+        <div class="meal-warn">💡 Freeze leftovers in portions — lentil soup keeps very well.</div>
+      </div>
+    </div>
+  </section>
+
+
+  <div class="divider"></div>
+
+  <!-- ===== VEGETARIAN PROTEIN ===== -->
+  <section id="vegprotein">
+    <div class="section-label">// Plant-Based &amp; Vegetarian</div>
+    <h2>🌱 Vegetarian Protein on a Budget</h2>
+    <p class="lead">No eggs, no meat — no problem. Getting enough protein without animal products is completely possible on a tight budget. Here is how.</p>
+
+    <div class="callout tip"><strong>How much protein do you need?</strong> Roughly 0.8 grams per kilogram of body weight per day for an average adult. A 150lb (68kg) person needs about 55g of protein daily. This is very achievable on a plant-based budget.</div>
+
+    <h3>💪 Cheapest Plant Protein Sources</h3>
+    <div class="store-grid">
+      <div class="store-card best">
+        <div class="store-name">Lentils</div>
+        <div class="store-tag tag-best">🏆 Best Value Protein</div>
+        <ul>
+          <li>~18g protein per cooked cup</li>
+          <li>~$1.50–2.00 per pound dried — makes many servings</li>
+          <li>Also high in iron, folate, and fibre</li>
+          <li>No soaking needed — cook in 20–30 minutes</li>
+          <li>Red, green, or brown — all work</li>
+        </ul>
+      </div>
+      <div class="store-card best">
+        <div class="store-name">Dried Beans</div>
+        <div class="store-tag tag-best">🏆 Extremely Cheap</div>
+        <ul>
+          <li>Black beans, pinto, kidney, chickpeas</li>
+          <li>~15g protein per cooked cup</li>
+          <li>~$1.00–1.50 per pound dried — huge yield</li>
+          <li>Canned beans ~$0.59–0.89 for convenience</li>
+          <li>Rinse canned beans to reduce sodium</li>
+        </ul>
+      </div>
+      <div class="store-card good">
+        <div class="store-name">Peanut Butter</div>
+        <div class="store-tag tag-good">✅ Easy Protein Anywhere</div>
+        <ul>
+          <li>~8g protein per 2 tablespoon serving</li>
+          <li>Store brand at Aldi or Walmart ~$2.50–3.00</li>
+          <li>Also has healthy fats and calories</li>
+          <li>On toast, with fruit, in oatmeal — versatile</li>
+        </ul>
+      </div>
+      <div class="store-card good">
+        <div class="store-name">Tofu</div>
+        <div class="store-tag tag-good">✅ Versatile Protein</div>
+        <ul>
+          <li>~10g protein per half cup</li>
+          <li>~$2.00–3.00 per block at Walmart or Aldi</li>
+          <li>Firm tofu: fry, bake, or crumble like ground meat</li>
+          <li>Silken tofu: blend into smoothies or sauces</li>
+          <li>Absorbs whatever seasoning you cook with</li>
+        </ul>
+      </div>
+      <div class="store-card good">
+        <div class="store-name">Oats</div>
+        <div class="store-tag tag-good">✅ Breakfast Protein</div>
+        <ul>
+          <li>~6g protein per cup cooked — more than most cereals</li>
+          <li>Large container at Walmart ~$3–4, lasts weeks</li>
+          <li>Add peanut butter to oatmeal for a protein-rich breakfast</li>
+          <li>Also high in fibre — keeps you full longer</li>
+        </ul>
+      </div>
+      <div class="store-card good">
+        <div class="store-name">Sunflower / Pumpkin Seeds</div>
+        <div class="store-tag tag-good">✅ Snack Protein</div>
+        <ul>
+          <li>~7–9g protein per quarter cup</li>
+          <li>Sprinkle on salads, oatmeal, or eat as a snack</li>
+          <li>Often cheap in bulk bins or store brand bags</li>
+          <li>Also high in magnesium and zinc</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>💊 Budget Supplements — When Food Is Not Enough</h3>
+    <div class="callout warn"><strong>Note:</strong> Supplements are not a replacement for food — they are a backup when your diet has gaps. Focus on whole foods first. These are the most useful and affordable options for people on a plant-based or tight budget diet.</div>
+
+    <div class="hack-card cyan">
+      <div class="hack-title">🟡 Vitamin B12 — Essential for Vegetarians and Vegans</div>
+      <div class="hack-save">~$5–8 for a year supply</div>
+      <p>Vitamin B12 is found almost exclusively in animal products. If you eat no meat, fish, dairy, or eggs you will become deficient over time — this is not optional. B12 deficiency causes fatigue, nerve damage, and cognitive problems. A basic B12 supplement at any pharmacy or Walmart is cheap and one tablet daily covers you completely. Look for methylcobalamin form for best absorption.</p>
+    </div>
+
+    <div class="hack-card cyan">
+      <div class="hack-title">☀️ Vitamin D — Most People Are Low</div>
+      <div class="hack-save">~$5–8 for several months</div>
+      <p>Vitamin D is made by your skin in sunlight, but most people — especially those who work indoors or live in northern climates — are deficient. Vegetarians are at higher risk since fatty fish and eggs are the main dietary sources. A standard 1000–2000 IU Vitamin D3 supplement daily costs almost nothing and makes a real difference in energy, mood, and immune function.</p>
+    </div>
+
+    <div class="hack-card green">
+      <div class="hack-title">💪 Plant Protein Powder — Optional but Useful</div>
+      <div class="hack-save">~$15–25 per month</div>
+      <p>If you are struggling to hit your protein targets through food alone, a basic pea protein or rice protein powder added to oatmeal, a smoothie, or even water can close the gap cheaply. Brands like NOW Sports, Bulk Supplements, or store brand options at Walmart are far cheaper than name-brand whey proteins. One serving typically gives 20–25g of protein.</p>
+    </div>
+
+    <div class="hack-card gold">
+      <div class="hack-title">🩸 Iron — Watch This If You Skip Meat</div>
+      <div class="hack-save">~$5–10 for several months</div>
+      <p>Red meat is the easiest source of iron. Without it, especially for women, iron levels can drop and cause fatigue and weakness. Lentils, beans, spinach, and fortified cereals all contain iron but in a form that is harder for the body to absorb. Eating these with vitamin C (a squeeze of lemon juice or a glass of orange juice) significantly improves absorption. If you are always tired despite eating well, ask a doctor to check your iron levels — a basic iron supplement is inexpensive.</p>
+    </div>
+
+    <div class="callout info"><strong>Where to buy supplements cheaply:</strong> Walmart pharmacy section, Costco (larger sizes = cheaper per pill), Amazon, or iHerb.com for online. Always compare price per serving, not price per bottle. Generic and store-brand supplements contain the same ingredients as name brands at a fraction of the cost.</div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===== HOME HACKS ===== -->
+  <section id="hacks">
+    <div class="section-label">// Smart Living</div>
+    <h2>💡 Home Hacks — Make It Last Longer</h2>
+    <p class="lead">Small changes at home that save real money every month without sacrifice. These are things people with money already know.</p>
+
+    <div class="hack-card green">
+      <div class="hack-title">💧 Dilute Your Dish Soap</div>
+      <div class="hack-save">Saves ~$3–5/month</div>
+      <p>When a dish soap bottle is about halfway down, fill the rest with water and shake gently. The soap is concentrated enough that even at half strength it cleans just as well. You effectively double the life of every bottle. Works with hand soap too — buy a foaming soap dispenser and dilute regular soap 4:1 with water.</p>
+    </div>
+
+    <div class="hack-card green">
+      <div class="hack-title">🧴 Use Half the Laundry Detergent</div>
+      <div class="hack-save">Saves ~$5–10/month</div>
+      <p>Most laundry detergent instructions tell you to fill the cap to a line that is two to three times more than what modern washers actually need. For normal loads, use half the recommended amount. Your clothes will come out just as clean. Modern washing machines are very efficient and use far less water than the detergent manufacturers assume.</p>
+    </div>
+
+    <div class="hack-card cyan">
+      <div class="hack-title">🧻 Paper Towel Strategy</div>
+      <div class="hack-save">Saves ~$5/month</div>
+      <p>Keep a stack of old t-shirts or cut-up towels in the kitchen. Use those for everyday wiping and spills. Save paper towels only for raw meat or genuinely unsanitary messes. A household that switches to this system can cut paper towel spending by 70%.</p>
+    </div>
+
+    <div class="hack-card cyan">
+      <div class="hack-title">❄️ Freeze Everything</div>
+      <div class="hack-save">Saves $20–50/month on food waste</div>
+      <p>Bread going stale — freeze it. Meat on sale — buy extra and freeze it. Bananas going brown — freeze them (perfect for smoothies or banana bread). Leftover rice — freeze in portions. The average American household throws away $1,500 worth of food per year. A freezer habit cuts that dramatically.</p>
+    </div>
+
+    <div class="hack-card gold">
+      <div class="hack-title">🌿 Regrow Kitchen Scraps</div>
+      <div class="hack-save">Free produce from what you already bought</div>
+      <p>Green onion roots placed in a glass of water on a windowsill regrow within days — clip and regrow indefinitely. Romaine lettuce hearts placed in shallow water will sprout new leaves. Celery base does the same. You are not going to feed a family this way, but supplementing fresh herbs and greens for free adds up over time.</p>
+    </div>
+
+    <div class="hack-card gold">
+      <div class="hack-title">💡 Unplug Vampire Appliances</div>
+      <div class="hack-save">Saves $10–30/month on electricity</div>
+      <p>Devices left plugged in but not in use — TVs, game consoles, microwaves, chargers — quietly draw power around the clock. This is called vampire or phantom load. Plugging things into a power strip with an off switch, or simply unplugging what you do not use daily, can reduce your electric bill noticeably over a month.</p>
+    </div>
+
+    <div class="hack-card green">
+      <div class="hack-title">🧊 Cold Water Washing</div>
+      <div class="hack-save">Saves ~$5–15/month on electric or gas</div>
+      <p>Washing clothes in cold water instead of hot or warm uses significantly less energy because your washer does not have to heat the water. Modern detergents are formulated to work in cold water. Unless you are washing heavily soiled items, cold water cleans just as well and is gentler on your clothes — making them last longer too.</p>
+    </div>
+
+    <div class="hack-card cyan">
+      <div class="hack-title">🛁 Shorter Showers</div>
+      <div class="hack-save">Saves $10–20/month on water and heating</div>
+      <p>Cutting your average shower from 10 minutes to 5 minutes saves roughly 25 gallons of water per shower. For a household of four, that is 3,000 gallons less per month. Combined with the hot water heating cost, this is a real number on your bill. A cheap shower timer from the dollar store helps build the habit.</p>
+    </div>
+
+    <div class="hack-card gold">
+      <div class="hack-title">🍋 White Vinegar — The All-Purpose Cleaner</div>
+      <div class="hack-save">Replaces $20+ in cleaning products</div>
+      <p>A gallon of white vinegar costs around $3–4 and replaces most of your cleaning cabinet. Diluted 1:1 with water in a spray bottle it cleans countertops, glass, and appliances. Full strength it removes lime scale, unclog drains when combined with baking soda, and deodorizes. Add a few drops of dish soap and you have an all-purpose cleaner that rivals expensive branded products.</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===== UK GUIDE ===== -->
+  <section id="uk">
+    <div class="section-label">// United Kingdom 🇬🇧</div>
+    <h2>🇬🇧 UK — Stretch Your Pound</h2>
+    <p class="lead">The UK has some of the best budget supermarkets in the world. Aldi and Lidl changed everything when they arrived and the major chains had to respond. Here is where to shop.</p>
+
+    <div class="store-grid">
+      <div class="store-card best">
+        <div class="store-name">Aldi UK</div>
+        <div class="store-tag tag-best">🏆 Cheapest Overall</div>
+        <ul>
+          <li>Consistently ranked UK's cheapest supermarket</li>
+          <li>Own-brand products rival Tesco and Sainsbury's quality</li>
+          <li>Specialbuys middle aisle — incredible non-food deals weekly</li>
+          <li>Fresh produce and meat quality is genuinely good</li>
+          <li>No loyalty card — just always low prices</li>
+        </ul>
+        <a href="https://www.aldi.co.uk" target="_blank" class="store-link">aldi.co.uk ↗</a>
+      </div>
+
+      <div class="store-card best">
+        <div class="store-name">Lidl UK</div>
+        <div class="store-tag tag-best">🏆 Neck and Neck With Aldi</div>
+        <ul>
+          <li>Bakery section is exceptional — fresh bread very cheap</li>
+          <li>Lidl Plus app — personalised offers and coupons</li>
+          <li>Deluxe range for treats without premium supermarket prices</li>
+          <li>Fruit and veg often fresher than larger chains</li>
+        </ul>
+        <a href="https://www.lidl.co.uk" target="_blank" class="store-link">lidl.co.uk ↗</a>
+      </div>
+
+      <div class="store-card good">
+        <div class="store-name">Asda</div>
+        <div class="store-tag tag-good">✅ Best of the Big Four on Price</div>
+        <ul>
+          <li>Consistently cheapest among Tesco, Sainsbury's, Morrisons, Asda</li>
+          <li>Rollback deals — genuinely competitive when on offer</li>
+          <li>George clothing for cheap kids and basic adult clothes</li>
+          <li>Click & Collect — good way to avoid impulse buys</li>
+        </ul>
+        <a href="https://www.asda.com" target="_blank" class="store-link">asda.com ↗</a>
+      </div>
+
+      <div class="store-card good">
+        <div class="store-name">Morrisons</div>
+        <div class="store-tag tag-good">✅ Best Fresh Food Deals</div>
+        <ul>
+          <li>Has its own butchers, fishmongers, and bakery in-store</li>
+          <li>Price-match with Aldi and Lidl on many items</li>
+          <li>More Card loyalty scheme — earn points on every shop</li>
+          <li>Yellow sticker reduced items — check evenings for deals</li>
+        </ul>
+        <a href="https://www.morrisons.com" target="_blank" class="store-link">morrisons.com ↗</a>
+      </div>
+
+      <div class="store-card good">
+        <div class="store-name">Poundland / Pound Bakery</div>
+        <div class="store-tag tag-good">✅ Household Essentials</div>
+        <ul>
+          <li>Cleaning supplies, toiletries, snacks — extremely cheap</li>
+          <li>Poundland now sells food as well as household items</li>
+          <li>Pound Bakery — cheap hot food, pasties, sausage rolls</li>
+          <li>Check dates carefully on food items</li>
+        </ul>
+        <a href="https://www.poundland.co.uk" target="_blank" class="store-link">poundland.co.uk ↗</a>
+      </div>
+
+      <div class="store-card good">
+        <div class="store-name">Iceland</div>
+        <div class="store-tag tag-good">✅ Frozen Food Value</div>
+        <ul>
+          <li>Best for frozen meat, fish, veg, and ready meals on a budget</li>
+          <li>Bonus Card — 2% back on all spending</li>
+          <li>Free delivery on orders over £35</li>
+          <li>Great for stocking up freezer on a limited budget</li>
+        </ul>
+        <a href="https://www.iceland.co.uk" target="_blank" class="store-link">iceland.co.uk ↗</a>
+      </div>
+    </div>
+
+    <h3>📊 UK Price Comparison</h3>
+    <div style="overflow-x:auto;">
+      <table class="price-table">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Aldi/Lidl</th>
+            <th>Asda</th>
+            <th>Tesco</th>
+            <th>Sainsbury's</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>6 Free Range Eggs</td><td class="best-price">~£1.09</td><td>~£1.35</td><td>~£1.59</td><td>~£1.79</td></tr>
+          <tr><td>4 Pints Milk</td><td class="best-price">~£1.39</td><td>~£1.45</td><td>~£1.55</td><td>~£1.65</td></tr>
+          <tr><td>800g Loaf Bread</td><td class="best-price">~£0.99</td><td>~£1.15</td><td>~£1.30</td><td>~£1.40</td></tr>
+          <tr><td>Chicken Breast (500g)</td><td class="best-price">~£2.49</td><td>~£2.75</td><td>~£3.00</td><td>~£3.50</td></tr>
+          <tr><td>Pasta (500g)</td><td class="best-price">~£0.59</td><td>~£0.70</td><td>~£0.85</td><td>~£0.95</td></tr>
+          <tr><td>Tinned Beans (4 pack)</td><td class="best-price">~£0.89</td><td>~£1.05</td><td>~£1.25</td><td>~£1.35</td></tr>
+          <tr><td>Rice (1kg)</td><td class="best-price">~£0.99</td><td>~£1.15</td><td>~£1.35</td><td>~£1.49</td></tr>
+          <tr><td>Butter (250g)</td><td class="best-price">~£1.59</td><td>~£1.75</td><td>~£1.95</td><td>~£2.10</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>📍 Find UK Stores Near You</h3>
+    <div class="gps-grid">
+      <a href="https://www.google.com/maps/search/Aldi+near+me+UK" target="_blank" class="gps-btn">
+        <div class="gps-icon">🛒</div><div class="gps-label">Aldi UK</div><div class="gps-sub">Nearest Aldi</div>
+      </a>
+      <a href="https://www.google.com/maps/search/Lidl+near+me+UK" target="_blank" class="gps-btn">
+        <div class="gps-icon">🛒</div><div class="gps-label">Lidl UK</div><div class="gps-sub">Nearest Lidl</div>
+      </a>
+      <a href="https://www.google.com/maps/search/Asda+near+me" target="_blank" class="gps-btn">
+        <div class="gps-icon">🏪</div><div class="gps-label">Asda</div><div class="gps-sub">Nearest Asda</div>
+      </a>
+      <a href="https://www.google.com/maps/search/Poundland+near+me" target="_blank" class="gps-btn">
+        <div class="gps-icon">💷</div><div class="gps-label">Poundland</div><div class="gps-sub">Nearest Poundland</div>
+      </a>
+      <a href="https://www.google.com/maps/search/Iceland+Foods+near+me" target="_blank" class="gps-btn">
+        <div class="gps-icon">❄️</div><div class="gps-label">Iceland</div><div class="gps-sub">Nearest Iceland</div>
+      </a>
+      <a href="https://www.google.com/maps/search/food+bank+near+me+UK" target="_blank" class="gps-btn">
+        <div class="gps-icon">🤝</div><div class="gps-label">Food Bank</div><div class="gps-sub">Free food assistance</div>
+      </a>
+    </div>
+
+    <h3>💡 UK Specific Money Hacks</h3>
+    <div class="hack-card green">
+      <div class="hack-title">🟡 Yellow Sticker Shopping</div>
+      <div class="hack-save">Save 50–75% on food</div>
+      <p>Every UK supermarket reduces items approaching their best-before date, usually marked with yellow stickers. The best time to find these is early evening — typically 7pm to 9pm. Meat, bakery items, and prepared food get reduced dramatically. Freeze anything you cannot use immediately.</p>
+    </div>
+    <div class="hack-card cyan">
+      <div class="hack-title">📱 Too Good To Go App</div>
+      <div class="hack-save">Magic Bags from £3–4</div>
+      <p>Restaurants, bakeries, and cafes sell surplus food at end of day through the Too Good To Go app for a fraction of the original price. A bag worth £10–15 of food typically costs £3–4. Available across the UK in most towns and cities.</p>
+      <a href="https://toogoodtogo.com/en-gb" target="_blank" style="color:var(--cyan);font-family:var(--mono);font-size:12px;">toogoodtogo.com ↗</a>
+    </div>
+    <div class="hack-card gold">
+      <div class="hack-title">🔄 Voucher Codes + Cashback</div>
+      <div class="hack-save">Stack savings on top of savings</div>
+      <p>Use TopCashback or Quidco for cashback on online grocery orders. Stack with voucher codes from VoucherCodes.co.uk or MyVoucherCodes.co.uk. On a £50 weekly shop you can regularly save £5–15 just by spending 3 minutes checking codes before checkout.</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- FOUNDATION MESSAGE -->
+  <div style="background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:24px;margin:28px 0;text-align:center;">
+    <div style="font-family:var(--display);font-size:22px;letter-spacing:2px;color:var(--green);margin-bottom:10px;text-transform:uppercase;">Knowledge Is Power</div>
+    <p style="font-size:15px;max-width:580px;margin:0 auto 8px;">Knowing where to shop, what to buy, and how to make things last is not about being cheap — it is about being smart. Every dollar you save is a dollar you control.</p>
+    <p style="color:var(--cyan);font-family:var(--mono);font-size:11px;letter-spacing:2px;margin-top:12px;">// DUTTYBOOKBAG — REAL TOOLS FOR REAL LIFE //</p>
+  </div>
+
+</div>
+
+<!-- BOTTOM LOGO -->
+<section style="padding:24px 0;">
+  <div class="wrap" style="text-align:center;">
+    <div class="dbb-logo">
+      <div class="dot rd d1"></div>
+      <div class="dot gr d2"></div>
+      <div class="dot rd d3"></div>
+      <div class="dot gr d4"></div>
+      <div class="dot gr d5"></div>
+      <div class="dot gr d6"></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>DuttyBookBag · DBB Stretch · Smart Living Guide</p>
+    <p style="color:var(--green);font-size:12px;letter-spacing:3px;margin-bottom:8px;">// MAKE YOUR DOLLAR GO FURTHER //</p>
+    <p><a href="index.html">Home</a> · <a href="dbb-lifeline.html">Lifeline</a> · <a href="dbb-off-grid.html">Off-Grid</a> · <a href="dbb-encouragement-center.html">Encouragement</a></p>
+    <div class="disclaimer">
+      <strong>DISCLAIMER:</strong> The information on this page is provided for general educational and informational purposes only. All prices listed are approximate national averages and will vary by region, store location, and time. Prices change frequently — always verify current prices at your local store before making purchasing decisions. DuttyBookBag and the Dutty Ashy Win_G Foundation are not affiliated with, endorsed by, or partnered with any store, brand, app, or service mentioned on this page. Store links open third-party websites governed by their own terms and privacy policies. Budget meal suggestions are intended for short-term financial hardship only and do not constitute nutritional or medical advice — consult a healthcare professional regarding your diet. Home hack suggestions are general tips — results vary. We assume no liability for decisions made based on information on this page. By using this page you acknowledge it is a community resource provided as-is for informational purposes only.
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
