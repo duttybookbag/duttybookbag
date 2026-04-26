@@ -1,189 +1,311 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Encouragement Center — Dutty Ashy Win_G Foundation</title>
-  <meta name="description" content="Daily encouragement from the Dutty Ashy Win_G Foundation. Motivational quotes and world wisdom to lift you up. We care about you." />
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <style>
-    :root{--black:#000;--panel:#080f0f;--border:#0c3030;--cyan:#00ffe1;--green:#00ff6a;--blue:#4db8ff;--gold:#ffd166;--red:#ff5252;--purple:#c792ea;--orange:#ff9f43;--neon:#39ff14;--text:#b8e8e2;--muted:#3d7070;--mono:'Share Tech Mono',monospace;--display:'Bebas Neue',sans-serif;--body:'Rajdhani',sans-serif;}
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}
-    body{background:var(--black);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.7;overflow-x:hidden;}
-    body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,255,225,0.012) 3px,rgba(0,255,225,0.012) 4px);pointer-events:none;z-index:999;}
-    body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,255,225,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,225,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0;}
-    .wrap{position:relative;z-index:1;max-width:800px;margin:0 auto;padding:0 24px;}
-    .site-nav{position:sticky;top:0;z-index:100;background:rgba(0,0,0,0.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:0 24px;}
-    .site-nav .wrap{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;padding:0;max-width:800px;}
-    .site-nav a{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--muted);text-decoration:none;text-transform:uppercase;padding:14px 14px;transition:color 0.2s;white-space:nowrap;}
-    .site-nav a:hover{color:var(--cyan);}.site-nav a.active{color:var(--green);text-shadow:0 0 8px rgba(0,255,106,0.4);}.site-nav a.nav-highlight{color:var(--gold);font-weight:700;}
-    @media(max-width:580px){.site-nav a{font-size:10px;padding:10px 7px;letter-spacing:1px;}}
-    header{position:relative;padding:50px 0 30px;text-align:center;overflow:hidden;}
-    .glow-orb{position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:500px;height:500px;background:radial-gradient(circle,rgba(0,255,106,0.08) 0%,transparent 70%);pointer-events:none;}
-    .badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:5px;color:var(--cyan);border:1px solid var(--cyan);padding:5px 18px;margin-bottom:18px;text-transform:uppercase;}
-    h1{font-family:var(--display);font-size:clamp(38px,7vw,70px);letter-spacing:4px;line-height:0.95;color:#fff;text-transform:uppercase;}
-    h1 .accent{color:var(--cyan);text-shadow:0 0 30px rgba(0,255,225,0.5);}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encouragement Center — Dutty Ashy Win_G Foundation</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#000;--panel:#080f0f;--border:#0c3030;
+  --cyan:#00ffe1;--green:#00ff6a;--gold:#ffd166;
+  --red:#ff5252;--purple:#c792ea;--silver:#a8b8c8;
+  --bible:#d4a843;--text:#b8e8e2;--muted:#3d7070;
+  --mono:"Share Tech Mono",monospace;
+  --display:"Bebas Neue",sans-serif;
+  --body:"Rajdhani",sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--black);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.7;overflow-x:hidden;}
+body::before{content:"";position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,255,225,0.012) 3px,rgba(0,255,225,0.012) 4px);pointer-events:none;z-index:999;}
+.wrap{position:relative;z-index:1;max-width:800px;margin:0 auto;padding:0 24px;}
 
-    /* ── DAILY ENCOURAGEMENT BOX ── */
-    .daily{background:linear-gradient(135deg,rgba(0,255,106,0.07),rgba(0,255,225,0.04));border:2px solid rgba(0,255,106,0.4);border-radius:10px;padding:40px 36px;margin:30px 0;text-align:center;position:relative;overflow:hidden;}
-    .daily::before{content:'';position:absolute;top:-40px;left:50%;transform:translateX(-50%);width:300px;height:300px;background:radial-gradient(circle,rgba(0,255,106,0.1),transparent 70%);pointer-events:none;}
-    .daily-label{font-family:var(--mono);font-size:11px;letter-spacing:5px;color:var(--green);text-transform:uppercase;margin-bottom:20px;position:relative;}
-    .daily-label span{display:inline-block;background:rgba(0,255,106,0.12);border:1px solid rgba(0,255,106,0.4);border-radius:3px;padding:2px 10px;margin-left:8px;font-size:9px;vertical-align:middle;}
-    .daily-quote{font-family:Georgia,'Times New Roman',serif;font-size:clamp(20px,4vw,28px);color:#89cff0;line-height:1.6;font-style:italic;margin-bottom:18px;position:relative;}
-    .daily-author{font-family:var(--mono);font-size:14px;letter-spacing:2px;color:var(--green);position:relative;}
+/* NAV */
+.site-nav{position:sticky;top:0;z-index:100;background:rgba(0,0,0,0.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:0 24px;}
+.site-nav .inner{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;max-width:800px;margin:0 auto;}
+.site-nav a{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--muted);text-decoration:none;text-transform:uppercase;padding:14px 14px;transition:color 0.2s;white-space:nowrap;}
+.site-nav a:hover{color:var(--cyan);}
+.site-nav a.active{color:var(--green);}
+.site-nav a.hl{color:var(--gold);}
 
-    /* ── WISDOM BOX ── */
-    .wisdom-box{background:linear-gradient(135deg,rgba(255,209,102,0.05),rgba(199,146,234,0.03));border:2px solid rgba(255,209,102,0.25);border-radius:10px;padding:32px 36px;margin:20px 0;text-align:center;position:relative;overflow:hidden;}
-    .wisdom-box::before{content:'';position:absolute;top:-40px;left:50%;transform:translateX(-50%);width:300px;height:300px;background:radial-gradient(circle,rgba(255,209,102,0.06),transparent 70%);pointer-events:none;}
-    .wisdom-label{font-family:var(--mono);font-size:11px;letter-spacing:5px;color:var(--gold);text-transform:uppercase;margin-bottom:16px;position:relative;}
-    .wisdom-label span{display:inline-block;background:rgba(255,209,102,0.1);border:1px solid rgba(255,209,102,0.35);border-radius:3px;padding:2px 10px;margin-left:8px;font-size:9px;vertical-align:middle;}
-    .wisdom-quote{font-family:Georgia,'Times New Roman',serif;font-size:clamp(17px,3.5vw,24px);color:#f0d080;line-height:1.6;font-style:italic;margin-bottom:14px;position:relative;}
-    .wisdom-author{font-family:var(--mono);font-size:13px;letter-spacing:2px;color:var(--gold);opacity:0.8;position:relative;}
+/* HEADER */
+header{padding:40px 0 20px;text-align:center;}
+.badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:4px;color:var(--cyan);border:1px solid var(--cyan);padding:4px 16px;margin-bottom:14px;text-transform:uppercase;}
+h1{font-family:var(--display);font-size:clamp(36px,7vw,66px);letter-spacing:4px;color:#fff;text-transform:uppercase;line-height:0.95;}
+h1 span{color:var(--cyan);text-shadow:0 0 30px rgba(0,255,225,0.4);}
 
-    /* ── SECTION DIVIDER ── */
-    .section-divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:30px 0;}
-    .section-title{font-family:var(--display);font-size:clamp(22px,4vw,36px);letter-spacing:3px;color:#fff;text-transform:uppercase;margin-bottom:6px;}
-    .section-sub{font-family:var(--mono);font-size:11px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:20px;}
+/* QUOTE BOXES */
+.qbox{border-radius:10px;padding:32px 28px;margin:20px 0;text-align:center;position:relative;}
+.qbox.enc{background:linear-gradient(135deg,rgba(0,255,106,0.07),rgba(0,255,225,0.04));border:2px solid rgba(0,255,106,0.4);}
+.qbox.wis{background:linear-gradient(135deg,rgba(255,209,102,0.06),rgba(199,146,234,0.03));border:2px solid rgba(255,209,102,0.25);}
+.qbox.sto{background:linear-gradient(135deg,rgba(168,184,200,0.06),rgba(122,143,160,0.03));border:2px solid rgba(168,184,200,0.25);}
+.qbox.prv{background:linear-gradient(135deg,rgba(199,146,234,0.06),rgba(100,80,180,0.03));border:2px solid rgba(199,146,234,0.25);}
+.qbox.bib{background:linear-gradient(135deg,rgba(212,168,67,0.07),rgba(180,130,40,0.03));border:2px solid rgba(212,168,67,0.3);}
 
-    /* ── BUTTONS ── */
-    .btn-row{display:flex;gap:12px;justify-content:center;margin:20px 0;flex-wrap:wrap;}
-    .btn{font-family:var(--display);font-size:18px;letter-spacing:3px;padding:12px 28px;border:2px solid;border-radius:6px;cursor:pointer;text-transform:uppercase;transition:all 0.2s;background:transparent;}
-    .btn-enc{color:var(--green);border-color:var(--green);}.btn-enc:hover{background:var(--green);color:#000;}
-    .btn-wis{color:var(--gold);border-color:var(--gold);}.btn-wis:hover{background:var(--gold);color:#000;}
-    .btn-browse{color:var(--cyan);border-color:var(--cyan);font-size:15px;padding:10px 22px;}.btn-browse:hover{background:var(--cyan);color:#000;}
-    .btn-filter{color:var(--muted);border-color:var(--border);font-size:13px;padding:7px 16px;letter-spacing:1px;}.btn-filter:hover{border-color:var(--cyan);color:var(--cyan);}.btn-filter.active-enc{background:rgba(0,255,106,0.12);border-color:var(--green);color:var(--green);}.btn-filter.active-wis{background:rgba(255,209,102,0.1);border-color:var(--gold);color:var(--gold);}.btn-filter.active-prv{background:rgba(199,146,234,0.1);border-color:var(--purple);color:var(--purple);}.btn-filter.active-all{background:rgba(0,255,225,0.08);border-color:var(--cyan);color:var(--cyan);}
+.qlabel{font-family:var(--mono);font-size:11px;letter-spacing:4px;text-transform:uppercase;margin-bottom:16px;}
+.qlabel .tag{display:inline-block;border-radius:3px;padding:2px 10px;margin-left:6px;font-size:9px;vertical-align:middle;}
+.qlabel.enc{color:var(--green)}.qlabel.enc .tag{background:rgba(0,255,106,0.12);border:1px solid rgba(0,255,106,0.4);}
+.qlabel.wis{color:var(--gold)}.qlabel.wis .tag{background:rgba(255,209,102,0.1);border:1px solid rgba(255,209,102,0.35);}
+.qlabel.sto{color:var(--silver)}.qlabel.sto .tag{background:rgba(168,184,200,0.1);border:1px solid rgba(168,184,200,0.3);}
+.qlabel.prv{color:var(--purple)}.qlabel.prv .tag{background:rgba(199,146,234,0.1);border:1px solid rgba(199,146,234,0.3);}
+.qlabel.bib{color:var(--bible)}.qlabel.bib .tag{background:rgba(212,168,67,0.1);border:1px solid rgba(212,168,67,0.3);}
 
-    /* ── BROWSE SECTION ── */
-    .browse{display:none;margin:20px 0;}.browse.show{display:block;}
-    .browse-count{font-family:var(--mono);font-size:12px;color:var(--muted);text-align:center;margin-bottom:16px;letter-spacing:2px;}
-    .q-card{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:18px 22px;margin-bottom:10px;transition:border-color 0.2s;position:relative;}
-    .q-card:hover{border-color:rgba(0,255,225,0.3);}
-    .q-card.type-enc{border-left:3px solid var(--green);}
-    .q-card.type-wis{border-left:3px solid var(--gold);}
-    .q-card.type-prv{border-left:3px solid var(--purple);}
-    .q-text{font-family:Georgia,serif;font-size:16px;color:#fff;font-style:italic;line-height:1.6;margin-bottom:8px;}
-    .q-author{font-family:var(--mono);font-size:12px;letter-spacing:1px;}
-    .q-author.enc{color:var(--green);}.q-author.wis{color:var(--gold);}.q-author.prv{color:var(--purple);}
-    .q-badge{position:absolute;top:14px;right:14px;font-family:var(--mono);font-size:9px;letter-spacing:1px;padding:2px 7px;border-radius:3px;text-transform:uppercase;}
-    .badge-enc{background:rgba(0,255,106,0.12);color:var(--green);border:1px solid rgba(0,255,106,0.3);}
-    .badge-wis{background:rgba(255,209,102,0.1);color:var(--gold);border:1px solid rgba(255,209,102,0.3);}
-    .badge-prv{background:rgba(199,146,234,0.1);color:var(--purple);border:1px solid rgba(199,146,234,0.3);}
+.qtext{font-family:Georgia,"Times New Roman",serif;font-size:clamp(17px,3.5vw,24px);line-height:1.65;font-style:italic;margin-bottom:14px;}
+.qtext.enc{color:#89cff0;}
+.qtext.wis{color:#f0d080;}
+.qtext.sto{color:#c8d8e8;}
+.qtext.prv{color:#d8b8f0;}
+.qtext.bib{color:#e8c878;}
 
-    /* ── CATEGORY EXPLAINER ── */
-    .cat-explain{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0;}
-    @media(max-width:580px){.cat-explain{grid-template-columns:1fr;}}
-    .cat-card{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:18px 16px;text-align:center;}
-    .cat-card.enc{border-top:3px solid var(--green);}.cat-card.wis{border-top:3px solid var(--gold);}.cat-card.prv{border-top:3px solid var(--purple);}
-    .cat-icon{font-size:24px;margin-bottom:8px;}
-    .cat-name{font-family:var(--display);font-size:18px;letter-spacing:2px;color:#fff;text-transform:uppercase;margin-bottom:4px;}
-    .cat-desc{font-size:13px;color:var(--muted);line-height:1.5;}
+.qauthor{font-family:var(--mono);font-size:13px;letter-spacing:2px;}
+.qauthor.enc{color:var(--green);}
+.qauthor.wis{color:var(--gold);}
+.qauthor.sto{color:var(--silver);}
+.qauthor.prv{color:var(--purple);}
+.qauthor.bib{color:var(--bible);}
 
-    .message{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:24px;margin:30px 0;text-align:center;}
-    .message h3{font-family:var(--display);font-size:22px;letter-spacing:2px;color:var(--green);margin-bottom:12px;text-transform:uppercase;}
-    .message p{font-size:15px;max-width:600px;margin:0 auto 8px;}
-    .dbb-logo{display:grid;grid-template-columns:repeat(3,22px);grid-template-rows:repeat(3,22px);gap:7px;justify-content:center;margin:0 auto;width:max-content;}
-    .dbb-logo .dot{width:22px;height:22px;border-radius:50%;animation:p 2.8s ease-in-out infinite;}
-    .dbb-logo .green{background:#00ff44;box-shadow:0 0 7px #00ff44,0 0 14px #00ff44;}
-    .dbb-logo .red{background:#ff1a1a;box-shadow:0 0 7px #ff1a1a,0 0 14px #ff1a1a;}
-    .dbb-logo .d1{grid-column:2;grid-row:1;}.dbb-logo .d2{grid-column:1;grid-row:2;}.dbb-logo .d3{grid-column:2;grid-row:2;}.dbb-logo .d4{grid-column:3;grid-row:2;}.dbb-logo .d5{grid-column:1;grid-row:3;}.dbb-logo .d6{grid-column:3;grid-row:3;}
-    @keyframes p{0%,100%{opacity:0.55;transform:scale(0.92);}50%{opacity:1;transform:scale(1.08);}}
-    footer{border-top:1px solid var(--border);padding:30px 0;margin-top:40px;text-align:center;background:#010505;}
-    footer p{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:6px;}
-    footer a{color:var(--green);text-decoration:none;}
-    .disclaimer{max-width:700px;margin:14px auto 0;font-size:10px;color:var(--muted);font-style:italic;line-height:1.5;padding:10px;border:1px solid var(--border);border-radius:4px;text-align:left;}
-  </style>
+/* BUTTONS */
+.btn-row{display:flex;gap:10px;justify-content:center;margin:10px 0 22px;flex-wrap:wrap;}
+.btn{font-family:var(--display);font-size:16px;letter-spacing:2px;padding:10px 22px;border:2px solid;border-radius:6px;cursor:pointer;text-transform:uppercase;background:transparent;transition:all 0.2s;}
+.btn.enc{color:var(--green);border-color:var(--green);}.btn.enc:hover{background:var(--green);color:#000;}
+.btn.wis{color:var(--gold);border-color:var(--gold);}.btn.wis:hover{background:var(--gold);color:#000;}
+.btn.sto{color:var(--silver);border-color:var(--silver);}.btn.sto:hover{background:var(--silver);color:#000;}
+.btn.prv{color:var(--purple);border-color:var(--purple);}.btn.prv:hover{background:var(--purple);color:#000;}
+.btn.bib{color:var(--bible);border-color:var(--bible);}.btn.bib:hover{background:var(--bible);color:#000;}
+.btn.sm{font-size:13px;padding:8px 16px;}
+
+/* CAT CARDS */
+.cat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:20px 0;}
+@media(max-width:520px){.cat-grid{grid-template-columns:1fr;}}
+.cat-card{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:14px;text-align:center;}
+.cat-card.enc{border-top:3px solid var(--green);}
+.cat-card.wis{border-top:3px solid var(--gold);}
+.cat-card.sto{border-top:3px solid var(--silver);}
+.cat-card.prv{border-top:3px solid var(--purple);}
+.cat-card.bib{border-top:3px solid var(--bible);}
+.cat-icon{font-size:20px;margin-bottom:6px;}
+.cat-name{font-family:var(--display);font-size:16px;letter-spacing:2px;color:#fff;text-transform:uppercase;margin-bottom:3px;}
+.cat-desc{font-size:12px;color:var(--muted);line-height:1.4;}
+
+/* BROWSE */
+.browse{display:none;margin:16px 0;}.browse.show{display:block;}
+.qcard{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:16px 20px;margin-bottom:8px;position:relative;}
+.qcard.enc{border-left:3px solid var(--green);}
+.qcard.wis{border-left:3px solid var(--gold);}
+.qcard.sto{border-left:3px solid var(--silver);}
+.qcard.prv{border-left:3px solid var(--purple);}
+.qcard.bib{border-left:3px solid var(--bible);}
+.qcard-text{font-family:Georgia,serif;font-size:15px;color:#fff;font-style:italic;line-height:1.6;margin-bottom:6px;}
+.qcard-auth{font-family:var(--mono);font-size:11px;letter-spacing:1px;}
+.qcard-auth.enc{color:var(--green);}.qcard-auth.wis{color:var(--gold);}
+.qcard-auth.sto{color:var(--silver);}.qcard-auth.prv{color:var(--purple);}
+.qcard-auth.bib{color:var(--bible);}
+.qbadge{position:absolute;top:10px;right:10px;font-family:var(--mono);font-size:8px;letter-spacing:1px;padding:2px 6px;border-radius:3px;text-transform:uppercase;}
+.qbadge.enc{background:rgba(0,255,106,0.12);color:var(--green);border:1px solid rgba(0,255,106,0.3);}
+.qbadge.wis{background:rgba(255,209,102,0.1);color:var(--gold);border:1px solid rgba(255,209,102,0.3);}
+.qbadge.sto{background:rgba(168,184,200,0.1);color:var(--silver);border:1px solid rgba(168,184,200,0.3);}
+.qbadge.prv{background:rgba(199,146,234,0.1);color:var(--purple);border:1px solid rgba(199,146,234,0.3);}
+.qbadge.bib{background:rgba(212,168,67,0.1);color:var(--bible);border:1px solid rgba(212,168,67,0.3);}
+.browse-count{font-family:var(--mono);font-size:12px;color:var(--muted);text-align:center;margin-bottom:12px;letter-spacing:2px;}
+.frow{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:14px;}
+.fbtn{font-family:var(--mono);font-size:10px;letter-spacing:1px;padding:5px 12px;border:1px solid var(--border);border-radius:4px;cursor:pointer;background:transparent;color:var(--muted);text-transform:uppercase;transition:all 0.15s;}
+.fbtn:hover,.fbtn.on{border-color:var(--cyan);color:var(--cyan);}
+
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:24px 0;}
+#toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:var(--green);color:#000;font-family:var(--mono);font-size:12px;letter-spacing:2px;padding:10px 22px;border-radius:6px;z-index:9999;opacity:0;transition:opacity 0.3s;pointer-events:none;}
+
+/* LOGO */
+.dbb-logo{display:grid;grid-template-columns:repeat(3,20px);grid-template-rows:repeat(3,20px);gap:6px;justify-content:center;margin:0 auto;width:max-content;}
+.dbb-logo .dot{width:20px;height:20px;border-radius:50%;animation:pulse 2.8s ease-in-out infinite;}
+.dbb-logo .gr{background:#00ff44;box-shadow:0 0 7px #00ff44,0 0 14px #00ff44;}
+.dbb-logo .rd{background:#ff1a1a;box-shadow:0 0 7px #ff1a1a,0 0 14px #ff1a1a;}
+.dbb-logo .d1{grid-column:2;grid-row:1;}
+.dbb-logo .d2{grid-column:1;grid-row:2;}
+.dbb-logo .d3{grid-column:2;grid-row:2;}
+.dbb-logo .d4{grid-column:3;grid-row:2;}
+.dbb-logo .d5{grid-column:1;grid-row:3;}
+.dbb-logo .d6{grid-column:3;grid-row:3;}
+@keyframes pulse{0%,100%{opacity:0.55;transform:scale(0.92);}50%{opacity:1;transform:scale(1.08);}}
+
+footer{border-top:1px solid var(--border);padding:28px 0;margin-top:36px;text-align:center;background:#010505;}
+footer p{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:6px;}
+footer a{color:var(--green);text-decoration:none;}
+.disclaimer{max-width:700px;margin:12px auto 0;font-size:10px;color:var(--muted);font-style:italic;line-height:1.5;padding:10px;border:1px solid var(--border);border-radius:4px;text-align:left;}
+</style>
 </head>
 <body>
-<nav class="site-nav"><div class="wrap"><a href="index.html">Home</a><a href="dbb-lifeline.html" class="nav-highlight">Lifeline</a><a href="dbb-encouragement-center.html" class="active">Encouragement</a></div></nav>
-<div style="text-align:center;padding:6px 0;background:rgba(0,0,0,0.8);border-bottom:1px solid #0c3030;position:relative;z-index:99;">
+<div id="toast">✓ SAVED — SHARE IT!</div>
+
+<nav class="site-nav">
+  <div class="inner">
+    <a href="index.html">Home</a>
+    <a href="dbb-lifeline.html" class="hl">Lifeline</a>
+    <a href="dbb-encouragement-center.html" class="active">Encouragement</a>
+  </div>
+</nav>
+
+<div style="text-align:center;padding:5px 0;background:rgba(0,0,0,0.8);border-bottom:1px solid #0c3030;position:relative;z-index:99;">
   <div id="google_translate_element" style="display:inline-block;"></div>
 </div>
 <script>
-function googleTranslateElementInit(){new google.translate.TranslateElement({pageLanguage:'en',layout:google.translate.TranslateElement.InlineLayout.HORIZONTAL},'google_translate_element');}
+function googleTranslateElementInit(){
+  new google.translate.TranslateElement({pageLanguage:"en",layout:google.translate.TranslateElement.InlineLayout.HORIZONTAL},"google_translate_element");
+}
 </script>
 <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-<style>.goog-te-banner-frame{display:none!important;}.goog-te-gadget{font-size:11px!important;color:#3d7070!important;}.goog-te-gadget .goog-te-combo{background:#080f0f;color:#b8e8e2;border:1px solid #0c3030;border-radius:4px;padding:4px 8px;font-family:'Share Tech Mono',monospace;font-size:11px;outline:none;}.goog-te-gadget>span{display:none!important;}body{top:0!important;}</style>
+<style>
+.goog-te-banner-frame{display:none!important;}
+.goog-te-gadget{font-size:11px!important;color:#3d7070!important;}
+.goog-te-gadget .goog-te-combo{background:#080f0f;color:#b8e8e2;border:1px solid #0c3030;border-radius:4px;padding:4px 8px;font-family:"Share Tech Mono",monospace;font-size:11px;outline:none;}
+.goog-te-gadget>span{display:none!important;}
+body{top:0!important;}
+</style>
 
-<header><div class="glow-orb"></div><div class="wrap">
-  <div style="display:flex;justify-content:center;margin-bottom:18px;"><svg viewBox="0 0 120 140" width="90" height="105" style="filter:drop-shadow(0 0 18px rgba(57,255,20,0.3));"><rect x="10" y="10" width="100" height="120" rx="14" fill="#080f0f" stroke="#1a3a3a" stroke-width="2"/><circle cx="42" cy="38" r="9" fill="#39ff14"><animate attributeName="opacity" values="1;1;1;0.1;1" dur="4s" repeatCount="indefinite"/></circle><circle cx="42" cy="38" r="4" fill="#fff" opacity="0.3"/><circle cx="78" cy="38" r="9" fill="#39ff14"><animate attributeName="opacity" values="1;1;1;0.1;1" dur="4s" repeatCount="indefinite"/></circle><circle cx="78" cy="38" r="4" fill="#fff" opacity="0.3"/><circle cx="33" cy="72" r="7" fill="#ff5252" opacity="0.35"/><circle cx="60" cy="72" r="7" fill="#ff5252" opacity="0.6"/><circle cx="87" cy="72" r="7" fill="#ff5252" opacity="0.35"/><circle cx="60" cy="102" r="8" fill="#ff5252" opacity="0.85"><animate attributeName="opacity" values="0.85;0.5;0.85" dur="2.5s" repeatCount="indefinite"/></circle><animateTransform attributeName="transform" type="translate" values="0,0;0,-2;0,0" dur="4s" repeatCount="indefinite"/></svg></div>
-  <div class="badge">Dutty Ashy Win_G Foundation</div>
-  <h1>DUTTY ASHY WIN_G<br><span class="accent">ENCOURAGEMENT CENTER</span></h1>
-  <p style="margin-top:18px;font-size:16px;color:var(--text);max-width:600px;margin-left:auto;margin-right:auto;">The Dutty Ashy Win_G Foundation cares about your spirit, your mind, and your heart. Come here whenever you need a word. Every visit gives you a new one.</p>
-</div></header>
+<header>
+  <div class="wrap">
+    <div style="display:flex;justify-content:center;margin-bottom:16px;">
+      <svg viewBox="0 0 120 140" width="80" height="93" style="filter:drop-shadow(0 0 14px rgba(57,255,20,0.3));">
+        <rect x="10" y="10" width="100" height="120" rx="14" fill="#080f0f" stroke="#1a3a3a" stroke-width="2"/>
+        <circle cx="42" cy="38" r="9" fill="#39ff14"><animate attributeName="opacity" values="1;0.1;1" dur="4s" repeatCount="indefinite"/></circle>
+        <circle cx="78" cy="38" r="9" fill="#39ff14"><animate attributeName="opacity" values="1;0.1;1" dur="4s" repeatCount="indefinite"/></circle>
+        <circle cx="33" cy="72" r="7" fill="#ff5252" opacity="0.35"/>
+        <circle cx="60" cy="72" r="7" fill="#ff5252" opacity="0.6"/>
+        <circle cx="87" cy="72" r="7" fill="#ff5252" opacity="0.35"/>
+        <circle cx="60" cy="102" r="8" fill="#ff5252"><animate attributeName="opacity" values="0.85;0.4;0.85" dur="2.5s" repeatCount="indefinite"/></circle>
+      </svg>
+    </div>
+    <div class="badge">Dutty Ashy Win_G Foundation</div>
+    <h1>ENCOURAGEMENT<br><span>CENTER</span></h1>
+    <p style="margin-top:14px;font-size:16px;color:var(--text);max-width:560px;margin-left:auto;margin-right:auto;">Words for every season of life. Come here whenever you need a word — there is always one waiting for you.</p>
+    <div style="margin-top:14px;">
+      <button id="bell-btn" onclick="toggleBell()" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;padding:7px 18px;background:transparent;border:1px solid var(--gold);color:var(--gold);border-radius:20px;cursor:pointer;text-transform:uppercase;">&#128276; BELL: ON</button>
+    </div>
+  </div>
+</header>
 
 <div class="wrap">
 
-  <!-- DAILY ENCOURAGEMENT BOX — FIRST THING THEY SEE -->
-  <div class="daily" id="dailyBox">
-    <div class="daily-label">// Today's Encouragement <span>💚 PURE UPLIFT</span></div>
-    <div class="daily-quote" id="dailyQuote"></div>
-    <div class="daily-author" id="dailyAuthor"></div>
+  <!-- ENCOURAGEMENT -->
+  <div class="qbox enc" id="box-enc">
+    <div class="qlabel enc">// TODAY'S ENCOURAGEMENT <span class="tag">&#128154; PURE UPLIFT</span></div>
+    <div class="qtext enc" id="enc-quote">&nbsp;</div>
+    <div class="qauthor enc" id="enc-author">&nbsp;</div>
   </div>
   <div class="btn-row">
-    <button class="btn btn-enc" onclick="showRandomEnc()">Give Me Another 💚</button>
+    <button class="btn enc" onclick="newQ('enc')">Give Me Another &#128154;</button>
+    <button class="btn enc sm" onclick="shareBox('box-enc')">&#128248; Share</button>
   </div>
 
-  <div class="section-divider"></div>
+  <div class="divider"></div>
 
-  <!-- CATEGORY EXPLAINER -->
-  <div class="cat-explain">
-    <div class="cat-card enc">
-      <div class="cat-icon">💚</div>
-      <div class="cat-name">Encouragement</div>
-      <div class="cat-desc">Pure upliftment. Words that lift you when you're down. "Keep going. You've got this."</div>
-    </div>
-    <div class="cat-card wis">
-      <div class="cat-icon">🧠</div>
-      <div class="cat-name">Wisdom</div>
-      <div class="cat-desc">Life lessons and smart advice. Things to think about and live by.</div>
-    </div>
-    <div class="cat-card prv">
-      <div class="cat-icon">🌍</div>
-      <div class="cat-name">World Proverbs</div>
-      <div class="cat-desc">Jamaican, Caribbean, African, and world proverbs. Old truths that still hold.</div>
-    </div>
+  <!-- CATEGORY INFO -->
+  <div class="cat-grid">
+    <div class="cat-card enc"><div class="cat-icon">&#128154;</div><div class="cat-name">Encouragement</div><div class="cat-desc">Pure uplift. Keep going. You've got this.</div></div>
+    <div class="cat-card wis"><div class="cat-icon">&#129504;</div><div class="cat-name">Wisdom</div><div class="cat-desc">Life lessons and smart advice to live by.</div></div>
+    <div class="cat-card sto"><div class="cat-icon">&#9876;&#65039;</div><div class="cat-name">Stoic Wisdom</div><div class="cat-desc">Marcus Aurelius, Epictetus, Seneca.</div></div>
+    <div class="cat-card prv"><div class="cat-icon">&#127758;</div><div class="cat-name">World Proverbs</div><div class="cat-desc">Jamaican, Caribbean, African, Native American.</div></div>
+    <div class="cat-card bib" style="grid-column:1/-1;"><div class="cat-icon">&#128214;</div><div class="cat-name">Biblical — KJV</div><div class="cat-desc">Proverbs, Psalms, and Scripture. King James Version — public domain.</div></div>
   </div>
 
-  <!-- DAILY WISDOM BOX -->
-  <div class="wisdom-box" id="wisdomBox">
-    <div class="wisdom-label">// Today's Wisdom <span>🧠 THINK ON THIS</span></div>
-    <div class="wisdom-quote" id="wisdomQuote"></div>
-    <div class="wisdom-author" id="wisdomAuthor"></div>
+  <div class="divider"></div>
+
+  <!-- WISDOM -->
+  <div class="qbox wis" id="box-wis">
+    <div class="qlabel wis">// WISDOM <span class="tag">&#129504; THINK ON THIS</span></div>
+    <div class="qtext wis" id="wis-quote">&nbsp;</div>
+    <div class="qauthor wis" id="wis-author">&nbsp;</div>
   </div>
   <div class="btn-row">
-    <button class="btn btn-wis" onclick="showRandomWis()">New Wisdom 🧠</button>
+    <button class="btn wis" onclick="newQ('wis')">New Wisdom &#129504;</button>
+    <button class="btn wis sm" onclick="shareBox('box-wis')">&#128248; Share</button>
   </div>
 
-  <div class="section-divider"></div>
+  <div class="divider"></div>
 
-  <!-- BROWSE ALL -->
-  <div style="text-align:center;margin-bottom:16px;">
-    <div class="section-sub">// Explore All Quotes</div>
-    <div class="btn-row" style="margin-top:0;">
-      <button class="btn btn-browse" onclick="toggleBrowse()">Browse All Quotes</button>
+  <!-- STOIC -->
+  <div class="qbox sto" id="box-sto">
+    <div class="qlabel sto">// STOIC WISDOM <span class="tag">&#9876;&#65039; DISCIPLINE THE MIND</span></div>
+    <div class="qtext sto" id="sto-quote">&nbsp;</div>
+    <div class="qauthor sto" id="sto-author">&nbsp;</div>
+  </div>
+  <div class="btn-row">
+    <button class="btn sto" onclick="newQ('sto')">New Stoic &#9876;&#65039;</button>
+    <button class="btn sto sm" onclick="shareBox('box-sto')">&#128248; Share</button>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PROVERBS -->
+  <div class="qbox prv" id="box-prv">
+    <div class="qlabel prv">// WORLD PROVERBS <span class="tag">&#127758; OLD TRUTHS</span></div>
+    <div class="qtext prv" id="prv-quote">&nbsp;</div>
+    <div class="qauthor prv" id="prv-author">&nbsp;</div>
+  </div>
+  <div class="btn-row">
+    <button class="btn prv" onclick="newQ('prv')">New Proverb &#127758;</button>
+    <button class="btn prv sm" onclick="shareBox('box-prv')">&#128248; Share</button>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- BIBLICAL -->
+  <div class="qbox bib" id="box-bib">
+    <div class="qlabel bib">// SCRIPTURE <span class="tag">&#128214; KING JAMES VERSION</span></div>
+    <div class="qtext bib" id="bib-quote">&nbsp;</div>
+    <div class="qauthor bib" id="bib-author">&nbsp;</div>
+  </div>
+  <div class="btn-row">
+    <button class="btn bib" onclick="newQ('bib')">New Scripture &#128214;</button>
+    <button class="btn bib sm" onclick="shareBox('box-bib')">&#128248; Share</button>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- BROWSE -->
+  <div style="text-align:center;margin-bottom:14px;">
+    <button class="btn" style="color:var(--cyan);border-color:var(--cyan);font-size:14px;padding:10px 22px;" onclick="toggleBrowse()">Browse All 390 Quotes</button>
+  </div>
+  <div class="browse" id="browseDiv">
+    <div class="frow">
+      <button class="fbtn on" onclick="filter('all',this)">All</button>
+      <button class="fbtn" onclick="filter('enc',this)">&#128154; Encouragement</button>
+      <button class="fbtn" onclick="filter('wis',this)">&#129504; Wisdom</button>
+      <button class="fbtn" onclick="filter('sto',this)">&#9876; Stoic</button>
+      <button class="fbtn" onclick="filter('prv',this)">&#127758; Proverbs</button>
+      <button class="fbtn" onclick="filter('bib',this)">&#128214; Biblical</button>
     </div>
+    <div class="browse-count" id="bcount"></div>
+    <div id="blist"></div>
   </div>
 
-  <div class="browse" id="browseSection">
-    <div class="btn-row" id="filterRow">
-      <button class="btn btn-filter active-all" onclick="filterQ('all',this,'active-all')">All</button>
-      <button class="btn btn-filter" onclick="filterQ('enc',this,'active-enc')">💚 Encouragement</button>
-      <button class="btn btn-filter" onclick="filterQ('wis',this,'active-wis')">🧠 Wisdom</button>
-      <button class="btn btn-filter" onclick="filterQ('prv',this,'active-prv')">🌍 World Proverbs</button>
-    </div>
-    <div class="browse-count" id="browseCount"></div>
-    <div id="browseList"></div>
+  <div style="background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:22px;margin:28px 0;text-align:center;">
+    <div style="font-family:var(--display);font-size:20px;letter-spacing:2px;color:var(--green);margin-bottom:10px;text-transform:uppercase;">The Foundation Cares About You</div>
+    <p style="font-size:15px;max-width:560px;margin:0 auto 8px;">When you are down, when life is heavy, when you feel like nobody sees you — <strong>we see you.</strong> Come back here anytime.</p>
+    <p style="color:var(--cyan);font-family:var(--mono);font-size:11px;letter-spacing:2px;margin-top:12px;">// DUTTY ASHY WIN_G FOUNDATION — WE CARE //</p>
   </div>
 
-  <div class="message"><h3>The Foundation Cares About You</h3><p>We put this page together because words matter. When you're down, when life is heavy, when you feel like nobody sees you — <strong>we see you.</strong> Come back here anytime. There's always a new word waiting for you.</p><p style="color:var(--cyan);font-family:var(--mono);font-size:12px;letter-spacing:2px;margin-top:14px;">// DUTTY ASHY WIN_G FOUNDATION — WE CARE //</p></div>
 </div>
 
-<section style="padding:24px 0;"><div class="wrap" style="text-align:center;"><div class="dbb-logo"><div class="dot red d1"></div><div class="dot green d2"></div><div class="dot red d3"></div><div class="dot green d4"></div><div class="dot green d5"></div><div class="dot green d6"></div></div></div></section>
+<section style="padding:20px 0;">
+  <div class="wrap" style="text-align:center;">
+    <div class="dbb-logo">
+      <div class="dot rd d1"></div><div class="dot gr d2"></div><div class="dot rd d3"></div>
+      <div class="dot gr d4"></div><div class="dot gr d5"></div><div class="dot gr d6"></div>
+    </div>
+  </div>
+</section>
 
-<footer><div class="wrap"><p>Dutty Ashy Win_G Foundation · Encouragement Center</p><p style="color:var(--green);font-size:12px;letter-spacing:3px;margin-bottom:8px;">// WE CARE //</p><p><a href="index.html">Home</a> · <a href="dbb-lifeline.html">Lifeline</a></p><div class="disclaimer">The Dutty Ashy Win_G Foundation provides this Encouragement Center as a community resource for inspiration and upliftment. Quotes are attributed to their commonly recognized authors and are in the public domain. This page is not a substitute for professional counseling, therapy, or medical advice. If you are in crisis, please contact a professional crisis line — visit our <a href="dbb-lifeline.html" style="color:var(--cyan);">Lifeline page</a> for resources. The Foundation assumes no liability for the use of content on this page.</div></div></footer>
+<footer>
+  <div class="wrap">
+    <p>Dutty Ashy Win_G Foundation &middot; Encouragement Center</p>
+    <p style="color:var(--green);font-size:12px;letter-spacing:3px;margin-bottom:8px;">// WE CARE //</p>
+    <p><a href="index.html">Home</a> &middot; <a href="dbb-lifeline.html">Lifeline</a></p>
+    <div class="disclaimer">The Dutty Ashy Win_G Foundation provides this page as a community resource. Biblical quotes are from the King James Version (published 1611, public domain). Stoic quotes are from ancient texts in the public domain. Native American proverbs are traditional oral wisdom in the public domain. This page is not a substitute for professional counseling or therapy. If you are in crisis, please visit our <a href="dbb-lifeline.html" style="color:var(--cyan);">Lifeline page</a>.</div>
+  </div>
+</footer>
 
 <script>
-// ── PURE ENCOURAGEMENT — these lift you up when you're down ──
 var ENC = [
   {t:"It does not matter how slowly you go as long as you do not stop.",a:"Confucius"},
   {t:"Our greatest weakness lies in giving up. The most certain way to succeed is always to try just one more time.",a:"Thomas Edison"},
@@ -260,8 +382,6 @@ var ENC = [
   {t:"Even a small star shines in the darkness.",a:"Finnish Proverb"},
   {t:"After the rain, the earth hardens.",a:"Haitian Proverb"}
 ];
-
-// ── WISDOM / ADVICE — things to think about and live by ──
 var WIS = [
   {t:"Strength does not come from physical capacity. It comes from an indomitable will.",a:"Mahatma Gandhi"},
   {t:"You must be the change you wish to see in the world.",a:"Mahatma Gandhi"},
@@ -319,8 +439,6 @@ var WIS = [
   {t:"Until the lion learns to write, every story will glorify the hunter.",a:"African Proverb"},
   {t:"Knowledge without wisdom is like water in the sand.",a:"Guinean Proverb"}
 ];
-
-// ── WORLD PROVERBS ──
 var PRV = [
   {t:"A journey of a thousand miles begins with a single step.",a:"Chinese Proverb"},
   {t:"Smooth seas do not make skillful sailors.",a:"African Proverb"},
@@ -401,67 +519,311 @@ var PRV = [
   {t:"If you cannot serve, you cannot lead.",a:"Caribbean Proverb"},
   {t:"The coconut does not fall far from the tree.",a:"Caribbean Proverb"},
   {t:"Where there is a will, there is a way.",a:"English Proverb"},
-  {t:"Great oaks from little acorns grow.",a:"English Proverb"}
+  {t:"Great oaks from little acorns grow.",a:"English Proverb"},
+  {t:"We do not inherit the earth from our ancestors; we borrow it from our children.",a:"Native American Proverb"},
+  {t:"Tell me and I will forget. Show me and I may remember. Involve me and I will understand.",a:"Native American Proverb"},
+  {t:"It is less of a problem to be poor than to be dishonest.",a:"Anishinabe Proverb"},
+  {t:"You cannot wake a person who is pretending to be asleep.",a:"Navajo Proverb"},
+  {t:"The frog does not drink up the pond in which he lives.",a:"Native American Proverb"},
+  {t:"When you were born, you cried and the world rejoiced. Live so that when you die, the world cries and you rejoice.",a:"Cherokee Proverb"},
+  {t:"Do not be afraid to cry. It will free your mind of sorrowful thoughts.",a:"Hopi Proverb"},
+  {t:"The soul would have no rainbow if the eyes had no tears.",a:"Native American Proverb"},
+  {t:"Listen, or thy tongue will keep thee deaf.",a:"Native American Proverb"},
+  {t:"Cherish youth, but trust old age.",a:"Pueblo Proverb"},
+  {t:"What is life? It is the flash of a firefly in the night.",a:"Crowfoot — Blackfoot Nation"},
+  {t:"Treat the earth well: it was not given to you by your parents, it was loaned to you by your children.",a:"Native American Proverb"},
+  {t:"A brave man dies once; a coward dies a thousand times.",a:"Native American Proverb"},
+  {t:"The greatest strength is gentleness.",a:"Iroquois Proverb"},
+  {t:"When we show our respect for other living things, they respond with respect for us.",a:"Arapaho Proverb"},
+  {t:"Man's law changes with his understanding of man. Only the laws of the spirit remain always the same.",a:"Crow Proverb"},
+  {t:"Force, no matter how concealed, begets resistance.",a:"Lakota Proverb"},
+  {t:"Before eating, always take a little time to thank the food.",a:"Arapaho Proverb"},
+  {t:"It takes a thousand voices to tell a single story.",a:"Native American Saying"},
+  {t:"All plants are our brothers and sisters. They talk to us and if we listen, we can hear them.",a:"Arapaho Proverb"},
+  {t:"We do not inherit the earth from our ancestors; we borrow it from our children.",a:"Native American Proverb"},
+  {t:"Tell me and I will forget. Show me and I may remember. Involve me and I will understand.",a:"Native American Proverb"},
+  {t:"It is less of a problem to be poor than to be dishonest.",a:"Anishinabe Proverb"},
+  {t:"You cannot wake a person who is pretending to be asleep.",a:"Navajo Proverb"},
+  {t:"The frog does not drink up the pond in which he lives.",a:"Native American Proverb"},
+  {t:"When you were born, you cried and the world rejoiced. Live so that when you die, the world cries and you rejoice.",a:"Cherokee Proverb"},
+  {t:"Do not be afraid to cry. It will free your mind of sorrowful thoughts.",a:"Hopi Proverb"},
+  {t:"The soul would have no rainbow if the eyes had no tears.",a:"Native American Proverb"},
+  {t:"Listen, or thy tongue will keep thee deaf.",a:"Native American Proverb"},
+  {t:"Cherish youth, but trust old age.",a:"Pueblo Proverb"},
+  {t:"What is life? It is the flash of a firefly in the night.",a:"Crowfoot — Blackfoot Nation"},
+  {t:"Treat the earth well: it was not given to you by your parents, it was loaned to you by your children.",a:"Native American Proverb"},
+  {t:"A brave man dies once; a coward dies a thousand times.",a:"Native American Proverb"},
+  {t:"The greatest strength is gentleness.",a:"Iroquois Proverb"},
+  {t:"When we show our respect for other living things, they respond with respect for us.",a:"Arapaho Proverb"},
+  {t:"Man's law changes with his understanding of man. Only the laws of the spirit remain always the same.",a:"Crow Proverb"},
+  {t:"Force, no matter how concealed, begets resistance.",a:"Lakota Proverb"},
+  {t:"Before eating, always take a little time to thank the food.",a:"Arapaho Proverb"},
+  {t:"It takes a thousand voices to tell a single story.",a:"Native American Saying"},
+  {t:"All plants are our brothers and sisters. They talk to us and if we listen, we can hear them.",a:"Arapaho Proverb"}
+];
+var STO = [
+  {t:"You have power over your mind, not outside events. Realize this, and you will find strength.",a:"Marcus Aurelius — Meditations"},
+  {t:"The impediment to action advances action. What stands in the way becomes the way.",a:"Marcus Aurelius — Meditations"},
+  {t:"Very little is needed to make a happy life; it is all within yourself, in your way of thinking.",a:"Marcus Aurelius — Meditations"},
+  {t:"Waste no more time arguing about what a good man should be. Be one.",a:"Marcus Aurelius — Meditations"},
+  {t:"If it is not right, do not do it; if it is not true, do not say it.",a:"Marcus Aurelius — Meditations"},
+  {t:"The best revenge is to be unlike him who performed the injury.",a:"Marcus Aurelius — Meditations"},
+  {t:"Accept the things to which fate binds you, and love the people with whom fate brings you together.",a:"Marcus Aurelius — Meditations"},
+  {t:"Never esteem anything as of advantage to you that will make you break your word or lose your self-respect.",a:"Marcus Aurelius — Meditations"},
+  {t:"Do not indulge in dreams of having what you have not, but count the chief of the blessings you do possess.",a:"Marcus Aurelius — Meditations"},
+  {t:"Loss is nothing else but change, and change is Nature's delight.",a:"Marcus Aurelius — Meditations"},
+  {t:"How much more grievous are the consequences of anger than the causes of it.",a:"Marcus Aurelius — Meditations"},
+  {t:"The first rule is to keep an untroubled spirit. The second is to look things in the face and know them for what they are.",a:"Marcus Aurelius — Meditations"},
+  {t:"Make the best use of what is in your power, and take the rest as it happens.",a:"Epictetus — Enchiridion"},
+  {t:"No man is free who is not master of himself.",a:"Epictetus — Discourses"},
+  {t:"He is a wise man who does not grieve for the things which he has not, but rejoices for those which he has.",a:"Epictetus — Fragments"},
+  {t:"Seek not that the things which happen should happen as you wish; but wish the things which happen to be as they are, and you will have a tranquil flow of life.",a:"Epictetus — Enchiridion"},
+  {t:"First say to yourself what you would be; and then do what you have to do.",a:"Epictetus — Discourses"},
+  {t:"People are not disturbed by things, but by the views which they take of things.",a:"Epictetus — Enchiridion"},
+  {t:"It is not he who reviles or strikes you who insults you, but your opinion that these things are insulting.",a:"Epictetus — Enchiridion"},
+  {t:"Whoever does not regard what he has as most ample wealth, is unhappy, though he be master of the world.",a:"Epictetus — Fragments"},
+  {t:"Wealth is the slave of a wise man. The master of a fool.",a:"Seneca — Letters"},
+  {t:"Luck is what happens when preparation meets opportunity.",a:"Seneca — Letters"},
+  {t:"It is not that I am brave, but that I know what is not worth fearing.",a:"Seneca — Letters"},
+  {t:"Begin at once to live, and count each separate day as a separate life.",a:"Seneca — Letters"},
+  {t:"The whole future lies in uncertainty — live immediately.",a:"Seneca — Letters"},
+  {t:"We suffer more in imagination than in reality.",a:"Seneca — Letters"},
+  {t:"He who is brave is free.",a:"Seneca — Letters"},
+  {t:"It is quality rather than quantity that matters.",a:"Seneca — Letters"},
+  {t:"I am not born for one corner; the whole world is my native land.",a:"Seneca — Letters"},
+  {t:"Omnia aliena sunt, tempus tantum nostrum est. All things are not ours — time alone belongs to us.",a:"Seneca — Letters"},
+  {t:"Associate with people who are likely to improve you.",a:"Seneca — Letters"},
+  {t:"Difficulties strengthen the mind, as labor does the body.",a:"Seneca — Letters"},
+  {t:"If you wished to be loved, love.",a:"Seneca — Letters"},
+  {t:"Retire into yourself as much as possible.",a:"Seneca — Letters"},
+  {t:"Man is affected not by events but by the view he takes of them.",a:"Seneca — Letters"},
+  {t:"A gem cannot be polished without friction, nor a man perfected without trials.",a:"Seneca — Letters"},
+  {t:"The noble man is chiefly concerned with wisdom and friendship.",a:"Zeno of Citium"},
+  {t:"Better to trip with the feet than with the tongue.",a:"Zeno of Citium"},
+  {t:"Fate is the endless chain of causation, whereby things are; the reason or formula by which the world goes on.",a:"Zeno of Citium"},
+  {t:"No man has the power to have what he wants, but everyone has the power not to want what he does not have.",a:"Seneca"},
+  {t:"It is not the man who has too little, but the man who craves more, that is poor.",a:"Seneca"},
+  {t:"We suffer more often in imagination than in reality.",a:"Seneca"},
+  {t:"As is a tale, so is life: not how long it is, but how good it is, is what matters.",a:"Seneca"},
+  {t:"Nothing is a better proof of a well ordered mind than a man's ability to stop just where he is and pass time in his own company.",a:"Seneca"},
+  {t:"The best revenge is to not be like your enemy.",a:"Marcus Aurelius — Meditations"},
+  {t:"When you arise in the morning, think of what a precious privilege it is to be alive — to breathe, to think, to enjoy, to love.",a:"Marcus Aurelius — Meditations"},
+  {t:"How much trouble he avoids who does not look to see what his neighbor says or does or thinks.",a:"Marcus Aurelius — Meditations"},
+  {t:"Receive without pride, let go without attachment.",a:"Marcus Aurelius — Meditations"},
+  {t:"Whenever you find yourself agreeing too readily with praise, suspect yourself.",a:"Marcus Aurelius — Meditations"},
+  {t:"Today I escaped anxiety. Or no, I discarded it, because it was within me, in my own perceptions — not outside.",a:"Marcus Aurelius — Meditations"},
+  {t:"Choose not to be harmed — and you will not feel harmed. Do not feel harmed — and you have not been.",a:"Marcus Aurelius — Meditations"},
+  {t:"The nearer a man comes to a calm mind, the closer he is to strength.",a:"Marcus Aurelius — Meditations"},
+  {t:"Any person capable of angering you becomes your master.",a:"Epictetus"},
+  {t:"It is not what happens to you, but how you react to it that matters.",a:"Epictetus"},
+  {t:"Wealth consists not in having great possessions, but in having few wants.",a:"Epictetus"},
+  {t:"Recall that nothing belongs to you but your thoughts and actions.",a:"Epictetus"},
+  {t:"Keep silence for the most part, and speak only when you must, and then briefly.",a:"Epictetus"},
+  {t:"He who flatters you is not your friend; he who tells you your faults is.",a:"Stoic Wisdom"},
+  {t:"If anyone tells you someone speaks ill of you, do not make excuses — answer: he was ignorant of my other faults, else he would not have mentioned these alone.",a:"Epictetus"},
+  {t:"No man has the power to have what he wants, but everyone has the power not to want what he does not have.",a:"Seneca"},
+  {t:"It is not the man who has too little, but the man who craves more, that is poor.",a:"Seneca"},
+  {t:"We suffer more often in imagination than in reality.",a:"Seneca"},
+  {t:"As is a tale, so is life: not how long it is, but how good it is, is what matters.",a:"Seneca"},
+  {t:"Nothing is a better proof of a well ordered mind than a man's ability to stop and pass time in his own company.",a:"Seneca"},
+  {t:"The best revenge is to not be like your enemy.",a:"Marcus Aurelius — Meditations"},
+  {t:"When you arise in the morning, think of what a precious privilege it is to be alive — to breathe, to think, to enjoy, to love.",a:"Marcus Aurelius — Meditations"},
+  {t:"How much trouble he avoids who does not look to see what his neighbor says or does or thinks.",a:"Marcus Aurelius — Meditations"},
+  {t:"Receive without pride, let go without attachment.",a:"Marcus Aurelius — Meditations"},
+  {t:"Whenever you find yourself agreeing too readily with praise, suspect yourself.",a:"Marcus Aurelius — Meditations"},
+  {t:"Today I escaped anxiety. Or no, I discarded it, because it was within me, in my own perceptions — not outside.",a:"Marcus Aurelius — Meditations"},
+  {t:"Choose not to be harmed — and you will not feel harmed. Do not feel harmed — and you have not been.",a:"Marcus Aurelius — Meditations"},
+  {t:"The nearer a man comes to a calm mind, the closer he is to strength.",a:"Marcus Aurelius — Meditations"},
+  {t:"Any person capable of angering you becomes your master.",a:"Epictetus"},
+  {t:"It is not what happens to you, but how you react to it that matters.",a:"Epictetus"},
+  {t:"Wealth consists not in having great possessions, but in having few wants.",a:"Epictetus"},
+  {t:"Recall that nothing belongs to you but your thoughts and actions.",a:"Epictetus"},
+  {t:"Keep silence for the most part, and speak only when you must, and then briefly.",a:"Epictetus"},
+  {t:"He who flatters you is not your friend; he who tells you your faults is.",a:"Stoic Wisdom"},
+  {t:"If anyone tells you someone speaks ill of you, do not make excuses — answer: he was ignorant of my other faults.",a:"Epictetus"}
+];
+var BIB = [
+  {t:"Trust in the Lord with all thine heart; and lean not unto thine own understanding.",a:"Proverbs 3:5 — KJV"},
+  {t:"A merry heart doeth good like a medicine: but a broken spirit drieth the bones.",a:"Proverbs 17:22 — KJV"},
+  {t:"Iron sharpeneth iron; so a man sharpeneth the countenance of his friend.",a:"Proverbs 27:17 — KJV"},
+  {t:"Where there is no vision, the people perish.",a:"Proverbs 29:18 — KJV"},
+  {t:"Pride goeth before destruction, and an haughty spirit before a fall.",a:"Proverbs 16:18 — KJV"},
+  {t:"A soft answer turneth away wrath: but grievous words stir up anger.",a:"Proverbs 15:1 — KJV"},
+  {t:"The fear of the Lord is the beginning of wisdom.",a:"Proverbs 9:10 — KJV"},
+  {t:"A good name is rather to be chosen than great riches.",a:"Proverbs 22:1 — KJV"},
+  {t:"Train up a child in the way he should go: and when he is old, he will not depart from it.",a:"Proverbs 22:6 — KJV"},
+  {t:"As iron sharpeneth iron; so a man sharpeneth the countenance of his friend.",a:"Proverbs 27:17 — KJV"},
+  {t:"There is a time for everything, and a season for every activity under the heavens.",a:"Ecclesiastes 3:1 — KJV"},
+  {t:"For I know the thoughts that I think toward you, saith the Lord, thoughts of peace, and not of evil, to give you an expected end.",a:"Jeremiah 29:11 — KJV"},
+  {t:"The Lord is my shepherd; I shall not want.",a:"Psalm 23:1 — KJV"},
+  {t:"Yea, though I walk through the valley of the shadow of death, I will fear no evil: for thou art with me.",a:"Psalm 23:4 — KJV"},
+  {t:"God is our refuge and strength, a very present help in trouble.",a:"Psalm 46:1 — KJV"},
+  {t:"I can do all things through Christ which strengtheneth me.",a:"Philippians 4:13 — KJV"},
+  {t:"And we know that all things work together for good to them that love God.",a:"Romans 8:28 — KJV"},
+  {t:"Be strong and of a good courage; be not afraid, neither be thou dismayed: for the Lord thy God is with thee whithersoever thou goest.",a:"Joshua 1:9 — KJV"},
+  {t:"This is the day which the Lord hath made; we will rejoice and be glad in it.",a:"Psalm 118:24 — KJV"},
+  {t:"Commit thy works unto the Lord, and thy thoughts shall be established.",a:"Proverbs 16:3 — KJV"},
+  {t:"For with God nothing shall be impossible.",a:"Luke 1:37 — KJV"},
+  {t:"Ask, and it shall be given you; seek, and ye shall find; knock, and it shall be opened unto you.",a:"Matthew 7:7 — KJV"},
+  {t:"Blessed are the peacemakers: for they shall be called the children of God.",a:"Matthew 5:9 — KJV"},
+  {t:"Love is patient, love is kind. It doth not behave itself unseemly, seeketh not her own.",a:"1 Corinthians 13:4-5 — KJV"},
+  {t:"But they that wait upon the Lord shall renew their strength; they shall mount up with wings as eagles.",a:"Isaiah 40:31 — KJV"},
+  {t:"The Lord is nigh unto them that are of a broken heart.",a:"Psalm 34:18 — KJV"},
+  {t:"Cast all your anxiety on him because he careth for you.",a:"1 Peter 5:7 — KJV"},
+  {t:"In all thy ways acknowledge him, and he shall direct thy paths.",a:"Proverbs 3:6 — KJV"},
+  {t:"Weeping may endure for a night, but joy cometh in the morning.",a:"Psalm 30:5 — KJV"},
+  {t:"He that is slow to anger is better than the mighty; and he that ruleth his spirit than he that taketh a city.",a:"Proverbs 16:32 — KJV"},
+  {t:"Through wisdom is an house builded; and by understanding it is established.",a:"Proverbs 24:3 — KJV"},
+  {t:"Be not overcome of evil, but overcome evil with good.",a:"Romans 12:21 — KJV"},
+  {t:"The words of a wise man's mouth are gracious.",a:"Ecclesiastes 10:12 — KJV"},
+  {t:"Even a child is known by his doings, whether his work be pure, and whether it be right.",a:"Proverbs 20:11 — KJV"},
+  {t:"Better is a dry morsel, and quietness therewith, than an house full of sacrifices with strife.",a:"Proverbs 17:1 — KJV"},
+  {t:"As a man thinketh in his heart, so is he.",a:"Proverbs 23:7 — KJV"},
+  {t:"The heart of the discerning acquires knowledge, for the ears of the wise seek it out.",a:"Proverbs 18:15 — KJV"},
+  {t:"Where no counsel is, the people fall: but in the multitude of counsellors there is safety.",a:"Proverbs 11:14 — KJV"},
+  {t:"A friend loveth at all times, and a brother is born for a time of adversity.",a:"Proverbs 17:17 — KJV"},
+  {t:"Hatred stirreth up strifes: but love covereth all sins.",a:"Proverbs 10:12 — KJV"},
+  {t:"The wicked flee when no man pursueth: but the righteous are bold as a lion.",a:"Proverbs 28:1 — KJV"},
+  {t:"A fool uttereth all his mind: but a wise man keepeth it in till afterwards.",a:"Proverbs 29:11 — KJV"},
+  {t:"The fear of man bringeth a snare: but whoso putteth his trust in the LORD shall be safe.",a:"Proverbs 29:25 — KJV"},
+  {t:"He that hath no rule over his own spirit is like a city that is broken down, and without walls.",a:"Proverbs 25:28 — KJV"},
+  {t:"A man that flattereth his neighbour spreadeth a net for his feet.",a:"Proverbs 29:5 — KJV"},
+  {t:"He that rebuketh a man afterwards shall find more favour than he that flattereth with the tongue.",a:"Proverbs 28:23 — KJV"},
+  {t:"Meddle not with him that flattereth with his lips.",a:"Proverbs 20:19 — KJV"},
+  {t:"Keep thy heart with all diligence; for out of it are the issues of life.",a:"Proverbs 4:23 — KJV"},
+  {t:"Make no friendship with an angry man; and with a furious man thou shalt not go.",a:"Proverbs 22:24 — KJV"},
+  {t:"He that walketh with wise men shall be wise: but a companion of fools shall be destroyed.",a:"Proverbs 13:20 — KJV"},
+  {t:"Whoso keepeth his mouth and his tongue keepeth his soul from troubles.",a:"Proverbs 21:23 — KJV"},
+  {t:"Cast thy burden upon the LORD, and he shall sustain thee.",a:"Psalm 55:22 — KJV"},
+  {t:"Thou wilt keep him in perfect peace, whose mind is stayed on thee.",a:"Isaiah 26:3 — KJV"},
+  {t:"The peace of God, which passeth all understanding, shall keep your hearts and minds through Christ Jesus.",a:"Philippians 4:7 — KJV"},
+  {t:"Whatsoever things are true, honest, just, pure, lovely, of good report — think on these things.",a:"Philippians 4:8 — KJV"},
+  {t:"The heart is deceitful above all things, and desperately wicked: who can know it?",a:"Jeremiah 17:9 — KJV"},
+  {t:"For God hath not given us the spirit of fear; but of power, and of love, and of a sound mind.",a:"2 Timothy 1:7 — KJV"},
+  {t:"Be strong and of a good courage, fear not: for the LORD thy God doth go with thee.",a:"Deuteronomy 31:6 — KJV"},
+  {t:"Watch ye, stand fast in the faith, quit you like men, be strong.",a:"1 Corinthians 16:13 — KJV"},
+  {t:"The LORD is my light and my salvation; whom shall I fear?",a:"Psalm 27:1 — KJV"},
+  {t:"No weapon that is formed against thee shall prosper.",a:"Isaiah 54:17 — KJV"},
+  {t:"They speak vanity every one with his neighbour: with flattering lips and with a double heart.",a:"Psalm 12:2 — KJV"}
 ];
 
-function getDI(arr){var d=new Date();return(d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate())%arr.length;}
+var POOLS = {enc:ENC, wis:WIS, prv:PRV, sto:STO, bib:BIB};
+var bellOn = true;
+var browseOpen = false;
+var curFilter = "all";
 
-// Show daily encouragement on load
-(function(){
-  var q=ENC[getDI(ENC)];
-  document.getElementById('dailyQuote').textContent='\u201C'+q.t+'\u201D';
-  document.getElementById('dailyAuthor').textContent='\u2014 '+q.a;
-  // Show daily wisdom too
-  var w=WIS[getDI(WIS)];
-  document.getElementById('wisdomQuote').textContent='\u201C'+w.t+'\u201D';
-  document.getElementById('wisdomAuthor').textContent='\u2014 '+w.a;
-})();
-
-function showRandomEnc(){
-  var q=ENC[Math.floor(Math.random()*ENC.length)];
-  document.getElementById('dailyQuote').textContent='\u201C'+q.t+'\u201D';
-  document.getElementById('dailyAuthor').textContent='\u2014 '+q.a;
-  document.getElementById('dailyBox').scrollIntoView({behavior:'smooth',block:'center'});
-}
-function showRandomWis(){
-  var q=WIS[Math.floor(Math.random()*WIS.length)];
-  document.getElementById('wisdomQuote').textContent='\u201C'+q.t+'\u201D';
-  document.getElementById('wisdomAuthor').textContent='\u2014 '+q.a;
-  document.getElementById('wisdomBox').scrollIntoView({behavior:'smooth',block:'center'});
+function getDI(arr, seed) {
+  var d = new Date();
+  var day = d.getFullYear() * 10000 + (d.getMonth()+1) * 100 + d.getDate();
+  return Math.abs((day * 31 + seed * 1009 + seed)) % arr.length;
 }
 
-var browseOpen=false, currentFilter='all';
-function toggleBrowse(){
-  browseOpen=!browseOpen;
-  document.getElementById('browseSection').classList.toggle('show',browseOpen);
-  if(browseOpen) renderBrowse();
+function setBox(type, q) {
+  document.getElementById(type + "-quote").textContent = "\u201C" + q.t + "\u201D";
+  document.getElementById(type + "-author").textContent = "\u2014 " + q.a;
 }
-function filterQ(f,btn,cls){
-  currentFilter=f;
-  var btns=document.querySelectorAll('.btn-filter');
-  for(var i=0;i<btns.length;i++) btns[i].className='btn btn-filter';
-  btn.className='btn btn-filter '+cls;
+
+function loadDaily() {
+  setBox("enc", ENC[getDI(ENC, 1)]);
+  setBox("wis", WIS[getDI(WIS, 3)]);
+  setBox("sto", STO[getDI(STO, 7)]);
+  setBox("prv", PRV[getDI(PRV, 13)]);
+  setBox("bib", BIB[getDI(BIB, 17)]);
+  if (bellOn) playBell();
+}
+
+function newQ(type) {
+  var arr = POOLS[type];
+  setBox(type, arr[Math.floor(Math.random() * arr.length)]);
+  document.getElementById("box-" + type).scrollIntoView({behavior:"smooth", block:"center"});
+}
+
+function toggleBell() {
+  bellOn = !bellOn;
+  document.getElementById("bell-btn").textContent = bellOn ? "\uD83D\uDD14 BELL: ON" : "\uD83D\uDD15 BELL: OFF";
+}
+
+function playBell() {
+  try {
+    var ctx = new (window.AudioContext || window.webkitAudioContext)();
+    [110, 220, 330, 440, 550].forEach(function(f, i) {
+      var o = ctx.createOscillator();
+      var g = ctx.createGain();
+      var v = [0.5, 0.3, 0.15, 0.1, 0.05][i];
+      o.connect(g); g.connect(ctx.destination);
+      o.type = "sine"; o.frequency.value = f;
+      g.gain.setValueAtTime(v, ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 4.5);
+      o.start(); o.stop(ctx.currentTime + 4.5);
+    });
+  } catch(e) {}
+}
+
+function shareBox(id) {
+  function doIt() {
+    var box = document.getElementById(id);
+    var wm = document.createElement("div");
+    wm.style.cssText = "font-family:monospace;font-size:10px;letter-spacing:1px;color:rgba(255,255,255,0.4);text-align:center;padding:12px 8px 4px;line-height:1.8;";
+    wm.innerHTML = "duttybookbag.github.io<br>Encouragement Center";
+    box.appendChild(wm);
+    html2canvas(box, {backgroundColor:null, scale:2, useCORS:true}).then(function(canvas) {
+      box.removeChild(wm);
+      canvas.toBlob(function(blob) {
+        var f = new File([blob], "dbb-quote.png", {type:"image/png"});
+        if (navigator.canShare && navigator.canShare({files:[f]})) {
+          navigator.share({files:[f], title:"DuttyBookBag"}).catch(function(){});
+        } else {
+          var a = document.createElement("a");
+          a.href = URL.createObjectURL(blob);
+          a.download = "dbb-quote.png";
+          a.click();
+        }
+        var t = document.getElementById("toast");
+        t.style.opacity = "1";
+        setTimeout(function(){ t.style.opacity = "0"; }, 2500);
+      });
+    }).catch(function(){ box.removeChild(wm); });
+  }
+  if (window.html2canvas) { doIt(); }
+  else {
+    var s = document.createElement("script");
+    s.src = "https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js";
+    s.onload = doIt;
+    document.head.appendChild(s);
+  }
+}
+
+function toggleBrowse() {
+  browseOpen = !browseOpen;
+  document.getElementById("browseDiv").className = browseOpen ? "browse show" : "browse";
+  if (browseOpen) renderBrowse();
+}
+
+function filter(f, btn) {
+  curFilter = f;
+  document.querySelectorAll(".fbtn").forEach(function(b){ b.className = "fbtn"; });
+  btn.className = "fbtn on";
   renderBrowse();
 }
-function renderBrowse(){
-  var all=[];
-  ENC.forEach(function(q){all.push({q:q,c:'enc'});});
-  WIS.forEach(function(q){all.push({q:q,c:'wis'});});
-  PRV.forEach(function(q){all.push({q:q,c:'prv'});});
-  var filtered = currentFilter==='all' ? all : all.filter(function(item){return item.c===currentFilter;});
-  filtered.sort(function(){return Math.random()-0.5;});
-  document.getElementById('browseCount').textContent='Showing '+filtered.length+' quotes';
-  var h='';
-  var labels={enc:'💚 Encouragement',wis:'🧠 Wisdom',prv:'🌍 Proverb'};
-  filtered.forEach(function(item){
-    h+='<div class="q-card type-'+item.c+'">';
-    h+='<span class="q-badge badge-'+item.c+'">'+labels[item.c]+'</span>';
-    h+='<div class="q-text">\u201C'+item.q.t+'\u201D</div>';
-    h+='<div class="q-author '+item.c+'">\u2014 '+item.q.a+'</div>';
-    h+='</div>';
+
+function renderBrowse() {
+  var all = [];
+  var labels = {enc:"&#128154; Encouragement", wis:"&#129504; Wisdom", sto:"&#9876; Stoic", prv:"&#127758; Proverb", bib:"&#128214; Biblical"};
+  Object.keys(POOLS).forEach(function(c){ POOLS[c].forEach(function(q){ all.push({q:q,c:c}); }); });
+  var list = curFilter === "all" ? all : all.filter(function(i){ return i.c === curFilter; });
+  list.sort(function(){ return Math.random() - 0.5; });
+  document.getElementById("bcount").textContent = "Showing " + list.length + " quotes";
+  var h = "";
+  list.forEach(function(item) {
+    h += "<div class=\"qcard " + item.c + "\"><span class=\"qbadge " + item.c + "\">" + labels[item.c] + "</span>";
+    h += "<div class=\"qcard-text\">&ldquo;" + item.q.t + "&rdquo;</div>";
+    h += "<div class=\"qcard-auth " + item.c + "\">&mdash; " + item.q.a + "</div></div>";
   });
-  document.getElementById('browseList').innerHTML=h;
+  document.getElementById("blist").innerHTML = h;
 }
+
+// LOAD QUOTES — runs as soon as script executes (no waiting)
+loadDaily();
 </script>
 </body>
 </html>
