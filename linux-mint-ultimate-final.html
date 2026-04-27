@@ -187,13 +187,65 @@
 (function(){
   var canvas=document.getElementById('hackerRain');
   var ctx=canvas.getContext('2d');
-  var chars='01001101000111010010100001110100110101001100101101001100010110010001100101011010010';
-  chars+='#!@$%^&*<>{}[]|~;:=+?/\\ABCDEFabcdef0123456789';
-  var cols,drops=[],fontSize=13;
-  function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;cols=Math.floor(canvas.width/fontSize);drops=[];for(var i=0;i<cols;i++)drops[i]=Math.random()*-100;}
-  resize();window.addEventListener('resize',resize);
+  var chars='010011010001110100101000011101001101010011001011010011000101100100011001010110100100';
+  chars+='#!@$%^&*<>{}[]|~;:=+?/ABCDEFabcdef0123456789';
   var colors=['#00ff6a','#39ff14','#00ffe1','#00dd55'];
-  function draw(){ctx.fillStyle='rgba(0,0,0,0.05)';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.font=fontSize+'px "Share Tech Mono",monospace';for(var i=0;i<drops.length;i++){var c=chars[Math.floor(Math.random()*chars.length)];ctx.fillStyle=colors[Math.floor(Math.random()*colors.length)];ctx.fillText(c,i*fontSize,drops[i]*fontSize);if(drops[i]*fontSize>canvas.height&&Math.random()>0.975)drops[i]=0;drops[i]+=0.4;}}
+  var fontSize=13;
+  var drops=[], direction, cols, rows;
+  var directions=['bottom-to-top','left-to-right','right-to-left'];
+
+  function pickDirection(){
+    direction=directions[Math.floor(Math.random()*directions.length)];
+  }
+
+  function resize(){
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
+    cols=Math.floor(canvas.width/fontSize);
+    rows=Math.floor(canvas.height/fontSize);
+    drops=[];
+    if(direction==='bottom-to-top'){
+      for(var i=0;i<cols;i++) drops[i]=Math.floor(Math.random()*rows)+rows;
+    } else if(direction==='left-to-right'){
+      for(var i=0;i<rows;i++) drops[i]=Math.random()*-cols;
+    } else {
+      for(var i=0;i<rows;i++) drops[i]=cols+Math.random()*cols;
+    }
+  }
+
+  function draw(){
+    ctx.fillStyle='rgba(0,0,0,0.05)';
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.font=fontSize+'px "Share Tech Mono",monospace';
+    var c=chars[Math.floor(Math.random()*chars.length)];
+    if(direction==='bottom-to-top'){
+      for(var i=0;i<drops.length;i++){
+        ctx.fillStyle=colors[Math.floor(Math.random()*colors.length)];
+        ctx.fillText(c,i*fontSize,drops[i]*fontSize);
+        if(drops[i]*fontSize<0&&Math.random()>0.975) drops[i]=rows+Math.random()*rows;
+        drops[i]-=0.4;
+      }
+    } else if(direction==='left-to-right'){
+      for(var i=0;i<drops.length;i++){
+        ctx.fillStyle=colors[Math.floor(Math.random()*colors.length)];
+        ctx.fillText(c,drops[i]*fontSize,i*fontSize);
+        if(drops[i]*fontSize>canvas.width&&Math.random()>0.975) drops[i]=Math.random()*-cols;
+        drops[i]+=0.4;
+      }
+    } else {
+      for(var i=0;i<drops.length;i++){
+        ctx.fillStyle=colors[Math.floor(Math.random()*colors.length)];
+        ctx.fillText(c,drops[i]*fontSize,i*fontSize);
+        if(drops[i]*fontSize<0&&Math.random()>0.975) drops[i]=cols+Math.random()*cols;
+        drops[i]-=0.4;
+      }
+    }
+  }
+
+  pickDirection();
+  resize();
+  window.addEventListener('resize',function(){ resize(); });
+  setInterval(function(){ pickDirection(); resize(); },45000);
   setInterval(draw,60);
 })();
 </script>
