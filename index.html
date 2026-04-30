@@ -566,6 +566,84 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
   </div>
 </section>
 
+<!-- QR CODE SHARE SECTION -->
+<section style="padding:30px 0 10px;">
+  <div class="wrap" style="text-align:center;">
+    <div style="font-family:var(--mono);font-size:10px;letter-spacing:4px;color:var(--muted);text-transform:uppercase;margin-bottom:14px;">// Scan · Share · Print</div>
+
+    <!-- QR CARD -->
+    <div id="qr-print-card" style="display:inline-block;background:#000;border:2px solid var(--gold);border-radius:14px;padding:26px 30px;max-width:340px;width:100%;box-shadow:0 0 30px rgba(255,171,64,0.12);">
+      <div style="font-family:var(--display);font-size:30px;letter-spacing:3px;color:var(--gold);margin-bottom:3px;">DuttyBookBag</div>
+      <div style="font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:2px;margin-bottom:14px;">TradingView Indicators</div>
+      <div style="background:#fff;border-radius:8px;padding:10px;display:inline-block;margin-bottom:12px;">
+        <img src="data:image/png;base64,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" alt="DuttyBookBag QR Code" style="width:190px;height:190px;display:block;" />
+      </div>
+      <div style="font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:1px;margin-bottom:16px;">duttybookbag.github.io/duttybookbag</div>
+      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+        <div style="background:rgba(255,171,64,0.1);border:1px solid var(--gold);border-radius:5px;padding:7px 14px;font-family:var(--display);font-size:13px;letter-spacing:1px;color:var(--gold);">Stop Guessing</div>
+        <div style="background:rgba(255,171,64,0.1);border:1px solid var(--gold);border-radius:5px;padding:7px 14px;font-family:var(--display);font-size:13px;letter-spacing:1px;color:var(--gold);">Read The Data</div>
+        <div style="background:var(--gold);border-radius:5px;padding:7px 14px;font-family:var(--display);font-size:13px;letter-spacing:1px;color:#000;">$4.99/month</div>
+      </div>
+    </div>
+
+    <!-- ACTION BUTTONS -->
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:18px;">
+      <button onclick="shareQRCard()" style="font-family:var(--display);font-size:16px;letter-spacing:2px;padding:11px 24px;background:transparent;border:2px solid var(--cyan);color:var(--cyan);border-radius:6px;cursor:pointer;text-transform:uppercase;transition:all 0.2s;" onmouseover="this.style.background='var(--cyan)';this.style.color='#000'" onmouseout="this.style.background='transparent';this.style.color='var(--cyan)'">
+        📤 Share
+      </button>
+      <button onclick="printQRCard()" style="font-family:var(--display);font-size:16px;letter-spacing:2px;padding:11px 24px;background:transparent;border:2px solid var(--green);color:var(--green);border-radius:6px;cursor:pointer;text-transform:uppercase;transition:all 0.2s;" onmouseover="this.style.background='var(--green)';this.style.color='#000'" onmouseout="this.style.background='transparent';this.style.color='var(--green)'">
+        🖨️ Print
+      </button>
+    </div>
+    <p style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:12px;letter-spacing:1px;">// Scan to visit · Share with a trader · Print and post it</p>
+  </div>
+</section>
+
+<script>
+function shareQRCard(){
+  if(navigator.share){
+    navigator.share({
+      title:'DuttyBookBag — TradingView Indicators',
+      text:'Stop guessing. Read the data. $4.99/month TradingView indicators across 7 timeframes.',
+      url:'https://duttybookbag.github.io/duttybookbag/'
+    }).catch(function(){});
+  } else {
+    navigator.clipboard.writeText('https://duttybookbag.github.io/duttybookbag/').then(function(){
+      alert('Link copied! Paste it anywhere to share.');
+    });
+  }
+}
+
+function printQRCard(){
+  var win = window.open('','_blank','width=500,height=680');
+  win.document.write('<!DOCTYPE html><html><head><title>DuttyBookBag QR Code</title>');
+  win.document.write('<style>');
+  win.document.write('*{margin:0;padding:0;box-sizing:border-box;}');
+  win.document.write('body{background:#fff;display:flex;justify-content:center;align-items:center;min-height:100vh;font-family:Arial,sans-serif;}');
+  win.document.write('.card{text-align:center;padding:32px 28px;border:3px solid #000;border-radius:12px;max-width:380px;width:100%;}');
+  win.document.write('.title{font-size:30px;font-weight:bold;color:#000;letter-spacing:2px;margin-bottom:4px;}');
+  win.document.write('.sub{font-size:13px;color:#555;margin-bottom:18px;letter-spacing:1px;}');
+  win.document.write('.qr-wrap{background:#fff;border:2px solid #000;border-radius:8px;padding:10px;display:inline-block;margin-bottom:14px;}');
+  win.document.write('img{width:210px;height:210px;display:block;}');
+  win.document.write('.url{font-size:12px;color:#333;font-family:monospace;margin-bottom:18px;}');
+  win.document.write('.tags{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;}');
+  win.document.write('.tag{padding:6px 14px;border:2px solid #000;border-radius:5px;font-size:13px;font-weight:bold;color:#000;}');
+  win.document.write('.tag-filled{background:#000;color:#fff;}');
+  win.document.write('@media print{body{min-height:auto;}}');
+  win.document.write('</style></head><body>');
+  win.document.write('<div class="card">');
+  win.document.write('<div class="title">DuttyBookBag</div>');
+  win.document.write('<div class="sub">TradingView Indicators</div>');
+  win.document.write('<div class="qr-wrap"><img src="data:image/png;base64,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" alt="QR Code"/></div>');
+  win.document.write('<div class="url">duttybookbag.github.io/duttybookbag</div>');
+  win.document.write('<div class="tags"><div class="tag">Stop Guessing</div><div class="tag">Read The Data</div><div class="tag tag-filled">$4.99/month</div></div>');
+  win.document.write('</div></body></html>');
+  win.document.close();
+  win.focus();
+  setTimeout(function(){ win.print(); }, 500);
+}
+</script>
+
 <!-- BOTTOM GLOWING LOGO -->
 <section style="padding:30px 0 50px;">
   <div class="wrap" style="text-align:center;">
