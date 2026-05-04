@@ -116,6 +116,18 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
 </script>
 <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 <style>.goog-te-banner-frame{display:none!important;}.goog-te-gadget{font-size:11px!important;color:#3d7070!important;}.goog-te-gadget .goog-te-combo{background:#080f0f;color:#b8e8e2;border:1px solid #0c3030;border-radius:4px;padding:4px 8px;font-family:'Share Tech Mono',monospace;font-size:11px;outline:none;}.goog-te-gadget>span{display:none!important;}body{top:0!important;}</style>
+<section style="padding:14px 0 8px;text-align:center;">
+  <style>.dbb-tl{display:grid;grid-template-columns:repeat(3,24px);grid-template-rows:repeat(3,24px);gap:8px;justify-content:center;margin:0 auto;width:max-content;}.dbb-tl .td{width:24px;height:24px;border-radius:50%;animation:dbbTP 2.8s ease-in-out infinite;}.dbb-tl .ta1{grid-column:2;grid-row:1;}.dbb-tl .ta2{grid-column:1;grid-row:2;}.dbb-tl .ta3{grid-column:2;grid-row:2;}.dbb-tl .ta4{grid-column:3;grid-row:2;}.dbb-tl .ta5{grid-column:1;grid-row:3;}.dbb-tl .ta6{grid-column:3;grid-row:3;}.dbb-tl .trd{background:#ff1a1a;box-shadow:0 0 10px #ff1a1a,0 0 20px #ff1a1a;}.dbb-tl .tgr{background:#00ff44;box-shadow:0 0 10px #00ff44,0 0 20px #00ff44;}@keyframes dbbTP{0%,100%{opacity:.5;transform:scale(.88);}50%{opacity:1;transform:scale(1.1);}}</style>
+  <div class="dbb-tl">
+    <div class="td trd ta1"></div>
+    <div class="td tgr ta2"></div>
+    <div class="td trd ta3"></div>
+    <div class="td tgr ta4"></div>
+    <div class="td tgr ta5"></div>
+    <div class="td tgr ta6"></div>
+  </div>
+</section>
+
 
 <header>
   <div class="glow-orb"></div>
@@ -402,7 +414,26 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
 </section>
 
 <!-- FOOTER -->
+<section style="padding:20px 0 10px;">
+  <style>.dbb-fl{display:grid;grid-template-columns:repeat(3,32px);grid-template-rows:repeat(3,32px);gap:10px;justify-content:center;margin:0 auto;width:max-content;}.dbb-fl .fd{width:32px;height:32px;border-radius:50%;animation:dbbFP 2.8s ease-in-out infinite;}.dbb-fl .fa1{grid-column:2;grid-row:1;}.dbb-fl .fa2{grid-column:1;grid-row:2;}.dbb-fl .fa3{grid-column:2;grid-row:2;}.dbb-fl .fa4{grid-column:3;grid-row:2;}.dbb-fl .fa5{grid-column:1;grid-row:3;}.dbb-fl .fa6{grid-column:3;grid-row:3;}.dbb-fl .frd{background:#ff1a1a;box-shadow:0 0 12px #ff1a1a,0 0 24px #ff1a1a;}.dbb-fl .fgr{background:#00ff44;box-shadow:0 0 12px #00ff44,0 0 24px #00ff44;}@keyframes dbbFP{0%,100%{opacity:.55;transform:scale(.92);}50%{opacity:1;transform:scale(1.08);}}</style>
+  <div style="text-align:center;">
+    <div class="dbb-fl">
+      <div class="fd frd fa1"></div>
+      <div class="fd fgr fa2"></div>
+      <div class="fd frd fa3"></div>
+      <div class="fd fgr fa4"></div>
+      <div class="fd fgr fa5"></div>
+      <div class="fd fgr fa6"></div>
+    </div>
+  </div>
+</section>
+
 <footer>
   <div class="wrap">
     <p>Not financial advice · Trade responsibly · <span>DuttyBookBag</span></p>
     <p 
+<button id="top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top" style="position:fixed;bottom:22px;right:22px;z-index:9999;width:46px;height:46px;border-radius:50%;background:rgba(0,255,225,0.12);border:2px solid #00ffe1;color:#00ffe1;font-size:20px;cursor:pointer;display:none;align-items:center;justify-content:center;box-shadow:0 0 12px rgba(0,255,225,0.3);">&#8679;</button>
+<script>
+var topBtn=document.getElementById('top-btn');
+window.addEventListener('scroll',function(){topBtn.style.display=window.scrollY>400?'flex':'none';});
+</script>
