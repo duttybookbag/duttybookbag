@@ -83,17 +83,6 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
 </script>
 <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 <style>.goog-te-banner-frame{display:none!important;}.goog-te-gadget{font-size:11px!important;color:#3d7070!important;}.goog-te-gadget .goog-te-combo{background:#080f0f;color:#b8e8e2;border:1px solid #0c3030;border-radius:4px;padding:4px 8px;font-family:'Share Tech Mono',monospace;font-size:11px;outline:none;}.goog-te-gadget>span{display:none!important;}body{top:0!important;}</style>
-<section style="padding:14px 0 8px;text-align:center;">
-  <style>.dbb-tl{display:grid;grid-template-columns:repeat(3,24px);grid-template-rows:repeat(3,24px);gap:8px;justify-content:center;margin:0 auto;width:max-content;}.dbb-tl .td{width:24px;height:24px;border-radius:50%;animation:dbbTP 2.8s ease-in-out infinite;}.dbb-tl .ta1{grid-column:2;grid-row:1;}.dbb-tl .ta2{grid-column:1;grid-row:2;}.dbb-tl .ta3{grid-column:2;grid-row:2;}.dbb-tl .ta4{grid-column:3;grid-row:2;}.dbb-tl .ta5{grid-column:1;grid-row:3;}.dbb-tl .ta6{grid-column:3;grid-row:3;}.dbb-tl .trd{background:#ff1a1a;box-shadow:0 0 10px #ff1a1a,0 0 20px #ff1a1a;}.dbb-tl .tgr{background:#00ff44;box-shadow:0 0 10px #00ff44,0 0 20px #00ff44;}@keyframes dbbTP{0%,100%{opacity:.5;transform:scale(.88);}50%{opacity:1;transform:scale(1.1);}}</style>
-  <div class="dbb-tl">
-    <div class="td trd ta1"></div>
-    <div class="td tgr ta2"></div>
-    <div class="td trd ta3"></div>
-    <div class="td tgr ta4"></div>
-    <div class="td tgr ta5"></div>
-    <div class="td tgr ta6"></div>
-  </div>
-</section>
 
 
 <header>
@@ -2638,6 +2627,28 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
 </section>
 
 <!-- FOOTER -->
+<section style="padding:40px 0 10px;">
+  <div class="wrap" style="text-align:center;">
+    <div style="font-family:monospace;font-size:10px;letter-spacing:4px;color:#3d7070;text-transform:uppercase;margin-bottom:14px;">// Scan · Share · Print</div>
+    <div id="qr-print-card" style="display:inline-block;background:#000;border:2px solid #00ffe1;border-radius:14px;padding:26px 30px;max-width:340px;width:100%;box-shadow:0 0 30px rgba(0,255,225,0.12);">
+      <div style="font-family:monospace;font-size:22px;letter-spacing:3px;color:#00ffe1;margin-bottom:3px;">DuttyBookBag</div>
+      <div style="font-family:monospace;font-size:11px;color:#3d7070;letter-spacing:2px;margin-bottom:14px;">Dutty Ashy Win_G · Learning Center</div>
+      <div style="background:#fff;border-radius:8px;padding:10px;display:inline-block;margin-bottom:12px;">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAcIAAAHCAQAAAABUY/ToAAADqElEQVR4nO2cTarjMAyAP00CXSbQA/QoyQ3mSI93s/goPcBAsiw4aBaWXaftaqaPpkVamDbJhx0Qsv5iUf5Nwq9/BMFJJ5100kknnXRyf6SYtBBEhNCvkn6xiMi4tKRfIiIyvni1Tu6LRFVVGVRVdW70ek1Vo92FRhnmRquHp/d6Tyd/nlyKfUmyCiwtIj2ozqsAkEzVs+Z08lPJTpMxEjlFdGIVkZPepwD2sVon90fqtLQQelCdQb7OLTr97JxOvjeZt6ZOgQUYdBWG80FhOaqEvokCbQSgtkbv9Z5O/jgZRESkBxmXg+1lI8Aw5wHWFJY9a04nP4QsMZgJdJHkFA3pr0VoFroV8bjMySyPYnvTnPTXBp3SkLXOdcjJLHUGqBieiZILmkGnLpKMUSFch5y8JbtLSgipzmudKQp9k0N9OahOXcTuvud7Ovl8MvtDM+hUmaCIJabTYKH+1VFyO+TkQ3JpkS+9iIw0arYpudhmfUyRnjmnk29PFjvU1K7QBCT1GbS4Ql00U+X+kJMbucZlafOaOgvwbWvryk4HZL1yHXKyko0dKpHXDLAJztKNCY/LnLwV0whK28ecbU4yN0WvptQA4jrk5K1s8kOR7A/ZkJUme0aWKXIdcrKSvFvlFPVVVYoOmSLN1ojm/pCTGyl1+4sorK0GAaFrNFXwU0EfRQAhnOIrV+vkHsmq7zXJUMXxdS9sNkuNx/ZOPiSDHMwf+pZD3sHO1qJvvbBdfES+YrVO7oqs80OU4GzqrNaRCx7kJiKvdTh5J7Zb5ZJGujZBnZ3Wuc5d+17m5FZyfmhbDOuKF1ScopIacjvk5FYqO2QbGtQhfLJDbEofrkNO3pPWhN9aVoguot/SIl/ng8rYRWARAVb/ztXJrZRPDlfRcIrIoKAsPTrMx/rJYT7GpGb/O6eTn0VunJ2bBpBcsqcEbJ6ndvKB6FaqApndjaVeVnr3XYecvCOv537o90nVvrLXCEFa7JuzxfY9GV+8Wif3RZpeDBPAcoTh3EYNY4sAyDD3KJSuWNbsQb3Xezr58+T13I/uItntiej3KabDP/JxRAe9IV+xWif3RLa3F8LYqEADQXLpg+WgAk0k9M3/z+nkh5ND8p8vYt910Jh7lDoa07Unz+nkW5N3536E339aDf2swIoMZ0FZjshwbqPQNSqvW62TeyRLhxBAaVwEqmDeuhyvlTOP7Z2sJNmh67lCuj1kyJoYiWh5zPPUTjrppJNOOunkR5F/AaR3QrBjuCsxAAAAAElFTkSuQmCC" alt="QR Code" style="width:190px;height:190px;display:block;" />
+      </div>
+      <div style="font-family:monospace;font-size:11px;color:#3d7070;letter-spacing:1px;margin-bottom:16px;">duttybookbag.github.io/duttybookbag/dutty-learn-center.html</div>
+      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+        <div style="background:rgba(0,255,225,0.1);border:1px solid #00ffe1;border-radius:5px;padding:7px 14px;font-family:monospace;font-size:13px;color:#00ffe1;">Trading Terms</div>
+        <div style="background:rgba(0,255,225,0.1);border:1px solid #00ffe1;border-radius:5px;padding:7px 14px;font-family:monospace;font-size:13px;color:#00ffe1;">Free Education</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:18px;">
+      <button onclick="if(navigator.share){navigator.share({title:'DuttyBookBag Learning Center',url:'https://duttybookbag.github.io/duttybookbag/dutty-learn-center.html'}).catch(function(){})}else{navigator.clipboard.writeText('https://duttybookbag.github.io/duttybookbag/dutty-learn-center.html').then(function(){alert('Link copied!')})};" style="font-family:monospace;font-size:14px;letter-spacing:2px;padding:11px 24px;background:transparent;border:2px solid #00ffe1;color:#00ffe1;border-radius:6px;cursor:pointer;text-transform:uppercase;">📤 Share</button>
+      <button onclick="window.print();" style="font-family:monospace;font-size:14px;letter-spacing:2px;padding:11px 24px;background:transparent;border:2px solid #00ff44;color:#00ff44;border-radius:6px;cursor:pointer;text-transform:uppercase;">🖨️ Print</button>
+    </div>
+    <p style="font-family:monospace;font-size:11px;color:#3d7070;margin-top:12px;letter-spacing:1px;">// Scan to visit · Share with a learner · Print and post it</p>
+  </div>
+</section>
 <section style="padding:20px 0 10px;">
   <style>.dbb-fl{display:grid;grid-template-columns:repeat(3,32px);grid-template-rows:repeat(3,32px);gap:10px;justify-content:center;margin:0 auto;width:max-content;}.dbb-fl .fd{width:32px;height:32px;border-radius:50%;animation:dbbFP 2.8s ease-in-out infinite;}.dbb-fl .fa1{grid-column:2;grid-row:1;}.dbb-fl .fa2{grid-column:1;grid-row:2;}.dbb-fl .fa3{grid-column:2;grid-row:2;}.dbb-fl .fa4{grid-column:3;grid-row:2;}.dbb-fl .fa5{grid-column:1;grid-row:3;}.dbb-fl .fa6{grid-column:3;grid-row:3;}.dbb-fl .frd{background:#ff1a1a;box-shadow:0 0 12px #ff1a1a,0 0 24px #ff1a1a;}.dbb-fl .fgr{background:#00ff44;box-shadow:0 0 12px #00ff44,0 0 24px #00ff44;}@keyframes dbbFP{0%,100%{opacity:.55;transform:scale(.92);}50%{opacity:1;transform:scale(1.08);}}</style>
   <div style="text-align:center;">
@@ -2655,19 +2666,7 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
 <footer>
   <div class="wrap">
     <!-- Standard logo (original) -->
-    <div style="display:flex;justify-content:center;margin-bottom:20px;">
-      <svg viewBox="0 0 80 80" width="60" height="60" style="opacity:0.8;">
-        <!-- Top: 1 red dot -->
-        <circle cx="40" cy="15" r="6" fill="#ff5252"/>
-        <!-- Middle: green, red, green -->
-        <circle cx="23" cy="40" r="6" fill="#39ff14"/>
-        <circle cx="40" cy="40" r="6" fill="#ff5252"/>
-        <circle cx="57" cy="40" r="6" fill="#39ff14"/>
-        <!-- Bottom: 2 green dots -->
-        <circle cx="23" cy="62" r="6" fill="#39ff14"/>
-        <circle cx="57" cy="62" r="6" fill="#39ff14"/>
-      </svg>
-    </div>
+    
     <p>Not financial advice · Trade responsibly · <span>DuttyBookBag</span></p>
     <p style="margin-top:8px;">© Uncle_E · Dutty Ashy Win_G Learning Center · All Rights Reserved</p>
   </div>
