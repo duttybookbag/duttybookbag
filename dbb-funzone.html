@@ -475,6 +475,8 @@ startMatch();
 var topBtn=document.getElementById('top-btn');
 window.addEventListener('scroll',function(){topBtn.style.display=window.scrollY>400?'flex':'none';});
 </script>
+
+
 <script>
 function shareQRCard(){
   if(navigator.share){
@@ -492,7 +494,7 @@ function shareQRCard(){
 
 function printQRCard(){
   var win = window.open('','_blank','width=500,height=680');
-  win.document.write('<!DOCTYPE html><html><head><title>DuttyBookBag — Fun Zone<\/title>');
+  win.document.write('<!DOCTYPE html><html><head><title>DuttyBookBag QR Code</title>');
   win.document.write('<style>');
   win.document.write('*{margin:0;padding:0;box-sizing:border-box;}');
   win.document.write('body{background:#fff;display:flex;justify-content:center;align-items:center;min-height:100vh;font-family:Arial,sans-serif;}');
@@ -506,20 +508,20 @@ function printQRCard(){
   win.document.write('.tag{padding:6px 14px;border:2px solid #000;border-radius:5px;font-size:13px;font-weight:bold;color:#000;}');
   win.document.write('.tag-filled{background:#000;color:#fff;}');
   win.document.write('@media print{body{min-height:auto;}}');
-  win.document.write('<\/style><\/head><body>');
-  win.document.write('<div class=\"card\">');
-  win.document.write('<div class=\"title\">DuttyBookBag<\/div>');
-  win.document.write('<div class=\"sub\">Games · Entertainment<\/div>');
-  win.document.write('<div class=\"qr-wrap\"><img src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZoAAAGaAQAAAAAefbjOAAAC90lEQVR4nO2bzW3jMBCF36wE5EgDKcClSB24JNe0HYiluIAFyKMBCm8PQ1JUcgqMSIY0PBgJzQ8ZQS/D+SGF+PHwf37OAAYZZJBBBhlk0DEhyaMHEHvAX+rcZRYglgXjLuYZtD00kCQDAH9NAKII4EhO8YMAOpIk19B25hm0PRSzA5BRxZBAhllkdAn6hXqQncwzaF9I7o8Pwl8A8iHyi3/JoLeD+q8Tw9/PBH99CodHD4FLPRH3Ms+gzaGiCEegvngBesDfNG5oP7c2z6C9IK95RZkdQke5P3rIGHvIiFlTjb3MM2hrH9E6AJdAxFkA9xT661O4XvD2z2TQKxA0qxwCAE0yQ0dOjuSkCQf0AzUF5fTmz2TQKxBKnWHRAYmh1B4aWUxArluYIo4MIf/bu1p+QkcMTFhpo1M3Yj7i+FD1EUDrI0JXdhJHckLHZbEp4tBQUYRLUAkMoYYLVRtwCbmOaYo4OpRfco4nsyzIkJ0CBqaskkl/NUUcHKq5RsccQJY0o8x1edewOOIcULNrNKGkegamvCTHEZZ9ngGqishFCfURdRNpthMUvZgiDg3V7DOB1Jyz6ICs8WSwesRpoCb7RFOKqF8MtaJpccQ5oFX2ydXmUFNQdQ8WR5wDahVR+xo5oljO0lk94jxQszkspewl3dRNpElBTRFHh5ozVAL0ifmnWXvggvhJ+NtTMISLcGvzDNocWnXDS5qxVCrRRpsWR5wBalMKHW7V+Frq2Tn4NEUcHCp9jTLyO8e6r8HaDzVFHB3SOKIcoOwS/SUAwCyAC4AXAIifCTm22NY8g/aCtAARABlVDAkYlqsaLuWbf+M+5hm0PVTudOUYM/aAv5JyDx3hJd/z2s08g/aD/AVQHeTLn09Z+mD7m2fQb0Pf7nQh9tCD+Tl6AIAooJeadbz5Mxn0CvT1Thf97V9PjScxC1Cyjvb255s/k0GvQN97n+XklB66ZUBte1pf4wzQ1ztdBEpXSycc6wLbNQwyyCCDDDLIoHb8B33AsFVCg6uCAAAAAElFTkSuQmCC\" alt=\"QR Code\"/><\/div>');
-  win.document.write('<div class=\"url\">duttybookbag.github.io/duttybookbag/dbb-funzone.html<\/div>');
-  win.document.write('<div class=\"tags\">');
-  win.document.write('<div class=\"tag \">Games<\/div>');win.document.write('<div class=\"tag tag-filled\">Free Fun<\/div>');
-  win.document.write('<\/div>');
-  win.document.write('<\/div><\/body><\/html>');
+  win.document.write('</style></head><body>');
+  win.document.write('<div class="card">');
+  win.document.write('<div class="title">DuttyBookBag</div>');
+  win.document.write('<div class="sub">Fun Zone · Games</div>');
+  win.document.write('<div class="qr-wrap"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZoAAAGaAQAAAAAefbjOAAAC90lEQVR4nO2bzW3jMBCF36wE5EgDKcClSB24JNe0HYiluIAFyKMBCm8PQ1JUcgqMSIY0PBgJzQ8ZQS/D+SGF+PHwf37OAAYZZJBBBhlk0DEhyaMHEHvAX+rcZRYglgXjLuYZtD00kCQDAH9NAKII4EhO8YMAOpIk19B25hm0PRSzA5BRxZBAhllkdAn6hXqQncwzaF9I7o8Pwl8A8iHyi3/JoLeD+q8Tw9/PBH99CodHD4FLPRH3Ms+gzaGiCEegvngBesDfNG5oP7c2z6C9IK95RZkdQke5P3rIGHvIiFlTjb3MM2hrH9E6AJdAxFkA9xT661O4XvD2z2TQKxA0qxwCAE0yQ0dOjuSkCQf0AzUF5fTmz2TQKxBKnWHRAYmh1B4aWUxArluYIo4MIf/bu1p+QkcMTFhpo1M3Yj7i+FD1EUDrI0JXdhJHckLHZbEp4tBQUYRLUAkMoYYLVRtwCbmOaYo4OpRfco4nsyzIkJ0CBqaskkl/NUUcHKq5RsccQJY0o8x1edewOOIcULNrNKGkegamvCTHEZZ9ngGqishFCfURdRNpthMUvZgiDg3V7DOB1Jyz6ICs8WSwesRpoCb7RFOKqF8MtaJpccQ5oFX2ydXmUFNQdQ8WR5wDahVR+xo5oljO0lk94jxQszkspewl3dRNpElBTRFHh5ozVAL0ifmnWXvggvhJ+NtTMISLcGvzDNocWnXDS5qxVCrRRpsWR5wBalMKHW7V+Frq2Tn4NEUcHCp9jTLyO8e6r8HaDzVFHB3SOKIcoOwS/SUAwCyAC4AXAIifCTm22NY8g/aCtAARABlVDAkYlqsaLuWbf+M+5hm0PVTudOUYM/aAv5JyDx3hJd/z2s08g/aD/AVQHeTLn09Z+mD7m2fQb0Pf7nQh9tCD+Tl6AIAooJeadbz5Mxn0CvT1Thf97V9PjScxC1Cyjvb255s/k0GvQN97n+XklB66ZUBte1pf4wzQ1ztdBEpXSycc6wLbNQwyyCCDDDLIoHb8B33AsFVCg6uCAAAAAElFTkSuQmCC"  alt="QR Code"/></div>');
+  win.document.write('<div class="url">duttybookbag.github.io/duttybookbag/dbb-funzone.html</div>');
+  win.document.write('<div class="tags">');
+  win.document.write('<div class="tag">Games</div><div class="tag tag-filled">Free Fun</div>');
+  win.document.write('</div>');
+  win.document.write('</div></body></html>');
   win.document.close();
   win.focus();
   setTimeout(function(){ win.print(); }, 500);
 }
-<\/script>
+</script>
 </body>
 </html>

@@ -2677,6 +2677,8 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
 var topBtn=document.getElementById('top-btn');
 window.addEventListener('scroll',function(){topBtn.style.display=window.scrollY>400?'flex':'none';});
 </script>
+
+
 <script>
 function shareQRCard(){
   if(navigator.share){
@@ -2694,7 +2696,7 @@ function shareQRCard(){
 
 function printQRCard(){
   var win = window.open('','_blank','width=500,height=680');
-  win.document.write('<!DOCTYPE html><html><head><title>DuttyBookBag — Learning Center<\/title>');
+  win.document.write('<!DOCTYPE html><html><head><title>DuttyBookBag QR Code</title>');
   win.document.write('<style>');
   win.document.write('*{margin:0;padding:0;box-sizing:border-box;}');
   win.document.write('body{background:#fff;display:flex;justify-content:center;align-items:center;min-height:100vh;font-family:Arial,sans-serif;}');
@@ -2708,20 +2710,20 @@ function printQRCard(){
   win.document.write('.tag{padding:6px 14px;border:2px solid #000;border-radius:5px;font-size:13px;font-weight:bold;color:#000;}');
   win.document.write('.tag-filled{background:#000;color:#fff;}');
   win.document.write('@media print{body{min-height:auto;}}');
-  win.document.write('<\/style><\/head><body>');
-  win.document.write('<div class=\"card\">');
-  win.document.write('<div class=\"title\">DuttyBookBag<\/div>');
-  win.document.write('<div class=\"sub\">Dutty Ashy Win_G · Education<\/div>');
-  win.document.write('<div class=\"qr-wrap\"><img src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAcIAAAHCAQAAAABUY/ToAAADqElEQVR4nO2cTarjMAyAP00CXSbQA/QoyQ3mSI93s/goPcBAsiw4aBaWXaftaqaPpkVamDbJhx0Qsv5iUf5Nwq9/BMFJJ5100kknnXRyf6SYtBBEhNCvkn6xiMi4tKRfIiIyvni1Tu6LRFVVGVRVdW70ek1Vo92FRhnmRquHp/d6Tyd/nlyKfUmyCiwtIj2ozqsAkEzVs+Z08lPJTpMxEjlFdGIVkZPepwD2sVon90fqtLQQelCdQb7OLTr97JxOvjeZt6ZOgQUYdBWG80FhOaqEvokCbQSgtkbv9Z5O/jgZRESkBxmXg+1lI8Aw5wHWFJY9a04nP4QsMZgJdJHkFA3pr0VoFroV8bjMySyPYnvTnPTXBp3SkLXOdcjJLHUGqBieiZILmkGnLpKMUSFch5y8JbtLSgipzmudKQp9k0N9OahOXcTuvud7Ovl8MvtDM+hUmaCIJabTYKH+1VFyO+TkQ3JpkS+9iIw0arYpudhmfUyRnjmnk29PFjvU1K7QBCT1GbS4Ql00U+X+kJMbucZlafOaOgvwbWvryk4HZL1yHXKyko0dKpHXDLAJztKNCY/LnLwV0whK28ecbU4yN0WvptQA4jrk5K1s8kOR7A/ZkJUme0aWKXIdcrKSvFvlFPVVVYoOmSLN1ojm/pCTGyl1+4sorK0GAaFrNFXwU0EfRQAhnOIrV+vkHsmq7zXJUMXxdS9sNkuNx/ZOPiSDHMwf+pZD3sHO1qJvvbBdfES+YrVO7oqs80OU4GzqrNaRCx7kJiKvdTh5J7Zb5ZJGujZBnZ3Wuc5d+17m5FZyfmhbDOuKF1ScopIacjvk5FYqO2QbGtQhfLJDbEofrkNO3pPWhN9aVoguot/SIl/ng8rYRWARAVb/ztXJrZRPDlfRcIrIoKAsPTrMx/rJYT7GpGb/O6eTn0VunJ2bBpBcsqcEbJ6ndvKB6FaqApndjaVeVnr3XYecvCOv537o90nVvrLXCEFa7JuzxfY9GV+8Wif3RZpeDBPAcoTh3EYNY4sAyDD3KJSuWNbsQb3Xezr58+T13I/uItntiej3KabDP/JxRAe9IV+xWif3RLa3F8LYqEADQXLpg+WgAk0k9M3/z+nkh5ND8p8vYt910Jh7lDoa07Unz+nkW5N3536E339aDf2swIoMZ0FZjshwbqPQNSqvW62TeyRLhxBAaVwEqmDeuhyvlTOP7Z2sJNmh67lCuj1kyJoYiWh5zPPUTjrppJNOOunkR5F/AaR3QrBjuCsxAAAAAElFTkSuQmCC\" alt=\"QR Code\"/><\/div>');
-  win.document.write('<div class=\"url\">duttybookbag.github.io/duttybookbag/dutty-learn-center.html<\/div>');
-  win.document.write('<div class=\"tags\">');
-  win.document.write('<div class=\"tag \">Trading Terms<\/div>');win.document.write('<div class=\"tag tag-filled\">Free Education<\/div>');
-  win.document.write('<\/div>');
-  win.document.write('<\/div><\/body><\/html>');
+  win.document.write('</style></head><body>');
+  win.document.write('<div class="card">');
+  win.document.write('<div class="title">DuttyBookBag</div>');
+  win.document.write('<div class="sub">Learning Center</div>');
+  win.document.write('<div class="qr-wrap"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAcIAAAHCAQAAAABUY/ToAAADqElEQVR4nO2cTarjMAyAP00CXSbQA/QoyQ3mSI93s/goPcBAsiw4aBaWXaftaqaPpkVamDbJhx0Qsv5iUf5Nwq9/BMFJJ5100kknnXRyf6SYtBBEhNCvkn6xiMi4tKRfIiIyvni1Tu6LRFVVGVRVdW70ek1Vo92FRhnmRquHp/d6Tyd/nlyKfUmyCiwtIj2ozqsAkEzVs+Z08lPJTpMxEjlFdGIVkZPepwD2sVon90fqtLQQelCdQb7OLTr97JxOvjeZt6ZOgQUYdBWG80FhOaqEvokCbQSgtkbv9Z5O/jgZRESkBxmXg+1lI8Aw5wHWFJY9a04nP4QsMZgJdJHkFA3pr0VoFroV8bjMySyPYnvTnPTXBp3SkLXOdcjJLHUGqBieiZILmkGnLpKMUSFch5y8JbtLSgipzmudKQp9k0N9OahOXcTuvud7Ovl8MvtDM+hUmaCIJabTYKH+1VFyO+TkQ3JpkS+9iIw0arYpudhmfUyRnjmnk29PFjvU1K7QBCT1GbS4Ql00U+X+kJMbucZlafOaOgvwbWvryk4HZL1yHXKyko0dKpHXDLAJztKNCY/LnLwV0whK28ecbU4yN0WvptQA4jrk5K1s8kOR7A/ZkJUme0aWKXIdcrKSvFvlFPVVVYoOmSLN1ojm/pCTGyl1+4sorK0GAaFrNFXwU0EfRQAhnOIrV+vkHsmq7zXJUMXxdS9sNkuNx/ZOPiSDHMwf+pZD3sHO1qJvvbBdfES+YrVO7oqs80OU4GzqrNaRCx7kJiKvdTh5J7Zb5ZJGujZBnZ3Wuc5d+17m5FZyfmhbDOuKF1ScopIacjvk5FYqO2QbGtQhfLJDbEofrkNO3pPWhN9aVoguot/SIl/ng8rYRWARAVb/ztXJrZRPDlfRcIrIoKAsPTrMx/rJYT7GpGb/O6eTn0VunJ2bBpBcsqcEbJ6ndvKB6FaqApndjaVeVnr3XYecvCOv537o90nVvrLXCEFa7JuzxfY9GV+8Wif3RZpeDBPAcoTh3EYNY4sAyDD3KJSuWNbsQb3Xezr58+T13I/uItntiej3KabDP/JxRAe9IV+xWif3RLa3F8LYqEADQXLpg+WgAk0k9M3/z+nkh5ND8p8vYt910Jh7lDoa07Unz+nkW5N3536E339aDf2swIoMZ0FZjshwbqPQNSqvW62TeyRLhxBAaVwEqmDeuhyvlTOP7Z2sJNmh67lCuj1kyJoYiWh5zPPUTjrppJNOOunkR5F/AaR3QrBjuCsxAAAAAElFTkSuQmCC"  alt="QR Code"/></div>');
+  win.document.write('<div class="url">duttybookbag.github.io/duttybookbag/dutty-learn-center.html</div>');
+  win.document.write('<div class="tags">');
+  win.document.write('<div class="tag">Trading Terms</div><div class="tag tag-filled">Free Education</div>');
+  win.document.write('</div>');
+  win.document.write('</div></body></html>');
   win.document.close();
   win.focus();
   setTimeout(function(){ win.print(); }, 500);
 }
-<\/script>
+</script>
 </body>
 </html>
