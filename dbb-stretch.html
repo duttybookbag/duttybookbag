@@ -1063,8 +1063,8 @@ footer a{color:var(--green);text-decoration:none;}
       </div>
     </div>
     <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:18px;">
-      <button onclick="if(navigator.share){navigator.share({title:'DuttyBookBag Stretch Your Dollar',url:'https://duttybookbag.github.io/duttybookbag/dbb-stretch.html'}).catch(function(){})}else{navigator.clipboard.writeText('https://duttybookbag.github.io/duttybookbag/dbb-stretch.html').then(function(){alert('Link copied!')})};" style="font-family:monospace;font-size:14px;letter-spacing:2px;padding:11px 24px;background:transparent;border:2px solid #00ffe1;color:#00ffe1;border-radius:6px;cursor:pointer;text-transform:uppercase;">📤 Share</button>
-      <button onclick="window.print();" style="font-family:monospace;font-size:14px;letter-spacing:2px;padding:11px 24px;background:transparent;border:2px solid #00ff44;color:#00ff44;border-radius:6px;cursor:pointer;text-transform:uppercase;">🖨️ Print</button>
+      <button onclick="shareQRCard()" style="font-family:monospace;font-size:14px;letter-spacing:2px;padding:11px 24px;background:transparent;border:2px solid #00ffe1;color:#00ffe1;border-radius:6px;cursor:pointer;text-transform:uppercase;">📤 Share</button>
+      <button onclick="printQRCard()" style="font-family:monospace;font-size:14px;letter-spacing:2px;padding:11px 24px;background:transparent;border:2px solid #00ff44;color:#00ff44;border-radius:6px;cursor:pointer;text-transform:uppercase;">🖨️ Print</button>
     </div>
     <p style="font-family:monospace;font-size:11px;color:#3d7070;margin-top:12px;letter-spacing:1px;">// Scan to visit · Share with someone · Print and post it</p>
   </div>
@@ -1098,5 +1098,51 @@ footer a{color:var(--green);text-decoration:none;}
 var topBtn=document.getElementById('top-btn');
 window.addEventListener('scroll',function(){topBtn.style.display=window.scrollY>400?'flex':'none';});
 </script>
+<script>
+function shareQRCard(){
+  if(navigator.share){
+    navigator.share({
+      title:'DuttyBookBag — Stretch Your Dollar',
+      text:'Real talk about saving real money. Store comparisons, budget meals, home hacks.',
+      url:'https://duttybookbag.github.io/duttybookbag/dbb-stretch.html'
+    }).catch(function(){});
+  } else {
+    navigator.clipboard.writeText('https://duttybookbag.github.io/duttybookbag/dbb-stretch.html').then(function(){
+      alert('Link copied! Paste it anywhere to share.');
+    });
+  }
+}
+
+function printQRCard(){
+  var win = window.open('','_blank','width=500,height=680');
+  win.document.write('<!DOCTYPE html><html><head><title>DuttyBookBag — Stretch Your Dollar<\/title>');
+  win.document.write('<style>');
+  win.document.write('*{margin:0;padding:0;box-sizing:border-box;}');
+  win.document.write('body{background:#fff;display:flex;justify-content:center;align-items:center;min-height:100vh;font-family:Arial,sans-serif;}');
+  win.document.write('.card{text-align:center;padding:32px 28px;border:3px solid #000;border-radius:12px;max-width:380px;width:100%;}');
+  win.document.write('.title{font-size:30px;font-weight:bold;color:#000;letter-spacing:2px;margin-bottom:4px;}');
+  win.document.write('.sub{font-size:13px;color:#555;margin-bottom:18px;letter-spacing:1px;}');
+  win.document.write('.qr-wrap{background:#fff;border:2px solid #000;border-radius:8px;padding:10px;display:inline-block;margin-bottom:14px;}');
+  win.document.write('img{width:210px;height:210px;display:block;}');
+  win.document.write('.url{font-size:12px;color:#333;font-family:monospace;margin-bottom:18px;}');
+  win.document.write('.tags{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;}');
+  win.document.write('.tag{padding:6px 14px;border:2px solid #000;border-radius:5px;font-size:13px;font-weight:bold;color:#000;}');
+  win.document.write('.tag-filled{background:#000;color:#fff;}');
+  win.document.write('@media print{body{min-height:auto;}}');
+  win.document.write('<\/style><\/head><body>');
+  win.document.write('<div class=\"card\">');
+  win.document.write('<div class=\"title\">DuttyBookBag<\/div>');
+  win.document.write('<div class=\"sub\">Smart Living · Save Money<\/div>');
+  win.document.write('<div class=\"qr-wrap\"><img src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZoAAAGaAQAAAAAefbjOAAAC+0lEQVR4nO2cwW3rMAyGfz4byFEGOkBGcTboSJ3pbSCN0gEKSMcAMvgOJG2l7aVIn+3E1MGIHH2IhBLUT1IqMX7c0p+fM4BDDjnkkEMOOfScEGnrgTRMBJQeSGQPFBtw2WR6Dq0IgZmZMTIzc+4YCMwc0TXv9DGPiztfk0O/ARVzAOM7ERCuxLEQEZ0r6AJAPMhW03NoOyidK+gtA0TnCo6Y6D/9kkO7hPpPfUbpwWn4kE+EADDKVtNzaHXILCIwgAIgXQACToz0yiCgkxxWm8na+ZocugdSZamtY4z5u4cNcGX59JD4iMYBpPPVhEOoEI156yF2vyaH7oG+RJ9jBjgGZnlwBjiiY4422H3EU0P2Rw5V7AC6dQDMGdBPtrG4RTw/1PgI6Ytw4IolTYXGStwijgKV3vYK69Ibq6KQpEQaNpyeQ6tBqizTAGKUvoqUTENXTV9OPcY8iLakMa47PYdWh3Qj0MpFBRCqSghpoaqYiIBHnweATEdkk5IIzGYHVuSKriOOA1kgEXgue8KMgStUY4ZWaLpFPDXU1jXGvwRG+OilkJFeMwPlRYIQQsjrT8+hjSCNMEwzAFLxnIgu4UoY30/MsRDdQOtNz6Et8hFVu5KfDNZVbeG7xmGgRkdYrKEGspycEmMA5u7O1+TQ/ZDlpU5tRSsNAF0AyNaBcPVd4wDQHH0uByvnL7KaijoP9xGHgxIRNSGo7B+5Y0lgj3lyH3EAqMlQLQKy9Ruz84juIw4BaT4inRlySwMAaIxTr8IhXAmJAIyLxtj5mhy6B7K6hjWNOvL8fahSzWi9xc7X5ND90HKnq8lViaIoPcx5TKTfPsSaHLoLasOMiSBxxTsRvVk91M9HHAya73Sh9OYyzsySo9AgRG93PcyaHPoVaFxCj0KkF4ObgsfG03NodSgNaHaI5Xz2Eok83poc+kmzStftQSp0Iiu+vPNY49mhb+90Nf83oD2iX/0M1QGgz3e6GLDDlvIi8Dygs2E7X5NDDjnkkEMOObQO9A/PcH7M6xq6YAAAAABJRU5ErkJggg==\" alt=\"QR Code\"/><\/div>');
+  win.document.write('<div class=\"url\">duttybookbag.github.io/duttybookbag/dbb-stretch.html<\/div>');
+  win.document.write('<div class=\"tags\">');
+  win.document.write('<div class=\"tag \">Smart Living<\/div>');win.document.write('<div class=\"tag tag-filled\">Save Money<\/div>');
+  win.document.write('<\/div>');
+  win.document.write('<\/div><\/body><\/html>');
+  win.document.close();
+  win.focus();
+  setTimeout(function(){ win.print(); }, 500);
+}
+<\/script>
 </body>
 </html>
