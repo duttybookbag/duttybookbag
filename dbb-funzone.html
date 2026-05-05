@@ -37,7 +37,7 @@
     .game-nav a{font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--neon);text-decoration:none;padding:10px 20px;border:2px solid var(--neon);border-radius:4px;text-transform:uppercase;}
     .game-nav a:hover{background:rgba(57,255,20,0.1);}
     /* SHOOTER GAME */
-    #shooter-canvas{width:100%;max-width:500px;height:500px;background:#050d0d;border:1px solid var(--border);border-radius:6px;position:relative;overflow:hidden;margin:0 auto;display:block;touch-action:none;user-select:none;}
+    #shooter-canvas{width:100%;max-width:500px;height:390px;background:#050d0d;border:1px solid var(--border);border-radius:6px;position:relative;overflow:hidden;margin:0 auto;display:block;touch-action:none;user-select:none;}
     .shooter-controls{display:flex;gap:12px;justify-content:center;margin-top:12px;}
     .ctrl-btn{font-family:var(--mono);font-size:18px;padding:16px 28px;background:rgba(57,255,20,0.1);border:2px solid var(--neon);border-radius:6px;color:var(--neon);cursor:pointer;user-select:none;-webkit-user-select:none;touch-action:manipulation;}
     .ctrl-btn:active{background:rgba(57,255,20,0.3);}
@@ -117,12 +117,18 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
   <p style="font-family:var(--mono);font-size:11px;color:var(--muted);text-align:center;margin-bottom:6px;">Move left/right. Shoot the correct answer!</p>
   <div id="shooter-question" style="font-family:var(--display);font-size:20px;color:#fff;text-align:center;min-height:28px;margin-bottom:6px;"></div>
   <div id="shooter-score" class="score-display">Score: 0 | Lives: 5</div>
-  <canvas id="shooter-canvas" width="300" height="280" style="width:100%;max-width:300px;height:280px;background:#050d0d;border:1px solid #0c3030;border-radius:6px;display:block;margin:0 auto;touch-action:none;"></canvas>
+  <canvas id="shooter-canvas" width="300" height="390" style="width:100%;max-width:300px;height:390px;background:#050d0d;border:1px solid #0c3030;border-radius:6px;display:block;margin:0 auto;touch-action:none;"></canvas>
   <div style="display:flex;gap:8px;justify-content:center;margin-top:8px;">
     <button ontouchstart="shipDir=-1;event.preventDefault();" ontouchend="shipDir=0" onmousedown="shipDir=-1" onmouseup="shipDir=0" style="font-family:var(--mono);font-size:16px;padding:10px 20px;background:rgba(57,255,20,0.1);border:1px solid #39ff14;border-radius:4px;color:#39ff14;cursor:pointer;user-select:none;-webkit-user-select:none;touch-action:manipulation;">◀</button>
     <button id="btn-start-pause" onclick="toggleShooter()" style="font-family:var(--mono);font-size:11px;padding:10px 18px;background:var(--neon);color:#000;border:none;border-radius:4px;cursor:pointer;letter-spacing:1px;">START</button>
     <button onclick="fireShot()" ontouchstart="fireShot();event.preventDefault();" style="font-family:var(--mono);font-size:11px;padding:10px 18px;background:rgba(255,82,82,0.2);border:1px solid #ff5252;border-radius:4px;color:#ff5252;cursor:pointer;user-select:none;touch-action:manipulation;">FIRE</button>
     <button ontouchstart="shipDir=1;event.preventDefault();" ontouchend="shipDir=0" onmousedown="shipDir=1" onmouseup="shipDir=0" style="font-family:var(--mono);font-size:16px;padding:10px 20px;background:rgba(57,255,20,0.1);border:1px solid #39ff14;border-radius:4px;color:#39ff14;cursor:pointer;user-select:none;-webkit-user-select:none;touch-action:manipulation;">▶</button>
+  </div>
+  <div style="text-align:center;margin-top:8px;">
+    <span style="font-family:var(--mono);font-size:9px;color:#3d7070;letter-spacing:1px;margin-right:6px;">SPEED:</span>
+    <button onclick="shSpeed=0.5;updateSpeedBtns(this)" id="spd-slow" style="font-family:var(--mono);font-size:9px;padding:5px 10px;background:transparent;border:1px solid #3d7070;border-radius:3px;color:#3d7070;cursor:pointer;margin:0 2px;">SLOW</button>
+    <button onclick="shSpeed=1.0;updateSpeedBtns(this)" id="spd-med" style="font-family:var(--mono);font-size:9px;padding:5px 10px;background:rgba(0,255,225,0.15);border:1px solid #00ffe1;border-radius:3px;color:#00ffe1;cursor:pointer;margin:0 2px;">MED</button>
+    <button onclick="shSpeed=1.8;updateSpeedBtns(this)" id="spd-fast" style="font-family:var(--mono);font-size:9px;padding:5px 10px;background:transparent;border:1px solid #3d7070;border-radius:3px;color:#3d7070;cursor:pointer;margin:0 2px;">FAST</button>
   </div>
   <div id="sound-toggle" style="text-align:center;margin-top:8px;">
     <button onclick="toggleSound()" id="snd-btn" style="font-family:var(--mono);font-size:9px;padding:6px 14px;background:transparent;border:1px solid #3d7070;border-radius:3px;color:#3d7070;cursor:pointer;">SOUND: OFF</button>
@@ -323,16 +329,58 @@ const pool=[
   {q:"To the moon?",opts:["Price crashing","Price skyrocketing","Sideways","Squeeze"],ans:1},
   {q:"Whale?",opts:["Small trader","Huge crypto holder","An exchange","A pattern"],ans:1},
   {q:"Pump and dump?",opts:["Real growth","Inflate then sell scam","A pattern","DCA strategy"],ans:1},
-  {q:"DYOR means?",opts:["Do Your Own Research","Daily Yield On Returns","A token","A strategy"],ans:0}
+  {q:"DYOR means?",opts:["Do Your Own Research","Daily Yield On Returns","A token","A strategy"],ans:0},
+  {q:"Linear regression shows?",opts:["Exact price","Average direction","Volume","Wicks"],ans:1},
+  {q:"Linear regression used for?",opts:["Counting candles","Finding avg trend","Measuring volume","Alerts"],ans:1},
+  {q:"Price far from regression line?",opts:["Stay there","Likely snap back","Always breaks out","No meaning"],ans:1},
+  {q:"Trading vs Investing key diff?",opts:["Same thing","Trading short-term investing long-term","Investing riskier","No charts"],ans:1},
+  {q:"Going long means?",opts:["Selling short","Buying expecting price up","Holding forever","Leverage only"],ans:1},
+  {q:"Going short means?",opts:["Buying and holding","Profiting when price falls","Staking","Long with leverage"],ans:1},
+  {q:"Shorting risk?",opts:["Same as longing","Can have unlimited loss","Longing riskier","No difference"],ans:1},
+  {q:"Supply vs demand vs S&R?",opts:["Completely different","Same idea different zoom level","Demand always wrong","S&R outdated"],ans:1},
+  {q:"Coin vs Token main diff?",opts:["Coins bigger","Coins own blockchain tokens ride others","Tokens private","No diff"],ans:1},
+  {q:"USDC is a?",opts:["Coin on own chain","Token built on Ethereum","Mining reward","DeFi protocol"],ans:1},
+  {q:"NFT stands for?",opts:["New Finance Token","Non-Fungible Token","Network File Transfer","None"],ans:1},
+  {q:"NFT proves?",opts:["Price of coin","Unique ownership of digital asset","Mining reward","Staking yield"],ans:1},
+  {q:"Chainlink LINK does?",opts:["Mines Bitcoin","Feeds real-world data into blockchains","Issues stablecoins","Runs DEX"],ans:1},
+  {q:"Stellar XLM built for?",opts:["Gaming","Cross-border payments and inclusion","NFTs only","Smart contracts only"],ans:1},
+  {q:"Litecoin MWEB adds?",opts:["Smart contracts","Optional privacy for transactions","NFT support","Staking"],ans:1},
+  {q:"MimbleWimble does?",opts:["Speeds mining","Hides transaction details for privacy","Creates NFTs","Issues stablecoins"],ans:1},
+  {q:"USDC most popular in?",opts:["Asia","The United States","Africa","Europe only"],ans:1},
+  {q:"USDT most popular where?",opts:["US only","Globally especially outside US","Africa only","EU only"],ans:1},
+  {q:"GUSD issued by?",opts:["Coinbase","Gemini","Kraken","Binance"],ans:1},
+  {q:"DAI stablecoin backed by?",opts:["USD in bank","Crypto collateral via smart contracts","Gold","A government"],ans:1},
+  {q:"Gemini exchange known for?",opts:["Lowest fees","Strictest US regulation","Most coins","Fastest trades"],ans:1},
+  {q:"Coinbase licensed in US states?",opts:["10","46","All 50","25"],ans:1},
+  {q:"Binance.US NOT in which states?",opts:["California","New York Hawaii Texas Vermont","Florida","Ohio"],ans:1},
+  {q:"Global Binance in US?",opts:["Legal","Banned","EU-based only","Bitcoin only"],ans:1},
+  {q:"IBIT is?",opts:["Ethereum fund","BlackRock Bitcoin ETF","A stablecoin","A DEX"],ans:1},
+  {q:"First Bitcoin ETF approved in US?",opts:["2020","January 2024","2019","2022"],ans:1},
+  {q:"ETHA is?",opts:["BlackRock Ethereum ETF","A stablecoin","XRP fund","Bitcoin ETF"],ans:1},
+  {q:"ETHB differs from ETHA how?",opts:["Older fund","Staked ETH ETF with yield","Bitcoin fund","Privacy coin ETF"],ans:1},
+  {q:"Monero privacy is?",opts:["Optional","Mandatory on all transactions","Mining only","Off in US"],ans:1},
+  {q:"Zcash privacy is?",opts:["Always mandatory","Optional transparent or shielded","Banned globally","Institutions only"],ans:1},
+  {q:"Honeypot crypto scam?",opts:["Fake exchange","Buy easily but code blocks selling","Mining type","Staking scheme"],ans:1},
+  {q:"Leverage liquidation?",opts:["No risk","Losses grow fast position wiped","Bitcoin only","CEX only"],ans:1},
+  {q:"Lose cold wallet but have seed?",opts:["Coins lost forever","Restore on any device","Call exchange","Buy new crypto"],ans:1},
+  {q:"Blockchain transaction is?",opts:["Private deletable","Public and permanent","Banks only","Hidden"],ans:1},
+  {q:"Tokenized real estate allows?",opts:["Only whole property","Fractional ownership buy a slice","No rent","Millionaires only"],ans:1},
 ];
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 
 // ===== SPACE SHOOTER =====
 const canvas=document.getElementById('shooter-canvas');
 const ctx=canvas.getContext('2d');
-let shipX=150,shipDir=0,bullets=[],answers=[],shScore=0,shLives=5,shQuestion=null,shActive=false,shPaused=false,shQuestions=[];
+let shipX=150,shipDir=0,bullets=[],answers=[],shScore=0,shLives=5,shQuestion=null,shActive=false,shPaused=false,shQuestions=[],shSpeed=1.0;
 function toggleSound(){soundOn=!soundOn;document.getElementById('snd-btn').textContent='SOUND: '+(soundOn?'ON':'OFF');document.getElementById('snd-btn').style.color=soundOn?'#39ff14':'#3d7070';if(soundOn)initAudio();}
 function safeSound(fn){try{fn();}catch(e){}}
+function updateSpeedBtns(active){
+  ['spd-slow','spd-med','spd-fast'].forEach(function(id){
+    var b=document.getElementById(id);if(!b)return;
+    if(b===active){b.style.background='rgba(0,255,225,0.15)';b.style.borderColor='#00ffe1';b.style.color='#00ffe1';}
+    else{b.style.background='transparent';b.style.borderColor='#3d7070';b.style.color='#3d7070';}
+  });
+}
 
 function toggleShooter(){
   const btn=document.getElementById('btn-start-pause');
@@ -352,15 +400,15 @@ function nextShooterQ(){
   document.getElementById('shooter-question').textContent=shQuestion.q;
   answers=[];
   const positions=shuffle([25,95,165,235]);
-  shQuestion.opts.forEach((opt,i)=>{answers.push({x:positions[i]-20,y:-25-(i*35),w:60,h:26,text:opt,correct:i===shQuestion.ans,speed:0.4+Math.random()*0.2,hit:false});});
+  shQuestion.opts.forEach((opt,i)=>{answers.push({x:positions[i]-20,y:-25-(i*35),w:60,h:26,text:opt,correct:i===shQuestion.ans,speed:(0.4+Math.random()*0.2)*shSpeed,hit:false});});
 }
 function fireShot(){if(!shActive||shPaused)return;safeSound(sndShoot);bullets.push({x:shipX,y:245,speed:5});}
 function shooterLoop(){
   if(!shActive||shPaused)return;
-  ctx.clearRect(0,0,300,280);
+  ctx.clearRect(0,0,300,390);
   shipX+=shipDir*4;if(shipX<20)shipX=20;if(shipX>320)shipX=320;
   // Ship - EXACT logo: row1=red center, row2=green/red/green horizontal, row3=2 green aligned with outer
-  ctx.save();ctx.translate(shipX,255);
+  ctx.save();ctx.translate(shipX,365);
   ctx.fillStyle='#ff5252';ctx.beginPath();ctx.arc(0,-14,3.5,0,Math.PI*2);ctx.fill();
   ctx.fillStyle='#39ff14';ctx.beginPath();ctx.arc(-11,-4,3.5,0,Math.PI*2);ctx.fill();
   ctx.fillStyle='#ff5252';ctx.beginPath();ctx.arc(0,-4,3.5,0,Math.PI*2);ctx.fill();
@@ -370,7 +418,7 @@ function shooterLoop(){
   ctx.restore();
   for(let i=bullets.length-1;i>=0;i--){bullets[i].y-=bullets[i].speed;ctx.fillStyle='#39ff14';ctx.fillRect(bullets[i].x-1,bullets[i].y,3,8);if(bullets[i].y<-10)bullets.splice(i,1);}
   let allGone=true;
-  for(let a of answers){if(a.hit)continue;a.y+=a.speed;if(a.y<360)allGone=false;if(a.y>360)continue;ctx.fillStyle='rgba(0,255,225,0.08)';ctx.strokeStyle='#0c3030';ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(a.x,a.y,a.w,a.h,3);ctx.fill();ctx.stroke();ctx.fillStyle='#00d4ff';ctx.font='bold 9px Share Tech Mono';ctx.textAlign='center';const w=a.text.split(' ');if(w.length>2){ctx.fillText(w.slice(0,2).join(' '),a.x+a.w/2,a.y+10);ctx.fillText(w.slice(2).join(' '),a.x+a.w/2,a.y+19);}else{ctx.fillText(a.text,a.x+a.w/2,a.y+14);}}
+  for(let a of answers){if(a.hit)continue;a.y+=a.speed;if(a.y<470)allGone=false;if(a.y>470)continue;ctx.fillStyle='rgba(0,255,225,0.08)';ctx.strokeStyle='#0c3030';ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(a.x,a.y,a.w,a.h,3);ctx.fill();ctx.stroke();ctx.fillStyle='#00d4ff';ctx.font='bold 9px Share Tech Mono';ctx.textAlign='center';const w=a.text.split(' ');if(w.length>2){ctx.fillText(w.slice(0,2).join(' '),a.x+a.w/2,a.y+10);ctx.fillText(w.slice(2).join(' '),a.x+a.w/2,a.y+19);}else{ctx.fillText(a.text,a.x+a.w/2,a.y+14);}}
   for(let bi=bullets.length-1;bi>=0;bi--){for(let a of answers){if(!a.hit&&bullets[bi]&&bullets[bi].x>a.x&&bullets[bi].x<a.x+a.w&&bullets[bi].y>a.y&&bullets[bi].y<a.y+a.h){a.hit=true;bullets.splice(bi,1);if(a.correct){shScore++;safeSound(sndCorrect);}else{shLives--;safeSound(sndWrong);}document.getElementById('shooter-score').textContent='Score: '+shScore+' | Lives: '+shLives;if(shLives<=0){shActive=false;document.getElementById('shooter-question').textContent='GAME OVER! Score: '+shScore;document.getElementById('btn-start-pause').textContent='START';if(shScore>=5){safeSound(sndGameOverGood);}else{safeSound(sndGameOverBad);}return;}setTimeout(nextShooterQ,800);break;}}}
   if(allGone&&answers.length>0)setTimeout(nextShooterQ,300);
   if(shActive&&!shPaused)requestAnimationFrame(shooterLoop);
