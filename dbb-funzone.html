@@ -115,9 +115,9 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
   <div class="section-label" style="color:var(--neon);">// Space Shooter Quiz</div>
   <h2>Shoot the Right Answer</h2>
   <p style="font-family:var(--mono);font-size:11px;color:var(--muted);text-align:center;margin-bottom:6px;">Move left/right. Shoot the correct answer!</p>
-  <div id="shooter-question" style="font-family:var(--display);font-size:20px;color:#fff;text-align:center;min-height:28px;margin-bottom:6px;"></div>
+  <div id="shooter-question" style="font-family:var(--display);font-size:22px;color:#00ffe1;text-align:center;min-height:32px;margin-bottom:8px;background:rgba(0,255,225,0.06);border:1px solid #0c3030;border-radius:6px;padding:8px 12px;letter-spacing:1px;"></div>
   <div id="shooter-score" class="score-display">Score: 0 | Lives: 5</div>
-  <canvas id="shooter-canvas" width="300" height="390" style="width:100%;max-width:300px;height:390px;background:#050d0d;border:1px solid #0c3030;border-radius:6px;display:block;margin:0 auto;touch-action:none;"></canvas>
+  <canvas id="shooter-canvas" width="400" height="390" style="width:100%;max-width:400px;height:390px;background:#050d0d;border:1px solid #0c3030;border-radius:6px;display:block;margin:0 auto;touch-action:none;"></canvas>
   <div style="display:flex;gap:8px;justify-content:center;margin-top:8px;">
     <button ontouchstart="shipDir=-1;event.preventDefault();" ontouchend="shipDir=0" onmousedown="shipDir=-1" onmouseup="shipDir=0" style="font-family:var(--mono);font-size:16px;padding:10px 20px;background:rgba(57,255,20,0.1);border:1px solid #39ff14;border-radius:4px;color:#39ff14;cursor:pointer;user-select:none;-webkit-user-select:none;touch-action:manipulation;">◀</button>
     <button id="btn-start-pause" onclick="toggleShooter()" style="font-family:var(--mono);font-size:11px;padding:10px 18px;background:var(--neon);color:#000;border:none;border-radius:4px;cursor:pointer;letter-spacing:1px;">START</button>
@@ -380,6 +380,12 @@ function updateSpeedBtns(active){
     if(b===active){b.style.background='rgba(0,255,225,0.15)';b.style.borderColor='#00ffe1';b.style.color='#00ffe1';}
     else{b.style.background='transparent';b.style.borderColor='#3d7070';b.style.color='#3d7070';}
   });
+  // Live update currently falling answers
+  if(answers&&answers.length>0){
+    answers.forEach(function(a){
+      if(!a.hit){a.speed=(0.4+Math.random()*0.2)*shSpeed;}
+    });
+  }
 }
 
 function toggleShooter(){
@@ -399,14 +405,14 @@ function nextShooterQ(){
   shQuestion=pool[Math.floor(Math.random()*pool.length)];
   document.getElementById('shooter-question').textContent=shQuestion.q;
   answers=[];
-  const positions=shuffle([25,95,165,235]);
-  shQuestion.opts.forEach((opt,i)=>{answers.push({x:positions[i]-20,y:-25-(i*35),w:60,h:26,text:opt,correct:i===shQuestion.ans,speed:(0.4+Math.random()*0.2)*shSpeed,hit:false});});
+  const positions=shuffle([6,106,206,306]);
+  shQuestion.opts.forEach((opt,i)=>{answers.push({x:positions[i]-2,y:-25-(i*35),w:90,h:32,text:opt,correct:i===shQuestion.ans,speed:(0.4+Math.random()*0.2)*shSpeed,hit:false});});
 }
-function fireShot(){if(!shActive||shPaused)return;safeSound(sndShoot);bullets.push({x:shipX,y:245,speed:5});}
+function fireShot(){if(!shActive||shPaused)return;safeSound(sndShoot);bullets.push({x:shipX,y:345,speed:5});}
 function shooterLoop(){
   if(!shActive||shPaused)return;
-  ctx.clearRect(0,0,300,390);
-  shipX+=shipDir*4;if(shipX<20)shipX=20;if(shipX>320)shipX=320;
+  ctx.clearRect(0,0,400,390);
+  shipX+=shipDir*4;if(shipX<20)shipX=20;if(shipX>390)shipX=390;
   // Ship - EXACT logo: row1=red center, row2=green/red/green horizontal, row3=2 green aligned with outer
   ctx.save();ctx.translate(shipX,365);
   ctx.fillStyle='#ff5252';ctx.beginPath();ctx.arc(0,-14,3.5,0,Math.PI*2);ctx.fill();
@@ -418,7 +424,7 @@ function shooterLoop(){
   ctx.restore();
   for(let i=bullets.length-1;i>=0;i--){bullets[i].y-=bullets[i].speed;ctx.fillStyle='#39ff14';ctx.fillRect(bullets[i].x-1,bullets[i].y,3,8);if(bullets[i].y<-10)bullets.splice(i,1);}
   let allGone=true;
-  for(let a of answers){if(a.hit)continue;a.y+=a.speed;if(a.y<470)allGone=false;if(a.y>470)continue;ctx.fillStyle='rgba(0,255,225,0.08)';ctx.strokeStyle='#0c3030';ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(a.x,a.y,a.w,a.h,3);ctx.fill();ctx.stroke();ctx.fillStyle='#00d4ff';ctx.font='bold 9px Share Tech Mono';ctx.textAlign='center';const w=a.text.split(' ');if(w.length>2){ctx.fillText(w.slice(0,2).join(' '),a.x+a.w/2,a.y+10);ctx.fillText(w.slice(2).join(' '),a.x+a.w/2,a.y+19);}else{ctx.fillText(a.text,a.x+a.w/2,a.y+14);}}
+  for(let a of answers){if(a.hit)continue;a.y+=a.speed;if(a.y<380)allGone=false;if(a.y>385)continue;ctx.fillStyle='rgba(0,255,225,0.08)';ctx.strokeStyle='#0c3030';ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(a.x,a.y,a.w,a.h,3);ctx.fill();ctx.stroke();ctx.fillStyle='#00d4ff';ctx.font='bold 13px Share Tech Mono';ctx.textAlign='center';const w=a.text.split(' ');if(w.length>2){ctx.fillText(w.slice(0,2).join(' '),a.x+a.w/2,a.y+10);ctx.fillText(w.slice(2).join(' '),a.x+a.w/2,a.y+19);}else{ctx.fillText(a.text,a.x+a.w/2,a.y+14);}}
   for(let bi=bullets.length-1;bi>=0;bi--){for(let a of answers){if(!a.hit&&bullets[bi]&&bullets[bi].x>a.x&&bullets[bi].x<a.x+a.w&&bullets[bi].y>a.y&&bullets[bi].y<a.y+a.h){a.hit=true;bullets.splice(bi,1);if(a.correct){shScore++;safeSound(sndCorrect);}else{shLives--;safeSound(sndWrong);}document.getElementById('shooter-score').textContent='Score: '+shScore+' | Lives: '+shLives;if(shLives<=0){shActive=false;document.getElementById('shooter-question').textContent='GAME OVER! Score: '+shScore;document.getElementById('btn-start-pause').textContent='START';if(shScore>=5){safeSound(sndGameOverGood);}else{safeSound(sndGameOverBad);}return;}setTimeout(nextShooterQ,800);break;}}}
   if(allGone&&answers.length>0)setTimeout(nextShooterQ,300);
   if(shActive&&!shPaused)requestAnimationFrame(shooterLoop);
