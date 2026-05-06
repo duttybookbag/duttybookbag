@@ -182,6 +182,19 @@ textarea.txt-input{min-height:72px;resize:vertical;}
   <div class="card">
     <div class="card-head">03 &mdash; Watermark</div>
     <input type="text" id="wmText" class="txt-input" placeholder="Your watermark text...">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+      <label style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:1px;">Color</label>
+      <input type="color" id="wmColor" value="#ffffff" style="width:46px;height:34px;border:1px solid var(--border);border-radius:6px;background:var(--panel);cursor:pointer;padding:2px;">
+      <div style="display:flex;gap:6px;flex-wrap:wrap;">
+        <div onclick="setWMColor('#ffffff')" style="width:24px;height:24px;border-radius:50%;background:#ffffff;border:2px solid var(--border);cursor:pointer;" title="White"></div>
+        <div onclick="setWMColor('#000000')" style="width:24px;height:24px;border-radius:50%;background:#000000;border:2px solid #444;cursor:pointer;" title="Black"></div>
+        <div onclick="setWMColor('#ffff00')" style="width:24px;height:24px;border-radius:50%;background:#ffff00;border:2px solid var(--border);cursor:pointer;" title="Yellow"></div>
+        <div onclick="setWMColor('#ff5252')" style="width:24px;height:24px;border-radius:50%;background:#ff5252;border:2px solid var(--border);cursor:pointer;" title="Red"></div>
+        <div onclick="setWMColor('#00ff44')" style="width:24px;height:24px;border-radius:50%;background:#00ff44;border:2px solid var(--border);cursor:pointer;" title="Green"></div>
+        <div onclick="setWMColor('#00ffe1')" style="width:24px;height:24px;border-radius:50%;background:#00ffe1;border:2px solid var(--border);cursor:pointer;" title="Cyan"></div>
+        <div onclick="setWMColor('#ffd166')" style="width:24px;height:24px;border-radius:50%;background:#ffd166;border:2px solid var(--border);cursor:pointer;" title="Gold"></div>
+      </div>
+    </div>
     <div class="slider-row">
       <div class="slider-label">Size <span id="vSize">80</span></div>
       <input type="range" id="wmSize" min="10" max="300" value="80">
@@ -339,10 +352,8 @@ window.addEventListener('scroll',function(){
         pen.textAlign = 'center';
         pen.textBaseline = 'middle';
         // Outline for visibility
-        pen.strokeStyle = 'rgba(0,0,0,0.6)';
-        pen.lineWidth = sz * 0.08;
-        pen.strokeText(txt, 0, 0);
-        pen.fillStyle = '#00ffe1';
+        var wmCol = document.getElementById('wmColor') ? document.getElementById('wmColor').value : '#ffffff';
+        pen.fillStyle = wmCol;
         pen.fillText(txt, 0, 0);
         pen.restore();
       }
@@ -491,6 +502,12 @@ window.addEventListener('scroll',function(){
       }
     });
   };
+
+  window.setWMColor = function(col){
+    document.getElementById('wmColor').value = col;
+    redraw(true);
+  };
+  document.getElementById('wmColor').addEventListener('input', function(){ redraw(true); });
 
   window.doReset = function(){
     location.reload();
