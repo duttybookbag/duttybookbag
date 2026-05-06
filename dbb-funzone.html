@@ -100,6 +100,20 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
   </div>
 </header>
 
+<section style="padding:18px 0 10px;">
+  <div class="wrap">
+    <div style="background:rgba(0,255,225,0.06);border:1px solid #0c3030;border-left:4px solid #00ffe1;border-radius:6px;padding:16px 20px;text-align:center;">
+      <p style="font-family:var(--mono);font-size:13px;color:#b8e8e2;line-height:1.8;margin:0;">
+        &#127218; These games test your trading and crypto knowledge. 
+        Want better scores? Study first. &nbsp;
+        <a href="dutty-learn-center.html" style="color:#00ffe1;font-weight:bold;text-decoration:none;border-bottom:1px solid #00ffe1;padding-bottom:1px;letter-spacing:1px;">
+          &#128218; Visit the Learning Center &#8599;
+        </a>
+      </p>
+    </div>
+  </div>
+</section>
+
 <section><div class="wrap">
   <div class="game-nav">
     <a href="#game-shooter">Space Shooter</a>
@@ -117,7 +131,7 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
   <p style="font-family:var(--mono);font-size:11px;color:var(--muted);text-align:center;margin-bottom:6px;">Move left/right. Shoot the correct answer!</p>
   <div id="shooter-question" style="font-family:var(--display);font-size:22px;color:#00ffe1;text-align:center;min-height:32px;margin-bottom:8px;background:rgba(0,255,225,0.06);border:1px solid #0c3030;border-radius:6px;padding:8px 12px;letter-spacing:1px;"></div>
   <div id="shooter-score" class="score-display">Score: 0 | Lives: 5</div>
-  <canvas id="shooter-canvas" width="400" height="390" style="width:100%;max-width:400px;height:390px;background:#050d0d;border:1px solid #0c3030;border-radius:6px;display:block;margin:0 auto;touch-action:none;"></canvas>
+  <canvas id="shooter-canvas" width="480" height="440" style="width:100%;max-width:480px;height:440px;background:#050d0d;border:1px solid #0c3030;border-radius:6px;display:block;margin:0 auto;touch-action:none;"></canvas>
   <div style="display:flex;gap:8px;justify-content:center;margin-top:8px;">
     <button ontouchstart="shipDir=-1;event.preventDefault();" ontouchend="shipDir=0" onmousedown="shipDir=-1" onmouseup="shipDir=0" style="font-family:var(--mono);font-size:16px;padding:10px 20px;background:rgba(57,255,20,0.1);border:1px solid #39ff14;border-radius:4px;color:#39ff14;cursor:pointer;user-select:none;-webkit-user-select:none;touch-action:manipulation;">◀</button>
     <button id="btn-start-pause" onclick="toggleShooter()" style="font-family:var(--mono);font-size:11px;padding:10px 18px;background:var(--neon);color:#000;border:none;border-radius:4px;cursor:pointer;letter-spacing:1px;">START</button>
@@ -379,8 +393,8 @@ const bgObjects=[];
   // Stars - small white/blue dots
   for(var i=0;i<35;i++){
     bgObjects.push({
-      x:Math.random()*400,
-      y:Math.random()*390,
+      x:Math.random()*480,
+      y:Math.random()*440,
       r:Math.random()*1.5+0.3,
       type:'star',
       color:Math.random()>0.7?'rgba(180,220,255,0.9)':'rgba(255,255,255,0.85)',
@@ -392,8 +406,8 @@ const bgObjects=[];
   var planetColors=['rgba(255,160,80,0.7)','rgba(100,180,255,0.7)','rgba(180,100,255,0.6)','rgba(255,100,100,0.6)','rgba(80,255,180,0.6)'];
   for(var i=0;i<5;i++){
     bgObjects.push({
-      x:Math.random()*400,
-      y:Math.random()*390,
+      x:Math.random()*480,
+      y:Math.random()*440,
       r:Math.random()*5+4,
       type:'planet',
       color:planetColors[i],
@@ -403,7 +417,7 @@ const bgObjects=[];
     });
   }
   // Tiny moon
-  bgObjects.push({x:Math.random()*400,y:Math.random()*390,r:3,type:'moon',color:'rgba(220,220,200,0.75)',speed:0.08,twinkle:0});
+  bgObjects.push({x:Math.random()*480,y:Math.random()*440,r:3,type:'moon',color:'rgba(220,220,200,0.75)',speed:0.08,twinkle:0});
 })();
 
 function drawBg(){
@@ -419,7 +433,7 @@ function drawBg(){
       ctx.fill();
       // Move downward with speed scaled by shSpeed
       obj.y+=obj.speed*shSpeed;
-      if(obj.y>390){obj.y=-2;obj.x=Math.random()*400;}
+      if(obj.y>440){obj.y=-2;obj.x=Math.random()*480;}
     } else if(obj.type==='planet'){
       ctx.globalAlpha=0.75;
       ctx.fillStyle=obj.color;
@@ -436,7 +450,7 @@ function drawBg(){
         ctx.stroke();
       }
       obj.y+=obj.speed*shSpeed;
-      if(obj.y>395){obj.y=-10;obj.x=Math.random()*400;}
+      if(obj.y>445){obj.y=-10;obj.x=Math.random()*480;}
     } else if(obj.type==='moon'){
       ctx.globalAlpha=0.7;
       ctx.fillStyle=obj.color;
@@ -450,7 +464,7 @@ function drawBg(){
       ctx.arc(obj.x+1,obj.y-1,1.2,0,Math.PI*2);
       ctx.fill();
       obj.y+=obj.speed*shSpeed;
-      if(obj.y>395){obj.y=-10;obj.x=Math.random()*400;}
+      if(obj.y>445){obj.y=-10;obj.x=Math.random()*480;}
     }
     ctx.globalAlpha=1;
     ctx.restore();
@@ -489,17 +503,17 @@ function nextShooterQ(){
   shQuestion=pool[Math.floor(Math.random()*pool.length)];
   document.getElementById('shooter-question').textContent=shQuestion.q;
   answers=[];
-  const positions=shuffle([6,106,206,306]);
-  shQuestion.opts.forEach((opt,i)=>{answers.push({x:positions[i]-2,y:-25-(i*35),w:90,h:32,text:opt,correct:i===shQuestion.ans,speed:(0.4+Math.random()*0.2)*shSpeed,hit:false});});
+  const positions=shuffle([6,126,246,366]);
+  shQuestion.opts.forEach((opt,i)=>{answers.push({x:positions[i],y:-25-(i*35),w:108,h:38,text:opt,correct:i===shQuestion.ans,speed:(0.4+Math.random()*0.2)*shSpeed,hit:false});});
 }
-function fireShot(){if(!shActive||shPaused)return;safeSound(sndShoot);bullets.push({x:shipX,y:345,speed:5});}
+function fireShot(){if(!shActive||shPaused)return;safeSound(sndShoot);bullets.push({x:shipX,y:395,speed:5});}
 function shooterLoop(){
   if(!shActive||shPaused)return;
-  ctx.clearRect(0,0,400,390);
+  ctx.clearRect(0,0,480,440);
   drawBg();
-  shipX+=shipDir*4;if(shipX<20)shipX=20;if(shipX>390)shipX=390;
+  shipX+=shipDir*4;if(shipX<20)shipX=20;if(shipX>465)shipX=465;
   // Ship - EXACT logo: row1=red center, row2=green/red/green horizontal, row3=2 green aligned with outer
-  ctx.save();ctx.translate(shipX,365);
+  ctx.save();ctx.translate(shipX,415);
   ctx.fillStyle='#ff5252';ctx.beginPath();ctx.arc(0,-14,3.5,0,Math.PI*2);ctx.fill();
   ctx.fillStyle='#39ff14';ctx.beginPath();ctx.arc(-11,-4,3.5,0,Math.PI*2);ctx.fill();
   ctx.fillStyle='#ff5252';ctx.beginPath();ctx.arc(0,-4,3.5,0,Math.PI*2);ctx.fill();
@@ -509,7 +523,30 @@ function shooterLoop(){
   ctx.restore();
   for(let i=bullets.length-1;i>=0;i--){bullets[i].y-=bullets[i].speed;ctx.fillStyle='#39ff14';ctx.fillRect(bullets[i].x-1,bullets[i].y,3,8);if(bullets[i].y<-10)bullets.splice(i,1);}
   let allGone=true;
-  for(let a of answers){if(a.hit)continue;a.y+=a.speed;if(a.y<380)allGone=false;if(a.y>385)continue;ctx.fillStyle='rgba(0,255,225,0.08)';ctx.strokeStyle='#0c3030';ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(a.x,a.y,a.w,a.h,3);ctx.fill();ctx.stroke();ctx.fillStyle='#00d4ff';ctx.font='bold 13px Share Tech Mono';ctx.textAlign='center';const w=a.text.split(' ');if(w.length>2){ctx.fillText(w.slice(0,2).join(' '),a.x+a.w/2,a.y+10);ctx.fillText(w.slice(2).join(' '),a.x+a.w/2,a.y+19);}else{ctx.fillText(a.text,a.x+a.w/2,a.y+14);}}
+  for(let a of answers){if(a.hit)continue;a.y+=a.speed;if(a.y<430)allGone=false;if(a.y>435)continue;ctx.fillStyle='rgba(0,255,225,0.08)';ctx.strokeStyle='#0c3030';ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(a.x,a.y,a.w,a.h,3);ctx.fill();ctx.stroke();ctx.fillStyle='#00d4ff';ctx.font='bold 13px Share Tech Mono';ctx.textAlign='center';
+      // Word wrap: break into lines that fit inside the box
+      (function(){
+        var words=a.text.split(' ');
+        var lines=[];
+        var line='';
+        var maxW=a.w-8;
+        for(var wi=0;wi<words.length;wi++){
+          var test=line?line+' '+words[wi]:words[wi];
+          if(ctx.measureText(test).width>maxW&&line){
+            lines.push(line);
+            line=words[wi];
+          } else {
+            line=test;
+          }
+        }
+        if(line)lines.push(line);
+        var lineH=14;
+        var totalH=lines.length*lineH;
+        var startY=a.y+(a.h-totalH)/2+11;
+        for(var li=0;li<lines.length;li++){
+          ctx.fillText(lines[li],a.x+a.w/2,startY+li*lineH);
+        }
+      })();}
   for(let bi=bullets.length-1;bi>=0;bi--){for(let a of answers){if(!a.hit&&bullets[bi]&&bullets[bi].x>a.x&&bullets[bi].x<a.x+a.w&&bullets[bi].y>a.y&&bullets[bi].y<a.y+a.h){a.hit=true;bullets.splice(bi,1);if(a.correct){shScore++;safeSound(sndCorrect);}else{shLives--;safeSound(sndWrong);}document.getElementById('shooter-score').textContent='Score: '+shScore+' | Lives: '+shLives;if(shLives<=0){shActive=false;document.getElementById('shooter-question').textContent='GAME OVER! Score: '+shScore;document.getElementById('btn-start-pause').textContent='START';if(shScore>=5){safeSound(sndGameOverGood);}else{safeSound(sndGameOverBad);}return;}setTimeout(nextShooterQ,800);break;}}}
   if(allGone&&answers.length>0)setTimeout(nextShooterQ,300);
   if(shActive&&!shPaused)requestAnimationFrame(shooterLoop);
