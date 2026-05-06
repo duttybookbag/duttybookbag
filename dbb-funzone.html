@@ -245,6 +245,21 @@ function playTone(freq,dur,type){if(!soundOn)return;try{initAudio();const o=audi
 function sndCorrect(){playTone(523,0.1,'square');setTimeout(()=>playTone(659,0.1,'square'),100);setTimeout(()=>playTone(784,0.15,'square'),200);}
 function sndWrong(){playTone(200,0.3,'sawtooth');}
 function sndShoot(){playTone(1200,0.08,'square');setTimeout(()=>playTone(800,0.05,'square'),50);}
+function sndThrust(){
+  if(!soundOn)return;
+  try{
+    initAudio();
+    var o=audioCtx.createOscillator();
+    var g=audioCtx.createGain();
+    o.connect(g);g.connect(audioCtx.destination);
+    o.type='sawtooth';
+    o.frequency.value=420;
+    o.frequency.exponentialRampToValueAtTime(180,audioCtx.currentTime+0.12);
+    g.gain.value=0.07;
+    g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+0.13);
+    o.start();o.stop(audioCtx.currentTime+0.14);
+  }catch(e){}
+}
 function sndExplode(){playTone(100,0.3,'sawtooth');playTone(80,0.4,'triangle');}
 function sndGameOverBad(){playTone(400,0.2,'square');setTimeout(()=>playTone(300,0.2,'square'),200);setTimeout(()=>playTone(200,0.3,'square'),400);setTimeout(()=>playTone(100,0.5,'sawtooth'),600);}
 function sndGameOverGood(){playTone(523,0.15,'square');setTimeout(()=>playTone(659,0.15,'square'),150);setTimeout(()=>playTone(784,0.15,'square'),300);setTimeout(()=>playTone(1047,0.3,'square'),450);}
@@ -385,7 +400,7 @@ function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random
 // ===== SPACE SHOOTER =====
 const canvas=document.getElementById('shooter-canvas');
 const ctx=canvas.getContext('2d');
-let shipX=150,shipDir=0,bullets=[],answers=[],shScore=0,shLives=5,shQuestion=null,shActive=false,shPaused=false,shQuestions=[],shSpeed=1.0;
+let shipX=150,shipDir=0,bullets=[],answers=[],shScore=0,shLives=5,shQuestion=null,shActive=false,shPaused=false,shQuestions=[],shSpeed=1.0,lastThrustTime=0;
 
 // Background stars and planets
 const bgObjects=[];
@@ -512,6 +527,7 @@ function shooterLoop(){
   ctx.clearRect(0,0,480,440);
   drawBg();
   shipX+=shipDir*4;if(shipX<20)shipX=20;if(shipX>465)shipX=465;
+  if(shipDir!==0){var now=Date.now();if(now-lastThrustTime>150){sndThrust();lastThrustTime=now;}}
   // Ship - EXACT logo: row1=red center, row2=green/red/green horizontal, row3=2 green aligned with outer
   ctx.save();ctx.translate(shipX,415);
   ctx.fillStyle='#ff5252';ctx.beginPath();ctx.arc(0,-14,3.5,0,Math.PI*2);ctx.fill();
