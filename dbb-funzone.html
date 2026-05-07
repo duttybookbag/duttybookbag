@@ -130,7 +130,17 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
   <h2>Shoot the Right Answer</h2>
   <p style="font-family:var(--mono);font-size:11px;color:var(--muted);text-align:center;margin-bottom:6px;">Move left/right. Shoot the correct answer!</p>
   <div id="shooter-question" style="font-family:var(--display);font-size:22px;color:#00ffe1;text-align:center;min-height:32px;margin-bottom:8px;background:rgba(0,255,225,0.06);border:1px solid #0c3030;border-radius:6px;padding:8px 12px;letter-spacing:1px;"></div>
-  <div id="shooter-score" class="score-display">Score: 0 | Lives: 5</div>
+  <div id="shooter-score" style="font-family:var(--mono);font-size:13px;color:var(--green);text-align:center;margin-bottom:6px;display:flex;justify-content:center;align-items:center;gap:14px;">
+    <span id="sh-score-box" style="display:flex;align-items:center;gap:6px;">
+      <span id="sh-blue-dot" style="width:10px;height:10px;border-radius:50%;background:#0c3030;box-shadow:none;display:inline-block;transition:background 0.2s,box-shadow 0.2s;"></span>
+      &#128218; Score: <span id="sh-score-num">0</span>
+    </span>
+    <span style="color:#0c3030;">|</span>
+    <span id="sh-lives-box" style="display:flex;align-items:center;gap:6px;">
+      <span id="sh-pink-dot" style="width:10px;height:10px;border-radius:50%;background:#0c3030;box-shadow:none;display:inline-block;transition:background 0.2s,box-shadow 0.2s;"></span>
+      &#128218; Lives: <span id="sh-lives-num">5</span>
+    </span>
+  </div>
   <canvas id="shooter-canvas" width="480" height="440" style="width:100%;max-width:480px;height:440px;background:#050d0d;border:1px solid #0c3030;border-radius:6px;display:block;margin:0 auto;touch-action:none;"></canvas>
   <div style="display:flex;gap:8px;justify-content:center;margin-top:8px;">
     <button ontouchstart="shipDir=-1;event.preventDefault();" ontouchend="shipDir=0" onmousedown="shipDir=-1" onmouseup="shipDir=0" style="font-family:var(--mono);font-size:16px;padding:10px 20px;background:rgba(57,255,20,0.1);border:1px solid #39ff14;border-radius:4px;color:#39ff14;cursor:pointer;user-select:none;-webkit-user-select:none;touch-action:manipulation;">◀</button>
@@ -144,8 +154,9 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
     <button onclick="shSpeed=1.0;updateSpeedBtns(this)" id="spd-med" style="font-family:var(--mono);font-size:9px;padding:5px 10px;background:rgba(0,255,225,0.15);border:1px solid #00ffe1;border-radius:3px;color:#00ffe1;cursor:pointer;margin:0 2px;">MED</button>
     <button onclick="shSpeed=1.8;updateSpeedBtns(this)" id="spd-fast" style="font-family:var(--mono);font-size:9px;padding:5px 10px;background:transparent;border:1px solid #3d7070;border-radius:3px;color:#3d7070;cursor:pointer;margin:0 2px;">FAST</button>
   </div>
-  <div id="sound-toggle" style="text-align:center;margin-top:8px;">
-    <button onclick="toggleSound()" id="snd-btn" style="font-family:var(--mono);font-size:9px;padding:6px 14px;background:transparent;border:1px solid #3d7070;border-radius:3px;color:#3d7070;cursor:pointer;">SOUND: OFF</button>
+  <div id="sound-toggle" style="text-align:center;margin-top:8px;display:flex;justify-content:center;gap:8px;flex-wrap:wrap;">
+    <button onclick="toggleSound()" id="snd-btn" style="font-family:var(--mono);font-size:9px;padding:6px 14px;background:transparent;border:1px solid #39ff14;border-radius:3px;color:#39ff14;cursor:pointer;">SOUND: ON</button>
+    <button onclick="toggleDrumMusic()" id="btn-music" style="font-family:var(--mono);font-size:9px;padding:6px 14px;background:transparent;border:1px solid #39ff14;border-radius:3px;color:#39ff14;cursor:pointer;">MUSIC: ON</button>
   </div>
 </div></section>
 
@@ -186,7 +197,7 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
   <div class="section-label" style="color:var(--gold);">// Classic Quiz</div>
   <h2>Knowledge Quiz</h2>
   <div style="background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:28px;">
-    <div id="fz-quiz-question" style="font-family:var(--display);font-size:24px;color:#fff;margin-bottom:20px;"></div>
+    <div id="fz-quiz-question" style="transition:background 0.3s,border-color 0.3s;font-family:var(--display);font-size:24px;color:#fff;margin-bottom:20px;padding:16px;border:2px solid #0c3030;border-radius:8px;background:rgba(255,255,255,0.02);"></div>
     <div id="fz-quiz-options" style="display:flex;flex-direction:column;gap:10px;"></div>
     <div id="fz-quiz-feedback" style="font-family:var(--mono);font-size:13px;margin-top:15px;min-height:20px;"></div>
     <div id="fz-quiz-progress" style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:15px;"></div>
@@ -199,7 +210,7 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
     <div style="font-family:monospace;font-size:10px;letter-spacing:4px;color:#3d7070;text-transform:uppercase;margin-bottom:14px;">// Scan · Share · Print</div>
     <div id="qr-print-card" style="display:inline-block;background:#000;border:2px solid #00ff44;border-radius:14px;padding:26px 30px;max-width:340px;width:100%;box-shadow:0 0 30px rgba(0,255,68,0.12);">
       <div style="font-family:monospace;font-size:22px;letter-spacing:3px;color:#00ff44;margin-bottom:3px;">DuttyBookBag</div>
-      <div style="font-family:monospace;font-size:11px;color:#3d7070;letter-spacing:2px;margin-bottom:14px;">Fun Zone · Games &amp; Entertainment</div>
+      <div style="font-family:monospace;font-size:11px;color:#3d7070;letter-spacing:2px;margin-bottom:14px;">Fun Zone | Games &amp; Entertainment</div>
       <div style="background:#fff;border-radius:8px;padding:10px;display:inline-block;margin-bottom:12px;">
         <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZoAAAGaAQAAAAAefbjOAAAC90lEQVR4nO2bzW3jMBCF36wE5EgDKcClSB24JNe0HYiluIAFyKMBCm8PQ1JUcgqMSIY0PBgJzQ8ZQS/D+SGF+PHwf37OAAYZZJBBBhlk0DEhyaMHEHvAX+rcZRYglgXjLuYZtD00kCQDAH9NAKII4EhO8YMAOpIk19B25hm0PRSzA5BRxZBAhllkdAn6hXqQncwzaF9I7o8Pwl8A8iHyi3/JoLeD+q8Tw9/PBH99CodHD4FLPRH3Ms+gzaGiCEegvngBesDfNG5oP7c2z6C9IK95RZkdQke5P3rIGHvIiFlTjb3MM2hrH9E6AJdAxFkA9xT661O4XvD2z2TQKxA0qxwCAE0yQ0dOjuSkCQf0AzUF5fTmz2TQKxBKnWHRAYmh1B4aWUxArluYIo4MIf/bu1p+QkcMTFhpo1M3Yj7i+FD1EUDrI0JXdhJHckLHZbEp4tBQUYRLUAkMoYYLVRtwCbmOaYo4OpRfco4nsyzIkJ0CBqaskkl/NUUcHKq5RsccQJY0o8x1edewOOIcULNrNKGkegamvCTHEZZ9ngGqishFCfURdRNpthMUvZgiDg3V7DOB1Jyz6ICs8WSwesRpoCb7RFOKqF8MtaJpccQ5oFX2ydXmUFNQdQ8WR5wDahVR+xo5oljO0lk94jxQszkspewl3dRNpElBTRFHh5ozVAL0ifmnWXvggvhJ+NtTMISLcGvzDNocWnXDS5qxVCrRRpsWR5wBalMKHW7V+Frq2Tn4NEUcHCp9jTLyO8e6r8HaDzVFHB3SOKIcoOwS/SUAwCyAC4AXAIifCTm22NY8g/aCtAARABlVDAkYlqsaLuWbf+M+5hm0PVTudOUYM/aAv5JyDx3hJd/z2s08g/aD/AVQHeTLn09Z+mD7m2fQb0Pf7nQh9tCD+Tl6AIAooJeadbz5Mxn0CvT1Thf97V9PjScxC1Cyjvb255s/k0GvQN97n+XklB66ZUBte1pf4wzQ1ztdBEpXSycc6wLbNQwyyCCDDDLIoHb8B33AsFVCg6uCAAAAAElFTkSuQmCC" alt="QR Code" style="width:190px;height:190px;display:block;" />
       </div>
@@ -239,11 +250,38 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
 <script>
 // ===== AUDIO CONTEXT =====
 let audioCtx;
-let soundOn=false;
+let soundOn=true;
 function initAudio(){try{if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();}catch(e){}}
 function playTone(freq,dur,type){if(!soundOn)return;try{initAudio();const o=audioCtx.createOscillator();const g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);o.type=type||'square';o.frequency.value=freq;g.gain.value=0.08;o.start();g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+dur);o.stop(audioCtx.currentTime+dur);}catch(e){}}
-function sndCorrect(){playTone(523,0.1,'square');setTimeout(()=>playTone(659,0.1,'square'),100);setTimeout(()=>playTone(784,0.15,'square'),200);}
-function sndWrong(){playTone(200,0.3,'sawtooth');}
+function sndCorrect(){
+  if(!soundOn)return;
+  try{
+    initAudio();
+    [523,659,784].forEach(function(freq,i){
+      var o=audioCtx.createOscillator();var g=audioCtx.createGain();
+      o.connect(g);g.connect(audioCtx.destination);
+      o.type='sine';o.frequency.value=freq;
+      g.gain.setValueAtTime(0.0,audioCtx.currentTime+i*0.09);
+      g.gain.linearRampToValueAtTime(0.15,audioCtx.currentTime+i*0.09+0.02);
+      g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+i*0.09+0.18);
+      o.start(audioCtx.currentTime+i*0.09);o.stop(audioCtx.currentTime+i*0.09+0.2);
+    });
+  }catch(e){}
+}
+function sndWrong(){
+  if(!soundOn)return;
+  try{
+    initAudio();
+    var o=audioCtx.createOscillator();var g=audioCtx.createGain();
+    o.connect(g);g.connect(audioCtx.destination);
+    o.type='sawtooth';
+    o.frequency.setValueAtTime(300,audioCtx.currentTime);
+    o.frequency.exponentialRampToValueAtTime(100,audioCtx.currentTime+0.35);
+    g.gain.setValueAtTime(0.12,audioCtx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+0.35);
+    o.start();o.stop(audioCtx.currentTime+0.38);
+  }catch(e){}
+}
 function sndShoot(){playTone(1200,0.08,'square');setTimeout(()=>playTone(800,0.05,'square'),50);}
 function sndThrust(){
   if(!soundOn)return;
@@ -261,6 +299,90 @@ function sndThrust(){
   }catch(e){}
 }
 function sndExplode(){playTone(100,0.3,'sawtooth');playTone(80,0.4,'triangle');}
+// DRUM BEAT: B P B B P (BOOM tap BOOM BOOM tap) looping
+var drumLoop=null;
+var drumPlaying=false;
+function playDrumHit(type,time){
+  if(!soundOn)return;
+  try{
+    initAudio();
+    if(type==='B'){
+      var o=audioCtx.createOscillator();var g=audioCtx.createGain();
+      o.connect(g);g.connect(audioCtx.destination);
+      o.type='sine';
+      o.frequency.setValueAtTime(150,time);
+      o.frequency.exponentialRampToValueAtTime(40,time+0.12);
+      g.gain.setValueAtTime(0.9,time);
+      g.gain.exponentialRampToValueAtTime(0.001,time+0.18);
+      o.start(time);o.stop(time+0.2);
+    }else{
+      var o2=audioCtx.createOscillator();var g2=audioCtx.createGain();
+      o2.connect(g2);g2.connect(audioCtx.destination);
+      o2.type='sine';
+      o2.frequency.setValueAtTime(220,time);
+      o2.frequency.exponentialRampToValueAtTime(100,time+0.08);
+      g2.gain.setValueAtTime(0.5,time);
+      g2.gain.exponentialRampToValueAtTime(0.001,time+0.12);
+      o2.start(time);o2.stop(time+0.14);
+    }
+  }catch(e){}
+}
+function startDrumLoop(){
+  if(drumPlaying||!soundOn)return;
+  drumPlaying=true;
+  initAudio();
+  var timings=[0, 0.43, 0.86, 1.01, 1.44];
+  var barLen=1.87;
+  var pattern=['B','P','B','B','P'];
+  function scheduleBar(barStart){
+    if(!drumPlaying)return;
+    pattern.forEach(function(hit,i){playDrumHit(hit,barStart+timings[i]);});
+    var nextBar=barStart+barLen;
+    var delay=(nextBar-audioCtx.currentTime-0.1)*1000;
+    if(delay<0)delay=0;
+    drumLoop=setTimeout(function(){scheduleBar(nextBar);},delay);
+  }
+  scheduleBar(audioCtx.currentTime+0.05);
+}
+function toggleDrumMusic(){
+  var btn=document.getElementById('btn-music');
+  if(drumPlaying){stopDrumLoop();if(btn){btn.textContent='🎵 MUSIC OFF';btn.style.background='rgba(255,100,180,0.15)';btn.style.borderColor='#ff64b4';btn.style.color='#ff64b4';}}
+  else{if(shActive&&!shPaused){startDrumLoop();}if(btn){btn.textContent='🎵 MUSIC ON';btn.style.background='rgba(77,184,255,0.15)';btn.style.borderColor='#4db8ff';btn.style.color='#4db8ff';}}
+}
+function stopDrumLoop(){
+  drumPlaying=false;
+  if(drumLoop){clearTimeout(drumLoop);drumLoop=null;}
+}
+function updateShooterScore(score,lives){
+  var sn=document.getElementById('sh-score-num');
+  var ln=document.getElementById('sh-lives-num');
+  if(sn)sn.textContent=score;
+  if(ln)ln.textContent=lives;
+}
+function flashBlue(){
+  var d=document.getElementById('sh-blue-dot');
+  if(d){d.style.background='#4db8ff';d.style.boxShadow='0 0 8px #4db8ff,0 0 16px #4db8ff';setTimeout(function(){d.style.background='#0c3030';d.style.boxShadow='none';},500);}
+  var cv=document.getElementById('shooter-canvas');
+  var qb=document.getElementById('shooter-question');
+  if(cv){cv.style.transition='box-shadow 0.1s';cv.style.boxShadow='0 0 30px 10px #4db8ff, 0 0 60px 20px #4db8ff';}
+  if(qb){qb.style.transition='background 0.1s';qb.style.background='rgba(77,184,255,0.35)';}
+  setTimeout(function(){
+    if(cv){cv.style.boxShadow='';}
+    if(qb){qb.style.background='rgba(0,255,225,0.06)';}
+  },500);
+}
+function flashPink(){
+  var d=document.getElementById('sh-pink-dot');
+  if(d){d.style.background='#ff64b4';d.style.boxShadow='0 0 8px #ff64b4,0 0 16px #ff64b4';setTimeout(function(){d.style.background='#0c3030';d.style.boxShadow='none';},500);}
+  var cv=document.getElementById('shooter-canvas');
+  var qb=document.getElementById('shooter-question');
+  if(cv){cv.style.transition='box-shadow 0.1s';cv.style.boxShadow='0 0 30px 10px #ff64b4, 0 0 60px 20px #ff64b4';}
+  if(qb){qb.style.transition='background 0.1s';qb.style.background='rgba(255,100,180,0.35)';}
+  setTimeout(function(){
+    if(cv){cv.style.boxShadow='';}
+    if(qb){qb.style.background='rgba(0,255,225,0.06)';}
+  },500);
+}
 function sndGameOverBad(){playTone(400,0.2,'square');setTimeout(()=>playTone(300,0.2,'square'),200);setTimeout(()=>playTone(200,0.3,'square'),400);setTimeout(()=>playTone(100,0.5,'sawtooth'),600);}
 function sndGameOverGood(){playTone(523,0.15,'square');setTimeout(()=>playTone(659,0.15,'square'),150);setTimeout(()=>playTone(784,0.15,'square'),300);setTimeout(()=>playTone(1047,0.3,'square'),450);}
 
@@ -539,11 +661,11 @@ function updateSpeedBtns(active){
 function toggleShooter(){
   const btn=document.getElementById('btn-start-pause');
   if(!shActive){startShooter();btn.textContent='PAUSE';return;}
-  if(shPaused){shPaused=false;btn.textContent='PAUSE';requestAnimationFrame(shooterLoop);}
-  else{shPaused=true;btn.textContent='RESUME';}
+  if(shPaused){shPaused=false;btn.textContent='PAUSE';startDrumLoop();requestAnimationFrame(shooterLoop);}
+  else{shPaused=true;btn.textContent='RESUME';stopDrumLoop();}
 }
 function startShooter(){
-  shScore=0;shLives=5;shActive=true;shPaused=false;
+  shScore=0;shLives=5;shActive=true;shPaused=false;startDrumLoop();updateShooterScore(0,5);
   shQuestions=shuffle([...pool]);shipX=150;bullets=[];answers=[];
   document.getElementById('btn-start-pause').textContent='PAUSE';
   document.getElementById('shooter-score').textContent='Score: 0 | Lives: 5';
@@ -598,7 +720,7 @@ function shooterLoop(){
           ctx.fillText(lines[li],a.x+a.w/2,startY+li*lineH);
         }
       })();}
-  for(let bi=bullets.length-1;bi>=0;bi--){for(let a of answers){if(!a.hit&&bullets[bi]&&bullets[bi].x>a.x&&bullets[bi].x<a.x+a.w&&bullets[bi].y>a.y&&bullets[bi].y<a.y+a.h){a.hit=true;bullets.splice(bi,1);if(a.correct){shScore++;safeSound(sndCorrect);}else{shLives--;safeSound(sndWrong);}document.getElementById('shooter-score').textContent='Score: '+shScore+' | Lives: '+shLives;if(shLives<=0){shActive=false;document.getElementById('shooter-question').textContent='GAME OVER! Score: '+shScore;document.getElementById('btn-start-pause').textContent='START';if(shScore>=5){safeSound(sndGameOverGood);}else{safeSound(sndGameOverBad);}return;}setTimeout(nextShooterQ,800);break;}}}
+  for(let bi=bullets.length-1;bi>=0;bi--){for(let a of answers){if(!a.hit&&bullets[bi]&&bullets[bi].x>a.x&&bullets[bi].x<a.x+a.w&&bullets[bi].y>a.y&&bullets[bi].y<a.y+a.h){a.hit=true;bullets.splice(bi,1);if(a.correct){shScore++;safeSound(sndCorrect);flashBlue();}else{shLives--;safeSound(sndWrong);flashPink();}updateShooterScore(shScore,shLives);if(shLives<=0){shActive=false;stopDrumLoop();updateShooterScore(shScore,0);document.getElementById('shooter-question').textContent='GAME OVER! Score: '+shScore;document.getElementById('btn-start-pause').textContent='START';if(shScore>=5){safeSound(sndGameOverGood);}else{safeSound(sndGameOverBad);}return;}setTimeout(nextShooterQ,800);break;}}}
   if(allGone&&answers.length>0)setTimeout(nextShooterQ,300);
   if(shActive&&!shPaused)requestAnimationFrame(shooterLoop);
 }
@@ -689,8 +811,8 @@ startMatch();
   const qEl=document.getElementById('fz-quiz-question'),oEl=document.getElementById('fz-quiz-options'),fEl=document.getElementById('fz-quiz-feedback'),pEl=document.getElementById('fz-quiz-progress');
   function load(){
     if(current>=questions.length){const pct=Math.round((score/questions.length)*100);qEl.textContent='Quiz Complete!';oEl.innerHTML='';fEl.innerHTML='<span style="font-size:20px;color:'+(pct>=70?'#00ff6a':'#ff5252')+';">'+score+'/'+questions.length+' ('+pct+'%)</span>';pEl.textContent='';const btn=document.createElement('button');btn.textContent='NEW QUIZ';btn.style.cssText='font-family:var(--mono);font-size:12px;padding:12px 24px;background:#b44dff;color:#fff;border:none;border-radius:3px;cursor:pointer;margin-top:15px;';btn.onclick=function(){const nq=shuffle([...pool]).slice(0,15);questions.length=0;questions.push(...nq);current=0;score=0;answered=false;load();};fEl.appendChild(btn);return;}
-    answered=false;const q=questions[current];qEl.textContent=(current+1)+'. '+q.q;oEl.innerHTML='';fEl.textContent='';pEl.textContent='Question '+(current+1)+'/'+questions.length+' · Score: '+score;
-    q.opts.forEach(function(opt,i){const btn=document.createElement('button');btn.textContent=opt;btn.style.cssText='font-family:var(--body);font-size:15px;padding:14px 18px;background:rgba(255,255,255,0.03);border:1px solid #0c3030;border-radius:4px;color:#b8e8e2;cursor:pointer;text-align:left;';btn.onclick=function(){if(answered)return;answered=true;initAudio();if(i===q.ans){score++;btn.style.background='rgba(0,255,106,0.15)';btn.style.borderColor='#00ff6a';btn.style.color='#00ff6a';fEl.innerHTML='<span style="color:#00ff6a">Correct!</span>';sndCorrect();}else{btn.style.background='rgba(255,82,82,0.15)';btn.style.borderColor='#ff5252';btn.style.color='#ff5252';fEl.innerHTML='<span style="color:#ff5252">Wrong.</span> Answer: <strong style="color:#fff">'+q.opts[q.ans]+'</strong>';sndWrong();}pEl.textContent='Question '+(current+1)+'/'+questions.length+' · Score: '+score;setTimeout(function(){current++;load();},1800);};oEl.appendChild(btn);});
+    answered=false;const q=questions[current];qEl.textContent=(current+1)+'. '+q.q;oEl.innerHTML='';fEl.textContent='';pEl.textContent='Question '+(current+1)+'/'+questions.length+' | Score: '+score;
+    q.opts.forEach(function(opt,i){const btn=document.createElement('button');btn.textContent=opt;btn.style.cssText='font-family:var(--body);font-size:15px;padding:14px 18px;background:rgba(255,255,255,0.03);border:1px solid #0c3030;border-radius:4px;color:#b8e8e2;cursor:pointer;text-align:left;';btn.onclick=function(){if(answered)return;answered=true;initAudio();if(i===q.ans){score++;btn.style.background='rgba(0,255,106,0.15)';btn.style.borderColor='#00ff6a';btn.style.color='#00ff6a';fEl.innerHTML='<span style="font-size:38px;">&#128512;</span>';sndCorrect();}else{btn.style.background='rgba(255,82,82,0.15)';btn.style.borderColor='#ff5252';btn.style.color='#ff5252';fEl.innerHTML='<span style="font-size:38px;">&#10060;</span> <span style="color:#ff5252;font-size:13px;">'+q.opts[q.ans]+'</span>';sndWrong();}pEl.textContent='Question '+(current+1)+'/'+questions.length+' | Score: '+score;setTimeout(function(){current++;load();},1800);};oEl.appendChild(btn);});
   }
   load();
 })();
@@ -708,7 +830,7 @@ window.addEventListener('scroll',function(){topBtn.style.display=window.scrollY>
 function shareQRCard(){
   if(navigator.share){
     navigator.share({
-      title:'DuttyBookBag — Fun Zone',
+      title:'DuttyBookBag - Fun Zone',
       text:'Trading games, quizzes and fun. Free forever.',
       url:'https://duttybookbag.github.io/duttybookbag/dbb-funzone.html'
     }).catch(function(){});
@@ -738,7 +860,7 @@ function printQRCard(){
   win.document.write('</style></head><body>');
   win.document.write('<div class="card">');
   win.document.write('<div class="title">DuttyBookBag</div>');
-  win.document.write('<div class="sub">Fun Zone · Games</div>');
+  win.document.write('<div class="sub">Fun Zone | Games</div>');
   win.document.write('<div class="qr-wrap"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZoAAAGaAQAAAAAefbjOAAAC90lEQVR4nO2bzW3jMBCF36wE5EgDKcClSB24JNe0HYiluIAFyKMBCm8PQ1JUcgqMSIY0PBgJzQ8ZQS/D+SGF+PHwf37OAAYZZJBBBhlk0DEhyaMHEHvAX+rcZRYglgXjLuYZtD00kCQDAH9NAKII4EhO8YMAOpIk19B25hm0PRSzA5BRxZBAhllkdAn6hXqQncwzaF9I7o8Pwl8A8iHyi3/JoLeD+q8Tw9/PBH99CodHD4FLPRH3Ms+gzaGiCEegvngBesDfNG5oP7c2z6C9IK95RZkdQke5P3rIGHvIiFlTjb3MM2hrH9E6AJdAxFkA9xT661O4XvD2z2TQKxA0qxwCAE0yQ0dOjuSkCQf0AzUF5fTmz2TQKxBKnWHRAYmh1B4aWUxArluYIo4MIf/bu1p+QkcMTFhpo1M3Yj7i+FD1EUDrI0JXdhJHckLHZbEp4tBQUYRLUAkMoYYLVRtwCbmOaYo4OpRfco4nsyzIkJ0CBqaskkl/NUUcHKq5RsccQJY0o8x1edewOOIcULNrNKGkegamvCTHEZZ9ngGqishFCfURdRNpthMUvZgiDg3V7DOB1Jyz6ICs8WSwesRpoCb7RFOKqF8MtaJpccQ5oFX2ydXmUFNQdQ8WR5wDahVR+xo5oljO0lk94jxQszkspewl3dRNpElBTRFHh5ozVAL0ifmnWXvggvhJ+NtTMISLcGvzDNocWnXDS5qxVCrRRpsWR5wBalMKHW7V+Frq2Tn4NEUcHCp9jTLyO8e6r8HaDzVFHB3SOKIcoOwS/SUAwCyAC4AXAIifCTm22NY8g/aCtAARABlVDAkYlqsaLuWbf+M+5hm0PVTudOUYM/aAv5JyDx3hJd/z2s08g/aD/AVQHeTLn09Z+mD7m2fQb0Pf7nQh9tCD+Tl6AIAooJeadbz5Mxn0CvT1Thf97V9PjScxC1Cyjvb255s/k0GvQN97n+XklB66ZUBte1pf4wzQ1ztdBEpXSycc6wLbNQwyyCCDDDLIoHb8B33AsFVCg6uCAAAAAElFTkSuQmCC"  alt="QR Code"/></div>');
   win.document.write('<div class="url">duttybookbag.github.io/duttybookbag/dbb-funzone.html</div>');
   win.document.write('<div class="tags">');
