@@ -1400,62 +1400,130 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
       </div>
     </div>
 
-    <div class="term-card" id="pullback">
-      <div class="term-name">Pullback</div>
-      <div class="term-aka">// A temporary move against the main trend</div>
-      <p>A pullback is when price temporarily moves against the current trend before continuing in the original direction. In an uptrend, a pullback is a short dip before price resumes going up.</p>
-      <p>Pullbacks are common and healthy -- they let the market "breathe" before the next push. Many traders wait for pullbacks to enter a trade at a better price rather than chasing the move.</p>
-    </div>
+    <div class="term-card" id="divergence">
+      <div class="term-name">Divergence</div>
+      <div class="term-aka">// When price and an indicator disagree</div>
+      <p>Divergence happens when price moves one way but your indicator (like RSI) moves the other way. That disagreement is the signal -- it means momentum is not confirming what price is doing. There are four types: two that warn of a <strong>reversal</strong> and two that confirm <strong>continuation</strong>.</p>
 
-    <div class="term-card gold" id="breakout">
-      <div class="term-name">Breakout</div>
-      <div class="term-aka">// When price moves beyond a key level</div>
-      <p>A breakout happens when price pushes through a support or resistance level with enough force to keep going. Breakouts often happen after periods of compression or consolidation.</p>
-      <p>A <strong>bullish breakout</strong> is when price breaks above resistance. A <strong>bearish breakout</strong> (sometimes called a breakdown) is when price breaks below support. Volume on the breakout matters -- high volume breakouts are more reliable than low volume ones.</p>
-    </div>
-
-    <div class="term-card red" id="supply-demand">
-      <div class="term-name">Supply and Demand</div>
-      <div class="term-aka">// The force that moves every market</div>
-      <p><strong>Demand</strong> is how badly buyers want something. <strong>Supply</strong> is how much of it is available. When more people want to buy than sell, demand exceeds supply and price goes up. When more people want to sell than buy, supply exceeds demand and price goes down.</p>
-      <p>This is the most fundamental concept in all of trading. Every candle, every indicator, every signal — it all comes back to supply and demand. Zones where price previously reversed often mark areas of heavy supply (sellers) or heavy demand (buyers).</p>
-      <p>Understanding supply and demand helps you see why price moves — not just where it moves.</p>
-
-      <!-- SUPPLY AND DEMAND DIAGRAM -->
-      <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:20px;margin:20px 0 10px;">
-        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:12px;">SUPPLY & DEMAND</div>
-        <svg viewBox="0 0 400 120" style="width:100%;height:auto;">
-          <!-- Demand zone -->
-          <rect x="10" y="80" width="380" height="30" fill="rgba(0,255,106,0.08)" stroke="rgba(0,255,106,0.3)" stroke-width="1" rx="3"/>
-          <text x="20" y="100" fill="#00ff6a" font-family="Share Tech Mono" font-size="9">DEMAND ZONE — Buyers step in here</text>
-          <!-- Supply zone -->
-          <rect x="10" y="10" width="380" height="30" fill="rgba(255,82,82,0.08)" stroke="rgba(255,82,82,0.3)" stroke-width="1" rx="3"/>
-          <text x="20" y="30" fill="#ff5252" font-family="Share Tech Mono" font-size="9">SUPPLY ZONE — Sellers step in here</text>
-          <!-- Price bouncing -->
-          <polyline points="30,75 70,50 110,20 140,35 180,70 210,75 240,50 280,20 310,35 350,65 380,75" fill="none" stroke="#00ffe1" stroke-width="2">
-            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="2.5s" fill="freeze"/>
-          </polyline>
+      <!-- ═══ 1. REGULAR BULLISH ═══ -->
+      <p style="margin-top:16px;"><strong style="color:#00ff44;">Regular Bullish Divergence</strong> -- Potential reversal upward</p>
+      <p>Price makes a <strong>lower low</strong> (falling). RSI makes a <strong>higher low</strong> (rising). Sellers are losing strength even as price drops. A reversal up may follow.</p>
+      <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:16px;margin:10px 0;">
+        <div style="font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:2px;margin-bottom:10px;">REGULAR BULLISH -- PRICE: LOWER LOWS / RSI: HIGHER LOWS</div>
+        <svg viewBox="0 0 400 165" style="width:100%;height:auto;">
+          <!-- PRICE panel -->
+          <text x="5" y="11" fill="#3d7070" font-family="Share Tech Mono" font-size="8">PRICE</text>
+          <!-- Price zigzag making LOWER LOWS: lows go down -->
+          <polyline points="20,25 55,42 90,35 130,58 165,48 205,72 245,58 285,80" fill="none" stroke="#00ffe1" stroke-width="2"/>
+          <!-- Red dashed line connecting the LOWS (58->72->80) going DOWN = lower lows -->
+          <line x1="130" y1="58" x2="285" y2="80" stroke="#ff5252" stroke-width="1.5" stroke-dasharray="5,3"/>
+          <text x="145" y="76" fill="#ff5252" font-family="Share Tech Mono" font-size="7">LOWER LOWS</text>
+          <!-- Separator -->
+          <line x1="0" y1="92" x2="400" y2="92" stroke="#0c3030" stroke-width="1"/>
+          <!-- RSI panel -->
+          <text x="5" y="104" fill="#3d7070" font-family="Share Tech Mono" font-size="8">RSI</text>
+          <!-- RSI zigzag making HIGHER LOWS: lows go up (lower y = higher on screen) -->
+          <polyline points="20,148 55,136 90,143 130,130 165,138 205,122 245,130 285,112" fill="none" stroke="#b44dff" stroke-width="2"/>
+          <!-- Green dashed line connecting RSI lows going UP = higher lows -->
+          <line x1="130" y1="130" x2="285" y2="112" stroke="#00ff44" stroke-width="1.5" stroke-dasharray="5,3"/>
+          <text x="145" y="160" fill="#00ff44" font-family="Share Tech Mono" font-size="7">HIGHER LOWS</text>
+          <!-- DIVERGENCE label -->
+          <text x="295" y="65" fill="#ffd166" font-family="Share Tech Mono" font-size="7">DIVERGENCE</text>
+          <text x="295" y="75" fill="#ffd166" font-family="Share Tech Mono" font-size="7">= REVERSAL</text>
+          <text x="295" y="85" fill="#ffd166" font-family="Share Tech Mono" font-size="7">WARNING</text>
         </svg>
       </div>
-    </div>
 
-    <div class="term-card blue" id="alerts">
-      <div class="term-name">Alerts</div>
-      <div class="term-aka">// Automated notifications when conditions are met</div>
-      <p>Alerts are notifications that TradingView sends you when a specific condition happens on your chart. Instead of staring at the screen all day, you set an alert and TradingView tells you when something important occurs.</p>
-      <p>You can receive alerts as popup notifications, emails, phone notifications, or webhooks. Our indicators have built-in alert conditions -- you just right-click the indicator, select "Add alert," choose the condition, and create it.</p>
-      <p>Free TradingView accounts can set a limited number of alerts. Paid plans allow more.</p>
-    </div>
+      <!-- ═══ 2. REGULAR BEARISH ═══ -->
+      <p style="margin-top:16px;"><strong style="color:#ff5252;">Regular Bearish Divergence</strong> -- Potential reversal downward</p>
+      <p>Price makes a <strong>higher high</strong> (rising). RSI makes a <strong>lower high</strong> (falling). Buyers are losing strength even as price climbs. A reversal down may follow.</p>
+      <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:16px;margin:10px 0;">
+        <div style="font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:2px;margin-bottom:10px;">REGULAR BEARISH -- PRICE: HIGHER HIGHS / RSI: LOWER HIGHS</div>
+        <svg viewBox="0 0 400 165" style="width:100%;height:auto;">
+          <!-- PRICE panel -->
+          <text x="5" y="11" fill="#3d7070" font-family="Share Tech Mono" font-size="8">PRICE</text>
+          <!-- Price zigzag making HIGHER HIGHS: peaks go up (lower y) -->
+          <polyline points="20,70 55,48 90,62 130,35 165,55 205,22 245,42 285,15" fill="none" stroke="#00ffe1" stroke-width="2"/>
+          <!-- Red dashed line connecting HIGHS going UP = higher highs -->
+          <line x1="55" y1="48" x2="285" y2="15" stroke="#ff5252" stroke-width="1.5" stroke-dasharray="5,3"/>
+          <text x="100" y="12" fill="#ff5252" font-family="Share Tech Mono" font-size="7">HIGHER HIGHS</text>
+          <!-- Separator -->
+          <line x1="0" y1="92" x2="400" y2="92" stroke="#0c3030" stroke-width="1"/>
+          <!-- RSI panel -->
+          <text x="5" y="104" fill="#3d7070" font-family="Share Tech Mono" font-size="8">RSI</text>
+          <!-- RSI zigzag making LOWER HIGHS: peaks go down (higher y) -->
+          <polyline points="20,138 55,118 90,132 130,124 165,136 205,130 245,140 285,135" fill="none" stroke="#b44dff" stroke-width="2"/>
+          <!-- Green dashed line connecting RSI highs going DOWN = lower highs -->
+          <line x1="55" y1="118" x2="285" y2="135" stroke="#00ff44" stroke-width="1.5" stroke-dasharray="5,3"/>
+          <text x="100" y="115" fill="#00ff44" font-family="Share Tech Mono" font-size="7">LOWER HIGHS</text>
+          <!-- DIVERGENCE label -->
+          <text x="295" y="55" fill="#ffd166" font-family="Share Tech Mono" font-size="7">DIVERGENCE</text>
+          <text x="295" y="65" fill="#ffd166" font-family="Share Tech Mono" font-size="7">= REVERSAL</text>
+          <text x="295" y="75" fill="#ffd166" font-family="Share Tech Mono" font-size="7">WARNING</text>
+        </svg>
+      </div>
 
-    <div class="divider"></div>
-    <div class="section-label">// Wyckoff Method</div>
-    <h2>Richard D. Wyckoff (1873-1934)</h2>
+      <!-- ═══ 3. HIDDEN BULLISH ═══ -->
+      <p style="margin-top:16px;"><strong style="color:#00ffe1;">Hidden Bullish Divergence</strong> -- Trend continuation upward</p>
+      <p>During an uptrend. Price makes a <strong>higher low</strong> (pullback staying above last low). RSI makes a <strong>lower low</strong> (dips deeper). The uptrend is still intact. This is a buy-the-dip signal -- trend continues up.</p>
+      <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:16px;margin:10px 0;">
+        <div style="font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:2px;margin-bottom:10px;">HIDDEN BULLISH -- PRICE: HIGHER LOW / RSI: LOWER LOW -- UPTREND CONTINUES</div>
+        <svg viewBox="0 0 400 165" style="width:100%;height:auto;">
+          <!-- PRICE panel - uptrend with higher lows -->
+          <text x="5" y="11" fill="#3d7070" font-family="Share Tech Mono" font-size="8">PRICE</text>
+          <!-- Price uptrend: higher highs and higher lows -->
+          <polyline points="20,75 55,55 90,65 130,40 165,50 205,28 245,38 285,20" fill="none" stroke="#00ffe1" stroke-width="2"/>
+          <!-- Green dashed line connecting LOWS going UP = higher lows -->
+          <line x1="90" y1="65" x2="245" y2="38" stroke="#00ff44" stroke-width="1.5" stroke-dasharray="5,3"/>
+          <text x="120" y="78" fill="#00ff44" font-family="Share Tech Mono" font-size="7">HIGHER LOWS</text>
+          <!-- Separator -->
+          <line x1="0" y1="92" x2="400" y2="92" stroke="#0c3030" stroke-width="1"/>
+          <!-- RSI panel - lower lows during pullback -->
+          <text x="5" y="104" fill="#3d7070" font-family="Share Tech Mono" font-size="8">RSI</text>
+          <!-- RSI dips deeper during pullback = lower lows -->
+          <polyline points="20,120 55,108 90,128 130,112 165,135 205,118 245,140 285,122" fill="none" stroke="#b44dff" stroke-width="2"/>
+          <!-- Red dashed line connecting RSI lows going DOWN = lower lows -->
+          <line x1="90" y1="128" x2="245" y2="140" stroke="#ff5252" stroke-width="1.5" stroke-dasharray="5,3"/>
+          <text x="110" y="158" fill="#ff5252" font-family="Share Tech Mono" font-size="7">LOWER LOWS</text>
+          <!-- Label -->
+          <text x="295" y="50" fill="#00ffe1" font-family="Share Tech Mono" font-size="7">HIDDEN</text>
+          <text x="295" y="60" fill="#00ffe1" font-family="Share Tech Mono" font-size="7">BULLISH</text>
+          <text x="295" y="70" fill="#00ffe1" font-family="Share Tech Mono" font-size="7">CONTINUE</text>
+          <text x="295" y="80" fill="#00ffe1" font-family="Share Tech Mono" font-size="7">UP</text>
+        </svg>
+      </div>
 
-    <div class="term-card gold" id="wyckoff">
-      <div class="term-name">The Wyckoff Method</div>
-      <div class="term-aka">// A framework for reading the market developed over 100 years ago</div>
-      <p>Richard Wyckoff was a Wall Street legend who studied how the biggest traders of his time moved markets. He developed a method for understanding price action based on the idea that the market is driven by <strong>supply and demand</strong> -- and that you can read this on the chart if you know what to look for.</p>
-      <p>His method is still used by traders worldwide over 100 years later. It's not a formula or a magic indicator -- it's a way of thinking about why price moves the way it does.</p>
+      <!-- ═══ 4. HIDDEN BEARISH ═══ -->
+      <p style="margin-top:16px;"><strong style="color:#ff8c00;">Hidden Bearish Divergence</strong> -- Trend continuation downward</p>
+      <p>During a downtrend. Price makes a <strong>lower high</strong> (small rally that stays below last high). RSI makes a <strong>higher high</strong> (spikes up harder). The downtrend is still intact. The bounce is a trap -- trend continues down.</p>
+      <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:16px;margin:10px 0;">
+        <div style="font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:2px;margin-bottom:10px;">HIDDEN BEARISH -- PRICE: LOWER HIGH / RSI: HIGHER HIGH -- DOWNTREND CONTINUES</div>
+        <svg viewBox="0 0 400 165" style="width:100%;height:auto;">
+          <!-- PRICE panel - downtrend with lower highs -->
+          <text x="5" y="11" fill="#3d7070" font-family="Share Tech Mono" font-size="8">PRICE</text>
+          <!-- Price downtrend: lower highs and lower lows -->
+          <polyline points="20,20 55,42 90,55 130,38 165,65 205,50 245,75 285,60" fill="none" stroke="#00ffe1" stroke-width="2"/>
+          <!-- Red dashed line connecting HIGHS going DOWN = lower highs -->
+          <line x1="55" y1="42" x2="205" y2="50" stroke="#ff5252" stroke-width="1.5" stroke-dasharray="5,3"/>
+          <text x="90" y="38" fill="#ff5252" font-family="Share Tech Mono" font-size="7">LOWER HIGHS</text>
+          <!-- Separator -->
+          <line x1="0" y1="92" x2="400" y2="92" stroke="#0c3030" stroke-width="1"/>
+          <!-- RSI panel - higher highs during bounce -->
+          <text x="5" y="104" fill="#3d7070" font-family="Share Tech Mono" font-size="8">RSI</text>
+          <!-- RSI spikes higher during bounce = higher highs -->
+          <polyline points="20,145 55,125 90,138 130,112 165,130 205,108 245,125 285,115" fill="none" stroke="#b44dff" stroke-width="2"/>
+          <!-- Green dashed line connecting RSI highs going UP = higher highs -->
+          <line x1="55" y1="125" x2="205" y2="108" stroke="#00ff44" stroke-width="1.5" stroke-dasharray="5,3"/>
+          <text x="90" y="105" fill="#00ff44" font-family="Share Tech Mono" font-size="7">HIGHER HIGHS</text>
+          <!-- Label -->
+          <text x="295" y="50" fill="#ff8c00" font-family="Share Tech Mono" font-size="7">HIDDEN</text>
+          <text x="295" y="60" fill="#ff8c00" font-family="Share Tech Mono" font-size="7">BEARISH</text>
+          <text x="295" y="70" fill="#ff8c00" font-family="Share Tech Mono" font-size="7">CONTINUE</text>
+          <text x="295" y="80" fill="#ff8c00" font-family="Share Tech Mono" font-size="7">DOWN</text>
+        </svg>
+      </div>
+
+      <div class="term-tip">&#128161; <strong>Quick cheat sheet:</strong> Regular = REVERSAL signal (price and RSI going OPPOSITE directions at extremes). Hidden = CONTINUATION signal (price and RSI going OPPOSITE directions during a pullback). Regular divergence warns the trend is dying. Hidden divergence confirms the trend is alive.</div>
     </div>
 
     <div class="term-card" id="wyckoff-laws">
@@ -1750,8 +1818,8 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
       <div class="term-aka">// Agreeing today on tomorrow's price</div>
       <p>A <strong>futures contract</strong> is an agreement between two people to buy or sell something at a specific price on a specific date in the future. The deal is locked in today -- no matter what happens to the price between now and then.</p>
       <p>Example: A coffee shop owner is worried that coffee bean prices will double in 3 months. They buy a futures contract to lock in today's price. Even if beans skyrocket, they pay what was agreed. That protection is the whole point of futures for businesses.</p>
-      <p>Traders also use futures to speculate -- betting that a price will go up or down without actually owning the commodity. Stock index futures (like S&amp;P 500 futures) let traders bet on where the whole market is going. They also trade almost 24 hours a day, so traders watch them to gauge how the market will open the next morning.</p>
-      <div class="term-tip">&#128161; When you see news say "S&amp;P 500 futures are up 1% overnight" -- that means traders expect the stock market to open higher tomorrow morning. It is not the real market -- it is the prediction market.</div>
+      <p>Traders also use futures to speculate -- speculating that a price will go up or down without actually owning the commodity. Stock index futures (like S&amp;P 500 futures) let traders speculate on where the whole market is going. They also trade almost 24 hours a day, so traders watch them to gauge how the market will open the next morning.</p>
+      <div class="term-tip">&#128161; When you see news say "S&amp;P 500 futures are up 1% overnight" -- that means traders are pricing in the stock market to open higher tomorrow morning. It is not the real market -- it is the prediction market.</div>
     </div>
 
     <div class="term-card" id="options-explained">
