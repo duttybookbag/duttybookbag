@@ -668,7 +668,6 @@ function startShooter(){
   shScore=0;shLives=5;shActive=true;shPaused=false;startDrumLoop();updateShooterScore(0,5);
   shQuestions=shuffle([...pool]);shipX=150;bullets=[];answers=[];
   document.getElementById('btn-start-pause').textContent='PAUSE';
-  document.getElementById('shooter-score').textContent='Score: 0 | Lives: 5';
   nextShooterQ();requestAnimationFrame(shooterLoop);
 }
 function nextShooterQ(){
