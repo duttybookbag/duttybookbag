@@ -42,6 +42,7 @@
     .calc-sub{font-family:var(--mono);font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:16px;}
     label{font-family:var(--mono);font-size:11px;color:var(--text);letter-spacing:1px;display:block;margin-bottom:4px;}
     input[type="number"],input[type="text"],select{font-family:var(--mono);font-size:14px;padding:10px 14px;background:rgba(0,255,225,0.03);border:1px solid var(--border);border-radius:4px;color:#fff;width:100%;margin-bottom:12px;outline:none;transition:border-color 0.2s;}
+select option{background:#080f0f;color:#b8e8e2;}
     input:focus,select:focus{border-color:var(--cyan);}
     .btn-calc{font-family:var(--mono);font-size:13px;letter-spacing:2px;padding:12px 24px;background:var(--neon);color:#000;font-weight:700;border:none;border-radius:3px;cursor:pointer;transition:all 0.15s;text-transform:uppercase;width:100%;}
     .btn-calc:hover{box-shadow:0 0 30px rgba(57,255,20,0.5);transform:translateY(-1px);}
@@ -223,6 +224,7 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
       <div style="flex:1;font-family:var(--mono);font-size:11px;color:var(--muted);text-align:right;">1 coin = $<span id="conv-rate-usd">--</span></div>
     </div>
     <div id="conv-result" style="font-family:var(--mono);font-size:14px;color:var(--neon);text-align:center;padding:12px;min-height:30px;"></div>
+    <button onclick="resetConverter()" style="font-family:var(--mono);font-size:11px;letter-spacing:2px;padding:8px 20px;background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:4px;cursor:pointer;width:100%;margin-top:4px;text-transform:uppercase;">Reset</button>
   </div>
 </div></section>
 
@@ -418,10 +420,53 @@ function injectDCAtoPortfolio(){
 }
 
 // ===== CONVERTER =====
+function resetConverter(){
+  document.getElementById('conv-coin').value='bitcoin';
+  document.getElementById('conv-price').value='';
+  document.getElementById('conv-coin-amt').value='';
+  document.getElementById('conv-usd-amt').value='';
+  document.getElementById('conv-result').textContent='';
+  document.getElementById('conv-rate').textContent='--';
+  document.getElementById('conv-rate-usd').textContent='--';
+  const c='bitcoin';
+  if(livePrices[c]) document.getElementById('conv-price').value=livePrices[c].usd;
+}
 function getConvPrice(){const m=parseFloat(document.getElementById('conv-price').value);if(m>0)return m;const c=document.getElementById('conv-coin').value;if(livePrices[c])return livePrices[c].usd;return 0;}
-function convertCoinToUSD(){const a=parseFloat(document.getElementById('conv-coin-amt').value)||0;const p=getConvPrice();if(p>0&&a>0){document.getElementById('conv-result').textContent=a+' coins = $'+(a*p).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+' USD';document.getElementById('conv-rate').textContent=(1/p).toFixed(8);document.getElementById('conv-rate-usd').textContent=p.toLocaleString('en-US',{minimumFractionDigits:2});}}
-function convertUSDToCoin(){const a=parseFloat(document.getElementById('conv-usd-amt').value)||0;const p=getConvPrice();if(p>0&&a>0){document.getElementById('conv-result').textContent='$'+a.toLocaleString()+' = '+(a/p).toFixed(8)+' coins';document.getElementById('conv-rate').textContent=(1/p).toFixed(8);document.getElementById('conv-rate-usd').textContent=p.toLocaleString('en-US',{minimumFractionDigits:2});}}
-document.getElementById('conv-coin').addEventListener('change',function(){const c=this.value;if(livePrices[c])document.getElementById('conv-price').value=livePrices[c].usd;});
+function convertCoinToUSD(){
+  const a=parseFloat(document.getElementById('conv-coin-amt').value)||0;
+  const p=getConvPrice();
+  if(p>0&&a>0){
+    const usdAmt=(a*p).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+    document.getElementById('conv-usd-amt').value=(a*p).toFixed(2);
+    document.getElementById('conv-result').textContent=a+' coins = $'+usdAmt+' USD';
+    document.getElementById('conv-rate').textContent=(1/p).toFixed(8);
+    document.getElementById('conv-rate-usd').textContent=p.toLocaleString('en-US',{minimumFractionDigits:2});
+  }
+}
+function convertUSDToCoin(){
+  const a=parseFloat(document.getElementById('conv-usd-amt').value)||0;
+  const p=getConvPrice();
+  if(p>0&&a>0){
+    const coinAmt=(a/p).toFixed(8);
+    document.getElementById('conv-coin-amt').value=coinAmt;
+    document.getElementById('conv-result').textContent='$'+a.toLocaleString()+' = '+coinAmt+' coins';
+    document.getElementById('conv-rate').textContent=(1/p).toFixed(8);
+    document.getElementById('conv-rate-usd').textContent=p.toLocaleString('en-US',{minimumFractionDigits:2});
+  }
+}
+document.getElementById('conv-coin').addEventListener('change',function(){
+  const c=this.value;
+  if(livePrices[c]){
+    document.getElementById('conv-price').value=livePrices[c].usd;
+  } else {
+    document.getElementById('conv-price').value='';
+  }
+  document.getElementById('conv-coin-amt').value='';
+  document.getElementById('conv-usd-amt').value='';
+  document.getElementById('conv-result').textContent='';
+  document.getElementById('conv-rate').textContent='--';
+  document.getElementById('conv-rate-usd').textContent='--';
+});
 
 // ===== DIVIDENDS =====
 function calcDividend(){
