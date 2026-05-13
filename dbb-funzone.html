@@ -346,8 +346,8 @@ function startDrumLoop(){
 }
 function toggleDrumMusic(){
   var btn=document.getElementById('btn-music');
-  if(drumPlaying){stopDrumLoop();if(btn){btn.textContent='🎵 MUSIC OFF';btn.style.background='rgba(255,100,180,0.15)';btn.style.borderColor='#ff64b4';btn.style.color='#ff64b4';}}
-  else{if(shActive&&!shPaused){startDrumLoop();}if(btn){btn.textContent='🎵 MUSIC ON';btn.style.background='rgba(77,184,255,0.15)';btn.style.borderColor='#4db8ff';btn.style.color='#4db8ff';}}
+  if(drumPlaying){stopDrumLoop();if(btn){btn.textContent='MUSIC: OFF';btn.style.borderColor='#ff64b4';btn.style.color='#ff64b4';}}
+  else{if(shActive&&!shPaused){startDrumLoop();}if(btn){btn.textContent='MUSIC: ON';btn.style.borderColor='#39ff14';btn.style.color='#39ff14';}}
 }
 function stopDrumLoop(){
   drumPlaying=false;
@@ -551,6 +551,28 @@ const pool=[
   {q:"Recession means?",opts:["Stock market drops 20%","Two quarters of negative GDP growth","A single bad earnings report","Crypto crash"],ans:1},
   {q:"Fed raising rates usually hits which stocks hardest?",opts:["Utilities","Energy","High PE growth stocks and tech","Consumer staples"],ans:2},
   {q:"Fed cutting rates usually causes?",opts:["Stocks to fall","Bonds to crash","Markets to rally","Crypto to ban"],ans:1},
+  // STOCHASTIC RSI
+  {q:"Stoch RSI is?",opts:["RSI of the RSI","Volume of RSI","Price indicator","A candle"],ans:0},
+  {q:"StochRSI above 0.8?",opts:["Oversold","Overbought","Neutral","No signal"],ans:1},
+  {q:"StochRSI below 0.2?",opts:["Overbought","Oversold","Trending","Squeeze"],ans:1},
+  {q:"StochRSI %K line is?",opts:["Slow line","Fast line","Volume","Price"],ans:1},
+  {q:"StochRSI %D line is?",opts:["Fast line","Moving avg of %K","Volume","Price"],ans:1},
+  {q:"StochRSI %K crosses above %D?",opts:["Bearish","Bullish signal","No signal","Squeeze"],ans:1},
+  {q:"StochRSI best in?",opts:["Choppy markets","Trending markets","Any market","Crypto only"],ans:1},
+  {q:"StochRSI vs RSI?",opts:["RSI faster","StochRSI faster more sensitive","Same speed","StochRSI slower"],ans:1},
+  {q:"StochRSI 0.5 midpoint means?",opts:["Overbought","Oversold","Bias line bulls above bears below","No trend"],ans:2},
+  // MORE STOCKS
+  {q:"Bonds are?",opts:["Riskier than stocks","Loans to companies or government","A type of ETF","A crypto token"],ans:1},
+  {q:"Portfolio diversification means?",opts:["All in one stock","Spread risk across assets","Day trading only","Crypto only"],ans:1},
+  {q:"Theta in options is?",opts:["Direction of move","Daily time decay of option value","Volatility measure","Speed of delta"],ans:1},
+  {q:"Delta in options is?",opts:["Time decay","Option price move per $1 stock move","Volatility measure","Dividend exposure"],ans:1},
+  {q:"Vega in options measures?",opts:["Daily time decay","Direction of trade","Sensitivity to volatility changes","Dividend exposure"],ans:2},
+  {q:"Options Greeks are?",opts:["Chart patterns","Delta Gamma Theta Vega","Candle names","Moving averages"],ans:1},
+  {q:"High P/E ratio usually means?",opts:["Company is cheap","Strong future growth expected","Company losing money","Low volatility"],ans:1},
+  {q:"Recession means?",opts:["Stock drops 20%","Two quarters of negative GDP growth","One bad earnings","Crypto crash"],ans:1},
+  {q:"Bonds vs stocks safety?",opts:["Stocks safer","Bonds generally safer lower return","Same risk","Crypto safest"],ans:1},
+  {q:"52-week high breakout signals?",opts:["Weak momentum","Potential run with no resistance above","Time to sell","Bear market"],ans:1},
+  {q:"GameStop 2021 was famous for?",opts:["An IPO","A massive short squeeze","A dividend payout","An ETF launch"],ans:1},
 ];
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 
