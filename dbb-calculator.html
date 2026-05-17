@@ -115,13 +115,13 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
 <style>.goog-te-banner-frame{display:none!important;}.goog-te-gadget{font-size:11px!important;color:#3d7070!important;}.goog-te-gadget .goog-te-combo{background:#080f0f;color:#b8e8e2;border:1px solid #0c3030;border-radius:4px;padding:4px 8px;font-family:'Share Tech Mono',monospace;font-size:11px;outline:none;}.goog-te-gadget>span{display:none!important;}body{top:0!important;}</style>
 <div class="nav-back">
   <a href="#live-prices">Prices</a>
+  <a href="#dbb-position">DBB</a>
   <a href="#dca-calc">DCA</a>
   <a href="#scaled-exit">Exit</a>
   <a href="#converter">Convert</a>
   <a href="#dividend-calc">Dividends</a>
   <a href="#projection">What If</a>
   <a href="#portfolio">Portfolio</a>
-  <a href="#dbb-position">DBB</a>
   <a href="#guide">Guide</a>
 </div>
 
@@ -151,21 +151,38 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
 
 <!-- DISCLAIMER TOP -->
 <section><div class="wrap">
-  <div class="disclaimer">I am not your financial adviser. All calculations are for educational and entertainment purposes only. Do your own math. Do your own research. Prices shown may be delayed or estimated. Trading and investing involves substantial risk. You are solely responsible for your own decisions.</div>
+  <div class="disclaimer" style="border-color:rgba(255,82,82,0.5);background:rgba(255,82,82,0.07);padding:22px;">
+    <div style="color:var(--red);font-size:12px;letter-spacing:4px;margin-bottom:10px;font-weight:700;">⚠ LEGAL DISCLAIMER — READ BEFORE USING ANY TOOL ON THIS PAGE</div>
+    <strong style="color:#fff;">DuttyBookBag and its creator are NOT licensed financial advisors, investment advisors, brokers, dealers, or registered representatives of any kind under any law or regulation.</strong> Nothing on this website — including but not limited to calculations, price data, tools, charts, projections, position sizing, or any written content — constitutes financial advice, investment advice, trading advice, legal advice, tax advice, or any professional recommendation of any kind whatsoever.<br><br>
+    <strong style="color:var(--red);">ALL TOOLS ARE FOR EDUCATIONAL AND ENTERTAINMENT PURPOSES ONLY.</strong> Use of these tools does not create any advisor-client relationship. Past performance does not guarantee future results. All investments, trades, and positions in stocks, crypto, options, or any other asset carry substantial risk including the complete and total loss of your entire capital.<br><br>
+    <strong style="color:#fff;">BY USING THIS WEBSITE YOU EXPRESSLY AGREE THAT:</strong> (1) You are solely and exclusively responsible for every financial decision you make. (2) DuttyBookBag and its creator bear absolutely NO LIABILITY for any losses, damages, missed profits, or any other outcomes — direct or indirect — resulting from your use of these tools. (3) You waive any and all claims, legal actions, or proceedings against DuttyBookBag and its creator arising from your use of this site. (4) Price data shown may be delayed, estimated, or inaccurate — always verify with your licensed broker or exchange before making any trade.<br><br>
+    <strong style="color:var(--red);">IF YOU DO NOT AGREE TO THESE TERMS IN FULL, STOP USING THIS SITE IMMEDIATELY.</strong>
+  </div>
 </div></section>
 
 <!-- SECTION NAV -->
 <section><div class="wrap">
   <div class="section-nav">
     <a href="#live-prices">Live Prices</a>
+    <a href="#dbb-position" style="color:var(--cyan);">⚡ DBB Position</a>
     <a href="#dca-calc">DCA In</a>
     <a href="#scaled-exit">Scaled Exit</a>
     <a href="#converter">Converter</a>
     <a href="#dividend-calc">Dividends</a>
     <a href="#projection">What If</a>
     <a href="#portfolio">Portfolio</a>
-    <a href="#dbb-position" style="color:var(--cyan);">⚡ DBB Position</a>
     <a href="#guide" style="color:var(--blue);">📖 How To Use</a>
+  </div>
+
+  <!-- AUTO-FILL SYNC BAR -->
+  <div id="sync-bar" style="display:flex;align-items:center;justify-content:center;gap:14px;padding:10px 16px;background:rgba(0,255,106,0.04);border:1px solid rgba(0,255,106,0.2);border-radius:6px;margin-top:10px;flex-wrap:wrap;">
+    <div style="font-family:var(--mono);font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;">⚡ Auto-Fill Sync</div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div id="sync-dot" style="width:10px;height:10px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);transition:all 0.3s;"></div>
+      <span id="sync-label" style="font-family:var(--mono);font-size:11px;color:var(--green);letter-spacing:1px;font-weight:700;">ON</span>
+    </div>
+    <button onclick="toggleSync()" id="sync-btn" style="font-family:var(--mono);font-size:10px;letter-spacing:2px;padding:6px 16px;background:transparent;border:1px solid var(--green);color:var(--green);border-radius:3px;cursor:pointer;text-transform:uppercase;transition:all 0.2s;">Toggle Off</button>
+    <div style="font-family:var(--mono);font-size:10px;color:var(--muted);">Enter asset in any calc → auto-fills the rest</div>
   </div>
 </div></section>
 
@@ -176,6 +193,51 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
   <h2>Market Watch</h2>
   <div id="ticker-container" class="ticker-bar"><div style="font-family:var(--mono);font-size:12px;color:var(--muted);">Loading prices...</div></div>
   <p style="font-family:var(--mono);font-size:9px;color:var(--muted);text-align:center;">Prices via CoinGecko API. May be delayed. Not real-time. For reference only.</p>
+</div></section>
+
+<!-- DBB POSITION SIZING -->
+<section id="dbb-position"><div class="wrap">
+  <div class="divider" style="background:linear-gradient(90deg,transparent,var(--cyan),transparent);"></div>
+  <div class="section-label" style="color:var(--cyan);">// DBB Position Sizing</div>
+  <h2>Money Management</h2>
+  <p style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:20px;line-height:1.7;">Built on Edward Thorp's Kelly Criterion. Four conviction tiers. Liquidity-aware stops. <a href="dbb-money-management.html" style="color:var(--cyan);">Full standalone page →</a></p>
+  <div class="calc-box" style="border-color:rgba(0,255,225,0.2);">
+    <div class="calc-title">Stocks &amp; Crypto — DBB Tiers</div>
+    <div class="calc-sub">// Know your size before you enter</div>
+    <div class="grid-2">
+      <div><label>Total Trading Capital ($)</label><input type="number" id="dbb-capital" placeholder="10000" step="any" oninput="dbbUpdateMaxRisk()"/></div>
+      <div><label>Asset Type</label><select id="dbb-type" onchange="dbbUpdateMaxRisk()"><option value="stock">Stock</option><option value="crypto">Crypto</option></select></div>
+    </div>
+    <div class="grid-2">
+      <div><label>Asset Price ($)</label><input type="number" id="dbb-price" placeholder="150.00" step="any" oninput="dbbUpdateMaxRisk()"/></div>
+      <div><label>Max Risk Per Trade (%)</label><input type="number" id="dbb-risk" placeholder="2" step="0.1" oninput="dbbUpdateMaxRisk()"/></div>
+    </div>
+    <div id="dbb-risk-display" style="display:none;background:#030a0a;border:1px solid rgba(0,255,225,0.2);border-radius:4px;padding:10px 14px;margin-bottom:12px;font-family:var(--mono);font-size:11px;"></div>
+    <div class="grid-2">
+      <div><label>Entry Price ($)</label><input type="number" id="dbb-entry" placeholder="148.50" step="any" oninput="dbbUpdateLiq()"/></div>
+      <div></div>
+    </div>
+    <div class="grid-2">
+      <div><label>Possible Support Level ($)</label><input type="number" id="dbb-support" placeholder="144.00" step="any" oninput="dbbUpdateLiq()"/></div>
+      <div><label>Possible Resistance Level ($)</label><input type="number" id="dbb-resistance" placeholder="155.00" step="any" oninput="dbbUpdateLiq()"/></div>
+    </div>
+    <div id="dbb-liq-display" style="display:none;background:rgba(77,184,255,0.04);border:1px solid rgba(77,184,255,0.15);border-radius:4px;padding:12px 14px;margin-bottom:12px;font-family:var(--mono);font-size:11px;color:var(--blue);line-height:1.8;"></div>
+    <div style="margin-bottom:16px;">
+      <label>Conviction Score (1 = weak · 10 = A+ setup)</label>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+        <span style="font-family:var(--mono);font-size:10px;color:var(--muted);">Drag to rate</span>
+        <span id="dbb-conv-val" style="font-family:var(--display);font-size:28px;color:var(--cyan);">5</span>
+      </div>
+      <input type="range" id="dbb-conviction" min="1" max="10" value="5" oninput="dbbConviction()" style="-webkit-appearance:none;width:100%;height:4px;border-radius:2px;background:var(--border);outline:none;cursor:pointer;"/>
+      <div id="dbb-conv-pips" style="display:flex;gap:3px;margin-top:6px;"></div>
+    </div>
+    <div id="dbb-warning" style="display:none;border-radius:4px;padding:10px 14px;font-family:var(--mono);font-size:11px;margin-bottom:12px;"></div>
+    <button class="btn-calc" onclick="dbbCalc()">⚡ CALCULATE DBB TIERS</button>
+    <div id="dbb-results" style="display:none;margin-top:20px;">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:4px;color:var(--muted);margin-bottom:12px;">// DBB POSITION TIERS</div>
+      <div id="dbb-tier-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;"></div>
+    </div>
+  </div>
 </div></section>
 
 <!-- DCA CALCULATOR -->
@@ -203,6 +265,13 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
     <button class="btn-secondary" onclick="injectDCAtoPortfolio()">Send to Portfolio Tracker</button>
     <button class="btn-clear" onclick="clearDCA()">Clear All</button>
     <div id="dca-results" class="result-box"></div>
+    <div id="dca-chart-wrap" style="display:none;margin-top:16px;text-align:center;">
+      <div style="font-family:var(--mono);font-size:10px;color:var(--gold);letter-spacing:2px;margin-bottom:10px;">VISUAL BREAKDOWN</div>
+      <div style="display:flex;flex-wrap:wrap;gap:20px;justify-content:center;">
+        <div><svg id="dca-pie" viewBox="0 0 200 200" width="160" height="160"></svg><div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:4px;">Cost vs Gain/Loss</div></div>
+        <div><svg id="dca-pie2" viewBox="0 0 200 200" width="160" height="160"></svg><div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:4px;">Fees vs Net Cost</div></div>
+      </div>
+    </div>
   </div>
 </div></section>
 
@@ -232,6 +301,13 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
     <button class="btn-calc" style="background:var(--red);" onclick="calcScaledExit()">Calculate Scaled Exit</button>
     <button class="btn-clear" onclick="clearSE()">Clear</button>
     <div id="se-results" class="result-box"></div>
+    <div id="se-chart-wrap" style="display:none;margin-top:16px;text-align:center;">
+      <div style="font-family:var(--mono);font-size:10px;color:var(--gold);letter-spacing:2px;margin-bottom:10px;">EXIT BREAKDOWN</div>
+      <div style="display:flex;flex-wrap:wrap;gap:20px;justify-content:center;">
+        <div><svg id="se-pie" viewBox="0 0 200 200" width="160" height="160"></svg><div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:4px;">USD Per Level</div></div>
+        <div><svg id="se-pie2" viewBox="0 0 200 200" width="160" height="160"></svg><div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:4px;">Cost vs Profit</div></div>
+      </div>
+    </div>
   </div>
 </div></section>
 
@@ -286,6 +362,13 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
     <button class="btn-calc" onclick="calcDividend()">Calculate Dividends</button>
     <button class="btn-clear" onclick="clearDiv()">Clear</button>
     <div id="div-results" class="result-box"></div>
+    <div id="div-chart-wrap" style="display:none;margin-top:16px;text-align:center;">
+      <div style="font-family:var(--mono);font-size:10px;color:var(--gold);letter-spacing:2px;margin-bottom:10px;">DIVIDEND VISUAL</div>
+      <div style="display:flex;flex-wrap:wrap;gap:20px;justify-content:center;">
+        <div><svg id="div-pie" viewBox="0 0 200 200" width="160" height="160"></svg><div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:4px;">Yield vs Price</div></div>
+        <div><svg id="div-pie2" viewBox="0 0 200 200" width="160" height="160"></svg><div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:4px;">Income Per Year</div></div>
+      </div>
+    </div>
   </div>
 </div></section>
 
@@ -309,6 +392,13 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
     <button class="btn-secondary" onclick="injectWhatIfToPortfolio()">Send to Portfolio Tracker</button>
     <button class="btn-clear" onclick="clearProj()">Clear</button>
     <div id="proj-results" class="result-box"></div>
+    <div id="proj-chart-wrap" style="display:none;margin-top:16px;text-align:center;">
+      <div style="font-family:var(--mono);font-size:10px;color:var(--gold);letter-spacing:2px;margin-bottom:10px;">PROJECTION VISUAL</div>
+      <div style="display:flex;flex-wrap:wrap;gap:20px;justify-content:center;">
+        <div><svg id="proj-pie" viewBox="0 0 200 200" width="160" height="160"></svg><div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:4px;">Invested vs Gain</div></div>
+        <div><svg id="proj-pie2" viewBox="0 0 200 200" width="160" height="160"></svg><div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:4px;">2x / 5x / 10x</div></div>
+      </div>
+    </div>
   </div>
 </div></section>
 
@@ -380,47 +470,60 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
 
 </div></section>
 
-<!-- DBB POSITION SIZING -->
-<section id="dbb-position"><div class="wrap">
-  <div class="divider" style="background:linear-gradient(90deg,transparent,var(--cyan),transparent);"></div>
-  <div class="section-label" style="color:var(--cyan);">// DBB Position Sizing</div>
-  <h2>Money Management</h2>
-  <p style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:20px;line-height:1.7;">Built on Edward Thorp's Kelly Criterion. Four conviction tiers. Liquidity-aware stops. <a href="dbb-money-management.html" style="color:var(--cyan);">Full standalone page →</a></p>
-  <div class="calc-box" style="border-color:rgba(0,255,225,0.2);">
-    <div class="calc-title">Stocks &amp; Crypto — DBB Tiers</div>
-    <div class="calc-sub">// Know your size before you enter</div>
-    <div class="grid-2">
-      <div><label>Total Trading Capital ($)</label><input type="number" id="dbb-capital" placeholder="10000" step="any" oninput="dbbUpdateMaxRisk()"/></div>
-      <div><label>Asset Type</label><select id="dbb-type" onchange="dbbUpdateMaxRisk()"><option value="stock">Stock</option><option value="crypto">Crypto</option></select></div>
-    </div>
-    <div class="grid-2">
-      <div><label>Asset Price ($)</label><input type="number" id="dbb-price" placeholder="150.00" step="any" oninput="dbbUpdateMaxRisk()"/></div>
-      <div><label>Max Risk Per Trade (%)</label><input type="number" id="dbb-risk" placeholder="2" step="0.1" oninput="dbbUpdateMaxRisk()"/></div>
-    </div>
-    <div id="dbb-risk-display" style="display:none;background:#030a0a;border:1px solid rgba(0,255,225,0.2);border-radius:4px;padding:10px 14px;margin-bottom:12px;font-family:var(--mono);font-size:11px;"></div>
-    <div class="grid-2">
-      <div><label>Entry Price ($)</label><input type="number" id="dbb-entry" placeholder="148.50" step="any" oninput="dbbUpdateLiq()"/></div>
-      <div></div>
-    </div>
-    <div class="grid-2">
-      <div><label>Possible Support Level ($)</label><input type="number" id="dbb-support" placeholder="144.00" step="any" oninput="dbbUpdateLiq()"/></div>
-      <div><label>Possible Resistance Level ($)</label><input type="number" id="dbb-resistance" placeholder="155.00" step="any" oninput="dbbUpdateLiq()"/></div>
-    </div>
-    <div id="dbb-liq-display" style="display:none;background:rgba(77,184,255,0.04);border:1px solid rgba(77,184,255,0.15);border-radius:4px;padding:12px 14px;margin-bottom:12px;font-family:var(--mono);font-size:11px;color:var(--blue);line-height:1.8;"></div>
-    <div style="margin-bottom:16px;">
-      <label>Conviction Score (1 = weak · 10 = A+ setup)</label>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-        <span style="font-family:var(--mono);font-size:10px;color:var(--muted);">Drag to rate</span>
-        <span id="dbb-conv-val" style="font-family:var(--display);font-size:28px;color:var(--cyan);">5</span>
+<!-- HOW TO USE GUIDE -->
+<section id="guide"><div class="wrap">
+  <div class="divider" style="background:linear-gradient(90deg,transparent,var(--blue),transparent);"></div>
+  <div class="section-label" style="color:var(--blue);">// How To Use</div>
+  <h2>Guide</h2>
+  <div class="calc-box" style="border-color:rgba(77,184,255,0.2);">
+    <div class="calc-title" style="color:var(--blue);">Quick Start</div>
+    <div class="calc-sub">// Each tool works standalone or synced together</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;">
+
+      <div style="background:#030a0a;border:1px solid var(--border);border-top:3px solid var(--neon);border-radius:6px;padding:14px;">
+        <div style="font-family:var(--display);font-size:16px;letter-spacing:2px;color:var(--neon);margin-bottom:6px;">DCA IN</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.8;">Enter each buy — price, quantity, fee. Hit <strong style="color:#fff;">Calculate DCA</strong> to see your average cost, total invested, and P&amp;L. Hit <strong style="color:#fff;">Send to Portfolio</strong> to add it automatically.</div>
       </div>
-      <input type="range" id="dbb-conviction" min="1" max="10" value="5" oninput="dbbConviction()" style="-webkit-appearance:none;width:100%;height:4px;border-radius:2px;background:var(--border);outline:none;cursor:pointer;"/>
-      <div id="dbb-conv-pips" style="display:flex;gap:3px;margin-top:6px;"></div>
+
+      <div style="background:#030a0a;border:1px solid var(--border);border-top:3px solid var(--red);border-radius:6px;padding:14px;">
+        <div style="font-family:var(--display);font-size:16px;letter-spacing:2px;color:var(--red);margin-bottom:6px;">SCALED EXIT</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.8;">Enter your position size and average entry. Add price targets and what % you want to sell at each level. See exactly how much USD you collect at every step.</div>
+      </div>
+
+      <div style="background:#030a0a;border:1px solid var(--border);border-top:3px solid var(--gold);border-radius:6px;padding:14px;">
+        <div style="font-family:var(--display);font-size:16px;letter-spacing:2px;color:var(--gold);margin-bottom:6px;">CONVERTER</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.8;">Select a coin, enter either a coin amount or USD amount — the other fills in automatically. Price pulls from live data. You can override the price manually any time.</div>
+      </div>
+
+      <div style="background:#030a0a;border:1px solid var(--border);border-top:3px solid var(--purple);border-radius:6px;padding:14px;">
+        <div style="font-family:var(--display);font-size:16px;letter-spacing:2px;color:var(--purple);margin-bottom:6px;">DIVIDENDS</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.8;">Enter stock price, shares, and annual dividend per share. Toggle DRIP on to see how reinvesting compounds your shares year by year.</div>
+      </div>
+
+      <div style="background:#030a0a;border:1px solid var(--border);border-top:3px solid var(--cyan);border-radius:6px;padding:14px;">
+        <div style="font-family:var(--display);font-size:16px;letter-spacing:2px;color:var(--cyan);margin-bottom:6px;">WHAT IF</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.8;">Enter current price and how much you hold. See your value at 2x, 3x, 4x, 5x, 10x. Set a target price to see exactly what it's worth when you get there.</div>
+      </div>
+
+      <div style="background:#030a0a;border:1px solid var(--border);border-top:3px solid var(--neon);border-radius:6px;padding:14px;">
+        <div style="font-family:var(--display);font-size:16px;letter-spacing:2px;color:var(--neon);margin-bottom:6px;">PORTFOLIO</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.8;">Add any holding manually or use the <strong style="color:#fff;">Send to Portfolio</strong> buttons from DCA or What If. See your total value, gain/loss, ROI, fees, dividends, and pie charts all in one place.</div>
+      </div>
+
+      <div style="background:#030a0a;border:1px solid var(--border);border-top:3px solid var(--cyan);border-radius:6px;padding:14px;grid-column:1/-1;">
+        <div style="font-family:var(--display);font-size:16px;letter-spacing:2px;color:var(--cyan);margin-bottom:6px;">⚡ DBB POSITION SIZING</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.8;">Built on Edward Thorp's Kelly Criterion. Enter your capital, asset price, max risk %, entry price, and support/resistance levels. Set your conviction score 1–10. The calculator gives you 4 position sizes — FULL, 75, HALF, QUARTER — so you always know exactly how many shares or coins to buy based on your confidence in the trade.</div>
+      </div>
+
     </div>
-    <div id="dbb-warning" style="display:none;border-radius:4px;padding:10px 14px;font-family:var(--mono);font-size:11px;margin-bottom:12px;"></div>
-    <button class="btn-calc" onclick="dbbCalc()">⚡ CALCULATE DBB TIERS</button>
-    <div id="dbb-results" style="display:none;margin-top:20px;">
-      <div style="font-family:var(--mono);font-size:10px;letter-spacing:4px;color:var(--muted);margin-bottom:12px;">// DBB POSITION TIERS</div>
-      <div id="dbb-tier-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;"></div>
+
+    <div style="margin-top:16px;padding:14px;background:rgba(0,255,106,0.04);border:1px solid rgba(0,255,106,0.2);border-radius:6px;">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:3px;color:var(--neon);margin-bottom:8px;">// AUTO-FILL SYNC — HOW IT WORKS</div>
+      <div style="font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.9;">
+        When <strong style="color:var(--green);">Sync is ON</strong> — type an asset name in any calculator and the same name fills across DCA, Scaled Exit, Converter, and Portfolio automatically. Same with price and quantity. You can still override any field manually at any time — just type your own value and it sticks.<br><br>
+        Turn sync <strong style="color:var(--red);">OFF</strong> using the toggle bar above if you want each calculator to work independently with different assets at the same time.
+      </div>
     </div>
   </div>
 </div></section>
@@ -449,7 +552,9 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
 
 <!-- DISCLAIMER BOTTOM -->
 <section><div class="wrap">
-  <div class="disclaimer">I am not your financial adviser. All calculations are for educational and entertainment purposes only. Do your own math. Do your own research. Prices shown may be delayed or estimated. Trading and investing involves substantial risk. You are solely responsible for your own decisions.</div>
+  <div class="disclaimer" style="border-color:rgba(255,82,82,0.5);background:rgba(255,82,82,0.07);">
+    <strong style="color:var(--red);">⚠ LEGAL DISCLAIMER:</strong> <strong style="color:#fff;">DuttyBookBag is NOT a licensed financial advisor.</strong> Nothing here is financial, investment, legal, or tax advice. All tools are for educational and entertainment purposes only. <strong style="color:var(--red);">USE AT YOUR OWN RISK.</strong> All investments carry the risk of total loss of capital. You are solely responsible for every financial decision you make. DuttyBookBag and its creator bear NO LIABILITY for any losses or outcomes arising from your use of this site. Price data may be delayed or inaccurate — always verify with your broker or exchange. By continuing to use this site you agree to these terms in full.
+  </div>
 </div></section>
 
 <!-- FOOTER -->
@@ -476,34 +581,70 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
 
 <script>
 // ===== LIVE PRICES =====
+// Crypto: Coinbase public API (free, no key, CORS-open)
+// Stocks: corsproxy.io + Stooq CSV (free, no key)
 let livePrices={};
 async function fetchPrices(){
-  try{
-    const r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,ripple,solana,cardano,dogecoin,shiba-inu,tether,usd-coin,binancecoin,avalanche-2,chainlink,matic-network,pepe,dogwifcoin&vs_currencies=usd&include_24hr_change=true');
-    const d=await r.json();livePrices=d;
-    const names={bitcoin:'BTC',ethereum:'ETH',ripple:'XRP',solana:'SOL',cardano:'ADA',dogecoin:'DOGE','shiba-inu':'SHIB',tether:'USDT','usd-coin':'USDC',binancecoin:'BNB','avalanche-2':'AVAX',chainlink:'LINK','matic-network':'POL',pepe:'PEPE',dogwifcoin:'WIF'};
-    let h='';
-    for(const[id,info]of Object.entries(d)){
-      const c=info.usd_24h_change||0;const cls=c>=0?'up':'down';const s=c>=0?'+':'';
-      const p=info.usd<1?info.usd.toFixed(6):info.usd<100?info.usd.toFixed(2):info.usd.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
-      h+='<div class="ticker-item"><span class="ticker-name">'+(names[id]||id)+'</span><span class="ticker-price">$'+p+'</span><span class="ticker-change '+cls+'">'+s+c.toFixed(2)+'%</span></div>';
-    }
-    // Add stock section header
-    h+='<div style="font-family:var(--mono);font-size:9px;letter-spacing:3px;color:var(--muted);width:100%;padding:8px 4px 4px;text-transform:uppercase;">// Stocks (Delayed)</div>';
-    const stocks=[{sym:'TSLA',label:'Tesla'},{sym:'SPY',label:'S&P 500'},{sym:'QQQ',label:'Nasdaq 100'}];
-    for(const st of stocks){
-      try{
-        const sr=await fetch('https://stooq.com/q/l/?s='+st.sym+'.US&f=sd2t2ohlcvn&e=csv');
-        const txt=await sr.text();const rows=txt.trim().split('\n');
-        if(rows.length>1){const cols=rows[1].split(',');const price=parseFloat(cols[4])||0;const open=parseFloat(cols[2])||0;
-          if(price>0){const chPct=open>0?((price-open)/open*100):0;const cls=chPct>=0?'up':'down';const s=chPct>=0?'+':'';
-            h+='<div class="ticker-item" style="border-color:rgba(255,209,102,0.3);"><span class="ticker-name" style="color:var(--gold);">'+st.sym+'</span><span class="ticker-price">$'+price.toFixed(2)+'</span><span class="ticker-change '+cls+'">'+s+chPct.toFixed(2)+'%</span></div>';
-          } else { h+='<div class="ticker-item"><span class="ticker-name" style="color:var(--gold);">'+st.sym+'</span><span class="ticker-price" style="color:var(--muted);">—</span><span class="ticker-change" style="color:var(--muted);">delayed</span></div>'; }
+  let h='';
+  // --- CRYPTO via Coinbase public spot API ---
+  const coins=[
+    {sym:'BTC',id:'bitcoin',pair:'BTC-USD'},
+    {sym:'ETH',id:'ethereum',pair:'ETH-USD'},
+    {sym:'XRP',id:'ripple',pair:'XRP-USD'},
+    {sym:'SOL',id:'solana',pair:'SOL-USD'},
+    {sym:'ADA',id:'cardano',pair:'ADA-USD'},
+    {sym:'DOGE',id:'dogecoin',pair:'DOGE-USD'},
+    {sym:'AVAX',id:'avalanche-2',pair:'AVAX-USD'},
+    {sym:'LINK',id:'chainlink',pair:'LINK-USD'},
+    {sym:'SHIB',id:'shiba-inu',pair:'SHIB-USD'},
+    {sym:'BNB',id:'binancecoin',pair:'BNB-USD'},
+    {sym:'PEPE',id:'pepe',pair:'PEPE-USD'},
+  ];
+  let cryptoLoaded=0;
+  for(const coin of coins){
+    try{
+      const r=await fetch('https://api.coinbase.com/v2/prices/'+coin.pair+'/spot');
+      const d=await r.json();
+      const price=parseFloat(d.data&&d.data.amount)||0;
+      if(price>0){
+        livePrices[coin.id]={usd:price,'usd_24h_change':0};
+        const p=price<0.001?price.toFixed(8):price<1?price.toFixed(6):price<100?price.toFixed(2):price.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+        h+='<div class="ticker-item"><span class="ticker-name">'+coin.sym+'</span><span class="ticker-price">$'+p+'</span><span class="ticker-change" style="color:var(--muted);">spot</span></div>';
+        cryptoLoaded++;
+      }
+    }catch(e){}
+  }
+  if(cryptoLoaded===0) h+='<div style="font-family:var(--mono);font-size:12px;color:var(--red);">Crypto prices unavailable — check connection</div>';
+
+  // --- STOCKS via corsproxy.io + Stooq CSV (free, no key) ---
+  h+='<div style="font-family:var(--mono);font-size:9px;letter-spacing:3px;color:var(--muted);width:100%;padding:8px 4px 4px;text-transform:uppercase;">// Stocks (Delayed)</div>';
+  const stocks=['TSLA','SPY','QQQ'];
+  for(const sym of stocks){
+    try{
+      const stooqUrl='https://stooq.com/q/l/?s='+sym+'.US&f=sd2t2ohlcvn&e=csv';
+      const proxyUrl='https://corsproxy.io/?'+encodeURIComponent(stooqUrl);
+      const sr=await fetch(proxyUrl);
+      const txt=await sr.text();
+      const rows=txt.trim().split('\n');
+      if(rows.length>1){
+        const cols=rows[1].split(',');
+        const price=parseFloat(cols[4])||0;
+        const open=parseFloat(cols[2])||0;
+        if(price>0){
+          const chPct=open>0?((price-open)/open*100):0;
+          const cls=chPct>=0?'up':'down';const s=chPct>=0?'+':'';
+          h+='<div class="ticker-item" style="border-color:rgba(255,209,102,0.3);"><span class="ticker-name" style="color:var(--gold);">'+sym+'</span><span class="ticker-price">$'+price.toFixed(2)+'</span><span class="ticker-change '+cls+'">'+s+chPct.toFixed(2)+'%</span></div>';
+        } else {
+          h+='<div class="ticker-item" style="border-color:rgba(255,209,102,0.3);"><span class="ticker-name" style="color:var(--gold);">'+sym+'</span><span class="ticker-price" style="color:var(--muted);">—</span><span class="ticker-change" style="color:var(--muted);">mkt closed</span></div>';
         }
-      }catch(e){ h+='<div class="ticker-item"><span class="ticker-name" style="color:var(--gold);">'+st.sym+'</span><span class="ticker-price" style="color:var(--muted);">—</span><span class="ticker-change" style="color:var(--muted);">delayed</span></div>'; }
+      } else {
+        h+='<div class="ticker-item" style="border-color:rgba(255,209,102,0.3);"><span class="ticker-name" style="color:var(--gold);">'+sym+'</span><span class="ticker-price" style="color:var(--muted);">—</span><span class="ticker-change" style="color:var(--muted);">mkt closed</span></div>';
+      }
+    }catch(e){
+      h+='<div class="ticker-item" style="border-color:rgba(255,209,102,0.3);"><span class="ticker-name" style="color:var(--gold);">'+sym+'</span><span class="ticker-price" style="color:var(--muted);">—</span><span class="ticker-change" style="color:var(--muted);">mkt closed</span></div>';
     }
-    document.getElementById('ticker-container').innerHTML=h;
-  }catch(e){document.getElementById('ticker-container').innerHTML='<div style="color:var(--red);font-family:var(--mono);font-size:12px;">Unable to load. Refresh page.</div>';}
+  }
+  document.getElementById('ticker-container').innerHTML=h||'<div style="color:var(--red);font-family:var(--mono);font-size:12px;">Unable to load. Refresh page.</div>';
 }
 fetchPrices();setInterval(fetchPrices,60000);
 
@@ -521,8 +662,26 @@ function calcDCA(){
   const b=document.getElementById('dca-results');b.style.display='block';
   b.innerHTML='<div class="result-row"><span class="result-label">Holding</span><span class="result-val">'+name+'</span></div><div class="result-row"><span class="result-label">Entries</span><span class="result-val">'+en+'</span></div><div class="result-row"><span class="result-label">Total Qty</span><span class="result-val">'+tq.toFixed(8)+'</span></div><div class="result-row"><span class="result-label">Total Cost</span><span class="result-val">$'+tc.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+'</span></div><div class="result-row"><span class="result-label">Fees</span><span class="result-val">$'+tf.toFixed(2)+'</span></div><div class="result-row"><span class="result-label">Total Invested</span><span class="result-val">$'+ti.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+'</span></div><div class="result-row"><span class="result-label">Avg Price</span><span class="result-val" style="color:var(--cyan)">$'+avg.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+'</span></div>'+(current>0?'<div class="result-row"><span class="result-label">Current Value</span><span class="result-val">$'+fv.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+'</span></div><div class="result-row"><span class="result-label">Gain/Loss</span><span class="result-val '+gc+'">$'+gl.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+'</span></div><div class="result-row"><span class="result-label">ROI</span><span class="result-val '+gc+'">'+roi.toFixed(2)+'%</span></div>':'');
   window._dcaData={name:name,avgPrice:avg,qty:tq,fee:tf,current:current};
+  // Draw DCA pie charts
+  document.getElementById('dca-chart-wrap').style.display='block';
+  // Chart 1: Cost vs Gain/Loss
+  if(current>0){
+    const gain=fv-ti;
+    drawPie('dca-pie',[
+      {val:ti,color:'#4db8ff',label:'Invested'},
+      {val:Math.max(0,gain),color:'#00ff6a',label:'Gain'},
+      {val:Math.max(0,-gain),color:'#ff5252',label:'Loss'},
+    ].filter(s=>s.val>0),{line1:'P/L',line2:(gl>=0?'+':'')+gl.toFixed(0)});
+  } else {
+    drawPie('dca-pie',[{val:ti,color:'#4db8ff'}],{line1:'INVESTED',line2:'$'+ti.toFixed(0)});
+  }
+  // Chart 2: Fees vs Net Cost
+  drawPie('dca-pie2',[
+    {val:Math.max(0,tc),color:'#00ffe1',label:'Cost'},
+    {val:Math.max(0,tf),color:'#ffd166',label:'Fees'},
+  ].filter(s=>s.val>0),{line1:'FEES',line2:'$'+tf.toFixed(2)});
 }
-function clearDCA(){document.getElementById('dca-name').value='';document.getElementById('dca-entries').innerHTML='<div class="dca-entry"><div><label>Price ($)</label><input type="number" class="dca-price" placeholder="45000" step="any"/></div><div><label>Quantity</label><input type="number" class="dca-qty" placeholder="0.5" step="any"/></div><div><label>Fee ($)</label><input type="number" class="dca-fee" placeholder="2.50" step="any"/></div></div>';document.getElementById('dca-current').value='';document.getElementById('dca-results').style.display='none';}
+function clearDCA(){document.getElementById('dca-chart-wrap').style.display='none';document.getElementById('dca-name').value='';document.getElementById('dca-entries').innerHTML='<div class="dca-entry"><div><label>Price ($)</label><input type="number" class="dca-price" placeholder="45000" step="any"/></div><div><label>Quantity</label><input type="number" class="dca-qty" placeholder="0.5" step="any"/></div><div><label>Fee ($)</label><input type="number" class="dca-fee" placeholder="2.50" step="any"/></div></div>';document.getElementById('dca-current').value='';document.getElementById('dca-results').style.display='none';}
 
 function injectDCAtoPortfolio(){
   if(!window._dcaData)return alert('Calculate DCA first');
@@ -593,6 +752,17 @@ function calcDividend(){
   for(let y=1;y<=years;y++){let yd=0;for(let p=0;p<freq;p++){const pay=cs*dpp;yd+=pay;tde+=pay;if(drip&&price>0)cs+=pay/price;}ph+='<div class="result-row"><span class="result-label">Year '+y+'</span><span class="result-val green">$'+yd.toFixed(2)+(drip?' ('+cs.toFixed(4)+' shares)':'')+'</span></div>';}
   const b=document.getElementById('div-results');b.style.display='block';
   b.innerHTML='<div class="result-row"><span class="result-label">Portfolio Value</span><span class="result-val">$'+tv.toLocaleString('en-US',{minimumFractionDigits:2})+'</span></div><div class="result-row"><span class="result-label">Yield</span><span class="result-val" style="color:var(--purple)">'+yld.toFixed(2)+'%</span></div><div class="result-row"><span class="result-label">Annual Income</span><span class="result-val green">$'+ai.toFixed(2)+'</span></div><div class="result-row"><span class="result-label">Per Payment</span><span class="result-val">$'+(dpp*shares).toFixed(2)+'</span></div><div style="font-family:var(--mono);font-size:10px;color:var(--gold);margin:12px 0 6px;letter-spacing:2px;">PROJECTION'+(drip?' (DRIP)':'')+'</div>'+ph+'<div class="result-row" style="border-top:1px solid var(--border);margin-top:8px;padding-top:8px;"><span class="result-label">Total Earned</span><span class="result-val green">$'+tde.toFixed(2)+'</span></div>'+(drip?'<div class="result-row"><span class="result-label">Final Shares</span><span class="result-val" style="color:var(--cyan)">'+cs.toFixed(4)+'</span></div>':'');
+  // Draw Dividend pie charts
+  document.getElementById('div-chart-wrap').style.display='block';
+  drawPie('div-pie',[
+    {val:tv,color:'#4db8ff'},
+    {val:ai,color:'#b44dff'},
+  ],{line1:'YIELD',line2:yld.toFixed(2)+'%'});
+  // Bar-style: year 1 vs year N income
+  drawPie('div-pie2',[
+    {val:Math.max(0,ai),color:'#b44dff'},
+    {val:Math.max(0,tde-ai),color:'#ffd166'},
+  ],{line1:'TOTAL',line2:'$'+tde.toFixed(0)});
 }
 function clearDiv(){['div-price','div-shares','div-annual','div-years'].forEach(id=>document.getElementById(id).value='');document.getElementById('div-results').style.display='none';}
 
@@ -605,6 +775,21 @@ function calcProjection(){
   const b=document.getElementById('proj-results');b.style.display='block';
   b.innerHTML='<div class="result-row"><span class="result-label">Current Value</span><span class="result-val">$'+cv.toLocaleString('en-US',{minimumFractionDigits:2})+'</span></div>'+(inv>0?'<div class="result-row"><span class="result-label">Invested</span><span class="result-val">$'+inv.toLocaleString('en-US',{minimumFractionDigits:2})+'</span></div>':'')+(target>0?'<div class="result-row"><span class="result-label">At Target ($'+target.toLocaleString()+')</span><span class="result-val green">$'+tv.toLocaleString('en-US',{minimumFractionDigits:2})+'</span></div>':'')+'<div style="font-family:var(--mono);font-size:10px;color:var(--gold);margin:12px 0 6px;letter-spacing:2px;">MULTIPLIER PROJECTIONS</div>'+ph;
   window._whatIfData={price:price,qty:qty,invested:inv};
+  // Draw What If pie charts
+  document.getElementById('proj-chart-wrap').style.display='block';
+  const projInv=inv>0?inv:cv;
+  const projGain=cv-projInv;
+  drawPie('proj-pie',[
+    {val:projInv,color:'#4db8ff'},
+    {val:Math.max(0,projGain),color:'#00ff6a'},
+    {val:Math.max(0,-projGain),color:'#ff5252'},
+  ].filter(s=>s.val>0),{line1:'VALUE',line2:'$'+cv.toFixed(0)});
+  // Chart 2: multiplier slices 2x 5x 10x
+  drawPie('proj-pie2',[
+    {val:cv*2,color:'#00ffe1'},
+    {val:cv*5-cv*2,color:'#39ff14'},
+    {val:cv*10-cv*5,color:'#ffd166'},
+  ],{line1:'10X',line2:'$'+(cv*10).toFixed(0)});
 }
 function clearProj(){['proj-price','proj-qty','proj-invested','proj-target'].forEach(id=>document.getElementById(id).value='');document.getElementById('proj-results').style.display='none';}
 
@@ -767,6 +952,20 @@ function calcScaledExit(){
   if(remaining>0)html+='<div class="result-row"><span class="result-label">Still Holding</span><span class="result-val">'+remaining.toFixed(6)+' '+name+'</span></div>';
   html+='</div>';
   const b=document.getElementById('se-results');b.style.display='block';b.innerHTML=html;
+  // Draw Scaled Exit pie charts
+  document.getElementById('se-chart-wrap').style.display='block';
+  // Chart 1: USD received per level
+  const seSliceColors=['#00ffe1','#39ff14','#ffd166','#b44dff','#ff5252','#4db8ff'];
+  const seSlices=levels.map(function(lv,i){return {val:totalQty*(lv.pct/100)*lv.price,color:seSliceColors[i%seSliceColors.length]};});
+  drawPie('se-pie',seSlices,{line1:'TOTAL',line2:'$'+totalReceived.toFixed(0)});
+  // Chart 2: Cost vs Profit
+  const seTotalCost2=invested>0?invested:totalQty*entryPrice;
+  const seTP=totalReceived-seTotalCost2;
+  drawPie('se-pie2',[
+    {val:seTotalCost2,color:'#4db8ff'},
+    {val:Math.max(0,seTP),color:'#00ff6a'},
+    {val:Math.max(0,-seTP),color:'#ff5252'},
+  ].filter(s=>s.val>0),{line1:'P/L',line2:(seTP>=0?'+':'')+seTP.toFixed(0)});
 }
 function clearSE(){
   document.getElementById('se-name').value='';document.getElementById('se-qty').value='';
@@ -842,6 +1041,39 @@ function dbbCalc(){
   document.getElementById('dbb-results').style.display='block';
 }
 
+// ===== PIE CHART HELPER =====
+function drawPie(svgId, slices, centerLabel){
+  // slices = [{val, color, label}]
+  const svg=document.getElementById(svgId);
+  if(!svg) return;
+  const total=slices.reduce((s,sl)=>s+Math.abs(sl.val),0);
+  if(total<=0){svg.innerHTML='';return;}
+  let html='';let start=-90;
+  slices.forEach(function(sl){
+    const pct=Math.abs(sl.val)/total;
+    const angle=pct*360;
+    const end=start+angle;
+    const s1x=100+80*Math.cos(start*Math.PI/180);
+    const s1y=100+80*Math.sin(start*Math.PI/180);
+    const e1x=100+80*Math.cos(end*Math.PI/180);
+    const e1y=100+80*Math.sin(end*Math.PI/180);
+    const large=angle>180?1:0;
+    if(slices.length===1){
+      html+='<circle cx="100" cy="100" r="80" fill="'+sl.color+'" opacity="0.75"/>';
+    } else {
+      html+='<path d="M100,100 L'+s1x+','+s1y+' A80,80 0 '+large+',1 '+e1x+','+e1y+' Z" fill="'+sl.color+'" opacity="0.75"/>';
+    }
+    start=end;
+  });
+  // donut hole + label
+  html+='<circle cx="100" cy="100" r="44" fill="#080f0f"/>';
+  if(centerLabel){
+    html+='<text x="100" y="96" text-anchor="middle" fill="#fff" font-family="Share Tech Mono,monospace" font-size="10">'+centerLabel.line1+'</text>';
+    if(centerLabel.line2) html+='<text x="100" y="112" text-anchor="middle" fill="#3d7070" font-family="Share Tech Mono,monospace" font-size="9">'+centerLabel.line2+'</text>';
+  }
+  svg.innerHTML=html;
+}
+
 // ===== SHARE / PRINT =====
 function shareCalcPage(){
   if(navigator.share){navigator.share({title:'DuttyBookBag Calculator',text:'Free trading calculators — DCA, Scaled Exit, Portfolio Tracker, DBB Position Sizing.',url:'https://duttybookbag.github.io/duttybookbag/dbb-calculator.html'}).catch(function(){});}
@@ -854,9 +1086,94 @@ function printCalcCard(){
   win.document.close();win.focus();setTimeout(function(){win.print();},500);
 }
 
+// ===== SYNC SYSTEM =====
+let syncOn=true;
+function toggleSync(){
+  syncOn=!syncOn;
+  document.getElementById('sync-dot').style.background=syncOn?'var(--green)':'var(--red)';
+  document.getElementById('sync-dot').style.boxShadow=syncOn?'0 0 8px var(--green)':'0 0 8px var(--red)';
+  document.getElementById('sync-label').style.color=syncOn?'var(--green)':'var(--red)';
+  document.getElementById('sync-label').textContent=syncOn?'ON':'OFF';
+  document.getElementById('sync-btn').style.borderColor=syncOn?'var(--green)':'var(--red)';
+  document.getElementById('sync-btn').style.color=syncOn?'var(--green)':'var(--red)';
+  document.getElementById('sync-btn').textContent=syncOn?'Toggle Off':'Toggle On';
+  document.getElementById('sync-bar').style.borderColor=syncOn?'rgba(0,255,106,0.2)':'rgba(255,82,82,0.2)';
+  document.getElementById('sync-bar').style.background=syncOn?'rgba(0,255,106,0.04)':'rgba(255,82,82,0.03)';
+}
+
+// Coin name → Coinbase pair / livePrices id mapping
+const assetMap={
+  'BTC':'bitcoin','ETH':'ethereum','XRP':'ripple','SOL':'solana',
+  'ADA':'cardano','DOGE':'dogecoin','SHIB':'shiba-inu','BNB':'binancecoin',
+  'AVAX':'avalanche-2','LINK':'chainlink','PEPE':'pepe',
+  'BITCOIN':'bitcoin','ETHEREUM':'ethereum','SOLANA':'solana',
+  'CARDANO':'cardano','DOGECOIN':'dogecoin','AVALANCHE':'avalanche-2',
+};
+
+function syncFromAsset(assetRaw, sourceId){
+  if(!syncOn) return;
+  const asset=assetRaw.trim().toUpperCase();
+  if(!asset) return;
+  // Map to live price id
+  const priceId=assetMap[asset]||null;
+  const livePrice=priceId&&livePrices[priceId]?livePrices[priceId].usd:0;
+
+  // Fields to sync: [elementId, value]
+  const targets=[
+    {id:'dca-name', val:assetRaw},
+    {id:'se-name', val:assetRaw},
+    {id:'pt-name', val:assetRaw},
+  ];
+  targets.forEach(function(t){
+    if(t.id!==sourceId){
+      const el=document.getElementById(t.id);
+      if(el) el.value=t.val;
+    }
+  });
+
+  // Sync price if we have a live price
+  if(livePrice>0){
+    const priceTargets=[
+      {id:'dca-current'},
+      {id:'se-entry'},
+      {id:'pt-current'},
+      {id:'dbb-price'},
+      {id:'conv-price'},
+    ];
+    priceTargets.forEach(function(t){
+      if(t.id!==sourceId){
+        const el=document.getElementById(t.id);
+        if(el&&!el.value) el.value=livePrice;
+      }
+    });
+    // Also update converter coin select if possible
+    if(priceId){
+      const convCoin=document.getElementById('conv-coin');
+      if(convCoin){
+        for(let i=0;i<convCoin.options.length;i++){
+          if(convCoin.options[i].value===priceId){convCoin.value=priceId;break;}
+        }
+      }
+    }
+  }
+}
+
+function syncPrice(price, sourceId){
+  if(!syncOn||!price||price<=0) return;
+  const priceTargets=['dca-current','se-entry','pt-current','dbb-price','conv-price'];
+  priceTargets.forEach(function(id){
+    if(id!==sourceId){
+      const el=document.getElementById(id);
+      if(el&&!el.value) el.value=price;
+    }
+  });
+}
+
 // ===== INIT =====
 window.addEventListener('DOMContentLoaded',function(){
   dbbConviction();
+
+  // Converter coin change
   document.getElementById('conv-coin').addEventListener('change',function(){
     const coin=this.value;
     if(livePrices[coin]) document.getElementById('conv-price').value=livePrices[coin].usd;
@@ -865,6 +1182,27 @@ window.addEventListener('DOMContentLoaded',function(){
     document.getElementById('conv-result').textContent='';
     document.getElementById('conv-rate').textContent='--';
     document.getElementById('conv-rate-usd').textContent='--';
+  });
+
+  // Asset name sync listeners
+  var nameFields=[
+    {id:'dca-name'},{id:'se-name'},{id:'pt-name'}
+  ];
+  nameFields.forEach(function(f){
+    var el=document.getElementById(f.id);
+    if(el) el.addEventListener('input',function(){syncFromAsset(this.value,f.id);});
+  });
+
+  // Price sync listeners — only sync if field was manually typed
+  var priceFields=[
+    {id:'dca-current'},{id:'se-entry'},{id:'pt-current'},{id:'dbb-price'},{id:'conv-price'}
+  ];
+  priceFields.forEach(function(f){
+    var el=document.getElementById(f.id);
+    if(el) el.addEventListener('change',function(){
+      const v=parseFloat(this.value)||0;
+      if(v>0) syncPrice(v,f.id);
+    });
   });
 });
 </script>
