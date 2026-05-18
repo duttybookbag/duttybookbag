@@ -267,11 +267,22 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
     <button class="btn-secondary" onclick="injectDCAtoPortfolio()">Send to Portfolio Tracker</button>
     <button class="btn-clear" onclick="clearDCA()">Clear All</button>
     <div id="dca-results" class="result-box"></div>
-    <div id="dca-chart-wrap" style="display:none;margin-top:16px;text-align:center;">
-      <div style="font-family:var(--mono);font-size:10px;color:var(--gold);letter-spacing:2px;margin-bottom:10px;">VISUAL BREAKDOWN</div>
-      <div style="display:flex;flex-wrap:wrap;gap:20px;justify-content:center;">
-        <div><svg id="dca-pie" viewBox="0 0 200 200" width="160" height="160"></svg><div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:4px;">Cost vs Gain/Loss</div></div>
-        <div><svg id="dca-pie2" viewBox="0 0 200 200" width="160" height="160"></svg><div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:4px;">Fees vs Net Cost</div></div>
+    <div id="dca-chart-wrap" style="display:none;margin-top:20px;">
+      <div style="font-family:var(--mono);font-size:10px;color:var(--gold);letter-spacing:3px;margin-bottom:14px;text-align:center;">VISUAL BREAKDOWN</div>
+
+      <!-- PIE: all 3 values in one chart -->
+      <div style="display:flex;flex-wrap:wrap;gap:24px;justify-content:center;align-items:flex-start;">
+        <div style="text-align:center;">
+          <svg id="dca-pie" viewBox="0 0 200 200" width="180" height="180"></svg>
+          <!-- Color legend -->
+          <div id="dca-legend" style="margin-top:10px;display:inline-flex;flex-direction:column;gap:5px;text-align:left;"></div>
+        </div>
+
+        <!-- BAR CHART -->
+        <div style="flex:1;min-width:200px;max-width:340px;">
+          <div style="font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--muted);margin-bottom:10px;">// BREAKDOWN BAR</div>
+          <div id="dca-bar" style="display:flex;flex-direction:column;gap:8px;"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -737,24 +748,66 @@ function calcDCA(){
       setTimeout(function(){seEntry.style.borderColor='';seEntry.style.boxShadow='';},1500);
     }
   }
-  // Draw DCA pie charts
+  // Draw DCA charts
   document.getElementById('dca-chart-wrap').style.display='block';
-  // Chart 1: Cost vs Gain/Loss
-  if(current>0){
-    const gain=fv-ti;
-    drawPie('dca-pie',[
-      {val:ti,color:'#4db8ff',label:'Invested'},
-      {val:Math.max(0,gain),color:'#00ff6a',label:'Gain'},
-      {val:Math.max(0,-gain),color:'#ff5252',label:'Loss'},
-    ].filter(s=>s.val>0),{line1:'P/L',line2:(gl>=0?'+':'')+gl.toFixed(0)});
-  } else {
-    drawPie('dca-pie',[{val:ti,color:'#4db8ff'}],{line1:'INVESTED',line2:'$'+ti.toFixed(0)});
+
+  // Colors with meaning
+  const C_INVESTED='#4db8ff';  // blue  = money you put in
+  const C_GAIN='#39ff14';      // neon green = profit
+  const C_LOSS='#ff5252';      // red   = loss
+  const C_FEES='#ffd166';      // gold  = fees
+
+  const gain=current>0?fv-ti:0;
+  const isGain=gain>=0;
+  const absGain=Math.abs(gain);
+
+  // ONE PIE: Invested + Gain/Loss + Fees — all 3 in one donut
+  const pieSlices=[];
+  const legendItems=[];
+  const netInv=Math.max(0,ti-tf);
+  if(netInv>0){pieSlices.push({val:netInv,color:C_INVESTED});legendItems.push({color:C_INVESTED,label:'Net Invested','val':'$'+netInv.toFixed(2)});}
+  if(tf>0){pieSlices.push({val:tf,color:C_FEES});legendItems.push({color:C_FEES,label:'Fees Paid','val':'$'+tf.toFixed(2)});}
+  if(absGain>0&&current>0){pieSlices.push({val:absGain,color:isGain?C_GAIN:C_LOSS});legendItems.push({color:isGain?C_GAIN:C_LOSS,label:isGain?'Unrealised Gain':'Unrealised Loss','val':(isGain?'+':'-')+'$'+absGain.toFixed(2)});}
+
+  const centerLabel=current>0?{line1:isGain?'GAIN':'LOSS',line2:(isGain?'+':'-')+'$'+absGain.toFixed(0)}:{line1:'TOTAL',line2:'$'+ti.toFixed(0)};
+  drawPie('dca-pie', pieSlices.length>0?pieSlices:[{val:1,color:C_INVESTED}], centerLabel);
+
+  // Color legend
+  const leg=document.getElementById('dca-legend');
+  if(leg){
+    leg.innerHTML=legendItems.map(function(li){
+      return '<div style="display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:10px;">'
+        +'<div style="width:12px;height:12px;border-radius:2px;background:'+li.color+';flex-shrink:0;"></div>'
+        +'<span style="color:var(--muted);">'+li.label+'</span>'
+        +'<span style="color:#fff;margin-left:auto;padding-left:12px;">'+li.val+'</span>'
+        +'</div>';
+    }).join('');
   }
-  // Chart 2: Fees vs Net Cost
-  drawPie('dca-pie2',[
-    {val:Math.max(0,tc),color:'#00ffe1',label:'Cost'},
-    {val:Math.max(0,tf),color:'#ffd166',label:'Fees'},
-  ].filter(s=>s.val>0),{line1:'FEES',line2:'$'+tf.toFixed(2)});
+
+  // BAR CHART — horizontal bars, each with label + value + colored fill
+  const barEl=document.getElementById('dca-bar');
+  if(barEl){
+    const bars=[
+      {label:'Net Invested', val:netInv, max:Math.max(ti,fv||ti,1), color:C_INVESTED, fmt:'$'+netInv.toFixed(2)},
+      {label:'Fees', val:tf, max:Math.max(ti,fv||ti,1), color:C_FEES, fmt:'$'+tf.toFixed(2)},
+    ];
+    if(current>0){
+      bars.push({label:'Current Value', val:fv, max:Math.max(ti,fv,1), color:isGain?C_GAIN:C_LOSS, fmt:'$'+fv.toFixed(2)});
+      bars.push({label:isGain?'Gain':'Loss', val:absGain, max:Math.max(ti,fv,1), color:isGain?C_GAIN:C_LOSS, fmt:(isGain?'+':'-')+'$'+absGain.toFixed(2)});
+    }
+    barEl.innerHTML=bars.map(function(b){
+      const pct=Math.min(100, b.max>0?(b.val/b.max*100):0);
+      return '<div>'
+        +'<div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;margin-bottom:3px;">'
+        +'<span style="color:var(--muted);">'+b.label+'</span>'
+        +'<span style="color:'+b.color+';font-weight:700;">'+b.fmt+'</span>'
+        +'</div>'
+        +'<div style="background:rgba(255,255,255,0.06);border-radius:3px;height:10px;overflow:hidden;">'
+        +'<div style="height:100%;width:'+pct+'%;background:'+b.color+';border-radius:3px;transition:width 0.6s ease;box-shadow:0 0 8px '+b.color+'55;"></div>'
+        +'</div>'
+        +'</div>';
+    }).join('');
+  }
 }
 function clearDCA(){document.getElementById('dca-chart-wrap').style.display='none';document.getElementById('dca-name').value='';document.getElementById('dca-entries').innerHTML='<div class="dca-entry"><div><label>Price ($)</label><input type="text" inputmode="decimal" class="dca-price" placeholder="45000" step="any"/></div><div><label>Quantity</label><input type="text" inputmode="decimal" class="dca-qty" placeholder="0.5" step="any"/></div><div><label>Fee ($)</label><input type="text" inputmode="decimal" class="dca-fee" placeholder="2.50" step="any"/></div></div>';document.getElementById('dca-current').value='';document.getElementById('dca-results').style.display='none';}
 
