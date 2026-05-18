@@ -41,9 +41,10 @@
     .calc-title{font-family:var(--display);font-size:22px;letter-spacing:2px;color:#fff;text-transform:uppercase;margin-bottom:4px;}
     .calc-sub{font-family:var(--mono);font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:16px;}
     label{font-family:var(--mono);font-size:11px;color:var(--text);letter-spacing:1px;display:block;margin-bottom:4px;}
-    input[type="number"],input[type="text"],select{font-family:var(--mono);font-size:14px;padding:10px 14px;background:rgba(0,255,225,0.03);border:1px solid var(--border);border-radius:4px;color:#fff;width:100%;margin-bottom:12px;outline:none;transition:border-color 0.2s;}
+    input[type="text"],select{font-family:var(--mono);font-size:14px;padding:10px 14px;background:rgba(0,255,225,0.03);border:1px solid var(--border);border-radius:4px;color:#fff;width:100%;margin-bottom:12px;outline:none;transition:border-color 0.2s;}
 select option{background:#080f0f;color:#b8e8e2;}
     input:focus,select:focus{border-color:var(--cyan);}
+    input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus{-webkit-box-shadow:0 0 0 1000px #080f0f inset!important;-webkit-text-fill-color:#fff!important;caret-color:#fff;}
     .btn-calc{font-family:var(--mono);font-size:13px;letter-spacing:2px;padding:12px 24px;background:var(--neon);color:#000;font-weight:700;border:none;border-radius:3px;cursor:pointer;transition:all 0.15s;text-transform:uppercase;width:100%;}
     .btn-calc:hover{box-shadow:0 0 30px rgba(57,255,20,0.5);transform:translateY(-1px);}
     .btn-secondary{font-family:var(--mono);font-size:12px;letter-spacing:2px;padding:10px 20px;background:transparent;color:var(--cyan);border:1px solid var(--cyan);border-radius:3px;cursor:pointer;text-transform:uppercase;width:100%;margin-top:8px;}
@@ -205,21 +206,21 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
     <div class="calc-title">Stocks &amp; Crypto — DBB Tiers</div>
     <div class="calc-sub">// Know your size before you enter</div>
     <div class="grid-2">
-      <div><label>Total Trading Capital ($)</label><input type="number" id="dbb-capital" placeholder="10000" step="any" oninput="dbbUpdateMaxRisk()"/></div>
+      <div><label>Total Trading Capital ($)</label><input type="text" inputmode="decimal" id="dbb-capital" placeholder="10000" step="any" oninput="dbbUpdateMaxRisk()"/></div>
       <div><label>Asset Type</label><select id="dbb-type" onchange="dbbUpdateMaxRisk()"><option value="stock">Stock</option><option value="crypto">Crypto</option></select></div>
     </div>
     <div class="grid-2">
-      <div><label>Asset Price ($)</label><input type="number" id="dbb-price" placeholder="150.00" step="any" oninput="dbbUpdateMaxRisk()"/></div>
-      <div><label>Max Risk Per Trade (%)</label><input type="number" id="dbb-risk" placeholder="2" step="0.1" oninput="dbbUpdateMaxRisk()"/></div>
+      <div><label>Asset Price ($)</label><input type="text" inputmode="decimal" id="dbb-price" placeholder="150.00" step="any" oninput="dbbUpdateMaxRisk()"/></div>
+      <div><label>Max Risk Per Trade (%)</label><input type="text" inputmode="decimal" id="dbb-risk" placeholder="2" step="0.1" oninput="dbbUpdateMaxRisk()"/></div>
     </div>
     <div id="dbb-risk-display" style="display:none;background:#030a0a;border:1px solid rgba(0,255,225,0.2);border-radius:4px;padding:10px 14px;margin-bottom:12px;font-family:var(--mono);font-size:11px;"></div>
     <div class="grid-2">
-      <div><label>Entry Price ($)</label><input type="number" id="dbb-entry" placeholder="148.50" step="any" oninput="dbbUpdateLiq()"/></div>
+      <div><label>Entry Price ($)</label><input type="text" inputmode="decimal" id="dbb-entry" placeholder="148.50" step="any" oninput="dbbUpdateLiq()"/></div>
       <div></div>
     </div>
     <div class="grid-2">
-      <div><label>Possible Support Level ($)</label><input type="number" id="dbb-support" placeholder="144.00" step="any" oninput="dbbUpdateLiq()"/></div>
-      <div><label>Possible Resistance Level ($)</label><input type="number" id="dbb-resistance" placeholder="155.00" step="any" oninput="dbbUpdateLiq()"/></div>
+      <div><label>Possible Support Level ($)</label><input type="text" inputmode="decimal" id="dbb-support" placeholder="144.00" step="any" oninput="dbbUpdateLiq()"/></div>
+      <div><label>Possible Resistance Level ($)</label><input type="text" inputmode="decimal" id="dbb-resistance" placeholder="155.00" step="any" oninput="dbbUpdateLiq()"/></div>
     </div>
     <div id="dbb-liq-display" style="display:none;background:rgba(77,184,255,0.04);border:1px solid rgba(77,184,255,0.15);border-radius:4px;padding:12px 14px;margin-bottom:12px;font-family:var(--mono);font-size:11px;color:var(--blue);line-height:1.8;"></div>
     <div style="margin-bottom:16px;">
@@ -252,14 +253,14 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
     <input type="text" id="dca-name" placeholder="BTC, ETH, AAPL..."/>
     <div id="dca-entries">
       <div class="dca-entry">
-        <div><label>Price ($)</label><input type="number" class="dca-price" placeholder="45000" step="any"/></div>
-        <div><label>Quantity</label><input type="number" class="dca-qty" placeholder="0.5" step="any"/></div>
-        <div><label>Fee ($)</label><input type="number" class="dca-fee" placeholder="2.50" step="any"/></div>
+        <div><label>Price ($)</label><input type="text" inputmode="decimal" class="dca-price" placeholder="45000" step="any"/></div>
+        <div><label>Quantity</label><input type="text" inputmode="decimal" class="dca-qty" placeholder="0.5" step="any"/></div>
+        <div><label>Fee ($)</label><input type="text" inputmode="decimal" class="dca-fee" placeholder="2.50" step="any"/></div>
       </div>
     </div>
     <button class="add-entry-btn" onclick="addDCAEntry()">+ Add Another Entry</button>
     <div class="grid-2">
-      <div><label>Current Price ($)</label><input type="number" id="dca-current" placeholder="52000" step="any"/></div><div></div>
+      <div><label>Current Price ($)</label><input type="text" id="dca-current" placeholder="type XRP, BTC... or enter price" step="any" inputmode="decimal"/></div><div></div>
     </div>
     <button class="btn-calc" onclick="calcDCA()">Calculate DCA</button>
     <button class="btn-secondary" onclick="injectDCAtoPortfolio()">Send to Portfolio Tracker</button>
@@ -285,17 +286,17 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
     <div class="calc-sub">// Sell your position in stages — not all at once</div>
     <div class="grid-2">
       <div><label>Asset Name</label><input type="text" id="se-name" placeholder="BTC, TSLA, SOL..."/></div>
-      <div><label>Total Position (coins/shares)</label><input type="number" id="se-qty" placeholder="1.5" step="any"/></div>
+      <div><label>Total Position (coins/shares)</label><input type="text" inputmode="decimal" id="se-qty" placeholder="1.5" step="any"/></div>
     </div>
     <div class="grid-2">
-      <div><label>Average Entry Price ($)</label><input type="number" id="se-entry" placeholder="45000" step="any"/></div>
-      <div><label>Total Invested ($)</label><input type="number" id="se-invested" placeholder="67500" step="any"/></div>
+      <div><label>Average Entry Price ($)</label><input type="text" inputmode="decimal" id="se-entry" placeholder="45000" step="any"/></div>
+      <div><label>Total Invested ($)</label><input type="text" inputmode="decimal" id="se-invested" placeholder="67500" step="any"/></div>
     </div>
     <div style="font-family:var(--mono);font-size:10px;letter-spacing:3px;color:var(--gold);margin:16px 0 10px;">// EXIT LEVELS</div>
     <div id="se-levels">
-      <div class="dca-entry"><div><label>Target Price ($)</label><input type="number" class="se-price" placeholder="60000" step="any"/></div><div><label>% to Sell</label><input type="number" class="se-pct" placeholder="25" min="1" max="100"/></div><div><label>Note</label><input type="text" class="se-note" placeholder="First target"/></div></div>
-      <div class="dca-entry"><div><label>Target Price ($)</label><input type="number" class="se-price" placeholder="75000" step="any"/></div><div><label>% to Sell</label><input type="number" class="se-pct" placeholder="25" min="1" max="100"/></div><div><label>Note</label><input type="text" class="se-note" placeholder="Second target"/></div></div>
-      <div class="dca-entry"><div><label>Target Price ($)</label><input type="number" class="se-price" placeholder="100000" step="any"/></div><div><label>% to Sell</label><input type="number" class="se-pct" placeholder="50" min="1" max="100"/></div><div><label>Note</label><input type="text" class="se-note" placeholder="Final target"/></div></div>
+      <div class="dca-entry"><div><label>Target Price ($)</label><input type="text" inputmode="decimal" class="se-price" placeholder="60000" step="any"/></div><div><label>% to Sell</label><input type="text" inputmode="decimal" class="se-pct" placeholder="25" min="1" max="100"/></div><div><label>Note</label><input type="text" class="se-note" placeholder="First target"/></div></div>
+      <div class="dca-entry"><div><label>Target Price ($)</label><input type="text" inputmode="decimal" class="se-price" placeholder="75000" step="any"/></div><div><label>% to Sell</label><input type="text" inputmode="decimal" class="se-pct" placeholder="25" min="1" max="100"/></div><div><label>Note</label><input type="text" class="se-note" placeholder="Second target"/></div></div>
+      <div class="dca-entry"><div><label>Target Price ($)</label><input type="text" inputmode="decimal" class="se-price" placeholder="100000" step="any"/></div><div><label>% to Sell</label><input type="text" inputmode="decimal" class="se-pct" placeholder="50" min="1" max="100"/></div><div><label>Note</label><input type="text" class="se-note" placeholder="Final target"/></div></div>
     </div>
     <button class="add-entry-btn" onclick="addSELevel()" style="border-color:var(--red);color:var(--red);">+ Add Exit Level</button>
     <button class="btn-calc" style="background:var(--red);" onclick="calcScaledExit()">Calculate Scaled Exit</button>
@@ -324,11 +325,11 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
         <select id="conv-coin">
           <option value="bitcoin">Bitcoin (BTC)</option><option value="ethereum">Ethereum (ETH)</option><option value="ripple">XRP</option><option value="solana">Solana (SOL)</option><option value="cardano">Cardano (ADA)</option><option value="dogecoin">Dogecoin (DOGE)</option><option value="shiba-inu">Shiba Inu (SHIB)</option><option value="tether">Tether (USDT)</option><option value="usd-coin">USD Coin (USDC)</option>
         </select></div>
-      <div><label>Price ($) - auto or manual</label><input type="number" id="conv-price" placeholder="Auto from live" step="any"/></div>
+      <div><label>Price ($) - auto or manual</label><input type="text" inputmode="decimal" id="conv-price" placeholder="Auto from live" step="any"/></div>
     </div>
     <div class="grid-2">
-      <div><label>Coin Amount</label><input type="number" id="conv-coin-amt" placeholder="2.5" step="any" oninput="convertCoinToUSD()"/></div>
-      <div><label>USD Amount</label><input type="number" id="conv-usd-amt" placeholder="100000" step="any" oninput="convertUSDToCoin()"/></div>
+      <div><label>Coin Amount</label><input type="text" inputmode="decimal" id="conv-coin-amt" placeholder="2.5" step="any" oninput="convertCoinToUSD()"/></div>
+      <div><label>USD Amount</label><input type="text" inputmode="decimal" id="conv-usd-amt" placeholder="100000" step="any" oninput="convertUSDToCoin()"/></div>
     </div>
     <div style="display:flex;gap:12px;margin-top:8px;">
       <div style="flex:1;font-family:var(--mono);font-size:11px;color:var(--muted);">1 USD = <span id="conv-rate">--</span> coins</div>
@@ -348,15 +349,15 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
     <div class="calc-title">Dividend Income Projector</div>
     <div class="calc-sub">// See your current and future dividend income</div>
     <div class="grid-2">
-      <div><label>Stock Price ($)</label><input type="number" id="div-price" placeholder="150.00" step="any"/></div>
-      <div><label>Shares Owned</label><input type="number" id="div-shares" placeholder="100" step="any"/></div>
+      <div><label>Stock Price ($)</label><input type="text" inputmode="decimal" id="div-price" placeholder="150.00" step="any"/></div>
+      <div><label>Shares Owned</label><input type="text" inputmode="decimal" id="div-shares" placeholder="100" step="any"/></div>
     </div>
     <div class="grid-2">
-      <div><label>Annual Dividend / Share ($)</label><input type="number" id="div-annual" placeholder="3.28" step="any"/></div>
+      <div><label>Annual Dividend / Share ($)</label><input type="text" inputmode="decimal" id="div-annual" placeholder="3.28" step="any"/></div>
       <div><label>Frequency</label><select id="div-freq"><option value="4">Quarterly</option><option value="12">Monthly</option><option value="2">Semi-Annual</option><option value="1">Annual</option></select></div>
     </div>
     <div class="grid-2">
-      <div><label>Years to Project</label><input type="number" id="div-years" placeholder="5" value="5"/></div>
+      <div><label>Years to Project</label><input type="text" inputmode="decimal" id="div-years" placeholder="5" value="5"/></div>
       <div><label>Reinvest (DRIP)?</label><select id="div-drip"><option value="no">No - Cash Only</option><option value="yes">Yes - DRIP</option></select></div>
     </div>
     <button class="btn-calc" onclick="calcDividend()">Calculate Dividends</button>
@@ -381,12 +382,12 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
     <div class="calc-title">What If Calculator</div>
     <div class="calc-sub">// See what your holdings could be worth</div>
     <div class="grid-2">
-      <div><label>Current Price ($)</label><input type="number" id="proj-price" placeholder="45000" step="any"/></div>
-      <div><label>Amount You Hold</label><input type="number" id="proj-qty" placeholder="0.5" step="any"/></div>
+      <div><label>Current Price ($)</label><input type="text" inputmode="decimal" id="proj-price" placeholder="45000" step="any"/></div>
+      <div><label>Amount You Hold</label><input type="text" inputmode="decimal" id="proj-qty" placeholder="0.5" step="any"/></div>
     </div>
     <div class="grid-2">
-      <div><label>Total Invested ($)</label><input type="number" id="proj-invested" placeholder="22500" step="any"/></div>
-      <div><label>Target Price ($)</label><input type="number" id="proj-target" placeholder="100000" step="any"/></div>
+      <div><label>Total Invested ($)</label><input type="text" inputmode="decimal" id="proj-invested" placeholder="22500" step="any"/></div>
+      <div><label>Target Price ($)</label><input type="text" inputmode="decimal" id="proj-target" placeholder="100000" step="any"/></div>
     </div>
     <button class="btn-calc" onclick="calcProjection()">Project It</button>
     <button class="btn-secondary" onclick="injectWhatIfToPortfolio()">Send to Portfolio Tracker</button>
@@ -413,13 +414,13 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
     <div class="calc-sub">// Input your data — everything else calculates automatically</div>
     <div class="grid-3">
       <div><label>Name</label><input type="text" id="pt-name" placeholder="BTC"/></div>
-      <div><label>Price Bought ($)</label><input type="number" id="pt-price" placeholder="45000" step="any"/></div>
-      <div><label>Quantity</label><input type="number" id="pt-qty" placeholder="0.5" step="any"/></div>
+      <div><label>Price Bought ($)</label><input type="text" inputmode="decimal" id="pt-price" placeholder="45000" step="any"/></div>
+      <div><label>Quantity</label><input type="text" inputmode="decimal" id="pt-qty" placeholder="0.5" step="any"/></div>
     </div>
     <div class="grid-3">
-      <div><label>Fee ($)</label><input type="number" id="pt-fee" placeholder="5" step="any"/></div>
-      <div><label>Current Price ($)</label><input type="number" id="pt-current" placeholder="52000" step="any"/></div>
-      <div><label>Div/Share/Year ($)</label><input type="number" id="pt-div" placeholder="0" step="any"/></div>
+      <div><label>Fee ($)</label><input type="text" inputmode="decimal" id="pt-fee" placeholder="5" step="any"/></div>
+      <div><label>Current Price ($)</label><input type="text" inputmode="decimal" id="pt-current" placeholder="52000" step="any"/></div>
+      <div><label>Div/Share/Year ($)</label><input type="text" inputmode="decimal" id="pt-div" placeholder="0" step="any"/></div>
     </div>
     <button class="btn-calc" onclick="addToPortfolio()">Add to Portfolio</button>
   </div>
@@ -584,6 +585,7 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
 // Crypto: Coinbase public API (free, no key, CORS-open)
 // Stocks: corsproxy.io + Stooq CSV (free, no key)
 let livePrices={};
+let liveTicker={}; // sym→{id,price,type} for type-ahead + USE buttons
 async function fetchPrices(){
   let h='';
   // --- CRYPTO via Coinbase public spot API ---
@@ -591,6 +593,7 @@ async function fetchPrices(){
     {sym:'BTC',id:'bitcoin',pair:'BTC-USD'},
     {sym:'ETH',id:'ethereum',pair:'ETH-USD'},
     {sym:'XRP',id:'ripple',pair:'XRP-USD'},
+    {sym:'XLM',id:'stellar',pair:'XLM-USD'},
     {sym:'SOL',id:'solana',pair:'SOL-USD'},
     {sym:'ADA',id:'cardano',pair:'ADA-USD'},
     {sym:'DOGE',id:'dogecoin',pair:'DOGE-USD'},
@@ -599,6 +602,10 @@ async function fetchPrices(){
     {sym:'SHIB',id:'shiba-inu',pair:'SHIB-USD'},
     {sym:'BNB',id:'binancecoin',pair:'BNB-USD'},
     {sym:'PEPE',id:'pepe',pair:'PEPE-USD'},
+    {sym:'XMR',id:'monero',pair:'XMR-USD'},
+    {sym:'ZEC',id:'zcash',pair:'ZEC-USD'},
+    {sym:'TRUMP',id:'official-trump',pair:'TRUMP-USD'},
+    {sym:'PAXG',id:'pax-gold',pair:'PAXG-USD'},
   ];
   let cryptoLoaded=0;
   for(const coin of coins){
@@ -609,47 +616,78 @@ async function fetchPrices(){
       if(price>0){
         livePrices[coin.id]={usd:price,'usd_24h_change':0};
         const p=price<0.001?price.toFixed(8):price<1?price.toFixed(6):price<100?price.toFixed(2):price.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
-        h+='<div class="ticker-item"><span class="ticker-name">'+coin.sym+'</span><span class="ticker-price">$'+p+'</span><span class="ticker-change" style="color:var(--muted);">spot</span></div>';
+        liveTicker[coin.sym]={id:coin.id,price:price,type:'crypto'};
+        h+='<div class="ticker-item" style="cursor:default;"><span class="ticker-name">'+coin.sym+'</span><span class="ticker-price">$'+p+'</span><span class="ticker-change" style="color:var(--muted);">spot</span><button class="use-btn" data-sym="'+coin.sym+'" data-price="'+price+'" data-type="crypto" style="font-family:var(--mono);font-size:9px;padding:3px 8px;background:transparent;border:1px solid var(--neon);color:var(--neon);border-radius:2px;cursor:pointer;margin-left:4px;letter-spacing:1px;">USE</button></div>';
         cryptoLoaded++;
       }
     }catch(e){}
   }
   if(cryptoLoaded===0) h+='<div style="font-family:var(--mono);font-size:12px;color:var(--red);">Crypto prices unavailable — check connection</div>';
 
-  // --- STOCKS via corsproxy.io + Stooq CSV (free, no key) ---
-  h+='<div style="font-family:var(--mono);font-size:9px;letter-spacing:3px;color:var(--muted);width:100%;padding:8px 4px 4px;text-transform:uppercase;">// Stocks (Delayed)</div>';
-  const stocks=['TSLA','SPY','QQQ'];
-  for(const sym of stocks){
-    try{
-      const stooqUrl='https://stooq.com/q/l/?s='+sym+'.US&f=sd2t2ohlcvn&e=csv';
-      const proxyUrl='https://corsproxy.io/?'+encodeURIComponent(stooqUrl);
-      const sr=await fetch(proxyUrl);
-      const txt=await sr.text();
-      const rows=txt.trim().split('\n');
-      if(rows.length>1){
-        const cols=rows[1].split(',');
-        const price=parseFloat(cols[4])||0;
-        const open=parseFloat(cols[2])||0;
-        if(price>0){
+  // --- STOCKS + ETFs + SPECIAL via corsproxy.io + Stooq CSV ---
+  const stockGroups=[
+    {label:'// Stocks (Delayed)',color:'var(--gold)',borderColor:'rgba(255,209,102,0.3)',items:[
+      {sym:'TSLA',stooq:'TSLA.US'},{sym:'AMD',stooq:'AMD.US'},
+      {sym:'NVDA',stooq:'NVDA.US'},{sym:'MSTR',stooq:'MSTR.US'},
+    ]},
+    {label:'// Crypto ETFs (Delayed)',color:'var(--cyan)',borderColor:'rgba(0,255,225,0.25)',items:[
+      {sym:'IBIT',stooq:'IBIT.US'},{sym:'FBTC',stooq:'FBTC.US'},{sym:'ETHA',stooq:'ETHA.US'},
+    ]},
+    {label:'// Index & Commodities',color:'var(--purple)',borderColor:'rgba(180,77,255,0.3)',items:[
+      {sym:'SPY',stooq:'SPY.US'},{sym:'QQQ',stooq:'QQQ.US'},
+      {sym:'VIX',stooq:'^VIX'},{sym:'GOLD',stooq:'GC.F'},
+    ]},
+  ];
+
+  async function fetchStooq(stooqSym){
+    const url='https://stooq.com/q/l/?s='+stooqSym+'&f=sd2t2ohlcvn&e=csv';
+    const proxy='https://corsproxy.io/?'+encodeURIComponent(url);
+    const r=await fetch(proxy);
+    const txt=await r.text();
+    const rows=txt.trim().split('\n');
+    if(rows.length<2) return null;
+    const cols=rows[1].split(',');
+    const price=parseFloat(cols[4])||0;
+    const open=parseFloat(cols[2])||0;
+    return price>0?{price,open}:null;
+  }
+
+  for(const group of stockGroups){
+    h+='<div style="font-family:var(--mono);font-size:9px;letter-spacing:3px;color:var(--muted);width:100%;padding:8px 4px 4px;text-transform:uppercase;">'+group.label+'</div>';
+    for(const item of group.items){
+      try{
+        const data=await fetchStooq(item.stooq);
+        if(data){
+          const {price,open}=data;
           const chPct=open>0?((price-open)/open*100):0;
           const cls=chPct>=0?'up':'down';const s=chPct>=0?'+':'';
-          h+='<div class="ticker-item" style="border-color:rgba(255,209,102,0.3);"><span class="ticker-name" style="color:var(--gold);">'+sym+'</span><span class="ticker-price">$'+price.toFixed(2)+'</span><span class="ticker-change '+cls+'">'+s+chPct.toFixed(2)+'%</span></div>';
+          const p=price<10?price.toFixed(4):price.toFixed(2);
+          liveTicker[item.sym]={id:item.sym,price:price,type:'stock'};
+          h+='<div class="ticker-item" style="border-color:'+group.borderColor+';"><span class="ticker-name" style="color:'+group.color+';">'+item.sym+'</span><span class="ticker-price">$'+p+'</span><span class="ticker-change '+cls+'">'+s+chPct.toFixed(2)+'%</span><button class="use-btn" data-sym="'+item.sym+'" data-price="'+price+'" data-type="stock" style="font-family:var(--mono);font-size:9px;padding:3px 8px;background:transparent;border:1px solid '+group.color+';color:'+group.color+';border-radius:2px;cursor:pointer;margin-left:4px;letter-spacing:1px;">USE</button></div>';
         } else {
-          h+='<div class="ticker-item" style="border-color:rgba(255,209,102,0.3);"><span class="ticker-name" style="color:var(--gold);">'+sym+'</span><span class="ticker-price" style="color:var(--muted);">—</span><span class="ticker-change" style="color:var(--muted);">mkt closed</span></div>';
+          h+='<div class="ticker-item" style="border-color:'+group.borderColor+';"><span class="ticker-name" style="color:'+group.color+';">'+item.sym+'</span><span class="ticker-price" style="color:var(--muted);">—</span><span class="ticker-change" style="color:var(--muted);">mkt closed</span></div>';
         }
-      } else {
-        h+='<div class="ticker-item" style="border-color:rgba(255,209,102,0.3);"><span class="ticker-name" style="color:var(--gold);">'+sym+'</span><span class="ticker-price" style="color:var(--muted);">—</span><span class="ticker-change" style="color:var(--muted);">mkt closed</span></div>';
+      }catch(e){
+        h+='<div class="ticker-item" style="border-color:'+group.borderColor+';"><span class="ticker-name" style="color:'+group.color+';">'+item.sym+'</span><span class="ticker-price" style="color:var(--muted);">—</span><span class="ticker-change" style="color:var(--muted);">unavailable</span></div>';
       }
-    }catch(e){
-      h+='<div class="ticker-item" style="border-color:rgba(255,209,102,0.3);"><span class="ticker-name" style="color:var(--gold);">'+sym+'</span><span class="ticker-price" style="color:var(--muted);">—</span><span class="ticker-change" style="color:var(--muted);">mkt closed</span></div>';
     }
   }
   document.getElementById('ticker-container').innerHTML=h||'<div style="color:var(--red);font-family:var(--mono);font-size:12px;">Unable to load. Refresh page.</div>';
 }
 fetchPrices();setInterval(fetchPrices,60000);
 
+// USE button clicks via event delegation (avoids inline quote escaping issues)
+document.addEventListener('click',function(e){
+  var btn=e.target.closest('.use-btn');
+  if(!btn) return;
+  var sym=btn.getAttribute('data-sym');
+  var price=parseFloat(btn.getAttribute('data-price'))||0;
+  var type=btn.getAttribute('data-type')||'crypto';
+  if(sym&&price) useAsset(sym,price,type);
+});
+
 // ===== DCA =====
-function addDCAEntry(){const c=document.getElementById('dca-entries');const e=document.createElement('div');e.className='dca-entry';e.innerHTML='<div><label>Price ($)</label><input type="number" class="dca-price" placeholder="45000" step="any"/></div><div><label>Quantity</label><input type="number" class="dca-qty" placeholder="0.5" step="any"/></div><div><label>Fee ($)</label><input type="number" class="dca-fee" placeholder="2.50" step="any"/></div>';c.appendChild(e);}
+function addDCAEntry(){const c=document.getElementById('dca-entries');const e=document.createElement('div');e.className='dca-entry';e.innerHTML='<div><label>Price ($)</label><input type="text" inputmode="decimal" class="dca-price" placeholder="45000" step="any"/></div><div><label>Quantity</label><input type="text" inputmode="decimal" class="dca-qty" placeholder="0.5" step="any"/></div><div><label>Fee ($)</label><input type="text" inputmode="decimal" class="dca-fee" placeholder="2.50" step="any"/></div>';c.appendChild(e);}
 
 function calcDCA(){
   const name=document.getElementById('dca-name').value||'Asset';
@@ -681,7 +719,7 @@ function calcDCA(){
     {val:Math.max(0,tf),color:'#ffd166',label:'Fees'},
   ].filter(s=>s.val>0),{line1:'FEES',line2:'$'+tf.toFixed(2)});
 }
-function clearDCA(){document.getElementById('dca-chart-wrap').style.display='none';document.getElementById('dca-name').value='';document.getElementById('dca-entries').innerHTML='<div class="dca-entry"><div><label>Price ($)</label><input type="number" class="dca-price" placeholder="45000" step="any"/></div><div><label>Quantity</label><input type="number" class="dca-qty" placeholder="0.5" step="any"/></div><div><label>Fee ($)</label><input type="number" class="dca-fee" placeholder="2.50" step="any"/></div></div>';document.getElementById('dca-current').value='';document.getElementById('dca-results').style.display='none';}
+function clearDCA(){document.getElementById('dca-chart-wrap').style.display='none';document.getElementById('dca-name').value='';document.getElementById('dca-entries').innerHTML='<div class="dca-entry"><div><label>Price ($)</label><input type="text" inputmode="decimal" class="dca-price" placeholder="45000" step="any"/></div><div><label>Quantity</label><input type="text" inputmode="decimal" class="dca-qty" placeholder="0.5" step="any"/></div><div><label>Fee ($)</label><input type="text" inputmode="decimal" class="dca-fee" placeholder="2.50" step="any"/></div></div>';document.getElementById('dca-current').value='';document.getElementById('dca-results').style.display='none';}
 
 function injectDCAtoPortfolio(){
   if(!window._dcaData)return alert('Calculate DCA first');
@@ -916,7 +954,7 @@ window.addEventListener('scroll',function(){topBtn.style.display=window.scrollY>
 function addSELevel(){
   const con=document.getElementById('se-levels');
   const e=document.createElement('div');e.className='dca-entry';
-  e.innerHTML='<div><label>Target Price ($)</label><input type="number" class="se-price" placeholder="80000" step="any"/></div><div><label>% to Sell</label><input type="number" class="se-pct" placeholder="25" min="1" max="100"/></div><div><label>Note</label><input type="text" class="se-note" placeholder="Target"/></div>';
+  e.innerHTML='<div><label>Target Price ($)</label><input type="text" inputmode="decimal" class="se-price" placeholder="80000" step="any"/></div><div><label>% to Sell</label><input type="text" inputmode="decimal" class="se-pct" placeholder="25" min="1" max="100"/></div><div><label>Note</label><input type="text" class="se-note" placeholder="Target"/></div>';
   con.appendChild(e);
 }
 function calcScaledExit(){
@@ -971,7 +1009,7 @@ function clearSE(){
   document.getElementById('se-name').value='';document.getElementById('se-qty').value='';
   document.getElementById('se-entry').value='';document.getElementById('se-invested').value='';
   document.getElementById('se-results').style.display='none';
-  document.getElementById('se-levels').innerHTML='<div class="dca-entry"><div><label>Target Price ($)</label><input type="number" class="se-price" placeholder="60000" step="any"/></div><div><label>% to Sell</label><input type="number" class="se-pct" placeholder="25" min="1" max="100"/></div><div><label>Note</label><input type="text" class="se-note" placeholder="First target"/></div></div>';
+  document.getElementById('se-levels').innerHTML='<div class="dca-entry"><div><label>Target Price ($)</label><input type="text" inputmode="decimal" class="se-price" placeholder="60000" step="any"/></div><div><label>% to Sell</label><input type="text" inputmode="decimal" class="se-pct" placeholder="25" min="1" max="100"/></div><div><label>Note</label><input type="text" class="se-note" placeholder="First target"/></div></div>';
 }
 
 // ===== DBB POSITION SIZING =====
@@ -1086,6 +1124,178 @@ function printCalcCard(){
   win.document.close();win.focus();setTimeout(function(){win.print();},500);
 }
 
+// ===== USE ASSET (ticker click) =====
+function useAsset(sym, price, type){
+  // Fill all asset name fields
+  var nameFields=['dca-name','se-name','pt-name'];
+  nameFields.forEach(function(id){
+    var el=document.getElementById(id);if(el) el.value=sym;
+  });
+  // Fill all price fields (only if empty or user confirms overwrite)
+  var priceFields=['dca-current','se-entry','pt-current','dbb-price','dbb-entry','conv-price','proj-price','div-price'];
+  priceFields.forEach(function(id){
+    var el=document.getElementById(id);if(el) el.value=price;
+  });
+  // Converter coin select
+  var convCoin=document.getElementById('conv-coin');
+  if(convCoin){
+    var pid=liveTicker[sym]?liveTicker[sym].id:'';
+    for(var i=0;i<convCoin.options.length;i++){
+      if(convCoin.options[i].value===pid){convCoin.value=pid;break;}
+    }
+  }
+  // DBB type
+  var dbbType=document.getElementById('dbb-type');
+  if(dbbType) dbbType.value=type==='stock'?'stock':'crypto';
+  // Flash the ticker button
+  showUseToast(sym,price);
+}
+
+function showUseToast(sym,price){
+  var t=document.getElementById('use-toast');
+  if(!t){
+    t=document.createElement('div');t.id='use-toast';
+    t.style.cssText='position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#080f0f;border:1px solid var(--neon);color:var(--neon);font-family:var(--mono);font-size:12px;letter-spacing:2px;padding:10px 24px;border-radius:4px;z-index:9999;transition:opacity 0.4s;pointer-events:none;';
+    document.body.appendChild(t);
+  }
+  var p=price<0.001?price.toFixed(8):price<1?price.toFixed(6):price<100?price.toFixed(2):price.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+  t.textContent='⚡ '+sym+' $'+p+' filled all calculators';
+  t.style.opacity='1';
+  clearTimeout(window._toastTimer);
+  window._toastTimer=setTimeout(function(){t.style.opacity='0';},2200);
+}
+
+// ===== TYPE-AHEAD DROPDOWN =====
+function buildTypeAhead(inputId){
+  var inp=document.getElementById(inputId);
+  if(!inp) return;
+
+  // Create dropdown
+  var dd=document.createElement('div');
+  dd.id=inputId+'-dd';
+  dd.style.cssText='display:none;position:absolute;z-index:500;background:#080f0f;border:1px solid var(--border);border-radius:4px;width:100%;max-height:200px;overflow-y:auto;';
+  inp.parentNode.style.position='relative';
+  inp.parentNode.appendChild(dd);
+
+  inp.addEventListener('input',function(){
+    var q=this.value.trim().toUpperCase();
+    dd.innerHTML='';
+    if(q.length<1){dd.style.display='none';return;}
+    var matches=Object.keys(liveTicker).filter(function(k){return k.startsWith(q);});
+    if(matches.length===0) matches=Object.keys(liveTicker).filter(function(k){return k.includes(q);});
+    if(matches.length===0){dd.style.display='none';return;}
+    matches.slice(0,8).forEach(function(sym){
+      var info=liveTicker[sym];
+      var p=info.price<0.001?info.price.toFixed(8):info.price<1?info.price.toFixed(6):info.price<100?info.price.toFixed(2):info.price.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+      var row=document.createElement('div');
+      row.style.cssText='padding:8px 12px;cursor:pointer;font-family:var(--mono);font-size:12px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.04);';
+      row.innerHTML='<span style="color:'+(info.type==='stock'?'var(--gold)':'var(--cyan)')+';">'+sym+'</span><span style="color:#fff;">$'+p+'</span>';
+      row.addEventListener('mousedown',function(e){
+        e.preventDefault();
+        inp.value=sym;
+        useAsset(sym,info.price,info.type);
+        dd.style.display='none';
+      });
+      row.addEventListener('mouseover',function(){this.style.background='rgba(0,255,225,0.06)';});
+      row.addEventListener('mouseout',function(){this.style.background='';});
+      dd.appendChild(row);
+    });
+    dd.style.display='block';
+  });
+
+  // Close on blur
+  inp.addEventListener('blur',function(){setTimeout(function(){dd.style.display='none';},150);});
+  // Enter key fills
+  inp.addEventListener('keydown',function(e){
+    if(e.key==='Enter'){
+      var sym=this.value.trim().toUpperCase();
+      if(liveTicker[sym]){useAsset(sym,liveTicker[sym].price,liveTicker[sym].type);}
+      dd.style.display='none';
+    }
+  });
+}
+
+// ===== PRICE FIELD TYPE-AHEAD =====
+// Type a ticker symbol in any price field → dropdown shows price → click or Enter fills it
+function buildPriceTypeAhead(inputId){
+  var inp=document.getElementById(inputId);
+  if(!inp) return;
+  var dd=document.createElement('div');
+  dd.id=inputId+'-pdd';
+  dd.style.cssText='display:none;position:absolute;z-index:600;background:#080f0f;border:1px solid var(--neon);border-radius:4px;width:100%;max-height:200px;overflow-y:auto;box-shadow:0 4px 20px rgba(0,255,106,0.15);';
+  inp.parentNode.style.position='relative';
+  inp.parentNode.appendChild(dd);
+
+  function showPriceDrop(){
+    var raw=inp.value.trim().toUpperCase();
+    // Only show if text (not a pure number)
+    if(!raw||(!isNaN(raw)&&raw.length>0&&!raw.match(/[A-Z]/))){dd.style.display='none';return;}
+    // Match from liveTicker (live) AND from known static list as fallback
+    var knownSyms=Object.keys(liveTicker);
+    var matches=knownSyms.filter(function(k){return k.startsWith(raw);});
+    // Also try contains if startsWith gives nothing
+    if(matches.length===0) matches=knownSyms.filter(function(k){return k.includes(raw);});
+    if(matches.length===0){
+      // Show "loading..." hint if liveTicker empty (prices still loading)
+      if(knownSyms.length===0){
+        dd.innerHTML='<div style="padding:10px 14px;font-family:var(--mono);font-size:11px;color:var(--muted);">⏳ Prices loading... try again in a moment</div>';
+        dd.style.display='block';
+      } else {
+        dd.style.display='none';
+      }
+      return;
+    }
+    dd.innerHTML='';
+    // Header
+    var hdr=document.createElement('div');
+    hdr.style.cssText='padding:5px 12px;font-family:var(--mono);font-size:9px;letter-spacing:3px;color:var(--muted);border-bottom:1px solid var(--border);text-transform:uppercase;';
+    hdr.textContent='// Select to fill price';
+    dd.appendChild(hdr);
+    matches.slice(0,8).forEach(function(sym){
+      var info=liveTicker[sym];
+      var p=info.price<0.001?info.price.toFixed(8):info.price<1?info.price.toFixed(6):info.price<10?info.price.toFixed(4):info.price.toFixed(2);
+      var row=document.createElement('div');
+      row.style.cssText='padding:9px 14px;cursor:pointer;font-family:var(--mono);font-size:12px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.04);transition:background 0.1s;';
+      var typeColor=info.type==='stock'?'var(--gold)':(sym==='PAXG'?'var(--yellow)':'var(--cyan)');
+      row.innerHTML='<span style="color:'+typeColor+';font-weight:700;min-width:60px;">'+sym+'</span><span style="color:var(--neon);font-size:13px;font-weight:700;">$'+p+'</span><span style="color:var(--muted);font-size:9px;letter-spacing:1px;">'+(info.type==='stock'?'STOCK':'CRYPTO')+'</span>';
+      row.addEventListener('mousedown',function(e){
+        e.preventDefault();
+        inp.value=info.price;
+        dd.style.display='none';
+        inp.dispatchEvent(new Event('change'));
+        // Flash the input green briefly
+        inp.style.borderColor='var(--neon)';
+        inp.style.boxShadow='0 0 8px rgba(57,255,20,0.4)';
+        setTimeout(function(){inp.style.borderColor='';inp.style.boxShadow='';},1000);
+        showUseToast(sym,info.price);
+      });
+      row.addEventListener('mouseover',function(){this.style.background='rgba(0,255,225,0.07)';});
+      row.addEventListener('mouseout',function(){this.style.background='';});
+      dd.appendChild(row);
+    });
+    dd.style.display='block';
+  }
+
+  inp.addEventListener('input',showPriceDrop);
+  inp.addEventListener('keyup',showPriceDrop);
+  inp.addEventListener('blur',function(){setTimeout(function(){dd.style.display='none';},180);});
+  inp.addEventListener('keydown',function(e){
+    if(e.key==='Enter'){
+      var raw=this.value.trim().toUpperCase();
+      if(liveTicker[raw]){
+        this.value=liveTicker[raw].price;
+        dd.style.display='none';
+        this.dispatchEvent(new Event('change'));
+        this.style.borderColor='var(--neon)';
+        this.style.boxShadow='0 0 8px rgba(57,255,20,0.4)';
+        setTimeout(function(){inp.style.borderColor='';inp.style.boxShadow='';},1000);
+        showUseToast(raw,liveTicker[raw].price);
+      }
+    }
+    if(e.key==='Escape') dd.style.display='none';
+  });
+}
+
 // ===== SYNC SYSTEM =====
 let syncOn=true;
 function toggleSync(){
@@ -1184,13 +1394,37 @@ window.addEventListener('DOMContentLoaded',function(){
     document.getElementById('conv-rate-usd').textContent='--';
   });
 
-  // Asset name sync listeners
+  // Asset name sync listeners + type-ahead
   var nameFields=[
     {id:'dca-name'},{id:'se-name'},{id:'pt-name'}
   ];
   nameFields.forEach(function(f){
     var el=document.getElementById(f.id);
     if(el) el.addEventListener('input',function(){syncFromAsset(this.value,f.id);});
+    buildTypeAhead(f.id);
+  });
+
+  // Price field type-ahead — type ticker symbol, get price
+  var priceInputs=[
+    {id:'dca-current'},{id:'se-entry'},{id:'pt-current'},
+    {id:'dbb-price'},{id:'dbb-entry'},{id:'conv-price'},
+    {id:'proj-price'},{id:'div-price'},
+  ];
+  priceInputs.forEach(function(f){
+    buildPriceTypeAhead(f.id);
+  });
+
+  // Also wire type-ahead to dynamically added se-price inputs (scaled exit levels)
+  // Use event delegation since these are added dynamically
+  document.getElementById('se-levels').addEventListener('input',function(e){
+    var inp=e.target;
+    if(!inp.classList.contains('se-price')) return;
+    var raw=inp.value.trim().toUpperCase();
+    if(!raw||!raw.match(/[A-Z]/)) return;
+    var matches=Object.keys(liveTicker).filter(function(k){return k.startsWith(raw);});
+    if(matches.length===0) return;
+    // Simple inline fill on exact match
+    if(liveTicker[raw]){inp.value=liveTicker[raw].price;showUseToast(raw,liveTicker[raw].price);}
   });
 
   // Price sync listeners — only sync if field was manually typed
