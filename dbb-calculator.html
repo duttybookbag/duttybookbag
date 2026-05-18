@@ -714,6 +714,29 @@ function calcDCA(){
   const b=document.getElementById('dca-results');b.style.display='block';
   b.innerHTML='<div class="result-row"><span class="result-label">Holding</span><span class="result-val">'+name+'</span></div><div class="result-row"><span class="result-label">Entries</span><span class="result-val">'+en+'</span></div><div class="result-row"><span class="result-label">Total Qty</span><span class="result-val">'+tq.toFixed(8)+'</span></div><div class="result-row"><span class="result-label">Total Cost</span><span class="result-val">$'+tc.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+'</span></div><div class="result-row"><span class="result-label">Fees</span><span class="result-val">$'+tf.toFixed(2)+'</span></div><div class="result-row"><span class="result-label">Total Invested</span><span class="result-val">$'+ti.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+'</span></div><div class="result-row"><span class="result-label">Avg Price</span><span class="result-val" style="color:var(--cyan)">$'+avg.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+'</span></div>'+(current>0?'<div class="result-row"><span class="result-label">Current Value</span><span class="result-val">$'+fv.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+'</span></div><div class="result-row"><span class="result-label">Gain/Loss</span><span class="result-val '+gc+'">$'+gl.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+'</span></div><div class="result-row"><span class="result-label">ROI</span><span class="result-val '+gc+'">'+roi.toFixed(2)+'%</span></div>':'');
   window._dcaData={name:name,avgPrice:avg,qty:tq,fee:tf,current:current};
+
+  // ── AUTO-SYNC DCA results → Scaled Exit ──
+  // Fill Scaled Exit with the DCA average price + position size automatically
+  if(avg>0){
+    var seEntry=document.getElementById('se-entry');
+    var seQty=document.getElementById('se-qty');
+    var seName=document.getElementById('se-name');
+    var seInvested=document.getElementById('se-invested');
+    // Only fill if field is empty or sync is ON
+    if(seEntry&&(syncOn||!seEntry.value)) seEntry.value=avg.toFixed(6).replace(/\.?0+$/,'');
+    if(seQty&&(syncOn||!seQty.value)) seQty.value=tq;
+    if(seName&&(syncOn||!seName.value)) seName.value=name;
+    if(seInvested&&(syncOn||!seInvested.value)) seInvested.value=tc.toFixed(2);
+    // Also fill DBB entry price with avg cost
+    var dbbEntry=document.getElementById('dbb-entry');
+    if(dbbEntry&&(syncOn||!dbbEntry.value)) dbbEntry.value=avg.toFixed(6).replace(/\.?0+$/,'');
+    // Flash Scaled Exit entry field to show it was filled
+    if(seEntry&&avg>0){
+      seEntry.style.borderColor='var(--red)';
+      seEntry.style.boxShadow='0 0 10px rgba(255,82,82,0.4)';
+      setTimeout(function(){seEntry.style.borderColor='';seEntry.style.boxShadow='';},1500);
+    }
+  }
   // Draw DCA pie charts
   document.getElementById('dca-chart-wrap').style.display='block';
   // Chart 1: Cost vs Gain/Loss
