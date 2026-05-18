@@ -201,7 +201,7 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
   <div class="divider" style="background:linear-gradient(90deg,transparent,var(--cyan),transparent);"></div>
   <div class="section-label" style="color:var(--cyan);">// DBB Position Sizing</div>
   <h2>Money Management</h2>
-  <p style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:20px;line-height:1.7;">Built on Edward Thorp's Kelly Criterion. Four conviction tiers. Liquidity-aware stops. <a href="dbb-money-management.html" style="color:var(--cyan);">Full standalone page →</a></p>
+  <p style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:20px;line-height:1.7;">Built on Edward Thorp's Kelly Criterion. Four conviction tiers. Liquidity-aware stops.</p>
   <div class="calc-box" style="border-color:rgba(0,255,225,0.2);">
     <div class="calc-title">Stocks &amp; Crypto — DBB Tiers</div>
     <div class="calc-sub">// Know your size before you enter</div>
@@ -617,7 +617,7 @@ async function fetchPrices(){
         livePrices[coin.id]={usd:price,'usd_24h_change':0};
         const p=price<0.001?price.toFixed(8):price<1?price.toFixed(6):price<100?price.toFixed(2):price.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
         liveTicker[coin.sym]={id:coin.id,price:price,type:'crypto'};
-        h+='<div class="ticker-item" style="cursor:default;"><span class="ticker-name">'+coin.sym+'</span><span class="ticker-price">$'+p+'</span><span class="ticker-change" style="color:var(--muted);">spot</span><button class="use-btn" data-sym="'+coin.sym+'" data-price="'+price+'" data-type="crypto" style="font-family:var(--mono);font-size:9px;padding:3px 8px;background:transparent;border:1px solid var(--neon);color:var(--neon);border-radius:2px;cursor:pointer;margin-left:4px;letter-spacing:1px;">USE</button></div>';
+        h+='<div class="ticker-item" style="cursor:default;"><span class="ticker-name">'+coin.sym+'</span><span class="ticker-price">$'+p+'</span><span class="ticker-change" style="color:var(--muted);">spot</span><button class="use-btn" data-sym="'+coin.sym+'" data-price="'+price+'" data-type="crypto" style="font-family:var(--mono);font-size:9px;padding:3px 8px;background:transparent;border:1px solid var(--neon);color:var(--neon);border-radius:2px;cursor:pointer;margin-left:6px;letter-spacing:1px;">USE</button></div>';
         cryptoLoaded++;
       }
     }catch(e){}
@@ -663,7 +663,7 @@ async function fetchPrices(){
           const cls=chPct>=0?'up':'down';const s=chPct>=0?'+':'';
           const p=price<10?price.toFixed(4):price.toFixed(2);
           liveTicker[item.sym]={id:item.sym,price:price,type:'stock'};
-          h+='<div class="ticker-item" style="border-color:'+group.borderColor+';"><span class="ticker-name" style="color:'+group.color+';">'+item.sym+'</span><span class="ticker-price">$'+p+'</span><span class="ticker-change '+cls+'">'+s+chPct.toFixed(2)+'%</span><button class="use-btn" data-sym="'+item.sym+'" data-price="'+price+'" data-type="stock" style="font-family:var(--mono);font-size:9px;padding:3px 8px;background:transparent;border:1px solid '+group.color+';color:'+group.color+';border-radius:2px;cursor:pointer;margin-left:4px;letter-spacing:1px;">USE</button></div>';
+          h+='<div class="ticker-item" style="border-color:'+group.borderColor+';"><span class="ticker-name" style="color:'+group.color+';">'+item.sym+'</span><span class="ticker-price">$'+p+'</span><span class="ticker-change '+cls+'">'+s+chPct.toFixed(2)+'%</span><button class="use-btn" data-sym="'+item.sym+'" data-price="'+price+'" data-type="stock" style="font-family:var(--mono);font-size:9px;padding:3px 8px;background:transparent;border:1px solid '+group.color+';color:'+group.color+';border-radius:2px;cursor:pointer;margin-left:6px;letter-spacing:1px;">USE</button></div>';
         } else {
           h+='<div class="ticker-item" style="border-color:'+group.borderColor+';"><span class="ticker-name" style="color:'+group.color+';">'+item.sym+'</span><span class="ticker-price" style="color:var(--muted);">—</span><span class="ticker-change" style="color:var(--muted);">mkt closed</span></div>';
         }
