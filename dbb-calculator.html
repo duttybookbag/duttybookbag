@@ -69,6 +69,12 @@ select option{background:#080f0f;color:#b8e8e2;}
     .ticker-change{font-size:11px;}
     .ticker-change.up{color:var(--green);}
     .ticker-change.down{color:var(--red);}
+    /* DBB Price Pulse — meteor animation */
+    .ticker-item{position:relative;}
+    .ticker-price-flash{animation:pricePop 0.45s ease;}
+    @keyframes pricePop{0%{transform:scale(1);}40%{transform:scale(1.22);color:var(--cyan);text-shadow:0 0 12px var(--cyan);}100%{transform:scale(1);}}
+    .dbb-meteor{position:fixed;pointer-events:none;z-index:9999;will-change:transform,opacity;}
+    .dbb-meteor canvas{display:block;}
     .disclaimer{background:rgba(255,82,82,0.05);border:1px solid rgba(255,82,82,0.15);border-radius:6px;padding:18px;font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.7;margin:20px 0;}
     .section-nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:16px;background:var(--panel);border:1px solid var(--border);border-radius:6px;margin:20px 0;}
     .section-nav a{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--neon);text-decoration:none;padding:8px 16px;border:1px solid rgba(57,255,20,0.3);border-radius:3px;text-transform:uppercase;transition:all 0.2s;}
@@ -164,7 +170,7 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
 <!-- SECTION NAV -->
 <section><div class="wrap">
   <div class="section-nav">
-    <a href="#live-prices">Live Prices</a>
+    <a href="#live-prices">Price Pulse</a>
     <a href="#dbb-position" style="color:var(--cyan);">⚡ DBB Position</a>
     <a href="#dca-calc">DCA In</a>
     <a href="#scaled-exit">Scaled Exit</a>
@@ -192,10 +198,10 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
 <!-- LIVE PRICE TICKER -->
 <section id="live-prices"><div class="wrap">
   <div class="divider"></div>
-  <div class="section-label" style="color:var(--cyan);">// Live Prices</div>
-  <h2>Market Watch</h2>
+  <div class="section-label" style="color:var(--cyan);">// DBB Price Pulse</div>
+  <h2>DBB Price Pulse</h2>
   <div id="ticker-container" class="ticker-bar"><div style="font-family:var(--mono);font-size:12px;color:var(--muted);">Loading prices...</div></div>
-  <p style="font-family:var(--mono);font-size:9px;color:var(--muted);text-align:center;">Prices via CoinGecko API. May be delayed. Not real-time. For reference only.</p>
+  <p style="font-family:var(--mono);font-size:9px;color:var(--muted);text-align:center;">Crypto prices via Coinbase API. Live spot prices. For reference only.</p>
 </div></section>
 
 <!-- DBB POSITION SIZING -->
@@ -625,9 +631,8 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
 </div></footer>
 
 <script>
-// ===== LIVE PRICES =====
+// ===== DBB PRICE PULSE =====
 // Crypto: Coinbase public API (free, no key, CORS-open)
-// Stocks: corsproxy.io + Stooq CSV (free, no key)
 let livePrices={};
 let liveTicker={}; // sym→{id,price,type} for type-ahead + USE buttons
 async function fetchPrices(){
@@ -668,57 +673,158 @@ async function fetchPrices(){
   }
   if(cryptoLoaded===0) h+='<div style="font-family:var(--mono);font-size:12px;color:var(--red);">Crypto prices unavailable — check connection</div>';
 
-  // --- STOCKS + ETFs + SPECIAL via corsproxy.io + Stooq CSV ---
-  const stockGroups=[
-    {label:'// Stocks (Delayed)',color:'var(--gold)',borderColor:'rgba(255,209,102,0.3)',items:[
-      {sym:'TSLA',stooq:'TSLA.US'},{sym:'AMD',stooq:'AMD.US'},
-      {sym:'NVDA',stooq:'NVDA.US'},{sym:'MSTR',stooq:'MSTR.US'},
-    ]},
-    {label:'// Crypto ETFs (Delayed)',color:'var(--cyan)',borderColor:'rgba(0,255,225,0.25)',items:[
-      {sym:'IBIT',stooq:'IBIT.US'},{sym:'FBTC',stooq:'FBTC.US'},{sym:'ETHA',stooq:'ETHA.US'},
-    ]},
-    {label:'// Index & Commodities',color:'var(--purple)',borderColor:'rgba(180,77,255,0.3)',items:[
-      {sym:'SPY',stooq:'SPY.US'},{sym:'QQQ',stooq:'QQQ.US'},
-      {sym:'VIX',stooq:'^VIX'},{sym:'GOLD',stooq:'GC.F'},
-    ]},
-  ];
+  // Stocks/Futures/Forex removed — CORS blocks browser fetches from GitHub Pages.
+  // Crypto only via Coinbase: live, no key, always works.
+  document.getElementById('ticker-container').innerHTML=h||'<div style="color:var(--red);font-family:var(--mono);font-size:12px;">Unable to load. Refresh page.</div>';
+  // Launch meteors to every price tile on every refresh
+  launchMeteorsToAll();
+  // Track prices for future use
+  Object.keys(liveTicker).forEach(function(sym){ _lastPrices[sym]=liveTicker[sym].price; });
+}
+// ===== DBB METEOR ANIMATION =====
+var _lastPrices={};
 
-  async function fetchStooq(stooqSym){
-    const url='https://stooq.com/q/l/?s='+stooqSym+'&f=sd2t2ohlcvn&e=csv';
-    const proxy='https://corsproxy.io/?'+encodeURIComponent(url);
-    const r=await fetch(proxy);
-    const txt=await r.text();
-    const rows=txt.trim().split('\n');
-    if(rows.length<2) return null;
-    const cols=rows[1].split(',');
-    const price=parseFloat(cols[4])||0;
-    const open=parseFloat(cols[2])||0;
-    return price>0?{price,open}:null;
-  }
+function launchMeteor(targetEl, delay){
+  setTimeout(function(){
+    var rect=targetEl.getBoundingClientRect();
+    var tx=rect.left+rect.width/2;
+    var ty=rect.top+rect.height/2;
 
-  for(const group of stockGroups){
-    h+='<div style="font-family:var(--mono);font-size:9px;letter-spacing:3px;color:var(--muted);width:100%;padding:8px 4px 4px;text-transform:uppercase;">'+group.label+'</div>';
-    for(const item of group.items){
-      try{
-        const data=await fetchStooq(item.stooq);
-        if(data){
-          const {price,open}=data;
-          const chPct=open>0?((price-open)/open*100):0;
-          const cls=chPct>=0?'up':'down';const s=chPct>=0?'+':'';
-          const p=price<10?price.toFixed(4):price.toFixed(2);
-          liveTicker[item.sym]={id:item.sym,price:price,type:'stock'};
-          h+='<div class="ticker-item" style="border-color:'+group.borderColor+';"><span class="ticker-name" style="color:'+group.color+';">'+item.sym+'</span><span class="ticker-price">$'+p+'</span><span class="ticker-change '+cls+'">'+s+chPct.toFixed(2)+'%</span><button class="use-btn" data-sym="'+item.sym+'" data-price="'+price+'" data-type="stock" style="font-family:var(--mono);font-size:9px;padding:3px 8px;background:transparent;border:1px solid '+group.color+';color:'+group.color+';border-radius:2px;cursor:pointer;margin-left:6px;letter-spacing:1px;">USE</button></div>';
-        } else {
-          h+='<div class="ticker-item" style="border-color:'+group.borderColor+';"><span class="ticker-name" style="color:'+group.color+';">'+item.sym+'</span><span class="ticker-price" style="color:var(--muted);">—</span><span class="ticker-change" style="color:var(--muted);">mkt closed</span></div>';
+    // Start from random outside edge
+    var edge=Math.floor(Math.random()*4); // 0=top 1=right 2=bottom 3=left
+    var sx,sy;
+    var vw=window.innerWidth, vh=window.innerHeight;
+    if(edge===0){sx=Math.random()*vw;sy=-40;}
+    else if(edge===1){sx=vw+40;sy=Math.random()*vh;}
+    else if(edge===2){sx=Math.random()*vw;sy=vh+40;}
+    else{sx=-40;sy=Math.random()*vh;}
+
+    // Angle of travel
+    var ang=Math.atan2(ty-sy,tx-sx);
+
+    // Canvas meteor
+    var size=44;
+    var cvs=document.createElement('canvas');
+    cvs.width=size*3; cvs.height=size*3;
+    var wrap=document.createElement('div');
+    wrap.className='dbb-meteor';
+    wrap.style.left=(sx-size*1.5)+'px';
+    wrap.style.top=(sy-size*1.5)+'px';
+    wrap.appendChild(cvs);
+    document.body.appendChild(wrap);
+
+    var dist=Math.hypot(tx-sx,ty-sy);
+    var dur=Math.min(900,Math.max(500,dist*0.55));
+    var start=null;
+    var cx=sx,cy=sy;
+
+    function drawMeteor(progress){
+      var c=cvs.getContext('2d');
+      c.clearRect(0,0,cvs.width,cvs.height);
+      var ox=size*1.5, oy=size*1.5;
+
+      // Tail — drawn behind the head, along the travel angle
+      var tailLen=size*2.2*(0.4+progress*0.6);
+      var grad=c.createLinearGradient(
+        ox-Math.cos(ang)*tailLen, oy-Math.sin(ang)*tailLen,
+        ox, oy
+      );
+      grad.addColorStop(0,'rgba(0,255,225,0)');
+      grad.addColorStop(0.5,'rgba(0,255,225,0.18)');
+      grad.addColorStop(1,'rgba(0,255,225,0.7)');
+      c.save();
+      c.strokeStyle=grad;
+      c.lineWidth=4*(1-progress*0.3);
+      c.lineCap='round';
+      c.shadowColor='#00ffe1';
+      c.shadowBlur=10;
+      c.beginPath();
+      c.moveTo(ox-Math.cos(ang)*tailLen, oy-Math.sin(ang)*tailLen);
+      c.lineTo(ox, oy);
+      c.stroke();
+
+      // Secondary inner tail (brighter core)
+      var grad2=c.createLinearGradient(
+        ox-Math.cos(ang)*tailLen*0.6, oy-Math.sin(ang)*tailLen*0.6,
+        ox, oy
+      );
+      grad2.addColorStop(0,'rgba(255,255,255,0)');
+      grad2.addColorStop(1,'rgba(255,255,255,0.9)');
+      c.strokeStyle=grad2;
+      c.lineWidth=1.5;
+      c.shadowBlur=6;
+      c.shadowColor='#fff';
+      c.beginPath();
+      c.moveTo(ox-Math.cos(ang)*tailLen*0.6, oy-Math.sin(ang)*tailLen*0.6);
+      c.lineTo(ox, oy);
+      c.stroke();
+
+      // Head glow
+      var glow=c.createRadialGradient(ox,oy,0,ox,oy,size*0.55);
+      glow.addColorStop(0,'rgba(255,255,255,1)');
+      glow.addColorStop(0.3,'rgba(0,255,225,0.9)');
+      glow.addColorStop(0.7,'rgba(0,180,255,0.4)');
+      glow.addColorStop(1,'rgba(0,0,0,0)');
+      c.shadowBlur=20;
+      c.shadowColor='#00ffe1';
+      c.fillStyle=glow;
+      c.beginPath();
+      c.arc(ox,oy,size*0.55,0,Math.PI*2);
+      c.fill();
+
+      // Bright core dot
+      c.shadowBlur=8;
+      c.shadowColor='#fff';
+      c.fillStyle='#fff';
+      c.beginPath();
+      c.arc(ox,oy,3,0,Math.PI*2);
+      c.fill();
+      c.restore();
+    }
+
+    function step(ts){
+      if(!start) start=ts;
+      var progress=Math.min((ts-start)/dur,1);
+      var ease=1-Math.pow(1-progress,3); // ease-out cubic
+      cx=sx+(tx-sx)*ease;
+      cy=sy+(ty-sy)*ease;
+      wrap.style.left=(cx-size*1.5)+'px';
+      wrap.style.top=(cy-size*1.5)+'px';
+      wrap.style.opacity=progress<0.85?1:1-(progress-0.85)/0.15;
+      drawMeteor(progress);
+      if(progress<1) requestAnimationFrame(step);
+      else{
+        wrap.remove();
+        // Flash the price on arrival
+        var priceEl=targetEl.querySelector('.ticker-price');
+        if(priceEl){
+          priceEl.classList.remove('ticker-price-flash');
+          void priceEl.offsetWidth;
+          priceEl.classList.add('ticker-price-flash');
         }
-      }catch(e){
-        h+='<div class="ticker-item" style="border-color:'+group.borderColor+';"><span class="ticker-name" style="color:'+group.color+';">'+item.sym+'</span><span class="ticker-price" style="color:var(--muted);">—</span><span class="ticker-change" style="color:var(--muted);">unavailable</span></div>';
+        // Glow the tile border briefly
+        targetEl.style.transition='border-color 0.15s,box-shadow 0.15s';
+        targetEl.style.borderColor='var(--cyan)';
+        targetEl.style.boxShadow='0 0 14px rgba(0,255,225,0.4)';
+        setTimeout(function(){
+          targetEl.style.borderColor='';
+          targetEl.style.boxShadow='';
+        },400);
       }
     }
-  }
-  document.getElementById('ticker-container').innerHTML=h||'<div style="color:var(--red);font-family:var(--mono);font-size:12px;">Unable to load. Refresh page.</div>';
+    drawMeteor(0);
+    requestAnimationFrame(step);
+  }, delay);
 }
-fetchPrices();setInterval(fetchPrices,60000);
+
+function launchMeteorsToAll(){
+  var items=document.querySelectorAll('#ticker-container .ticker-item');
+  items.forEach(function(item,i){
+    launchMeteor(item, i*120);
+  });
+}
+
+fetchPrices();setInterval(fetchPrices,10000);
 
 // USE button clicks via event delegation (avoids inline quote escaping issues)
 document.addEventListener('click',function(e){
