@@ -122,10 +122,10 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
 <style>.goog-te-banner-frame{display:none!important;}.goog-te-gadget{font-size:11px!important;color:#3d7070!important;}.goog-te-gadget .goog-te-combo{background:#080f0f;color:#b8e8e2;border:1px solid #0c3030;border-radius:4px;padding:4px 8px;font-family:'Share Tech Mono',monospace;font-size:11px;outline:none;}.goog-te-gadget>span{display:none!important;}body{top:0!important;}</style>
 <div class="nav-back">
   <a href="#live-prices">Prices</a>
+  <a href="#converter">Convert</a>
   <a href="#dbb-position">DBB</a>
   <a href="#dca-calc">DCA</a>
   <a href="#scaled-exit">Exit</a>
-  <a href="#converter">Convert</a>
   <a href="#dividend-calc">Dividends</a>
   <a href="#projection">What If</a>
   <a href="#portfolio">Portfolio</a>
@@ -171,10 +171,10 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
 <section><div class="wrap">
   <div class="section-nav">
     <a href="#live-prices">Price Pulse</a>
+    <a href="#converter">Converter</a>
     <a href="#dbb-position" style="color:var(--cyan);">⚡ DBB Position</a>
     <a href="#dca-calc">DCA In</a>
     <a href="#scaled-exit">Scaled Exit</a>
-    <a href="#converter">Converter</a>
     <a href="#dividend-calc">Dividends</a>
     <a href="#projection">What If</a>
     <a href="#portfolio">Portfolio</a>
@@ -191,7 +191,162 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
     <button onclick="toggleSync()" id="sync-btn" style="font-family:var(--mono);font-size:10px;letter-spacing:2px;padding:6px 16px;background:transparent;border:1px solid var(--green);color:var(--green);border-radius:3px;cursor:pointer;text-transform:uppercase;transition:all 0.2s;">Toggle Off</button>
     <button onclick="reSyncAll()" style="font-family:var(--mono);font-size:10px;letter-spacing:2px;padding:6px 16px;background:transparent;border:1px solid var(--cyan);color:var(--cyan);border-radius:3px;cursor:pointer;text-transform:uppercase;">🔄 Re-Sync</button>
     <button onclick="clearAllCalcs()" style="font-family:var(--mono);font-size:10px;letter-spacing:2px;padding:6px 16px;background:transparent;border:1px solid var(--red);color:var(--red);border-radius:3px;cursor:pointer;text-transform:uppercase;">🗑 Clear All</button>
+    <button onclick="openCurrencyPicker()" id="currency-toggle-btn" style="font-family:var(--mono);font-size:10px;letter-spacing:2px;padding:6px 16px;background:transparent;border:1px solid var(--gold);color:var(--gold);border-radius:3px;cursor:pointer;text-transform:uppercase;transition:all 0.2s;">💱 Convert Results</button>
     <div style="font-family:var(--mono);font-size:10px;color:var(--muted);">Fill once → syncs everywhere · Re-Sync if mixed up</div>
+  </div>
+  <!-- CURRENCY PICKER PANEL -->
+  <div id="currency-picker-panel" style="display:none;margin-top:10px;padding:14px 16px;background:#050d0d;border:1px solid rgba(255,209,102,0.4);border-radius:6px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;">💱 Convert all results to:</div>
+      <button onclick="closeCurrencyPicker()" style="font-family:var(--mono);font-size:10px;padding:4px 12px;background:transparent;border:1px solid var(--muted);color:var(--muted);border-radius:3px;cursor:pointer;">✕ Close</button>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap;">
+      <select id="currency-picker-select" style="font-family:var(--mono);font-size:12px;padding:8px 12px;background:#080f0f;border:1px solid var(--gold);border-radius:4px;color:#fff;flex:1;min-width:200px;outline:none;">
+        <optgroup label="── Americas ──">
+          <option value="USD">🇺🇸 US Dollar (USD)</option>
+          <option value="CAD">🇨🇦 Canadian Dollar (CAD)</option>
+          <option value="MXN">🇲🇽 Mexican Peso (MXN)</option>
+          <option value="BRL">🇧🇷 Brazilian Real (BRL)</option>
+          <option value="ARS">🇦🇷 Argentine Peso (ARS)</option>
+          <option value="CLP">🇨🇱 Chilean Peso (CLP)</option>
+          <option value="COP">🇨🇴 Colombian Peso (COP)</option>
+          <option value="PEN">🇵🇪 Peruvian Sol (PEN)</option>
+          <option value="UYU">🇺🇾 Uruguayan Peso (UYU)</option>
+          <option value="BOB">🇧🇴 Bolivian Boliviano (BOB)</option>
+          <option value="PYG">🇵🇾 Paraguayan Guaraní (PYG)</option>
+          <option value="VES">🇻🇪 Venezuelan Bolívar (VES)</option>
+          <option value="GTQ">🇬🇹 Guatemalan Quetzal (GTQ)</option>
+          <option value="HNL">🇭🇳 Honduran Lempira (HNL)</option>
+          <option value="NIO">🇳🇮 Nicaraguan Córdoba (NIO)</option>
+          <option value="CRC">🇨🇷 Costa Rican Colón (CRC)</option>
+          <option value="DOP">🇩🇴 Dominican Peso (DOP)</option>
+          <option value="HTG">🇭🇹 Haitian Gourde (HTG)</option>
+          <option value="CUP">🇨🇺 Cuban Peso (CUP)</option>
+          <option value="PAB">🇵🇦 Panamanian Balboa (PAB)</option>
+        </optgroup>
+        <optgroup label="── Caribbean ──">
+          <option value="JMD">🇯🇲 Jamaican Dollar (JMD)</option>
+          <option value="TTD">🇹🇹 Trinidad &amp; Tobago Dollar (TTD)</option>
+          <option value="BBD">🇧🇧 Barbadian Dollar (BBD)</option>
+          <option value="XCD">🏝 East Caribbean Dollar (XCD)</option>
+          <option value="BSD">🇧🇸 Bahamian Dollar (BSD)</option>
+          <option value="BZD">🇧🇿 Belize Dollar (BZD)</option>
+          <option value="GYD">🇬🇾 Guyanese Dollar (GYD)</option>
+          <option value="SRD">🇸🇷 Surinamese Dollar (SRD)</option>
+          <option value="AWG">🇦🇼 Aruban Florin (AWG)</option>
+          <option value="ANG">🇨🇼 Netherlands Antillean Guilder (ANG)</option>
+          <option value="KYD">🇰🇾 Cayman Islands Dollar (KYD)</option>
+          <option value="BMD">🇧🇲 Bermudian Dollar (BMD)</option>
+        </optgroup>
+        <optgroup label="── Europe ──">
+          <option value="EUR">🇪🇺 Euro (EUR)</option>
+          <option value="GBP">🇬🇧 British Pound (GBP)</option>
+          <option value="CHF">🇨🇭 Swiss Franc (CHF)</option>
+          <option value="NOK">🇳🇴 Norwegian Krone (NOK)</option>
+          <option value="SEK">🇸🇪 Swedish Krona (SEK)</option>
+          <option value="DKK">🇩🇰 Danish Krone (DKK)</option>
+          <option value="PLN">🇵🇱 Polish Złoty (PLN)</option>
+          <option value="CZK">🇨🇿 Czech Koruna (CZK)</option>
+          <option value="HUF">🇭🇺 Hungarian Forint (HUF)</option>
+          <option value="RON">🇷🇴 Romanian Leu (RON)</option>
+          <option value="BGN">🇧🇬 Bulgarian Lev (BGN)</option>
+          <option value="HRK">🇭🇷 Croatian Kuna (HRK)</option>
+          <option value="RSD">🇷🇸 Serbian Dinar (RSD)</option>
+          <option value="UAH">🇺🇦 Ukrainian Hryvnia (UAH)</option>
+          <option value="RUB">🇷🇺 Russian Ruble (RUB)</option>
+          <option value="TRY">🇹🇷 Turkish Lira (TRY)</option>
+          <option value="ISK">🇮🇸 Icelandic Króna (ISK)</option>
+          <option value="MKD">🇲🇰 Macedonian Denar (MKD)</option>
+          <option value="ALL">🇦🇱 Albanian Lek (ALL)</option>
+          <option value="BAM">🇧🇦 Bosnia-Herzegovina Mark (BAM)</option>
+        </optgroup>
+        <optgroup label="── Africa ──">
+          <option value="NGN">🇳🇬 Nigerian Naira (NGN)</option>
+          <option value="GHS">🇬🇭 Ghanaian Cedi (GHS)</option>
+          <option value="KES">🇰🇪 Kenyan Shilling (KES)</option>
+          <option value="ZAR">🇿🇦 South African Rand (ZAR)</option>
+          <option value="EGP">🇪🇬 Egyptian Pound (EGP)</option>
+          <option value="MAD">🇲🇦 Moroccan Dirham (MAD)</option>
+          <option value="TZS">🇹🇿 Tanzanian Shilling (TZS)</option>
+          <option value="UGX">🇺🇬 Ugandan Shilling (UGX)</option>
+          <option value="ETB">🇪🇹 Ethiopian Birr (ETB)</option>
+          <option value="XOF">🌍 West African CFA Franc (XOF)</option>
+          <option value="XAF">🌍 Central African CFA Franc (XAF)</option>
+          <option value="DZD">🇩🇿 Algerian Dinar (DZD)</option>
+          <option value="TND">🇹🇳 Tunisian Dinar (TND)</option>
+          <option value="LYD">🇱🇾 Libyan Dinar (LYD)</option>
+          <option value="SDG">🇸🇩 Sudanese Pound (SDG)</option>
+          <option value="MZN">🇲🇿 Mozambican Metical (MZN)</option>
+          <option value="ZMW">🇿🇲 Zambian Kwacha (ZMW)</option>
+          <option value="BWP">🇧🇼 Botswana Pula (BWP)</option>
+          <option value="MWK">🇲🇼 Malawian Kwacha (MWK)</option>
+          <option value="RWF">🇷🇼 Rwandan Franc (RWF)</option>
+          <option value="MGA">🇲🇬 Malagasy Ariary (MGA)</option>
+          <option value="AOA">🇦🇴 Angolan Kwanza (AOA)</option>
+          <option value="CDF">🇨🇩 Congolese Franc (CDF)</option>
+          <option value="GNF">🇬🇳 Guinean Franc (GNF)</option>
+          <option value="SLL">🇸🇱 Sierra Leonean Leone (SLL)</option>
+          <option value="SOS">🇸🇴 Somali Shilling (SOS)</option>
+          <option value="NAD">🇳🇦 Namibian Dollar (NAD)</option>
+          <option value="SZL">🇸🇿 Swazi Lilangeni (SZL)</option>
+          <option value="LSL">🇱🇸 Lesotho Loti (LSL)</option>
+        </optgroup>
+        <optgroup label="── Middle East ──">
+          <option value="AED">🇦🇪 UAE Dirham (AED)</option>
+          <option value="SAR">🇸🇦 Saudi Riyal (SAR)</option>
+          <option value="QAR">🇶🇦 Qatari Riyal (QAR)</option>
+          <option value="KWD">🇰🇼 Kuwaiti Dinar (KWD)</option>
+          <option value="BHD">🇧🇭 Bahraini Dinar (BHD)</option>
+          <option value="OMR">🇴🇲 Omani Rial (OMR)</option>
+          <option value="JOD">🇯🇴 Jordanian Dinar (JOD)</option>
+          <option value="IQD">🇮🇶 Iraqi Dinar (IQD)</option>
+          <option value="ILS">🇮🇱 Israeli Shekel (ILS)</option>
+          <option value="LBP">🇱🇧 Lebanese Pound (LBP)</option>
+          <option value="IRR">🇮🇷 Iranian Rial (IRR)</option>
+          <option value="YER">🇾🇪 Yemeni Rial (YER)</option>
+        </optgroup>
+        <optgroup label="── Asia ──">
+          <option value="JPY">🇯🇵 Japanese Yen (JPY)</option>
+          <option value="CNY">🇨🇳 Chinese Yuan (CNY)</option>
+          <option value="INR">🇮🇳 Indian Rupee (INR)</option>
+          <option value="KRW">🇰🇷 South Korean Won (KRW)</option>
+          <option value="HKD">🇭🇰 Hong Kong Dollar (HKD)</option>
+          <option value="SGD">🇸🇬 Singapore Dollar (SGD)</option>
+          <option value="TWD">🇹🇼 Taiwan Dollar (TWD)</option>
+          <option value="THB">🇹🇭 Thai Baht (THB)</option>
+          <option value="MYR">🇲🇾 Malaysian Ringgit (MYR)</option>
+          <option value="IDR">🇮🇩 Indonesian Rupiah (IDR)</option>
+          <option value="PHP">🇵🇭 Philippine Peso (PHP)</option>
+          <option value="VND">🇻🇳 Vietnamese Dong (VND)</option>
+          <option value="PKR">🇵🇰 Pakistani Rupee (PKR)</option>
+          <option value="BDT">🇧🇩 Bangladeshi Taka (BDT)</option>
+          <option value="LKR">🇱🇰 Sri Lankan Rupee (LKR)</option>
+          <option value="NPR">🇳🇵 Nepalese Rupee (NPR)</option>
+          <option value="MMK">🇲🇲 Myanmar Kyat (MMK)</option>
+          <option value="KHR">🇰🇭 Cambodian Riel (KHR)</option>
+          <option value="LAK">🇱🇦 Lao Kip (LAK)</option>
+          <option value="MNT">🇲🇳 Mongolian Tögrög (MNT)</option>
+          <option value="KZT">🇰🇿 Kazakhstani Tenge (KZT)</option>
+          <option value="UZS">🇺🇿 Uzbekistani Som (UZS)</option>
+          <option value="GEL">🇬🇪 Georgian Lari (GEL)</option>
+          <option value="AMD">🇦🇲 Armenian Dram (AMD)</option>
+          <option value="AZN">🇦🇿 Azerbaijani Manat (AZN)</option>
+        </optgroup>
+        <optgroup label="── Oceania ──">
+          <option value="AUD">🇦🇺 Australian Dollar (AUD)</option>
+          <option value="NZD">🇳🇿 New Zealand Dollar (NZD)</option>
+          <option value="FJD">🇫🇯 Fijian Dollar (FJD)</option>
+          <option value="PGK">🇵🇬 Papua New Guinean Kina (PGK)</option>
+          <option value="WST">🇼🇸 Samoan Tālā (WST)</option>
+          <option value="TOP">🇹🇴 Tongan Paʻanga (TOP)</option>
+          <option value="SBD">🇸🇧 Solomon Islands Dollar (SBD)</option>
+          <option value="VUV">🇻🇺 Vanuatu Vatu (VUV)</option>
+        </optgroup>
+      </select>
+      <button onclick="applyCurrencyPicker()" style="font-family:var(--mono);font-size:11px;letter-spacing:2px;padding:8px 20px;background:var(--gold);color:#000;font-weight:700;border:none;border-radius:3px;cursor:pointer;text-transform:uppercase;white-space:nowrap;">✓ Apply</button>
+      <button onclick="revertAndClosePicker()" id="currency-revert-btn" style="display:none;font-family:var(--mono);font-size:11px;letter-spacing:2px;padding:8px 20px;background:transparent;color:var(--muted);border:1px solid var(--border);border-radius:3px;cursor:pointer;text-transform:uppercase;white-space:nowrap;">↩ Back to USD</button>
+    </div>
+    <div id="currency-picker-notice" style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:8px;"></div>
   </div>
 </div></section>
 
@@ -204,7 +359,222 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
   <p style="font-family:var(--mono);font-size:9px;color:var(--muted);text-align:center;">Crypto prices via Coinbase API. Live spot prices. For reference only.</p>
 </div></section>
 
-<!-- DBB POSITION SIZING -->
+<!-- CONVERTER -->
+<section id="converter"><div class="wrap">
+  <div class="divider"></div>
+  <div class="section-label" style="color:var(--gold);">// Converter</div>
+  <h2>Crypto Converter</h2>
+  <div class="calc-box">
+    <div class="calc-title">Global Crypto Converter</div>
+    <div class="calc-sub" id="conv-sub">// Crypto to your currency · Crypto to Crypto · Worldwide</div>
+    <div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-bottom:12px;padding:8px 12px;background:rgba(0,255,225,0.03);border:1px solid var(--border);border-radius:4px;">
+      <span id="conv-locale-notice">⏳ Detecting your currency...</span>
+    </div>
+    <div class="grid-2">
+      <div>
+        <label>From — Crypto</label>
+        <select id="conv-coin">
+          <option value="bitcoin">Bitcoin (BTC)</option>
+          <option value="ethereum">Ethereum (ETH)</option>
+          <option value="ripple">XRP (XRP)</option>
+          <option value="solana">Solana (SOL)</option>
+          <option value="cardano">Cardano (ADA)</option>
+          <option value="dogecoin">Dogecoin (DOGE)</option>
+          <option value="shiba-inu">Shiba Inu (SHIB)</option>
+          <option value="binancecoin">BNB (BNB)</option>
+          <option value="avalanche-2">Avalanche (AVAX)</option>
+          <option value="chainlink">Chainlink (LINK)</option>
+          <option value="pepe">Pepe (PEPE)</option>
+          <option value="monero">Monero (XMR)</option>
+          <option value="zcash">Zcash (ZEC)</option>
+          <option value="official-trump">TRUMP (TRUMP)</option>
+          <option value="pax-gold">PAX Gold (PAXG)</option>
+          <option value="tether">Tether (USDT)</option>
+          <option value="usd-coin">USD Coin (USDC)</option>
+          <option value="stellar">Stellar (XLM)</option>
+        </select>
+      </div>
+      <div>
+        <label id="conv-to-label">To — Currency or Crypto</label>
+        <select id="conv-currency">
+          <optgroup label="── Crypto to Crypto ──">
+            <option value="crypto:bitcoin">Bitcoin (BTC)</option>
+            <option value="crypto:ethereum">Ethereum (ETH)</option>
+            <option value="crypto:ripple">XRP (XRP)</option>
+            <option value="crypto:solana">Solana (SOL)</option>
+            <option value="crypto:cardano">Cardano (ADA)</option>
+            <option value="crypto:dogecoin">Dogecoin (DOGE)</option>
+            <option value="crypto:shiba-inu">Shiba Inu (SHIB)</option>
+            <option value="crypto:binancecoin">BNB (BNB)</option>
+            <option value="crypto:avalanche-2">Avalanche (AVAX)</option>
+            <option value="crypto:chainlink">Chainlink (LINK)</option>
+            <option value="crypto:pepe">Pepe (PEPE)</option>
+            <option value="crypto:monero">Monero (XMR)</option>
+            <option value="crypto:stellar">Stellar (XLM)</option>
+            <option value="crypto:tether">Tether (USDT)</option>
+            <option value="crypto:usd-coin">USD Coin (USDC)</option>
+          </optgroup>
+          <optgroup label="── Americas ──">
+            <option value="fiat:USD">🇺🇸 US Dollar (USD)</option>
+            <option value="fiat:CAD">🇨🇦 Canadian Dollar (CAD)</option>
+            <option value="fiat:MXN">🇲🇽 Mexican Peso (MXN)</option>
+            <option value="fiat:BRL">🇧🇷 Brazilian Real (BRL)</option>
+            <option value="fiat:ARS">🇦🇷 Argentine Peso (ARS)</option>
+            <option value="fiat:CLP">🇨🇱 Chilean Peso (CLP)</option>
+            <option value="fiat:COP">🇨🇴 Colombian Peso (COP)</option>
+            <option value="fiat:PEN">🇵🇪 Peruvian Sol (PEN)</option>
+            <option value="fiat:UYU">🇺🇾 Uruguayan Peso (UYU)</option>
+            <option value="fiat:BOB">🇧🇴 Bolivian Boliviano (BOB)</option>
+            <option value="fiat:PYG">🇵🇾 Paraguayan Guaraní (PYG)</option>
+            <option value="fiat:VES">🇻🇪 Venezuelan Bolívar (VES)</option>
+            <option value="fiat:GTQ">🇬🇹 Guatemalan Quetzal (GTQ)</option>
+            <option value="fiat:HNL">🇭🇳 Honduran Lempira (HNL)</option>
+            <option value="fiat:NIO">🇳🇮 Nicaraguan Córdoba (NIO)</option>
+            <option value="fiat:CRC">🇨🇷 Costa Rican Colón (CRC)</option>
+            <option value="fiat:DOP">🇩🇴 Dominican Peso (DOP)</option>
+            <option value="fiat:HTG">🇭🇹 Haitian Gourde (HTG)</option>
+            <option value="fiat:CUP">🇨🇺 Cuban Peso (CUP)</option>
+            <option value="fiat:PAB">🇵🇦 Panamanian Balboa (PAB)</option>
+          </optgroup>
+          <optgroup label="── Caribbean ──">
+            <option value="fiat:JMD">🇯🇲 Jamaican Dollar (JMD)</option>
+            <option value="fiat:TTD">🇹🇹 Trinidad &amp; Tobago Dollar (TTD)</option>
+            <option value="fiat:BBD">🇧🇧 Barbadian Dollar (BBD)</option>
+            <option value="fiat:XCD">🏝 East Caribbean Dollar (XCD)</option>
+            <option value="fiat:BSD">🇧🇸 Bahamian Dollar (BSD)</option>
+            <option value="fiat:BZD">🇧🇿 Belize Dollar (BZD)</option>
+            <option value="fiat:GYD">🇬🇾 Guyanese Dollar (GYD)</option>
+            <option value="fiat:SRD">🇸🇷 Surinamese Dollar (SRD)</option>
+            <option value="fiat:AWG">🇦🇼 Aruban Florin (AWG)</option>
+            <option value="fiat:ANG">🇨🇼 Netherlands Antillean Guilder (ANG)</option>
+            <option value="fiat:KYD">🇰🇾 Cayman Islands Dollar (KYD)</option>
+            <option value="fiat:BMD">🇧🇲 Bermudian Dollar (BMD)</option>
+          </optgroup>
+          <optgroup label="── Europe ──">
+            <option value="fiat:EUR">🇪🇺 Euro (EUR)</option>
+            <option value="fiat:GBP">🇬🇧 British Pound (GBP)</option>
+            <option value="fiat:CHF">🇨🇭 Swiss Franc (CHF)</option>
+            <option value="fiat:NOK">🇳🇴 Norwegian Krone (NOK)</option>
+            <option value="fiat:SEK">🇸🇪 Swedish Krona (SEK)</option>
+            <option value="fiat:DKK">🇩🇰 Danish Krone (DKK)</option>
+            <option value="fiat:PLN">🇵🇱 Polish Złoty (PLN)</option>
+            <option value="fiat:CZK">🇨🇿 Czech Koruna (CZK)</option>
+            <option value="fiat:HUF">🇭🇺 Hungarian Forint (HUF)</option>
+            <option value="fiat:RON">🇷🇴 Romanian Leu (RON)</option>
+            <option value="fiat:BGN">🇧🇬 Bulgarian Lev (BGN)</option>
+            <option value="fiat:HRK">🇭🇷 Croatian Kuna (HRK)</option>
+            <option value="fiat:RSD">🇷🇸 Serbian Dinar (RSD)</option>
+            <option value="fiat:UAH">🇺🇦 Ukrainian Hryvnia (UAH)</option>
+            <option value="fiat:RUB">🇷🇺 Russian Ruble (RUB)</option>
+            <option value="fiat:TRY">🇹🇷 Turkish Lira (TRY)</option>
+            <option value="fiat:ISK">🇮🇸 Icelandic Króna (ISK)</option>
+            <option value="fiat:MKD">🇲🇰 Macedonian Denar (MKD)</option>
+            <option value="fiat:ALL">🇦🇱 Albanian Lek (ALL)</option>
+            <option value="fiat:BAM">🇧🇦 Bosnia-Herzegovina Mark (BAM)</option>
+          </optgroup>
+          <optgroup label="── Africa ──">
+            <option value="fiat:NGN">🇳🇬 Nigerian Naira (NGN)</option>
+            <option value="fiat:GHS">🇬🇭 Ghanaian Cedi (GHS)</option>
+            <option value="fiat:KES">🇰🇪 Kenyan Shilling (KES)</option>
+            <option value="fiat:ZAR">🇿🇦 South African Rand (ZAR)</option>
+            <option value="fiat:EGP">🇪🇬 Egyptian Pound (EGP)</option>
+            <option value="fiat:MAD">🇲🇦 Moroccan Dirham (MAD)</option>
+            <option value="fiat:TZS">🇹🇿 Tanzanian Shilling (TZS)</option>
+            <option value="fiat:UGX">🇺🇬 Ugandan Shilling (UGX)</option>
+            <option value="fiat:ETB">🇪🇹 Ethiopian Birr (ETB)</option>
+            <option value="fiat:XOF">🌍 West African CFA Franc (XOF)</option>
+            <option value="fiat:XAF">🌍 Central African CFA Franc (XAF)</option>
+            <option value="fiat:DZD">🇩🇿 Algerian Dinar (DZD)</option>
+            <option value="fiat:TND">🇹🇳 Tunisian Dinar (TND)</option>
+            <option value="fiat:LYD">🇱🇾 Libyan Dinar (LYD)</option>
+            <option value="fiat:SDG">🇸🇩 Sudanese Pound (SDG)</option>
+            <option value="fiat:MZN">🇲🇿 Mozambican Metical (MZN)</option>
+            <option value="fiat:ZMW">🇿🇲 Zambian Kwacha (ZMW)</option>
+            <option value="fiat:BWP">🇧🇼 Botswana Pula (BWP)</option>
+            <option value="fiat:MWK">🇲🇼 Malawian Kwacha (MWK)</option>
+            <option value="fiat:RWF">🇷🇼 Rwandan Franc (RWF)</option>
+            <option value="fiat:MGA">🇲🇬 Malagasy Ariary (MGA)</option>
+            <option value="fiat:AOA">🇦🇴 Angolan Kwanza (AOA)</option>
+            <option value="fiat:CDF">🇨🇩 Congolese Franc (CDF)</option>
+            <option value="fiat:GNF">🇬🇳 Guinean Franc (GNF)</option>
+            <option value="fiat:SLL">🇸🇱 Sierra Leonean Leone (SLL)</option>
+            <option value="fiat:SOS">🇸🇴 Somali Shilling (SOS)</option>
+            <option value="fiat:NAD">🇳🇦 Namibian Dollar (NAD)</option>
+            <option value="fiat:SZL">🇸🇿 Swazi Lilangeni (SZL)</option>
+            <option value="fiat:LSL">🇱🇸 Lesotho Loti (LSL)</option>
+          </optgroup>
+          <optgroup label="── Middle East ──">
+            <option value="fiat:AED">🇦🇪 UAE Dirham (AED)</option>
+            <option value="fiat:SAR">🇸🇦 Saudi Riyal (SAR)</option>
+            <option value="fiat:QAR">🇶🇦 Qatari Riyal (QAR)</option>
+            <option value="fiat:KWD">🇰🇼 Kuwaiti Dinar (KWD)</option>
+            <option value="fiat:BHD">🇧🇭 Bahraini Dinar (BHD)</option>
+            <option value="fiat:OMR">🇴🇲 Omani Rial (OMR)</option>
+            <option value="fiat:JOD">🇯🇴 Jordanian Dinar (JOD)</option>
+            <option value="fiat:IQD">🇮🇶 Iraqi Dinar (IQD)</option>
+            <option value="fiat:ILS">🇮🇱 Israeli Shekel (ILS)</option>
+            <option value="fiat:LBP">🇱🇧 Lebanese Pound (LBP)</option>
+            <option value="fiat:IRR">🇮🇷 Iranian Rial (IRR)</option>
+            <option value="fiat:YER">🇾🇪 Yemeni Rial (YER)</option>
+          </optgroup>
+          <optgroup label="── Asia ──">
+            <option value="fiat:JPY">🇯🇵 Japanese Yen (JPY)</option>
+            <option value="fiat:CNY">🇨🇳 Chinese Yuan (CNY)</option>
+            <option value="fiat:INR">🇮🇳 Indian Rupee (INR)</option>
+            <option value="fiat:KRW">🇰🇷 South Korean Won (KRW)</option>
+            <option value="fiat:HKD">🇭🇰 Hong Kong Dollar (HKD)</option>
+            <option value="fiat:SGD">🇸🇬 Singapore Dollar (SGD)</option>
+            <option value="fiat:TWD">🇹🇼 Taiwan Dollar (TWD)</option>
+            <option value="fiat:THB">🇹🇭 Thai Baht (THB)</option>
+            <option value="fiat:MYR">🇲🇾 Malaysian Ringgit (MYR)</option>
+            <option value="fiat:IDR">🇮🇩 Indonesian Rupiah (IDR)</option>
+            <option value="fiat:PHP">🇵🇭 Philippine Peso (PHP)</option>
+            <option value="fiat:VND">🇻🇳 Vietnamese Dong (VND)</option>
+            <option value="fiat:PKR">🇵🇰 Pakistani Rupee (PKR)</option>
+            <option value="fiat:BDT">🇧🇩 Bangladeshi Taka (BDT)</option>
+            <option value="fiat:LKR">🇱🇰 Sri Lankan Rupee (LKR)</option>
+            <option value="fiat:NPR">🇳🇵 Nepalese Rupee (NPR)</option>
+            <option value="fiat:MMK">🇲🇲 Myanmar Kyat (MMK)</option>
+            <option value="fiat:KHR">🇰🇭 Cambodian Riel (KHR)</option>
+            <option value="fiat:LAK">🇱🇦 Lao Kip (LAK)</option>
+            <option value="fiat:MNT">🇲🇳 Mongolian Tögrög (MNT)</option>
+            <option value="fiat:KZT">🇰🇿 Kazakhstani Tenge (KZT)</option>
+            <option value="fiat:UZS">🇺🇿 Uzbekistani Som (UZS)</option>
+            <option value="fiat:GEL">🇬🇪 Georgian Lari (GEL)</option>
+            <option value="fiat:AMD">🇦🇲 Armenian Dram (AMD)</option>
+            <option value="fiat:AZN">🇦🇿 Azerbaijani Manat (AZN)</option>
+          </optgroup>
+          <optgroup label="── Oceania ──">
+            <option value="fiat:AUD">🇦🇺 Australian Dollar (AUD)</option>
+            <option value="fiat:NZD">🇳🇿 New Zealand Dollar (NZD)</option>
+            <option value="fiat:FJD">🇫🇯 Fijian Dollar (FJD)</option>
+            <option value="fiat:PGK">🇵🇬 Papua New Guinean Kina (PGK)</option>
+            <option value="fiat:WST">🇼🇸 Samoan Tālā (WST)</option>
+            <option value="fiat:TOP">🇹🇴 Tongan Paʻanga (TOP)</option>
+            <option value="fiat:SBD">🇸🇧 Solomon Islands Dollar (SBD)</option>
+            <option value="fiat:VUV">🇻🇺 Vanuatu Vatu (VUV)</option>
+          </optgroup>
+        </select>
+      </div>
+    </div>
+    <div class="grid-2" style="margin-top:8px;">
+      <div><label id="conv-from-amt-label">Crypto Amount</label><input type="text" inputmode="decimal" id="conv-coin-amt" placeholder="1.0" step="any" oninput="convertCoinToFiat()"/></div>
+      <div><label id="conv-to-amt-label">Currency Amount</label><input type="text" inputmode="decimal" id="conv-usd-amt" placeholder="0.00" step="any" oninput="convertFiatToCoin()"/></div>
+    </div>
+    <div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:6px;padding:8px 12px;background:rgba(0,0,0,0.3);border-radius:4px;">
+      <span id="conv-rate-line">Select amounts above to convert</span>
+    </div>
+    <div id="conv-result" style="font-family:var(--mono);font-size:14px;color:var(--neon);text-align:center;padding:12px;min-height:30px;"></div>
+    <!-- hidden field kept for sync compatibility -->
+    <input type="hidden" id="conv-price"/>
+    <input type="hidden" id="conv-rate"/>
+    <input type="hidden" id="conv-rate-usd"/>
+    <button onclick="resetConverter()" style="font-family:var(--mono);font-size:11px;letter-spacing:2px;padding:8px 20px;background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:4px;cursor:pointer;width:100%;margin-top:4px;text-transform:uppercase;">Reset</button>
+    <button class="btn-secondary" onclick="sendConverterToPortfolio()" style="margin-top:8px;">Send to Portfolio Tracker</button>
+  </div>
+</div></section>
+
+<!-- DIVIDEND CALCULATOR -->
 <section id="dbb-position"><div class="wrap">
   <div class="divider" style="background:linear-gradient(90deg,transparent,var(--cyan),transparent);"></div>
   <div class="section-label" style="color:var(--cyan);">// DBB Position Sizing</div>
@@ -305,7 +675,7 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
       <div><label>Total Position (coins/shares)</label><input type="text" inputmode="decimal" id="se-qty" placeholder="1.5" step="any"/></div>
     </div>
     <div class="grid-2">
-      <div><label>Avg Entry Price ($)</label><input type="text" inputmode="decimal" id="se-entry" placeholder="45000" step="any"/></div>
+      <div><label>Avg Entry Price ($) <span style="color:var(--muted);font-size:10px;">// or current price if single buy</span></label><input type="text" inputmode="decimal" id="se-entry" placeholder="45000" step="any" oninput="seSingleBuyHint()"/></div>
     <div><label>🎯 Potential Best-Case Price ($) <span style="color:var(--muted);font-size:10px;">// optional — hypothetical max, not a recommendation</span></label><input type="text" inputmode="decimal" id="se-best-exit" placeholder="e.g. 2.00" step="any"/></div>
       <div><label>Total Invested ($)</label><input type="text" inputmode="decimal" id="se-invested" placeholder="67500" step="any"/></div>
     </div>
@@ -337,35 +707,6 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
 </div></section>
 
 <!-- CONVERTER -->
-<section id="converter"><div class="wrap">
-  <div class="divider"></div>
-  <div class="section-label" style="color:var(--gold);">// Converter</div>
-  <h2>Coin / USD Converter</h2>
-  <div class="calc-box">
-    <div class="calc-title">Quick Convert</div>
-    <div class="calc-sub">// Coin to USD or USD to Coin</div>
-    <div class="grid-2">
-      <div><label>Select Coin</label>
-        <select id="conv-coin">
-          <option value="bitcoin">Bitcoin (BTC)</option><option value="ethereum">Ethereum (ETH)</option><option value="ripple">XRP</option><option value="solana">Solana (SOL)</option><option value="cardano">Cardano (ADA)</option><option value="dogecoin">Dogecoin (DOGE)</option><option value="shiba-inu">Shiba Inu (SHIB)</option><option value="tether">Tether (USDT)</option><option value="usd-coin">USD Coin (USDC)</option>
-        </select></div>
-      <div><label>Price ($) - auto or manual</label><input type="text" inputmode="decimal" id="conv-price" placeholder="Auto from live" step="any"/></div>
-    </div>
-    <div class="grid-2">
-      <div><label>Coin Amount</label><input type="text" inputmode="decimal" id="conv-coin-amt" placeholder="2.5" step="any" oninput="convertCoinToUSD()"/></div>
-      <div><label>USD Amount</label><input type="text" inputmode="decimal" id="conv-usd-amt" placeholder="100000" step="any" oninput="convertUSDToCoin()"/></div>
-    </div>
-    <div style="display:flex;gap:12px;margin-top:8px;">
-      <div style="flex:1;font-family:var(--mono);font-size:11px;color:var(--muted);">1 USD = <span id="conv-rate">--</span> coins</div>
-      <div style="flex:1;font-family:var(--mono);font-size:11px;color:var(--muted);text-align:right;">1 coin = $<span id="conv-rate-usd">--</span></div>
-    </div>
-    <div id="conv-result" style="font-family:var(--mono);font-size:14px;color:var(--neon);text-align:center;padding:12px;min-height:30px;"></div>
-    <button onclick="resetConverter()" style="font-family:var(--mono);font-size:11px;letter-spacing:2px;padding:8px 20px;background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:4px;cursor:pointer;width:100%;margin-top:4px;text-transform:uppercase;">Reset</button>
-    <button class="btn-secondary" onclick="sendConverterToPortfolio()" style="margin-top:8px;">Send to Portfolio Tracker</button>
-  </div>
-</div></section>
-
-<!-- DIVIDEND CALCULATOR -->
 <section id="dividend-calc"><div class="wrap">
   <div class="divider"></div>
   <div class="section-label" style="color:var(--purple);">// Dividends</div>
@@ -523,37 +864,44 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
 
       <div style="background:#030a0a;border:1px solid var(--border);border-top:3px solid var(--neon);border-radius:6px;padding:14px;">
         <div style="font-family:var(--display);font-size:16px;letter-spacing:2px;color:var(--neon);margin-bottom:6px;">DCA IN</div>
-        <div style="font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.8;">Enter each entry — price, quantity, fee. Hit <strong style="color:#fff;">Calculate DCA</strong> to see your average cost, total invested, and hypothetical P&amp;L. Hit <strong style="color:#fff;">Send to Portfolio</strong> to add it automatically.</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.8;">Add each buy — price, quantity, and optional fee. Hit <strong style="color:#fff;">Calculate DCA</strong> to see your average cost, total invested (including fees), unrealised P&amp;L at current price, and hypothetical return at a target price. Charts break down each entry by cost weight.<br><br>
+        <strong style="color:var(--cyan);">Auto-fill:</strong> The first Price row fills automatically with the live market price as soon as prices load, when you click a USE button on a ticker, or when you type into Current Price. It only fills if that row is still empty — it never overwrites what you have typed.<br><br>
+        After you calculate, qty and total invested push automatically to What If, Scaled Exit, Dividends, and Portfolio. Hit <strong style="color:#fff;">Send to Portfolio</strong> to add the full position in one tap.</div>
       </div>
 
       <div style="background:#030a0a;border:1px solid var(--border);border-top:3px solid var(--red);border-radius:6px;padding:14px;">
         <div style="font-family:var(--display);font-size:16px;letter-spacing:2px;color:var(--red);margin-bottom:6px;">SCALED EXIT</div>
-        <div style="font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.8;">Enter your position size and avg entry. Add potential price levels and what % you might consider exiting at each. See hypothetical USD totals at every stage. Educational only — not a recommendation to sell anything.</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.8;">Enter your total position size and average entry price. Add up to as many potential price levels as you like — set a % you might exit at each and an optional note. Hit <strong style="color:#fff;">Model Potential Exits</strong> to see hypothetical USD received, P&amp;L, and remaining holding at every stage, plus a blended exit price across all levels.<br><br>
+        If you fill in a <strong style="color:var(--gold);">Best-Case Price</strong>, a hypothetical best-case return is also shown. After calculating, Portfolio name, qty, and entry price auto-fill if those fields are empty. Educational only — not a recommendation to sell.</div>
       </div>
 
       <div style="background:#030a0a;border:1px solid var(--border);border-top:3px solid var(--gold);border-radius:6px;padding:14px;">
         <div style="font-family:var(--display);font-size:16px;letter-spacing:2px;color:var(--gold);margin-bottom:6px;">CONVERTER</div>
-        <div style="font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.8;">Select a coin, enter either a coin amount or USD amount — the other fills in automatically. Price pulls from live data. You can override the price manually any time.</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.8;">Select a coin from the dropdown — the live spot price fills automatically. Type either a coin amount or a currency amount and the other side calculates instantly. You can override the price field manually any time. Changing the dropdown resets both amount fields so you always start clean.<br><br>
+        <strong style="color:var(--gold);">Global currencies:</strong> The "To" dropdown covers every world currency — Americas, Caribbean, Europe, Africa, Middle East, Asia, and Oceania. Your local currency is auto-detected from your browser language on load and pre-selected for you. You can change it any time.<br><br>
+        <strong style="color:var(--cyan);">Crypto to Crypto:</strong> Pick any coin in both dropdowns to convert BTC → XRP, ETH → SOL, or any other pair directly using live prices.<br><br>
+        <strong style="color:var(--gold);">💱 Currency toggle:</strong> Hit <strong style="color:#fff;">💱 Convert Results</strong> in the top bar to open the currency picker. Your local currency is pre-detected and pre-selected — just hit <strong style="color:#fff;">✓ Apply</strong> to flip all result boxes to your currency, or choose any other from the full world list first. The button updates to show the active currency (e.g. <strong style="color:var(--gold);">💱 NGN</strong>). Hit <strong style="color:#fff;">↩ Back to USD</strong> inside the picker to revert everything. Results stay in USD by default — you opt in. Print captures whatever is displayed, so printing in your currency just works.</div>
       </div>
 
       <div style="background:#030a0a;border:1px solid var(--border);border-top:3px solid var(--purple);border-radius:6px;padding:14px;">
         <div style="font-family:var(--display);font-size:16px;letter-spacing:2px;color:var(--purple);margin-bottom:6px;">DIVIDENDS</div>
-        <div style="font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.8;">Enter stock price, shares, and annual dividend per share. Toggle DRIP on to see how reinvesting compounds your shares year by year.</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.8;">Enter asset price, number of shares, and the annual dividend per share. Choose your payment frequency (monthly, quarterly, semi-annual, or annual) and how many years to project. Toggle <strong style="color:#fff;">DRIP on</strong> to reinvest every payment and watch your share count compound year by year. Add an optional <strong style="color:var(--gold);">Potential Exit Price</strong> to see a hypothetical capital gain stacked on top of total dividends earned.</div>
       </div>
 
       <div style="background:#030a0a;border:1px solid var(--border);border-top:3px solid var(--cyan);border-radius:6px;padding:14px;">
         <div style="font-family:var(--display);font-size:16px;letter-spacing:2px;color:var(--cyan);margin-bottom:6px;">WHAT IF</div>
-        <div style="font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.8;">Enter current price and how much you hold. See your value at 2x, 3x, 4x, 5x, 10x. Set a target price to see exactly what it's worth when you get there.</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.8;">Enter the current price, how much you hold, and optionally your total amount invested. See your portfolio value at 2×, 3×, 4×, 5×, and 10× from current price — with ROI % shown if you entered your invested amount. Set a <strong style="color:var(--gold);">Target Price</strong> to see the exact value and return at that specific level. After calculating, shares and price auto-fill Dividends and Portfolio if those fields are still empty.</div>
       </div>
 
       <div style="background:#030a0a;border:1px solid var(--border);border-top:3px solid var(--neon);border-radius:6px;padding:14px;">
         <div style="font-family:var(--display);font-size:16px;letter-spacing:2px;color:var(--neon);margin-bottom:6px;">PORTFOLIO</div>
-        <div style="font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.8;">Add any holding manually or use the <strong style="color:#fff;">Send to Portfolio</strong> buttons from DCA or What If. See your total value, gain/loss, ROI, fees, dividends, and pie charts all in one place.</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.8;">Track all your holdings in one place. Fill in name, buy price, qty, fee, current price, and optional annual dividend — then hit <strong style="color:#fff;">Add to Portfolio</strong>. Or use the <strong style="color:#fff;">Send to Portfolio</strong> buttons from DCA, What If, or Scaled Exit to populate it automatically. See total invested, current value, overall P&amp;L, ROI, fees paid, estimated dividend income, 2×–10× multiplier projections, and two pie charts — holdings breakdown by value and invested-vs-gain. Each entry clears the input fields so you can add the next holding straight away.</div>
       </div>
 
       <div style="background:#030a0a;border:1px solid var(--border);border-top:3px solid var(--cyan);border-radius:6px;padding:14px;grid-column:1/-1;">
         <div style="font-family:var(--display);font-size:16px;letter-spacing:2px;color:var(--cyan);margin-bottom:6px;">⚡ DBB POSITION SIZING</div>
-        <div style="font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.8;">Built on Edward Thorp's Kelly Criterion. Enter your capital, asset price, max risk %, entry price, and support/resistance levels. Set your conviction score 1–10. The calculator gives you 4 position sizes — FULL, 75, HALF, QUARTER — so you always know exactly how many shares or coins to buy based on your confidence in the trade.</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.8;">Built on Edward Thorp's Kelly Criterion. Enter your total trading capital, asset type (stock or crypto), asset price, and max risk % — a live risk display shows dollar amounts and share counts for all four tiers as you type. Add your entry price, possible support, and possible resistance — a live liquidity panel shows hypothetical stop zones, target zones, and your risk/reward ratio (1:X) instantly.<br><br>
+        Set your <strong style="color:var(--cyan);">Conviction Score 1–10</strong> — the slider colours red (1–3), gold (4–5), cyan (6–7), or green (8–10) and the warning banner tells you which tier Thorp's method recommends. Hit <strong style="color:var(--neon);">Calculate DBB Tiers</strong> to get all four position sizes: <strong style="color:#fff;">FULL · 75 · HALF · QUARTER</strong> — each showing total position $, coins/shares, and max loss.</div>
       </div>
 
     </div>
@@ -561,9 +909,13 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
     <div style="margin-top:16px;padding:14px;background:rgba(0,255,106,0.04);border:1px solid rgba(0,255,106,0.2);border-radius:6px;">
       <div style="font-family:var(--mono);font-size:10px;letter-spacing:3px;color:var(--neon);margin-bottom:8px;">// AUTO-FILL SYNC — HOW IT WORKS</div>
       <div style="font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.9;">
-        When <strong style="color:var(--green);">Sync is ON</strong> — type an asset name in any calculator and the same name fills across DCA, Scaled Exit, Converter, and Portfolio automatically. Same with price and quantity. You can still override any field manually at any time — just type your own value and it sticks.<br><br>
-        <strong style="color:var(--cyan);">DBB Money Management sync:</strong> When you enter your Entry Price, Support, and Resistance in the DBB calculator, those levels automatically push into all other calculators — <strong style="color:#fff;">Entry Price</strong> fills the current price in DCA, Scaled Exit, What If, and Dividends. <strong style="color:var(--cyan);">Support</strong> fills your first DCA buy entry as a potential buy zone. <strong style="color:var(--gold);">Resistance</strong> fills the target/exit price in DCA, Scaled Exit, What If, and Dividends — so every calculator is instantly seeded with your technical levels for projections.<br><br>
-        Turn sync <strong style="color:var(--red);">OFF</strong> using the toggle bar above if you want each calculator to work independently with different assets at the same time.
+        When <strong style="color:var(--green);">Sync is ON</strong>, typing an asset name, price, or quantity in any calculator pushes the same value to all other empty matching fields across DCA, Scaled Exit, Converter, Portfolio, What If, and Dividends. You can type in any ticker symbol (e.g. BTC, ETH, SOL) in any name or price field — a dropdown appears with the live price and clicking it fills all calculators at once. Fields you have already typed a value into are never overwritten — sync only fills empty fields.<br><br>
+        <strong style="color:var(--cyan);">DCA first-row auto-fill:</strong> The first Price ($) row in the DCA entry table fills automatically with the live market price as soon as prices load, when you click a USE button on a ticker, or when you type into Current Price. Only fills if the row is empty — never overwrites your own entries.<br><br>
+        <strong style="color:var(--cyan);">DCA Calculate sync:</strong> When you hit Calculate DCA, the total quantity and total invested are force-written to What If, Scaled Exit, Dividends, and Portfolio — these are the real numbers so they always overwrite stale auto-filled values. For a single buy, Scaled Exit entry price gets the current price; for multiple buys it gets your DCA average. DBB entry also receives your average cost basis.<br><br>
+        <strong style="color:var(--cyan);">DBB sync:</strong> As you type Entry Price, Support, and Resistance — live panels update instantly. When Sync is ON, <strong style="color:var(--green);">Entry Price</strong> fills the current price field in DCA, Scaled Exit, What If, and Dividends (empty fields only). <strong style="color:var(--gold);">Resistance</strong> always overwrites all target and exit fields — it seeds DCA target, Scaled Exit best-case, What If target, Dividends target, and all three Scaled Exit level rows with staged prices based on the entry→resistance range. If qty is already filled in Scaled Exit, the exit model runs automatically. A sync notice confirms every field that was updated.<br><br>
+        <strong style="color:var(--cyan);">Scaled Exit and What If sync:</strong> After calculating Scaled Exit, Portfolio name, qty, and entry price auto-fill if empty. After calculating What If, shares and price push to Dividends and Portfolio if empty.<br><br>
+        Hit <strong style="color:var(--cyan);">🔄 Re-Sync</strong> in the top bar to push whatever is currently filled to any fields still empty across all calculators. Hit <strong style="color:var(--red);">Toggle Off</strong> to work each calculator independently with different assets at the same time.<br><br>
+        <strong style="color:var(--gold);">💱 Currency toggle:</strong> All results show in USD by default — inputs, prices, and math never change. Hit <strong style="color:#fff;">💱 Convert Results</strong> in the top bar to open the currency picker. Your local currency is auto-detected and pre-selected. Pick any world currency and hit <strong style="color:#fff;">✓ Apply</strong> — every result box across all calculators flips instantly. Hit <strong style="color:#fff;">↩ Back to USD</strong> to revert. Print captures whatever is displayed, so printing in your local currency just works.
       </div>
     </div>
   </div>
@@ -635,6 +987,23 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
 // Crypto: Coinbase public API (free, no key, CORS-open)
 let livePrices={};
 let liveTicker={}; // sym→{id,price,type} for type-ahead + USE buttons
+
+// ===== FILL FIRST DCA PRICE (global scope — called from fetchPrices & DOMContentLoaded) =====
+function fillFirstDCAPrice(){
+  var cur=document.getElementById('dca-current');
+  if(!cur) return;
+  var curVal=parseFloat(cur.value)||0;
+  if(curVal<=0) return;
+  var firstPrice=document.querySelector('#dca-entries .dca-price');
+  if(!firstPrice) return;
+  var existingVal=parseFloat(firstPrice.value)||0;
+  if(existingVal>0) return; // already has a real number — don't overwrite
+  firstPrice.value=curVal.toFixed(4).replace(/\.?0+$/,'');
+  firstPrice.style.borderColor='var(--cyan)';
+  firstPrice.style.boxShadow='0 0 8px rgba(0,255,225,0.3)';
+  setTimeout(function(){firstPrice.style.borderColor='';firstPrice.style.boxShadow='';},1200);
+}
+
 async function fetchPrices(){
   let h='';
   // --- CRYPTO via Coinbase public spot API ---
@@ -676,6 +1045,8 @@ async function fetchPrices(){
   // Stocks/Futures/Forex removed — CORS blocks browser fetches from GitHub Pages.
   // Crypto only via Coinbase: live, no key, always works.
   document.getElementById('ticker-container').innerHTML=h||'<div style="color:var(--red);font-family:var(--mono);font-size:12px;">Unable to load. Refresh page.</div>';
+  // Auto-fill first DCA price from current price after each fetch
+  if(typeof fillFirstDCAPrice==='function') fillFirstDCAPrice();
   // Launch meteors to every price tile on every refresh
   launchMeteorsToAll();
   // Track prices for future use
@@ -833,7 +1204,7 @@ document.addEventListener('click',function(e){
   var sym=btn.getAttribute('data-sym');
   var price=parseFloat(btn.getAttribute('data-price'))||0;
   var type=btn.getAttribute('data-type')||'crypto';
-  if(sym&&price) useAsset(sym,price,type);
+  if(sym&&price){ useAsset(sym,price,type); setTimeout(function(){ if(typeof fillFirstDCAPrice==='function') fillFirstDCAPrice(); },50); }
 });
 
 // ===== DCA =====
@@ -882,6 +1253,9 @@ function calcDCA(){
   dcaForceSet('pt-qty',     cleanQty);
   dcaForceSet('se-qty',     cleanQty);
   dcaForceSet('proj-qty',   cleanQty);
+  // Always push total invested to proj-invested and se-invested — DCA result is truth
+  dcaForceSet('proj-invested', ti.toFixed(2));
+  dcaForceSet('se-invested',   ti.toFixed(2));
   // Price — only fill empty fields (user may have overridden)
   function dcaFillEmpty(id, val){
     var el=document.getElementById(id);
@@ -901,24 +1275,26 @@ function calcDCA(){
   if(ptName&&!ptName.value){ptName.value=name;}
 
   // ── AUTO-SYNC DCA results → Scaled Exit ──
-  // Fill Scaled Exit with the DCA average price + position size automatically
+  // Single buy (en===1): se-entry = current price (what you can sell at now)
+  // Multiple buys (DCA): se-entry = avg cost basis
   if(avg>0){
     var seEntry=document.getElementById('se-entry');
     var seQty=document.getElementById('se-qty');
     var seName=document.getElementById('se-name');
     var seInvested=document.getElementById('se-invested');
-    // Only fill if field is empty or sync is ON
-    if(seEntry&&(syncOn||!seEntry.value)) seEntry.value=avg.toFixed(6).replace(/\.?0+$/,'');
+    var seEntryVal = (en===1 && current>0) ? current : avg;
+    var seEntryLabel = (en===1 && current>0) ? 'current price (single buy)' : 'DCA avg price';
+    if(seEntry&&(syncOn||!seEntry.value)) seEntry.value=seEntryVal.toFixed(6).replace(/\.?0+$/,'');
     if(seQty&&(syncOn||!seQty.value)) seQty.value=tq;
     if(seName&&(syncOn||!seName.value)) seName.value=name;
     if(seInvested&&(syncOn||!seInvested.value)) seInvested.value=tc.toFixed(2);
-    // Also fill DBB entry price with avg cost
+    // DBB entry = avg cost basis always (for position sizing)
     var dbbEntry=document.getElementById('dbb-entry');
     if(dbbEntry&&(syncOn||!dbbEntry.value)) dbbEntry.value=avg.toFixed(6).replace(/\.?0+$/,'');
-    // Flash Scaled Exit entry field to show it was filled
-    if(seEntry&&avg>0){
-      seEntry.style.borderColor='var(--red)';
-      seEntry.style.boxShadow='0 0 10px rgba(255,82,82,0.4)';
+    // Flash Scaled Exit entry field
+    if(seEntry&&seEntryVal>0){
+      seEntry.style.borderColor=en===1?'var(--cyan)':'var(--red)';
+      seEntry.style.boxShadow='0 0 10px '+(en===1?'rgba(0,255,225,0.4)':'rgba(255,82,82,0.4)');
       setTimeout(function(){seEntry.style.borderColor='';seEntry.style.boxShadow='';},1500);
     }
   }
@@ -971,6 +1347,7 @@ function calcDCA(){
       ...(target>0?(()=>{const tv2=tq*target;const tgl=tv2-ti;return [{label:'Value at Target', val:tv2, color:'#ffd166', fmt:'$'+tv2.toFixed(2), pct:null},{label:tgl>=0?'↑ Target Return':'↓ Target Loss', val:Math.abs(tgl), color:tgl>=0?'#ffd166':'#ff9f1c', fmt:(tgl>=0?'+':'-')+'$'+Math.abs(tgl).toFixed(2), pct:ti>0?(tgl/ti*100).toFixed(1)+'%':null}];})():[]),
     ],
   });
+  maybeApplyResultCurrency();
 }
 function clearDCA(){document.getElementById('dca-chart-wrap').style.display='none';document.getElementById('dca-name').value='';document.getElementById('dca-entries').innerHTML='<div class="dca-entry"><div><label>Price ($)</label><input type="text" inputmode="decimal" class="dca-price" placeholder="45000" step="any"/></div><div><label>Quantity</label><input type="text" inputmode="decimal" class="dca-qty" placeholder="0.5" step="any"/></div><div><label>Fee ($)</label><input type="text" inputmode="decimal" class="dca-fee" placeholder="2.50" step="any"/></div></div>';document.getElementById('dca-current').value='';document.getElementById('dca-results').style.display='none';}
 
@@ -986,53 +1363,322 @@ function injectDCAtoPortfolio(){
 }
 
 // ===== CONVERTER =====
+// Global fiat exchange rates vs USD (fetched once, cached)
+var _fxRates={USD:1};
+var _fxLoaded=false;
+
+// Locale → currency map for auto-detection
+var _localeCurrencyMap={
+  'en-US':'USD','en-CA':'CAD','fr-CA':'CAD','es-MX':'MXN','pt-BR':'BRL',
+  'es-AR':'ARS','es-CL':'CLP','es-CO':'COP','es-PE':'PEN','es-UY':'UYU',
+  'es-BO':'BOB','es-PY':'PYG','es-VE':'VES','es-GT':'GTQ','es-HN':'HNL',
+  'es-NI':'NIO','es-CR':'CRC','es-DO':'DOP','es-PA':'PAB','en-JM':'JMD',
+  'en-TT':'TTD','en-BB':'BBD','en-BS':'BSD','en-BZ':'BZD','en-GY':'GYD',
+  'en-GB':'GBP','de-DE':'EUR','fr-FR':'EUR','es-ES':'EUR','it-IT':'EUR',
+  'pt-PT':'EUR','nl-NL':'EUR','el-GR':'EUR','fi-FI':'EUR','sv-SE':'SEK',
+  'nb-NO':'NOK','da-DK':'DKK','pl-PL':'PLN','cs-CZ':'CZK','hu-HU':'HUF',
+  'ro-RO':'RON','bg-BG':'BGN','sr-RS':'RSD','uk-UA':'UAH','ru-RU':'RUB',
+  'tr-TR':'TRY','is-IS':'ISK','sq-AL':'ALL','en-NG':'NGN','en-GH':'GHS',
+  'sw-KE':'KES','af-ZA':'ZAR','ar-EG':'EGP','ar-MA':'MAD','sw-TZ':'TZS',
+  'en-UG':'UGX','am-ET':'ETB','ar-DZ':'DZD','ar-TN':'TND','ar-LY':'LYD',
+  'ar-SD':'SDG','pt-MZ':'MZN','en-ZM':'ZMW','tn-BW':'BWP','en-RW':'RWF',
+  'mg-MG':'MGA','pt-AO':'AOA','ln-CD':'CDF','en-NA':'NAD','ar-AE':'AED',
+  'ar-SA':'SAR','ar-QA':'QAR','ar-KW':'KWD','ar-BH':'BHD','ar-OM':'OMR',
+  'ar-JO':'JOD','ar-IQ':'IQD','he-IL':'ILS','ar-LB':'LBP','fa-IR':'IRR',
+  'ar-YE':'YER','ja-JP':'JPY','zh-CN':'CNY','zh-TW':'TWD','ko-KR':'KRW',
+  'zh-HK':'HKD','en-SG':'SGD','th-TH':'THB','ms-MY':'MYR','id-ID':'IDR',
+  'fil-PH':'PHP','vi-VN':'VND','ur-PK':'PKR','bn-BD':'BDT','si-LK':'LKR',
+  'ne-NP':'NPR','my-MM':'MMK','km-KH':'KHR','lo-LA':'LAK','mn-MN':'MNT',
+  'kk-KZ':'KZT','uz-UZ':'UZS','ka-GE':'GEL','hy-AM':'AMD','az-AZ':'AZN',
+  'en-AU':'AUD','en-NZ':'NZD','en-FJ':'FJD','en-PG':'PGK','en-WS':'WST',
+  'to-TO':'TOP','en-SB':'SBD','bi-VU':'VUV','ch-GU':'USD',
+  'en-IN':'INR','hi-IN':'INR',
+};
+
+// Currency symbols for display
+var _currencySymbols={
+  USD:'$',EUR:'€',GBP:'£',JPY:'¥',CNY:'¥',INR:'₹',KRW:'₩',NGN:'₦',
+  GHS:'₵',THB:'฿',PHP:'₱',PKR:'₨',BDT:'৳',RUB:'₽',TRY:'₺',UAH:'₴',
+  ILS:'₪',KZT:'₸',MNT:'₮',VND:'₫',KHR:'៛',LAK:'₭',MMK:'K',
+  SAR:'﷼',IRR:'﷼',YER:'﷼',QAR:'﷼',OMR:'﷼',
+  AED:'د.إ',KWD:'د.ك',BHD:'د.ب',JOD:'د.أ',IQD:'ع.د',LBP:'ل.ل',
+  MAD:'د.م.',DZD:'د.ج',TND:'د.ت',LYD:'ل.د',EGP:'ج.م',SDG:'ج.س',
+  DEFAULT:'',
+};
+
+function getConvSymbol(cur){return _currencySymbols[cur]||'';}
+
+async function fetchFXRates(){
+  try{
+    // frankfurter.app — free, no key, all ISO currencies
+    const r=await fetch('https://api.frankfurter.app/latest?from=USD');
+    const d=await r.json();
+    if(d&&d.rates){
+      _fxRates={USD:1,...d.rates};
+      _fxLoaded=true;
+    }
+  }catch(e){
+    // Fallback: approximate static rates (updated periodically)
+    _fxRates={
+      USD:1,EUR:0.92,GBP:0.79,JPY:149,CNY:7.24,INR:83.1,KRW:1325,
+      CAD:1.36,AUD:1.53,NZD:1.65,CHF:0.89,SEK:10.4,NOK:10.6,DKK:6.88,
+      PLN:3.95,CZK:22.8,HUF:356,RON:4.57,BGN:1.80,RSD:108,UAH:37.3,
+      RUB:91.5,TRY:30.5,NGN:1520,GHS:12.1,KES:129,ZAR:18.6,EGP:30.9,
+      MAD:10.1,TZS:2520,UGX:3760,ETB:55.8,DZD:134,TND:3.09,DOP:57.2,
+      AED:3.67,SAR:3.75,QAR:3.64,KWD:0.308,BHD:0.377,OMR:0.385,
+      JOD:0.709,ILS:3.66,TRY:30.5,PKR:278,BDT:110,LKR:319,THB:34.8,
+      MYR:4.65,IDR:15600,PHP:55.9,VND:24200,SGD:1.34,HKD:7.82,TWD:31.9,
+      MXN:17.1,BRL:4.97,ARS:890,CLP:895,COP:3950,PEN:3.72,UYU:38.8,
+      JMD:156,TTD:6.78,BBD:2.00,XCD:2.70,BSD:1.00,BZD:2.00,GYD:209,
+      MZN:63.9,ZMW:25.8,BWP:13.5,RWF:1280,AOA:826,NAD:18.6,
+      KZT:447,UZS:12300,GEL:2.67,AMD:387,AZN:1.70,MNT:3400,
+      FJD:2.25,PGK:3.73,WST:2.72,TOP:2.36,SBD:8.38,VUV:119,
+    };
+    _fxLoaded=true;
+  }
+}
+
+function detectUserCurrency(){
+  const langs=navigator.languages||[navigator.language||'en-US'];
+  for(const lang of langs){
+    if(_localeCurrencyMap[lang]) return _localeCurrencyMap[lang];
+    // try language prefix match (e.g. 'en-GB-oxendict' → 'en-GB')
+    const parts=lang.split('-');
+    if(parts.length>=2){
+      const short=parts[0]+'-'+parts[1];
+      if(_localeCurrencyMap[short]) return _localeCurrencyMap[short];
+    }
+  }
+  // Try Intl.NumberFormat to get currency
+  try{
+    const fmt=new Intl.NumberFormat(undefined,{style:'currency',currency:'USD'});
+    const resolved=fmt.resolvedOptions();
+    if(resolved.currency&&resolved.currency!=='USD') return resolved.currency;
+  }catch(e){}
+  return 'USD';
+}
+
+function setConverterCurrencyDefault(){
+  const cur=detectUserCurrency();
+  const sel=document.getElementById('conv-currency');
+  if(!sel) return;
+  // Try to find and select this currency in the fiat options
+  for(var i=0;i<sel.options.length;i++){
+    if(sel.options[i].value==='fiat:'+cur){
+      sel.value='fiat:'+cur;
+      break;
+    }
+  }
+  updateConverterLabels();
+  var notice=document.getElementById('conv-locale-notice');
+  if(notice){
+    notice.textContent='⚡ Detected currency: '+cur+' — change anytime using the dropdown above';
+    notice.style.color='var(--neon)';
+  }
+}
+
+function getSelectedCurrency(){
+  var sel=document.getElementById('conv-currency');
+  if(!sel) return {type:'fiat',code:'USD'};
+  var val=sel.value||'fiat:USD';
+  var parts=val.split(':');
+  return{type:parts[0],code:parts[1]};
+}
+
+function getFromCryptoId(){
+  var sel=document.getElementById('conv-coin');
+  return sel?sel.value:'bitcoin';
+}
+
+function getCryptoPriceUSD(id){
+  if(livePrices[id]) return livePrices[id].usd;
+  // try liveTicker by id
+  var keys=Object.keys(liveTicker);
+  for(var i=0;i<keys.length;i++){
+    if(liveTicker[keys[i]].id===id) return liveTicker[keys[i]].price;
+  }
+  return 0;
+}
+
+function cryptoIdToSym(id){
+  var keys=Object.keys(liveTicker);
+  for(var i=0;i<keys.length;i++){
+    if(liveTicker[keys[i]].id===id) return keys[i];
+  }
+  var map={bitcoin:'BTC',ethereum:'ETH',ripple:'XRP',solana:'SOL',
+    cardano:'ADA',dogecoin:'DOGE','shiba-inu':'SHIB',binancecoin:'BNB',
+    'avalanche-2':'AVAX',chainlink:'LINK',pepe:'PEPE',monero:'XMR',
+    zcash:'ZEC','official-trump':'TRUMP','pax-gold':'PAXG',
+    tether:'USDT','usd-coin':'USDC',stellar:'XLM'};
+  return map[id]||id.toUpperCase();
+}
+
+function fmtFiat(amount, code){
+  var sym=getConvSymbol(code);
+  var decimals=(['JPY','KRW','IDR','VND','CLP','PYG','UGX','TZS','RWF','GNF','CDF','LAK','MMK','KHR','MNT','IRR','YER','MGA'].includes(code))?0:2;
+  var formatted=parseFloat(amount).toLocaleString('en-US',{minimumFractionDigits:decimals,maximumFractionDigits:decimals});
+  return sym?sym+formatted:formatted+' '+code;
+}
+
+function fmtCrypto(amount, id){
+  var sym=cryptoIdToSym(id);
+  var p=parseFloat(amount);
+  var decimals=p<0.0001?10:p<0.01?8:p<1?6:p<100?4:2;
+  return p.toFixed(decimals)+' '+sym;
+}
+
+function updateConverterLabels(){
+  var cur=getSelectedCurrency();
+  var fromId=getFromCryptoId();
+  var fromSym=cryptoIdToSym(fromId);
+  var toLabel='';
+  if(cur.type==='fiat'){
+    toLabel=cur.code+' Amount';
+    var sub=document.getElementById('conv-sub');
+    if(sub) sub.textContent='// '+fromSym+' → '+cur.code+' · Worldwide';
+    var rateLine=document.getElementById('conv-rate-line');
+    if(rateLine) rateLine.textContent='Select amounts above to convert';
+  } else {
+    var toSym=cryptoIdToSym(cur.code);
+    toLabel=toSym+' Amount';
+    var sub=document.getElementById('conv-sub');
+    if(sub) sub.textContent='// '+fromSym+' → '+toSym+' · Crypto to Crypto';
+  }
+  var toAmtLabel=document.getElementById('conv-to-amt-label');
+  if(toAmtLabel) toAmtLabel.textContent=toLabel;
+  var fromAmtLabel=document.getElementById('conv-from-amt-label');
+  if(fromAmtLabel) fromAmtLabel.textContent=fromSym+' Amount';
+}
+
+function convertCoinToFiat(){
+  var fromId=getFromCryptoId();
+  var priceUSD=getCryptoPriceUSD(fromId);
+  if(priceUSD<=0){document.getElementById('conv-result').textContent='⏳ Price loading...';return;}
+  var amount=parseFloat(document.getElementById('conv-coin-amt').value)||0;
+  if(amount<=0) return;
+  var fromSym=cryptoIdToSym(fromId);
+  var cur=getSelectedCurrency();
+  var resultAmt,resultStr,rateStr;
+  if(cur.type==='fiat'){
+    var rate=_fxRates[cur.code]||1;
+    var fiatAmt=amount*priceUSD*rate;
+    document.getElementById('conv-usd-amt').value=(fiatAmt).toFixed(2);
+    resultStr=fmtCrypto(amount,fromId)+' = '+fmtFiat(fiatAmt,cur.code);
+    rateStr='1 '+fromSym+' = '+fmtFiat(priceUSD*rate,cur.code)+' · 1 '+cur.code+' = '+fmtCrypto(1/(priceUSD*rate),fromId);
+  } else {
+    var toId=cur.code;
+    var toPriceUSD=getCryptoPriceUSD(toId);
+    if(toPriceUSD<=0){document.getElementById('conv-result').textContent='⏳ Target price loading...';return;}
+    var toAmt=amount*(priceUSD/toPriceUSD);
+    var toSym=cryptoIdToSym(toId);
+    document.getElementById('conv-usd-amt').value=toAmt.toFixed(8);
+    resultStr=fmtCrypto(amount,fromId)+' = '+fmtCrypto(toAmt,toId);
+    rateStr='1 '+fromSym+' = '+fmtCrypto(priceUSD/toPriceUSD,toId)+' · 1 '+toSym+' = '+fmtCrypto(toPriceUSD/priceUSD,fromId);
+  }
+  document.getElementById('conv-result').textContent=resultStr;
+  var rateLine=document.getElementById('conv-rate-line');
+  if(rateLine) rateLine.textContent=rateStr;
+  // keep hidden fields populated for sync compat
+  document.getElementById('conv-price').value=priceUSD;
+  document.getElementById('conv-rate').value=cur.type==='fiat'?(1/(priceUSD*(_fxRates[cur.code]||1))).toFixed(8):'--';
+  document.getElementById('conv-rate-usd').value=priceUSD.toFixed(2);
+}
+
+function convertFiatToCoin(){
+  var fromId=getFromCryptoId();
+  var priceUSD=getCryptoPriceUSD(fromId);
+  if(priceUSD<=0){document.getElementById('conv-result').textContent='⏳ Price loading...';return;}
+  var amount=parseFloat(document.getElementById('conv-usd-amt').value)||0;
+  if(amount<=0) return;
+  var fromSym=cryptoIdToSym(fromId);
+  var cur=getSelectedCurrency();
+  var coinAmt,resultStr,rateStr;
+  if(cur.type==='fiat'){
+    var rate=_fxRates[cur.code]||1;
+    coinAmt=amount/(priceUSD*rate);
+    document.getElementById('conv-coin-amt').value=coinAmt.toFixed(8);
+    resultStr=fmtFiat(amount,cur.code)+' = '+fmtCrypto(coinAmt,fromId);
+    rateStr='1 '+fromSym+' = '+fmtFiat(priceUSD*rate,cur.code)+' · 1 '+cur.code+' = '+fmtCrypto(coinAmt/amount,fromId);
+  } else {
+    var toId=cur.code;
+    var toPriceUSD=getCryptoPriceUSD(toId);
+    if(toPriceUSD<=0){document.getElementById('conv-result').textContent='⏳ Target price loading...';return;}
+    var toSym=cryptoIdToSym(toId);
+    coinAmt=amount*(toPriceUSD/priceUSD);
+    document.getElementById('conv-coin-amt').value=coinAmt.toFixed(8);
+    resultStr=fmtCrypto(amount,toId)+' = '+fmtCrypto(coinAmt,fromId);
+    rateStr='1 '+fromSym+' = '+fmtCrypto(priceUSD/toPriceUSD,toId);
+  }
+  document.getElementById('conv-result').textContent=resultStr;
+  var rateLine=document.getElementById('conv-rate-line');
+  if(rateLine) rateLine.textContent=rateStr;
+  document.getElementById('conv-price').value=priceUSD;
+}
+
+// Legacy aliases — called by other parts of the codebase
+function convertCoinToUSD(){convertCoinToFiat();}
+function convertUSDToCoin(){convertFiatToCoin();}
+
+function sendConverterToPortfolio(){
+  var fromId=getFromCryptoId();
+  var priceUSD=getCryptoPriceUSD(fromId);
+  var sym=cryptoIdToSym(fromId);
+  var amt=parseFloat(document.getElementById('conv-coin-amt').value)||0;
+  if(priceUSD<=0||amt<=0){alert('Enter a coin amount first.');return;}
+  document.getElementById('pt-name').value=sym;
+  document.getElementById('pt-price').value=priceUSD.toFixed(2);
+  document.getElementById('pt-qty').value=amt.toFixed(8);
+  document.getElementById('pt-fee').value='0';
+  document.getElementById('pt-current').value=priceUSD.toFixed(2);
+  document.getElementById('portfolio').scrollIntoView({behavior:'smooth'});
+}
+
 function resetConverter(){
   document.getElementById('conv-coin').value='bitcoin';
+  document.getElementById('conv-coin-amt').value='';
+  document.getElementById('conv-usd-amt').value='';
+  document.getElementById('conv-result').textContent='';
   document.getElementById('conv-price').value='';
-  document.getElementById('conv-coin-amt').value='';
-  document.getElementById('conv-usd-amt').value='';
-  document.getElementById('conv-result').textContent='';
-  document.getElementById('conv-rate').textContent='--';
-  document.getElementById('conv-rate-usd').textContent='--';
-  const c='bitcoin';
-  if(livePrices[c]) document.getElementById('conv-price').value=livePrices[c].usd;
+  document.getElementById('conv-rate').value='--';
+  document.getElementById('conv-rate-usd').value='--';
+  var rateLine=document.getElementById('conv-rate-line');
+  if(rateLine) rateLine.textContent='Select amounts above to convert';
+  updateConverterLabels();
 }
-function getConvPrice(){const m=parseFloat(document.getElementById('conv-price').value);if(m>0)return m;const c=document.getElementById('conv-coin').value;if(livePrices[c])return livePrices[c].usd;return 0;}
-function convertCoinToUSD(){
-  const a=parseFloat(document.getElementById('conv-coin-amt').value)||0;
-  const p=getConvPrice();
-  if(p>0&&a>0){
-    const usdAmt=(a*p).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
-    document.getElementById('conv-usd-amt').value=(a*p).toFixed(2);
-    document.getElementById('conv-result').textContent=a+' coins = $'+usdAmt+' USD';
-    document.getElementById('conv-rate').textContent=(1/p).toFixed(8);
-    document.getElementById('conv-rate-usd').textContent=p.toLocaleString('en-US',{minimumFractionDigits:2});
+
+function getConvPrice(){
+  var fromId=getFromCryptoId();
+  var priceUSD=getCryptoPriceUSD(fromId);
+  var cur=getSelectedCurrency();
+  if(cur.type==='fiat'){
+    var rate=_fxRates[cur.code]||1;
+    return priceUSD*rate;
   }
+  return priceUSD;
 }
-function convertUSDToCoin(){
-  const a=parseFloat(document.getElementById('conv-usd-amt').value)||0;
-  const p=getConvPrice();
-  if(p>0&&a>0){
-    const coinAmt=(a/p).toFixed(8);
-    document.getElementById('conv-coin-amt').value=coinAmt;
-    document.getElementById('conv-result').textContent='$'+a.toLocaleString()+' = '+coinAmt+' coins';
-    document.getElementById('conv-rate').textContent=(1/p).toFixed(8);
-    document.getElementById('conv-rate-usd').textContent=p.toLocaleString('en-US',{minimumFractionDigits:2});
-  }
-}
+
+// Wire coin dropdown
 document.getElementById('conv-coin').addEventListener('change',function(){
-  const c=this.value;
-  if(livePrices[c]){
-    document.getElementById('conv-price').value=livePrices[c].usd;
-  } else {
-    document.getElementById('conv-price').value='';
-  }
   document.getElementById('conv-coin-amt').value='';
   document.getElementById('conv-usd-amt').value='';
   document.getElementById('conv-result').textContent='';
-  document.getElementById('conv-rate').textContent='--';
-  document.getElementById('conv-rate-usd').textContent='--';
+  var rateLine=document.getElementById('conv-rate-line');
+  if(rateLine) rateLine.textContent='Select amounts above to convert';
+  updateConverterLabels();
 });
+
+// Wire currency dropdown
+document.getElementById('conv-currency').addEventListener('change',function(){
+  document.getElementById('conv-coin-amt').value='';
+  document.getElementById('conv-usd-amt').value='';
+  document.getElementById('conv-result').textContent='';
+  var rateLine=document.getElementById('conv-rate-line');
+  if(rateLine) rateLine.textContent='Select amounts above to convert';
+  updateConverterLabels();
+});
+
+// Init: fetch FX rates then detect locale
+fetchFXRates().then(function(){setConverterCurrencyDefault();});
 
 // ===== DIVIDENDS =====
 function calcDividend(){
@@ -1092,6 +1738,7 @@ function calcDividend(){
       {label:'Annual Div/Share', val:parseFloat(document.getElementById('div-annual').value)||0, color:'#e040fb', fmt:'$'+(parseFloat(document.getElementById('div-annual').value)||0).toFixed(2)+'/share', pct:null},
     ],
   });
+  maybeApplyResultCurrency();
 }
 function clearDiv(){['div-price','div-shares','div-annual','div-years'].forEach(id=>document.getElementById(id).value='');document.getElementById('div-results').style.display='none';}
 
@@ -1148,6 +1795,7 @@ function calcProjection(){
       ...(target>0?[{label:'At Target ($'+target.toFixed(2)+')', val:qty*target, color:'#39ff14', fmt:'$'+(qty*target).toFixed(2), pct:projInv>0?((qty*target-projInv)/projInv*100).toFixed(1)+'%':null}]:[]),
     ],
   });
+  maybeApplyResultCurrency();
 }
 function clearProj(){['proj-price','proj-qty','proj-invested','proj-target'].forEach(id=>document.getElementById(id).value='');document.getElementById('proj-results').style.display='none';}
 
@@ -1209,6 +1857,7 @@ function renderPortfolio(){
   document.getElementById('pt-multipliers').innerHTML=mh;
   totals.style.display='block';
   renderCharts();
+  maybeApplyResultCurrency();
 }
 
 function clearPortfolio(){portfolio=[];renderPortfolio();}
@@ -1277,16 +1926,31 @@ function addSELevel(){
   e.innerHTML='<div><label>Possible Price ($)</label><input type="text" inputmode="decimal" class="se-price" placeholder="80000" step="any"/></div><div><label>% Might Exit</label><input type="text" inputmode="decimal" class="se-pct" placeholder="25" min="1" max="100"/></div><div><label>Note</label><input type="text" class="se-note" placeholder="Potential level"/></div>';
   con.appendChild(e);
 }
+function seSingleBuyHint(){
+  // If user types in se-qty but se-entry is empty, suggest filling from current price
+  var entryEl=document.getElementById('se-entry');
+  var curEl=document.getElementById('dca-current');
+  if(entryEl&&!entryEl.value&&curEl&&curEl.value){
+    entryEl.value=curEl.value;
+    entryEl.style.borderColor='var(--cyan)';
+    entryEl.style.boxShadow='0 0 8px rgba(0,255,225,0.3)';
+    setTimeout(function(){entryEl.style.borderColor='';entryEl.style.boxShadow='';},1200);
+  }
+}
 function calcScaledExit(){
   const name=document.getElementById('se-name').value||'Asset';
   const totalQty=parseFloat(document.getElementById('se-qty').value)||0;
   const entryPrice=parseFloat(document.getElementById('se-entry').value)||0;
-  const invested=parseFloat(document.getElementById('se-invested').value)||0;
-  const prices=document.querySelectorAll('.se-price'),pcts=document.querySelectorAll('.se-pct'),notes=document.querySelectorAll('.se-note');
+  const investedRaw=parseFloat(document.getElementById('se-invested').value)||0;
+  // Sanity check: if invested is wildly off from qty*entry (stale from old session), ignore it
+  const expectedInvested=totalQty*entryPrice;
+  const invested=(investedRaw>0&&Math.abs(investedRaw-expectedInvested)/expectedInvested<10)?investedRaw:expectedInvested;
+  const seContainer=document.getElementById('se-levels');
+  const prices=seContainer.querySelectorAll('.se-price'),pcts=seContainer.querySelectorAll('.se-pct'),notes=seContainer.querySelectorAll('.se-note');
   if(totalQty<=0||entryPrice<=0){alert('Enter total position and entry price.');return;}
   let levels=[];let totalPct=0;
   for(let i=0;i<prices.length;i++){const p=parseFloat(prices[i].value)||0;const pct=parseFloat(pcts[i].value)||0;if(p>0&&pct>0){levels.push({price:p,pct:pct,note:notes[i].value});totalPct+=pct;}}
-  if(levels.length===0){alert('Add at least one exit level.');return;}
+  if(levels.length===0){alert('Add at least one exit level — fill in a Possible Price and % Might Exit.');return;}
   levels.sort((a,b)=>a.price-b.price);
   let remaining=totalQty,totalReceived=0,totalSold=0,html='<div style="font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--gold);margin-bottom:12px;">'+name.toUpperCase()+' — SCALED EXIT PLAN</div>';
   levels.forEach(function(lv,i){
@@ -1383,6 +2047,7 @@ function calcScaledExit(){
   // Dividends — shares and price
   seAutoFill('div-shares', totalQty,   6);
   seAutoFill('div-price',  entryPrice, 2);
+  maybeApplyResultCurrency();
 }
 function clearSE(){
   document.getElementById('se-name').value='';document.getElementById('se-qty').value='';
@@ -1432,9 +2097,20 @@ function dbbUpdateLiq(){
 
   // ── DBB SYNC ──
   // Helper: fill a field only if empty, flash border color to confirm
+  // dbbFill — only fills if field is empty
   function dbbFill(id, val, color){
     var el=document.getElementById(id);
     if(el&&!el.value&&val>0){
+      el.value=val;
+      el.style.borderColor=color;
+      el.style.boxShadow='0 0 8px '+color+'66';
+      setTimeout(function(){el.style.borderColor='';el.style.boxShadow='';},1500);
+    }
+  }
+  // dbbForce — ALWAYS writes (resistance is authoritative — user just typed it)
+  function dbbForce(id, val, color){
+    var el=document.getElementById(id);
+    if(el&&val>0){
       el.value=val;
       el.style.borderColor=color;
       el.style.boxShadow='0 0 8px '+color+'66';
@@ -1451,21 +2127,19 @@ function dbbUpdateLiq(){
       dbbFill('div-price', entry.toFixed(2), 'var(--green)');
     }
 
-    // SUPPORT → fills DCA first buy entry price (support = potential buy zone)
-    if(sup>0){
-      var dcaFirstPrice=document.querySelector('#dca-entries .dca-price');
-      if(dcaFirstPrice&&!dcaFirstPrice.value){
-        dcaFirstPrice.value=sup.toFixed(2);
-        dcaFirstPrice.style.borderColor='var(--cyan)';
-        dcaFirstPrice.style.boxShadow='0 0 8px rgba(0,255,225,0.4)';
-        setTimeout(function(){dcaFirstPrice.style.borderColor='';dcaFirstPrice.style.boxShadow='';},1500);
-      }
-    }
+    // SUPPORT — not pushed into DCA price row (user wants current price there instead)
 
-    // RESISTANCE → fills ALL target/exit/prediction price fields across calcs
+    // RESISTANCE → ALWAYS overwrites target/exit fields — user just typed this number
     if(res>0){
-      dbbFill('dca-target', res.toFixed(2), 'var(--gold)');
-      dbbFill('se-best-exit', res.toFixed(2), 'var(--gold)');
+      dbbForce('dca-target', res.toFixed(2), 'var(--gold)');
+      dbbForce('se-best-exit', res.toFixed(2), 'var(--gold)');
+      dbbForce('proj-target', res.toFixed(2), 'var(--gold)');
+      dbbForce('div-target', res.toFixed(2), 'var(--gold)');
+      // Fire change on dca-target so se-levels rows also update from resistance
+      setTimeout(function(){
+        var dtEl=document.getElementById('dca-target');
+        if(dtEl) dtEl.dispatchEvent(new Event('change'));
+      },50);
 
       // Auto-fill SE exit level rows with 3 staged targets based on entry→resistance range
       // Level 1 = resistance, Level 2 = resistance + 50% of range, Level 3 = resistance + 100% of range
@@ -1847,6 +2521,128 @@ function toggleSync(){
   document.getElementById('sync-bar').style.background=syncOn?'rgba(0,255,106,0.04)':'rgba(255,82,82,0.03)';
 }
 
+// ===== CURRENCY DISPLAY TOGGLE =====
+var _currencyDisplayOn=false;
+var _activeCurrencyCode='USD'; // set when user hits Apply
+
+function openCurrencyPicker(){
+  var panel=document.getElementById('currency-picker-panel');
+  if(!panel) return;
+  var isOpen=panel.style.display!=='none';
+  if(isOpen){closeCurrencyPicker();return;}
+  // Pre-select detected currency if picker hasn't been used yet
+  var sel=document.getElementById('currency-picker-select');
+  if(sel&&_activeCurrencyCode==='USD'){
+    var detected=detectUserCurrency();
+    if(detected&&detected!=='USD'){
+      sel.value=detected;
+      var notice=document.getElementById('currency-picker-notice');
+      if(notice) notice.textContent='⚡ Auto-detected: '+detected+' — change if needed';
+    }
+  } else if(sel){
+    sel.value=_activeCurrencyCode;
+  }
+  panel.style.display='block';
+  panel.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function closeCurrencyPicker(){
+  var panel=document.getElementById('currency-picker-panel');
+  if(panel) panel.style.display='none';
+}
+
+function applyCurrencyPicker(){
+  var sel=document.getElementById('currency-picker-select');
+  if(!sel) return;
+  var code=sel.value;
+  _activeCurrencyCode=code;
+  _currencyDisplayOn=true;
+  // Update button
+  var btn=document.getElementById('currency-toggle-btn');
+  if(btn){
+    btn.textContent='💱 '+code;
+    btn.style.background='rgba(255,209,102,0.15)';
+    btn.style.boxShadow='0 0 10px rgba(255,209,102,0.35)';
+    btn.style.borderColor='var(--gold)';
+  }
+  // Show revert button, update notice
+  var revertBtn=document.getElementById('currency-revert-btn');
+  if(revertBtn) revertBtn.style.display='inline-block';
+  var notice=document.getElementById('currency-picker-notice');
+  if(notice){
+    notice.textContent='✓ Showing results in '+code+' · USD inputs unchanged · Close panel to continue';
+    notice.style.color='var(--neon)';
+  }
+  applyResultCurrency();
+}
+
+function revertAndClosePicker(){
+  _currencyDisplayOn=false;
+  _activeCurrencyCode='USD';
+  var btn=document.getElementById('currency-toggle-btn');
+  if(btn){
+    btn.textContent='💱 Convert Results';
+    btn.style.background='transparent';
+    btn.style.boxShadow='none';
+  }
+  var revertBtn=document.getElementById('currency-revert-btn');
+  if(revertBtn) revertBtn.style.display='none';
+  var notice=document.getElementById('currency-picker-notice');
+  if(notice){notice.textContent='';notice.style.color='';}
+  revertResultCurrency();
+  closeCurrencyPicker();
+}
+
+// Called after any calc runs — re-applies conversion if toggle is on
+function maybeApplyResultCurrency(){
+  if(_currencyDisplayOn) applyResultCurrency();
+}
+
+function getDisplayRate(){
+  if(!_currencyDisplayOn||_activeCurrencyCode==='USD') return {rate:1,code:'USD'};
+  var rate=_fxRates[_activeCurrencyCode]||1;
+  return {rate:rate,code:_activeCurrencyCode};
+}
+
+// Keep old toggleCurrencyDisplay as no-op for safety (not called anymore)
+function toggleCurrencyDisplay(){openCurrencyPicker();}
+
+function applyResultCurrency(){
+  var d=getDisplayRate();
+  if(d.code==='USD'||d.rate===1) return;
+  var sym=getConvSymbol(d.code);
+  var noDecimals=['JPY','KRW','IDR','VND','CLP','PYG','UGX','TZS','RWF','GNF','CDF','LAK','MMK','KHR','MNT','IRR','YER','MGA'];
+  var decimals=noDecimals.includes(d.code)?0:2;
+  function convertText(txt){
+    return txt.replace(/\$[\d,]+(\.\d+)?/g,function(match){
+      var num=parseFloat(match.replace(/[$,]/g,''))||0;
+      var converted=num*d.rate;
+      var formatted=converted.toLocaleString('en-US',{minimumFractionDigits:decimals,maximumFractionDigits:decimals});
+      return sym?sym+formatted:formatted+' '+d.code;
+    });
+  }
+  document.querySelectorAll('.result-box .result-val, #portfolio-totals .result-val').forEach(function(el){
+    if(!el.dataset.usdOriginal) el.dataset.usdOriginal=el.textContent;
+    el.textContent=convertText(el.dataset.usdOriginal);
+  });
+  ['pt-total-invested','pt-total-value','pt-total-gl','pt-total-fees'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(!el) return;
+    if(!el.dataset.usdOriginal) el.dataset.usdOriginal=el.textContent;
+    el.textContent=convertText(el.dataset.usdOriginal);
+  });
+}
+
+function revertResultCurrency(){
+  document.querySelectorAll('.result-box .result-val, #portfolio-totals .result-val').forEach(function(el){
+    if(el.dataset.usdOriginal){el.textContent=el.dataset.usdOriginal;delete el.dataset.usdOriginal;}
+  });
+  ['pt-total-invested','pt-total-value','pt-total-gl','pt-total-fees'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el&&el.dataset.usdOriginal){el.textContent=el.dataset.usdOriginal;delete el.dataset.usdOriginal;}
+  });
+}
+
 // ===== RE-SYNC =====
 // Reads whatever is already filled and pushes it to all empty matching fields
 function reSyncAll(){
@@ -1938,9 +2734,7 @@ function clearAllCalcs(){
   clearPortfolio();
 
   // Reset converter
-  document.getElementById('conv-result').textContent='';
-  document.getElementById('conv-rate').textContent='--';
-  document.getElementById('conv-rate-usd').textContent='--';
+  resetConverter();
 
   var t=document.getElementById('use-toast');
   if(!t){t=document.createElement('div');t.id='use-toast';t.style.cssText='position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#080f0f;border:1px solid var(--neon);color:var(--neon);font-family:var(--mono);font-size:12px;letter-spacing:2px;padding:10px 24px;border-radius:4px;z-index:9999;transition:opacity 0.4s;pointer-events:none;';document.body.appendChild(t);}
@@ -2060,9 +2854,9 @@ function syncFromAsset(assetRaw, sourceId){
 
 // Update converter dropdown + price to match whatever asset is active
 function syncConverterCoin(sym, priceId, price){
-  const sel=document.getElementById('conv-coin');
+  // Update the From crypto dropdown to match the active asset
+  var sel=document.getElementById('conv-coin');
   if(!sel) return;
-  // Try to select existing option
   var found=false;
   for(var i=0;i<sel.options.length;i++){
     if(sel.options[i].value===priceId||sel.options[i].dataset.sym===sym){
@@ -2071,20 +2865,20 @@ function syncConverterCoin(sym, priceId, price){
       break;
     }
   }
-  // If not in list, add it dynamically
   if(!found&&priceId&&sym){
     var opt=document.createElement('option');
     opt.value=priceId;
     opt.dataset.sym=sym;
-    opt.textContent=sym+(priceId!==sym?' ('+sym+')':'');
+    opt.textContent=sym+' ('+sym+')';
     sel.appendChild(opt);
     sel.value=priceId;
   }
-  // Update conv-price if we have a live price
+  // Update hidden price field for sync compat
   if(price>0){
     var cp=document.getElementById('conv-price');
     if(cp) cp.value=price;
   }
+  updateConverterLabels();
 }
 function syncPrice(price, sourceId){
   if(!syncOn||!price||price<=0) return;
@@ -2100,11 +2894,39 @@ function syncPrice(price, sourceId){
 // ===== INIT =====
 window.addEventListener('DOMContentLoaded',function(){
   dbbConviction();
+  // Fill first DCA price row if current price already set
+  setTimeout(function(){if(typeof fillFirstDCAPrice==='function') fillFirstDCAPrice();},500);
 
-  // Also wire target/exit fields type-ahead (not in unified price list)
+  // Wire target/exit fields type-ahead (each stays independent — no cross-sync)
   ['dca-target','se-best-exit','div-target','proj-target'].forEach(function(id){
     buildPriceTypeAhead(id);
   });
+  // When user types dca-target → auto-fill se-levels exit rows (user can still change)
+  var dcaTargetEl=document.getElementById('dca-target');
+  if(dcaTargetEl){
+    dcaTargetEl.addEventListener('change',function(){
+      var t=parseFloat(this.value)||0;
+      if(t<=0) return;
+      var entryEl=document.getElementById('se-entry');
+      var entry=parseFloat(entryEl&&entryEl.value)||0;
+      var range=entry>0?Math.abs(t-entry):t*0.1;
+      var lvl1=t, lvl2=t+range*0.5, lvl3=t+range*1.0;
+      var lvlPcts=['25','25','50'];
+      var lvlNotes=['Possible target (from DBB/DCA)','Potential extended zone','Hypothetical full exit'];
+      var seRows=document.querySelectorAll('#se-levels .dca-entry');
+      // Always write se-levels — resistance is authoritative
+      [lvl1,lvl2,lvl3].forEach(function(price,i){
+        if(seRows[i]){
+          var pi=seRows[i].querySelector('.se-price');
+          var pci=seRows[i].querySelector('.se-pct');
+          var ni=seRows[i].querySelector('.se-note');
+          if(pi){ pi.value=price<1?price.toFixed(4):price.toFixed(2); pi.style.borderColor='var(--gold)'; setTimeout(function(){pi.style.borderColor='';},1200); }
+          if(pci&&!pci.value){ pci.value=lvlPcts[i]; }
+          if(ni&&!ni.value){ ni.value=lvlNotes[i]; }
+        }
+      });
+    });
+  }
   // DBB fields type-ahead
   ['dbb-price','dbb-entry'].forEach(function(id){
     buildPriceTypeAhead(id);
@@ -2125,8 +2947,9 @@ window.addEventListener('DOMContentLoaded',function(){
   var QTY_FIELDS=['proj-qty','se-qty','div-shares','pt-qty'];
   // All invested/cost fields
   var INVESTED_FIELDS=['proj-invested','se-invested'];
-  // All target/exit price fields
-  var TARGET_FIELDS=['dca-target','se-best-exit','div-target','proj-target'];
+  // Target fields are NOT cross-synced — each calc owns its target.
+  // Sync happens only via DBB resistance or dca-target change event above.
+  var TARGET_FIELDS=[];
   // All name fields
   var NAME_FIELDS=['dca-name','se-name','pt-name'];
 
@@ -2215,6 +3038,14 @@ window.addEventListener('DOMContentLoaded',function(){
     buildTypeAhead(f);
   });
 
+  // Auto-fill first DCA price row from current price when dca-current is set
+  // fillFirstDCAPrice is defined globally above fetchPrices — accessible from here and from fetchPrices
+  var dcaCurEl=document.getElementById('dca-current');
+  if(dcaCurEl){
+    dcaCurEl.addEventListener('change',fillFirstDCAPrice);
+    dcaCurEl.addEventListener('input',fillFirstDCAPrice);
+  }
+
   // DCA entry rows — sum qty live as user types each row
   document.getElementById('dca-entries').addEventListener('input',function(e){
     var inp=e.target;
@@ -2257,16 +3088,6 @@ window.addEventListener('DOMContentLoaded',function(){
     if(liveTicker[raw]){inp.value=liveTicker[raw].price;showUseToast(raw,liveTicker[raw].price);}
   });
 
-  // Converter coin change
-  document.getElementById('conv-coin').addEventListener('change',function(){
-    const coin=this.value;
-    if(livePrices[coin]) document.getElementById('conv-price').value=livePrices[coin].usd;
-    document.getElementById('conv-coin-amt').value='';
-    document.getElementById('conv-usd-amt').value='';
-    document.getElementById('conv-result').textContent='';
-    document.getElementById('conv-rate').textContent='--';
-    document.getElementById('conv-rate-usd').textContent='--';
-  });
 
 });
 </script>
