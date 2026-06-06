@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="The real data on IPO performance — what actually happens after the first-day pop. Charts, stats, sources. By DuttyBookBag.">
+  <meta property="og:title" content="IPO Reality Check — DuttyBookBag">
+  <meta property="og:description" content="60% of IPOs underperform the market in 3 years. See the data.">
+  <meta property="og:url" content="https://duttybookbag.github.io/duttybookbag/dbb-ipo-reality.html">
+  <meta property="og:site_name" content="DuttyBookBag">
+  <title>IPO Reality Check — DuttyBookBag</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --black:#000000;--dark:#050d0d;--panel:#080f0f;--border:#0c3030;
+      --cyan:#00ffe1;--green:#00ff6a;--blue:#4db8ff;--gold:#ffd166;
+      --red:#ff5252;--orange:#FF8C42;--text:#b8e8e2;--muted:#3d7070;
+      --mono:'Share Tech Mono',monospace;--display:'Bebas Neue',sans-serif;--body:'Rajdhani',sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--black);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.7;overflow-x:hidden;}
+    body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,255,225,0.012) 3px,rgba(0,255,225,0.012) 4px);pointer-events:none;z-index:999;}
+    body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,255,225,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,225,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0;}
+    .wrap{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:0 24px;}
+
+    /* ── NAV ── */
+    .site-nav{position:sticky;top:0;z-index:100;background:rgba(0,0,0,0.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:0 24px;}
+    .site-nav .wrap{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;padding:0;max-width:860px;margin:0 auto;}
+    .site-nav a{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--muted);text-decoration:none;text-transform:uppercase;padding:14px 16px;transition:color 0.2s;white-space:nowrap;}
+    .site-nav a:hover{color:var(--cyan);}
+    .site-nav a.nav-highlight{color:var(--gold);font-weight:700;}
+    .site-nav a.nav-highlight:hover{color:#fff;}
+    .site-nav a.nav-active{color:var(--orange);font-weight:700;}
+    @media(max-width:580px){.site-nav a{font-size:10px;padding:10px 8px;letter-spacing:1px;}}
+
+    /* ── DBB LOGO ── */
+    @keyframes dbbPulse{0%,100%{opacity:0.55;transform:scale(0.92);}50%{opacity:1;transform:scale(1.08);}}
+    .dbb-logo{display:grid;grid-template-columns:repeat(3,42px);grid-template-rows:repeat(3,42px);gap:12px;justify-content:center;margin:0 auto 28px;width:max-content;position:relative;z-index:2;animation:fadeDown 0.6s ease both;}
+    .dbb-logo .dot{width:42px;height:42px;border-radius:50%;animation:dbbPulse 2.8s ease-in-out infinite;}
+    .dbb-logo .green{background:#00ff44;box-shadow:0 0 15px #00ff44,0 0 30px #00ff44;}
+    .dbb-logo .red{background:#ff1a1a;box-shadow:0 0 15px #ff1a1a,0 0 30px #ff1a1a;}
+    .dbb-logo .d1{grid-column:2;grid-row:1;}.dbb-logo .d2{grid-column:1;grid-row:2;}
+    .dbb-logo .d3{grid-column:2;grid-row:2;}.dbb-logo .d4{grid-column:3;grid-row:2;}
+    .dbb-logo .d5{grid-column:1;grid-row:3;}.dbb-logo .d6{grid-column:3;grid-row:3;}
+    .dbb-logo-sm{grid-template-columns:repeat(3,24px);grid-template-rows:repeat(3,24px);gap:8px;}
+    .dbb-logo-sm .dot{width:24px!important;height:24px!important;}
+    .dbb-logo-sm .green{background:#00ff44;box-shadow:0 0 8px #00ff44,0 0 16px #00ff44;}
+    .dbb-logo-sm .red{background:#ff1a1a;box-shadow:0 0 8px #ff1a1a,0 0 16px #ff1a1a;}
+    @media(max-width:580px){
+      .dbb-logo{grid-template-columns:repeat(3,34px);grid-template-rows:repeat(3,34px);gap:10px;}
+      .dbb-logo .dot{width:34px;height:34px;}
+    }
+    @keyframes fadeDown{from{opacity:0;transform:translateY(-16px);}to{opacity:1;transform:translateY(0);}}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+    /* ── HEADER ── */
+    header{position:relative;padding:80px 0 60px;text-align:center;overflow:hidden;}
+    .glow-orb{position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(255,140,66,0.06) 0%,transparent 70%);pointer-events:none;}
+    .badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:5px;color:var(--orange);border:1px solid var(--orange);padding:5px 18px;margin-bottom:28px;text-transform:uppercase;animation:fadeDown 0.6s ease both;}
+    h1{font-family:var(--display);font-size:clamp(48px,9vw,88px);letter-spacing:4px;line-height:0.95;color:#fff;text-transform:uppercase;animation:fadeDown 0.7s 0.1s ease both;}
+    h1 .accent{color:var(--orange);text-shadow:0 0 30px rgba(255,140,66,0.5);}
+    .hero-sub{margin:18px auto 0;font-family:var(--mono);font-size:11px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;animation:fadeDown 0.7s 0.2s ease both;}
+
+    .divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--orange),transparent);margin:50px 0;}
+    .section-label{font-family:var(--mono);font-size:10px;letter-spacing:5px;color:var(--orange);text-transform:uppercase;margin-bottom:14px;}
+    h2{font-family:var(--display);font-size:clamp(28px,5vw,46px);letter-spacing:3px;color:#fff;text-transform:uppercase;margin-bottom:20px;}
+
+    /* ── STAT CARDS ── */
+    .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:14px;margin-bottom:14px;}
+    .stat-card{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:22px 18px;text-align:center;position:relative;overflow:hidden;animation:fadeUp 0.5s ease both;}
+    .stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+    .stat-card.red::before{background:var(--red);}
+    .stat-card.orange::before{background:var(--orange);}
+    .stat-card.green::before{background:var(--green);}
+    .stat-card.cyan::before{background:var(--cyan);}
+    .stat-num{font-family:var(--display);font-size:50px;letter-spacing:2px;line-height:1;margin-bottom:6px;}
+    .stat-card.red .stat-num{color:var(--red);text-shadow:0 0 20px rgba(255,82,82,0.4);}
+    .stat-card.orange .stat-num{color:var(--orange);text-shadow:0 0 20px rgba(255,140,66,0.4);}
+    .stat-card.green .stat-num{color:var(--green);text-shadow:0 0 20px rgba(0,255,106,0.4);}
+    .stat-card.cyan .stat-num{color:var(--cyan);text-shadow:0 0 20px rgba(0,255,225,0.4);}
+    .stat-label{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:4px;}
+    .stat-sub{font-size:12px;color:var(--muted);line-height:1.4;}
+
+    /* ── CHART CARDS ── */
+    .chart-card{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:26px;margin-bottom:16px;animation:fadeUp 0.5s ease both;}
+    .chart-title{font-family:var(--display);font-size:24px;letter-spacing:3px;color:#fff;text-transform:uppercase;margin-bottom:4px;}
+    .chart-note{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:1px;margin-bottom:20px;}
+    canvas{max-height:300px;}
+
+    /* ── PIE ROW ── */
+    .pies-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-bottom:16px;}
+    .pie-card{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:22px;animation:fadeUp 0.5s ease both;}
+    .pie-title{font-family:var(--display);font-size:20px;letter-spacing:2px;color:#fff;text-transform:uppercase;margin-bottom:2px;}
+    .pie-note{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:1px;margin-bottom:14px;}
+    .pie-wrap{position:relative;height:170px;}
+    .legend{margin-top:12px;display:flex;flex-direction:column;gap:5px;}
+    .legend-item{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text);}
+    .legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+    .legend-pct{margin-left:auto;font-family:var(--mono);font-size:12px;font-weight:700;}
+
+    /* ── NOTABLE TABLE ── */
+    .ipo-table{width:100%;border-collapse:collapse;font-size:14px;}
+    .ipo-table th{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;padding:10px 14px;border-bottom:1px solid var(--border);text-align:left;}
+    .ipo-table td{padding:12px 14px;border-bottom:1px solid rgba(12,48,48,0.5);color:var(--text);}
+    .ipo-table tr:last-child td{border-bottom:none;}
+    .ipo-table tr:hover td{background:rgba(0,255,225,0.02);}
+    .ipo-table .pos{color:var(--green);font-family:var(--mono);font-weight:700;}
+    .ipo-table .neg{color:var(--red);font-family:var(--mono);font-weight:700;}
+    .ipo-table .ticker{font-family:var(--mono);color:var(--cyan);font-size:12px;}
+    .tag{display:inline-block;font-family:var(--mono);font-size:9px;padding:2px 8px;border-radius:2px;letter-spacing:1px;}
+    .tag.crash{background:rgba(255,82,82,0.12);color:var(--red);border:1px solid rgba(255,82,82,0.3);}
+    .tag.hold{background:rgba(0,255,106,0.08);color:var(--green);border:1px solid rgba(0,255,106,0.25);}
+    .tag.mixed{background:rgba(255,209,102,0.08);color:var(--gold);border:1px solid rgba(255,209,102,0.25);}
+
+    /* ── VERDICT ── */
+    .verdict{background:rgba(255,82,82,0.04);border:1px solid rgba(255,82,82,0.2);border-left:4px solid var(--red);border-radius:6px;padding:24px 28px;margin-bottom:16px;animation:fadeUp 0.5s ease both;}
+    .verdict-title{font-family:var(--mono);font-size:10px;letter-spacing:4px;color:var(--red);text-transform:uppercase;margin-bottom:16px;}
+    .verdict-item{display:flex;gap:14px;padding:10px 0;border-bottom:1px solid rgba(12,48,48,0.6);font-size:14px;line-height:1.6;}
+    .verdict-item:last-child{border-bottom:none;padding-bottom:0;}
+    .verdict-bold{color:#fff;font-weight:700;}
+    .verdict-rest{color:var(--muted);}
+
+    /* ── SOURCES ── */
+    .sources-card{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:24px 28px;margin-bottom:16px;}
+    .sources-title{font-family:var(--mono);font-size:10px;letter-spacing:4px;color:var(--blue);text-transform:uppercase;margin-bottom:16px;}
+    .source-item{display:flex;align-items:flex-start;gap:14px;padding:12px 0;border-bottom:1px solid rgba(12,48,48,0.5);}
+    .source-item:last-child{border-bottom:none;}
+    .source-num{width:22px;height:22px;background:rgba(77,184,255,0.1);border:1px solid rgba(77,184,255,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;color:var(--blue);flex-shrink:0;margin-top:2px;}
+    .source-name{font-size:13px;font-weight:700;color:#fff;margin-bottom:3px;}
+    .source-desc{font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:7px;}
+    .source-link{display:inline-flex;align-items:center;gap:4px;color:var(--blue);font-family:var(--mono);font-size:11px;text-decoration:none;border:1px solid rgba(77,184,255,0.25);padding:3px 12px;border-radius:3px;transition:all 0.2s;letter-spacing:1px;}
+    .source-link:hover{background:rgba(77,184,255,0.08);border-color:var(--blue);}
+
+    /* ── IND-CARD STYLE BACK LINKS ── */
+    .nav-card{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:22px 26px;display:flex;align-items:center;justify-content:space-between;gap:24px;transition:border-color 0.25s,box-shadow 0.25s;text-decoration:none;margin-bottom:12px;animation:fadeUp 0.5s ease both;}
+    .nav-card:hover{border-color:var(--cyan);box-shadow:0 0 28px rgba(0,255,225,0.09);}
+    .nav-card.green-card{border-color:rgba(0,255,106,0.2);}
+    .nav-card.green-card:hover{border-color:var(--green);}
+    .nav-card-label{font-family:var(--mono);font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:4px;}
+    .nav-card-name{font-family:var(--display);font-size:clamp(22px,4vw,32px);letter-spacing:3px;color:#fff;text-transform:uppercase;}
+    .nav-card-desc{font-size:13px;color:var(--muted);margin-top:4px;}
+    .nav-arrow{font-family:var(--mono);font-size:28px;color:var(--cyan);flex-shrink:0;transition:transform 0.2s;}
+    .nav-card.green-card .nav-arrow{color:var(--green);}
+    .nav-card:hover .nav-arrow{transform:translateX(6px);}
+
+    /* variance note */
+    .v-note{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:1px;margin:8px 0 30px;text-align:center;padding:0 10px;}
+
+    /* footer */
+    footer{border-top:1px solid var(--border);padding:40px 0 60px;text-align:center;color:var(--muted);font-family:var(--mono);font-size:11px;letter-spacing:2px;}
+    footer span{color:var(--cyan);}
+  </style>
+</head>
+<body>
+
+<!-- ── NAV — only Home, Lifeline, Calculator ── -->
+<nav class="site-nav">
+  <div class="wrap">
+    <a href="index.html">Home</a>
+    <a href="dbb-lifeline.html" class="nav-highlight">Lifeline</a>
+    <a href="dbb-calculator.html" class="nav-highlight">Calculator</a>
+    <a href="dbb-ipo-reality.html" class="nav-active">📊 IPO Reality</a>
+  </div>
+</nav>
+
+<!-- ── HEADER ── -->
+<header>
+  <div class="glow-orb"></div>
+  <div class="wrap">
+    <div class="dbb-logo">
+      <div class="dot red d1"></div><div class="dot green d2"></div>
+      <div class="dot red d3"></div><div class="dot green d4"></div>
+      <div class="dot green d5"></div><div class="dot green d6"></div>
+    </div>
+    <div class="badge">📊 IPO Reality Check</div>
+    <h1>The Truth About<br><span class="accent">IPO Performance</span></h1>
+    <p class="hero-sub">Data 1980–2025 · Academic Research · Not Financial Advice</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- ── STAT CARDS ── -->
+  <div class="section-label">Key Statistics</div>
+  <div class="stats-row">
+    <div class="stat-card red">
+      <div class="stat-num">~33%</div>
+      <div class="stat-label">Drop by Day 2</div>
+      <div class="stat-sub">of IPOs trading lower within 48 hrs</div>
+    </div>
+    <div class="stat-card orange">
+      <div class="stat-num">50%+</div>
+      <div class="stat-label">Below IPO Price</div>
+      <div class="stat-sub">after 1 year on average</div>
+    </div>
+    <div class="stat-card red">
+      <div class="stat-num">60%</div>
+      <div class="stat-label">Underperform Market</div>
+      <div class="stat-sub">vs S&amp;P 500 over 3 years</div>
+    </div>
+    <div class="stat-card cyan">
+      <div class="stat-num">~20%</div>
+      <div class="stat-label">Avg First-Day Pop</div>
+      <div class="stat-sub">median gain 2020–2024</div>
+    </div>
+  </div>
+  <p class="v-note">⚠ Figures are statistical approximations from peer-reviewed academic research. Results vary by year &amp; methodology. Always verify — sources linked below.</p>
+
+  <div class="divider"></div>
+
+  <!-- ══════════════════════════════════════════
+       SECTION 1 — FIRST DAY BEHAVIOR
+       Same data: Pie + Horizontal Bar
+  ══════════════════════════════════════════ -->
+  <div class="section-label">First Day Behavior — Same Data, Two Views</div>
+  <div class="pies-row">
+    <div class="pie-card">
+      <div class="pie-title">Pie View</div>
+      <div class="pie-note">// What actually happens Day 1</div>
+      <div class="pie-wrap"><canvas id="pie_day1"></canvas></div>
+      <div class="legend" id="leg_day1"></div>
+    </div>
+    <div class="pie-card">
+      <div class="pie-title">Bar View</div>
+      <div class="pie-note">// Same data, horizontal bars</div>
+      <div style="position:relative;height:170px;"><canvas id="bar_day1"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SECTION 2 — AFTER 1 YEAR
+       Same data: Pie + Bar
+  ══════════════════════════════════════════ -->
+  <div class="section-label" style="margin-top:10px;">After 1 Year — Same Data, Two Views</div>
+  <div class="pies-row">
+    <div class="pie-card">
+      <div class="pie-title">Pie View</div>
+      <div class="pie-note">// vs. original IPO offer price</div>
+      <div class="pie-wrap"><canvas id="pie_yr1"></canvas></div>
+      <div class="legend" id="leg_yr1"></div>
+    </div>
+    <div class="pie-card">
+      <div class="pie-title">Bar View</div>
+      <div class="pie-note">// Same data, horizontal bars</div>
+      <div style="position:relative;height:170px;"><canvas id="bar_yr1"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SECTION 3 — AFTER 3 YEARS
+       Same data: Pie + Bar
+  ══════════════════════════════════════════ -->
+  <div class="section-label" style="margin-top:10px;">After 3 Years — Same Data, Two Views</div>
+  <div class="pies-row">
+    <div class="pie-card">
+      <div class="pie-title">Pie View</div>
+      <div class="pie-note">// vs. S&amp;P 500 benchmark</div>
+      <div class="pie-wrap"><canvas id="pie_yr3"></canvas></div>
+      <div class="legend" id="leg_yr3"></div>
+    </div>
+    <div class="pie-card">
+      <div class="pie-title">Bar View</div>
+      <div class="pie-note">// Same data, horizontal bars</div>
+      <div style="position:relative;height:170px;"><canvas id="bar_yr3"></canvas></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══════════════════════════════════════════
+       SECTION 4 — FAMOUS IPOs: Day 1 vs 1-Year
+       Bar chart
+  ══════════════════════════════════════════ -->
+  <div class="section-label">Famous IPOs — Day 1 Pop vs 1-Year Reality</div>
+  <div class="chart-card">
+    <div class="chart-title">Pop vs Reality</div>
+    <div class="chart-note">// The bigger the pop, often the harder the fall. Green = Day 1. Red = 1-Year.</div>
+    <canvas id="bar_ipos"></canvas>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SECTION 5 — Historical first-day returns line
+  ══════════════════════════════════════════ -->
+  <div class="section-label">Avg First-Day IPO Returns by Year (2000–2024)</div>
+  <div class="chart-card">
+    <div class="chart-title">Historical Trend</div>
+    <div class="chart-note">// Dot-com bubble → crash → recovery → 2020 boom → cool-off. Source: Statista / Ritter.</div>
+    <canvas id="line_hist"></canvas>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── NOTABLE IPOs TABLE ── -->
+  <div class="section-label">Notable IPOs — Data Table</div>
+  <div class="chart-card" style="padding:0;overflow:hidden;">
+    <table class="ipo-table">
+      <thead>
+        <tr>
+          <th>Company</th><th>Ticker</th><th>Year</th>
+          <th>Day 1</th><th>~1-Yr</th><th>Outcome</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Figma</td><td class="ticker">FIGMA</td><td>2025</td><td class="pos">+250%</td><td class="neg">−23%</td><td><span class="tag mixed">Mixed</span></td></tr>
+        <tr><td>Beyond Meat</td><td class="ticker">BYND</td><td>2019</td><td class="pos">+163%</td><td class="neg">−80%</td><td><span class="tag crash">Pop→Crash</span></td></tr>
+        <tr><td>Airbnb</td><td class="ticker">ABNB</td><td>2020</td><td class="pos">+113%</td><td class="neg">−30%</td><td><span class="tag mixed">Partial Hold</span></td></tr>
+        <tr><td>Snowflake</td><td class="ticker">SNOW</td><td>2020</td><td class="pos">+111%</td><td class="neg">−55%</td><td><span class="tag crash">Pop→Crash</span></td></tr>
+        <tr><td>DoorDash</td><td class="ticker">DASH</td><td>2020</td><td class="pos">+86%</td><td class="neg">−60%</td><td><span class="tag crash">Pop→Crash</span></td></tr>
+        <tr><td>Coinbase</td><td class="ticker">COIN</td><td>2021</td><td class="pos">+31%</td><td class="neg">−75%</td><td><span class="tag crash">Pop→Crash</span></td></tr>
+        <tr><td>Rivian</td><td class="ticker">RIVN</td><td>2021</td><td class="pos">+29%</td><td class="neg">−80%</td><td><span class="tag crash">Pop→Crash</span></td></tr>
+        <tr><td>Reddit</td><td class="ticker">RDDT</td><td>2024</td><td class="pos">+48%</td><td class="pos">+120%</td><td><span class="tag hold">Held Gains</span></td></tr>
+        <tr><td>Uber</td><td class="ticker">UBER</td><td>2019</td><td class="neg">−7%</td><td class="neg">−25%</td><td><span class="tag crash">Flat→Down</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="v-note">⚠ Return figures are approximate from public financial data. Always verify independently before using for any investment decision.</p>
+
+  <div class="divider"></div>
+
+  <!-- ── VERDICT ── -->
+  <div class="section-label">What The Data Says</div>
+  <div class="verdict">
+    <div class="verdict-title">⚡ Bottom Line</div>
+    <div class="verdict-item"><span>✅</span><div><span class="verdict-bold">Waiting is statistically smarter.</span> <span class="verdict-rest">The first-day pop is mostly hype — institutional investors, media buzz, and retail FOMO. The price rarely reflects true fundamental value on Day 1.</span></div></div>
+    <div class="verdict-item"><span>📉</span><div><span class="verdict-bold">60% of IPOs underperform the S&amp;P 500 over 3 years.</span> <span class="verdict-rest">You'd often do better buying an index fund and going to sleep.</span></div></div>
+    <div class="verdict-item"><span>⏱️</span><div><span class="verdict-bold">Sweet spot: 3–6 months post-IPO.</span> <span class="verdict-rest">Lock-up periods expire (~90–180 days), insiders can sell, supply hits the market, and price finds its real floor. That's when opportunity can appear.</span></div></div>
+    <div class="verdict-item"><span>🚀</span><div><span class="verdict-bold">SpaceX note:</span> <span class="verdict-rest">A once-in-a-generation company with $10B+ real revenue — but hype will almost certainly inflate early pricing. History says: patience wins.</span></div></div>
+    <div class="verdict-item"><span>⚠️</span><div><span class="verdict-bold">This is data, not advice.</span> <span class="verdict-rest">Every IPO is different. Some beat the odds. Always do your own research and consult a licensed financial professional before investing anything.</span></div></div>
+  </div>
+
+  <!-- ── SOURCES ── -->
+  <div class="section-label">Verify The Data — Clickable Sources</div>
+  <div class="sources-card">
+    <div class="sources-title">🔗 Primary Research Sources</div>
+    <div class="source-item"><div class="source-num">1</div><div><div class="source-name">Prof. Jay Ritter — University of Florida (40+ Year IPO Study)</div><div class="source-desc">The most comprehensive long-run IPO performance dataset in existence. Updated through 2025. Shows 60%+ underperform the market over 3 years.</div><a class="source-link" href="https://site.warrington.ufl.edu/ritter/files/IPO-Statistics.pdf" target="_blank">↗ Open PDF</a></div></div>
+    <div class="source-item"><div class="source-num">2</div><div><div class="source-name">NBER Working Paper — IPO Activity, Pricing &amp; Allocations</div><div class="source-desc">National Bureau of Economic Research. Documents 3-year average market-adjusted return of −23.4% and the first-day underpricing phenomenon.</div><a class="source-link" href="https://www.nber.org/system/files/working_papers/w8805/w8805.pdf" target="_blank">↗ Open NBER Paper</a></div></div>
+    <div class="source-item"><div class="source-num">3</div><div><div class="source-name">Nasdaq Research — What Happens to IPOs Over the Long Run?</div><div class="source-desc">By year 1, more IPO companies underperform than beat the index. Gap widens by year 3.</div><a class="source-link" href="https://www.nasdaq.com/articles/what-happens-to-ipos-over-the-long-run-2021-04-15" target="_blank">↗ Open Article</a></div></div>
+    <div class="source-item"><div class="source-num">4</div><div><div class="source-name">Statista — U.S. IPO Statistics &amp; Facts</div><div class="source-desc">In 2023 and early 2024, over half of U.S. IPOs posted negative first-day returns.</div><a class="source-link" href="https://www.statista.com/topics/1272/ipos/" target="_blank">↗ Open Statista</a></div></div>
+    <div class="source-item"><div class="source-num">5</div><div><div class="source-name">RaseedInvest — First-Day IPO Performance Guide</div><div class="source-desc">~33% of IPOs trade lower by Day 1; over 50% by Day 2. Covers whipsaw events like Coinbase 2021.</div><a class="source-link" href="https://raseedinvest.com/en/learn/what-to-know-about-first-day-ipo-stock-performance" target="_blank">↗ Open Article</a></div></div>
+    <div class="source-item"><div class="source-num">6</div><div><div class="source-name">Quantum IPO Guide — First-Day Pops &amp; Long-Term Gains</div><div class="source-desc">Case studies on Beyond Meat, Snowflake, Rivian, Coinbase — pop-then-crash IPOs with detailed return data.</div><a class="source-link" href="https://quantum-ipo.com/2025/08/24/analyzing-ipo-performance-first-day-pops-and-long-term-gains/" target="_blank">↗ Open Analysis</a></div></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── BACK NAV CARDS (ind-card style with arrows) ── -->
+  <div class="section-label">Explore More</div>
+  <a href="index.html" class="nav-card">
+    <div><div class="nav-card-label">← Back To</div><div class="nav-card-name">Home</div><div class="nav-card-desc">TradingView Indicators · $4.99/mo · DuttyBookBag</div></div>
+    <div class="nav-arrow">→</div>
+  </a>
+  <a href="dbb-calculator.html" class="nav-card green-card">
+    <div><div class="nav-card-label">Tool</div><div class="nav-card-name">DBB Calculator</div><div class="nav-card-desc">Crypto calculator — DCA, portfolio tracker, live prices &amp; more</div></div>
+    <div class="nav-arrow">→</div>
+  </a>
+  <a href="dbb-lifeline.html" class="nav-card" style="border-color:rgba(255,82,82,0.2);">
+    <div><div class="nav-card-label">Tool</div><div class="nav-card-name">Lifeline</div><div class="nav-card-desc">Financial &amp; life resources — links, tools &amp; support</div></div>
+    <div class="nav-arrow" style="color:var(--red);">→</div>
+  </a>
+
+</div><!-- end .wrap -->
+
+<!-- ── LEGAL DISCLAIMER (same style as index footer) ── -->
+<section style="padding:30px 0 10px;">
+  <div class="wrap">
+    <div style="max-width:860px;padding:18px 20px 18px 22px;border-left:4px solid #cc0000;background:rgba(100,0,0,0.18);border-radius:4px;text-align:left;box-sizing:border-box;">
+      <p style="font-size:11px;font-style:italic;color:#e88;line-height:1.7;font-family:monospace;letter-spacing:0.3px;margin:0;">
+        <strong style="color:#ff5252;">IMPORTANT DISCLAIMER:</strong> This page is provided for educational and informational purposes only. Nothing on this page constitutes financial advice, investment advice, trading advice, or any recommendation to buy, sell, or hold any financial instrument, asset, cryptocurrency, or security of any kind. DuttyBookBag and its creator(s) are not licensed financial advisors, brokers, or investment professionals of any kind.<br><br>
+        This page is entirely independent and is <strong style="color:#ff5252;">NOT</strong> affiliated with, endorsed by, sponsored by, or connected in any way to: SpaceX / Space Exploration Technologies Corp. / Elon Musk; Snowflake Inc.; DoorDash Inc.; Airbnb Inc.; Coinbase Global Inc.; Beyond Meat Inc.; Rivian Automotive Inc.; Figma Inc.; Reddit Inc.; Uber Technologies Inc.; or any other company referenced herein. All company names and trademarks are the exclusive property of their respective owners, referenced solely for factual, educational purposes.<br><br>
+        <strong style="color:#ff5252;">SPACEX SPECIFIC NOTICE:</strong> Any reference to SpaceX or a potential SpaceX IPO is based solely on publicly reported news and market speculation. DuttyBookBag makes no claims regarding SpaceX's IPO plans, timeline, valuation, or investment potential. Nothing here should be construed as a recommendation to invest or not invest in any SpaceX offering.<br><br>
+        All percentage figures shown are statistical approximations from third-party academic and financial research institutions and may vary depending on methodology, time period, and data source. Always verify independently. DuttyBookBag, Uncle_E, and all associated creator(s) shall not be held liable for any financial losses, damages, or harm arising from use of or reliance upon this page. All financial decisions are made solely at your own risk. Consult a licensed financial professional before making any investment decision. <strong style="color:#ff5252;">Never invest more than you can afford to lose.</strong>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ── BOTTOM GLOWING LOGO ── -->
+<section style="padding:30px 0 20px;">
+  <div class="wrap" style="text-align:center;">
+    <div class="dbb-logo dbb-logo-sm" style="margin:0 auto;">
+      <div class="dot red d1"></div><div class="dot green d2"></div>
+      <div class="dot red d3"></div><div class="dot green d4"></div>
+      <div class="dot green d5"></div><div class="dot green d6"></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p style="color:#3d7070;font-size:11px;letter-spacing:2px;">Researched &amp; compiled by <span>DuttyBookBag · Uncle_E</span> · Data 1980–2025</p>
+    <p style="color:#3d7070;font-size:11px;letter-spacing:2px;margin-top:6px;">Not financial advice &middot; <span>DuttyBookBag</span> &middot; &copy; 2026 All Rights Reserved</p>
+  </div>
+</footer>
+
+<!-- ── BACK TO TOP BUTTON (exact same as index) ── -->
+<button id="top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top" style="position:fixed;bottom:22px;right:22px;z-index:9999;width:46px;height:46px;border-radius:50%;background:rgba(0,255,225,0.12);border:2px solid #00ffe1;color:#00ffe1;font-size:20px;cursor:pointer;display:none;align-items:center;justify-content:center;box-shadow:0 0 12px rgba(0,255,225,0.3);">&#8679;</button>
+
+<script>
+/* ── BACK TO TOP ── */
+var topBtn=document.getElementById('top-btn');
+window.addEventListener('scroll',function(){topBtn.style.display=window.scrollY>400?'flex':'none';});
+
+/* ── CHART DEFAULTS ── */
+Chart.defaults.color='#3d7070';
+Chart.defaults.font.family="'Share Tech Mono',monospace";
+const TT={backgroundColor:'#080f0f',borderColor:'#0c3030',borderWidth:1,titleColor:'#b8e8e2',bodyColor:'#b8e8e2',padding:12,cornerRadius:4,titleFont:{weight:'700',size:12},bodyFont:{size:11}};
+
+/* ── PIE + MATCHING HBAR HELPER ── */
+function makePairCharts(pieId, barId, legId, data) {
+  // Pie
+  new Chart(document.getElementById(pieId),{
+    type:'doughnut',
+    data:{labels:data.map(d=>d.l),datasets:[{data:data.map(d=>d.v),backgroundColor:data.map(d=>d.c),borderWidth:0,hoverOffset:6}]},
+    options:{responsive:true,maintainAspectRatio:false,cutout:'58%',
+      plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:ctx=>` ${ctx.parsed}%`}}}}
+  });
+  // Legend
+  if(legId){
+    const el=document.getElementById(legId);
+    data.forEach(d=>{el.innerHTML+=`<div class="legend-item"><div class="legend-dot" style="background:${d.c}"></div><span>${d.l}</span><span class="legend-pct" style="color:${d.c}">${d.v}%</span></div>`;});
+  }
+  // Horizontal Bar (same data)
+  new Chart(document.getElementById(barId),{
+    type:'bar',
+    data:{labels:data.map(d=>d.l),datasets:[{data:data.map(d=>d.v),backgroundColor:data.map(d=>d.c+'99'),borderColor:data.map(d=>d.c),borderWidth:1,borderRadius:3}]},
+    options:{
+      indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:ctx=>` ${ctx.parsed.x}%`}}},
+      scales:{
+        x:{ticks:{color:'#3d7070',callback:v=>v+'%'},grid:{color:'#0c3030'},border:{display:false},max:70},
+        y:{ticks:{color:'#b8e8e2',font:{size:10}},grid:{display:false},border:{display:false}}
+      }
+    }
+  });
+}
+
+/* FIRST DAY BEHAVIOR */
+makePairCharts('pie_day1','bar_day1','leg_day1',[
+  {l:'Pop then fall by Day 2',v:33,c:'#FF8C42'},
+  {l:'Pop & hold gains',      v:30,c:'#00ff6a'},
+  {l:'Drop on Day 1',         v:20,c:'#ff5252'},
+  {l:'Flat / minimal move',   v:17,c:'#4db8ff'},
+]);
+
+/* AFTER 1 YEAR */
+makePairCharts('pie_yr1','bar_yr1','leg_yr1',[
+  {l:'Below IPO price',v:56,c:'#ff5252'},
+  {l:'Above IPO price',v:44,c:'#00ff6a'},
+]);
+
+/* AFTER 3 YEARS */
+makePairCharts('pie_yr3','bar_yr3','leg_yr3',[
+  {l:'Underperform market',v:60,c:'#ff5252'},
+  {l:'Beat the market',    v:25,c:'#00ff6a'},
+  {l:'Match market',       v:15,c:'#4db8ff'},
+]);
+
+/* ── FAMOUS IPOs VERTICAL BAR ── */
+new Chart(document.getElementById('bar_ipos'),{
+  type:'bar',
+  data:{
+    labels:['Figma','Beyond\nMeat','Airbnb','Snowflake','DoorDash','Coinbase','Rivian'],
+    datasets:[
+      {label:'Day 1 Pop %',    data:[250,163,113,111,86,31,29], backgroundColor:'rgba(0,255,106,0.25)',borderColor:'#00ff6a',borderWidth:1,borderRadius:4},
+      {label:'1-Year Return %',data:[-23,-80,-30,-55,-60,-75,-80],backgroundColor:'rgba(255,82,82,0.25)',borderColor:'#ff5252',borderWidth:1,borderRadius:4}
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:true,labels:{color:'#b8e8e2',boxWidth:12,padding:16}},
+      tooltip:{...TT,callbacks:{label:ctx=>` ${ctx.dataset.label}: ${ctx.parsed.y>0?'+':''}${ctx.parsed.y}%`}}},
+    scales:{
+      x:{ticks:{color:'#3d7070'},grid:{display:false},border:{display:false}},
+      y:{ticks:{color:'#3d7070',callback:v=>v+'%'},grid:{color:'#0c3030'},border:{display:false}}
+    }
+  }
+});
+
+/* ── HISTORICAL LINE ── */
+new Chart(document.getElementById('line_hist'),{
+  type:'line',
+  data:{
+    labels:['2000','2002','2004','2006','2008','2010','2012','2014','2016','2018','2019','2020','2021','2022','2023','2024'],
+    datasets:[{
+      label:'Avg First-Day Return %',
+      data:[60,8,12,11,3,10,14,17,13,16,22,36,26,12,19,21],
+      borderColor:'#00ffe1',backgroundColor:'rgba(0,255,225,0.07)',
+      borderWidth:2,pointBackgroundColor:'#00ffe1',pointRadius:4,pointHoverRadius:6,fill:true,tension:0.35
+    }]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:ctx=>` Avg First-Day: +${ctx.parsed.y}%`}}},
+    scales:{
+      x:{ticks:{color:'#3d7070',maxRotation:45},grid:{color:'#0c3030'},border:{display:false}},
+      y:{ticks:{color:'#3d7070',callback:v=>v+'%'},grid:{color:'#0c3030'},border:{display:false}}
+    }
+  }
+});
+</script>
+</body>
+</html>
