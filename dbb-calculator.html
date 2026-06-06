@@ -563,7 +563,7 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
       <div><label id="conv-from-amt-label">Crypto Amount</label><input type="text" inputmode="decimal" id="conv-coin-amt" placeholder="1.0" step="any" oninput="convertCoinToFiat()"/></div>
       <div><label id="conv-to-amt-label">Currency Amount</label><input type="text" inputmode="decimal" id="conv-usd-amt" placeholder="0.00" step="any" oninput="convertFiatToCoin()"/></div>
     </div>
-    <div style="margin-top:8px;"><label>Quantity</label><input type="text" inputmode="decimal" id="conv-qty" placeholder="0.00" step="any" oninput="syncConvQty(this.value)"/></div>
+    <div style="margin-top:8px;"><label>Current Price (USD) <span style="color:var(--muted);font-size:10px;">// auto-filled · editable</span></label><input type="text" inputmode="decimal" id="conv-manual-price" placeholder="0.00" step="any" oninput="convertCoinToFiat()"/></div>
     <div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:6px;padding:8px 12px;background:rgba(0,0,0,0.3);border-radius:4px;">
       <span id="conv-rate-line">Select amounts above to convert</span>
     </div>
@@ -1744,8 +1744,9 @@ function updateConverterLabels(){
 
 function convertCoinToFiat(){
   var fromId=getFromCryptoId();
-  var priceUSD=getCryptoPriceUSD(fromId);
-  if(priceUSD<=0){document.getElementById('conv-result').textContent='⏳ Price loading...';return;}
+  var manualPrice=parseFloat(document.getElementById('conv-manual-price')&&document.getElementById('conv-manual-price').value)||0;
+  var priceUSD=manualPrice>0?manualPrice:getCryptoPriceUSD(fromId);
+  if(priceUSD<=0){document.getElementById('conv-result').textContent='⏳ Price loading — or enter price above';return;}
   var amount=parseFloat(document.getElementById('conv-coin-amt').value)||0;
   if(amount<=0) return;
   var fromSym=cryptoIdToSym(fromId);
@@ -1792,6 +1793,9 @@ function convertCoinToFiat(){
       });
     }
   })();
+  // Auto-fill manual price field if empty (user can override)
+  var mpEl=document.getElementById('conv-manual-price');
+  if(mpEl&&!mpEl.value) mpEl.value=priceUSD.toFixed(4);
   // keep hidden fields populated for sync compat
   document.getElementById('conv-price').value=priceUSD;
   document.getElementById('conv-rate').value=cur.type==='fiat'?(1/(priceUSD*(_fxRates[cur.code]||1))).toFixed(8):'--';
@@ -1800,8 +1804,9 @@ function convertCoinToFiat(){
 
 function convertFiatToCoin(){
   var fromId=getFromCryptoId();
-  var priceUSD=getCryptoPriceUSD(fromId);
-  if(priceUSD<=0){document.getElementById('conv-result').textContent='⏳ Price loading...';return;}
+  var manualPrice=parseFloat(document.getElementById('conv-manual-price')&&document.getElementById('conv-manual-price').value)||0;
+  var priceUSD=manualPrice>0?manualPrice:getCryptoPriceUSD(fromId);
+  if(priceUSD<=0){document.getElementById('conv-result').textContent='⏳ Price loading — or enter price above';return;}
   var amount=parseFloat(document.getElementById('conv-usd-amt').value)||0;
   if(amount<=0) return;
   var fromSym=cryptoIdToSym(fromId);
@@ -1894,6 +1899,8 @@ function getConvPrice(){
 
 // Wire coin dropdown
 document.getElementById('conv-coin').addEventListener('change',function(){
+  // Clear manual price so it refreshes from live feed
+  var mpEl=document.getElementById('conv-manual-price'); if(mpEl) mpEl.value='';
   document.getElementById('conv-coin-amt').value='';
   document.getElementById('conv-usd-amt').value='';
   document.getElementById('conv-result').textContent='';
@@ -2927,7 +2934,7 @@ function revertResultCurrency(){
 function autoSync(){
   // Called after any calculator runs — pushes all filled values to empty fields
   if(!syncOn) return;
-  var PRICE_IDS=['dca-current','se-entry','pt-current','dbb-price','dbb-entry','conv-price','proj-price','div-price','pyr-price'];
+  var PRICE_IDS=['dca-current','se-entry','pt-current','dbb-price','dbb-entry','conv-price','conv-manual-price','proj-price','div-price','pyr-price'];
   var NAME_IDS=['dca-name','se-name','pt-name','pyr-name'];
   var INVESTED_IDS=['dbb-capital','se-invested','proj-invested'];
   var QTY_IDS_SYNC=['proj-qty','se-qty','div-shares','pt-qty','conv-qty']; // dca-total-qty excluded — set only by DCA calculator
@@ -2947,7 +2954,7 @@ function autoSync(){
 }
 
 function reSyncAll(){
-  var PRICE_IDS=['dca-current','se-entry','proj-price','div-price','pt-current','pt-price','dbb-price','dbb-entry','conv-price','pyr-price'];
+  var PRICE_IDS=['dca-current','se-entry','proj-price','div-price','pt-current','pt-price','dbb-price','dbb-entry','conv-price','conv-manual-price','pyr-price'];
   var QTY_IDS=['proj-qty','se-qty','div-shares','pt-qty','dca-total-qty','conv-qty'];
   var INVESTED_IDS=['proj-invested','se-invested','pyr-budget','dbb-capital'];
   var NAME_IDS=['dca-name','se-name','pt-name','pyr-name'];
