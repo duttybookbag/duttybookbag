@@ -559,11 +559,16 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
         </select>
       </div>
     </div>
-    <div class="grid-2" style="margin-top:8px;">
-      <div><label id="conv-from-amt-label">Crypto Amount</label><input type="text" inputmode="decimal" id="conv-coin-amt" placeholder="1.0" step="any" oninput="convertCoinToFiat()"/></div>
-      <div><label id="conv-to-amt-label">Currency Amount</label><input type="text" inputmode="decimal" id="conv-usd-amt" placeholder="0.00" step="any" oninput="convertFiatToCoin()"/></div>
+    <div style="margin-top:8px;margin-bottom:10px;">
+      <button id="conv-dir-btn" onclick="convToggleDir()" style="width:100%;padding:9px;background:transparent;border:1px solid var(--gold);color:var(--gold);font-family:var(--mono);font-size:10px;letter-spacing:2px;cursor:pointer;border-radius:3px;">
+        ⇄ &nbsp; MODE: USD → COINS
+      </button>
     </div>
-    <div style="margin-top:8px;"><label>Current Price (USD) <span style="color:var(--muted);font-size:10px;">// auto-filled · editable</span></label><input type="text" inputmode="decimal" id="conv-manual-price" placeholder="0.00" step="any" oninput="convertCoinToFiat()"/></div>
+    <div class="grid-2" style="margin-top:8px;">
+      <div><label id="conv-from-amt-label">Amount (USD $)</label><input type="text" inputmode="decimal" id="conv-coin-amt" placeholder="500" step="any" oninput="convCalc()"/></div>
+      <div><label id="conv-to-amt-label">Coins You Get</label><input type="text" inputmode="decimal" id="conv-usd-amt" placeholder="0.00" step="any" readonly style="background:rgba(0,255,225,0.04);color:var(--cyan);"/></div>
+    </div>
+    <div style="margin-top:8px;"><label>Price ($) <span style="color:var(--muted);font-size:10px;">// what if price was this?</span></label><input type="text" inputmode="decimal" id="conv-manual-price" placeholder="e.g. 0.50" step="any" oninput="convCalc()"/></div>
     <div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:6px;padding:8px 12px;background:rgba(0,0,0,0.3);border-radius:4px;">
       <span id="conv-rate-line">Select amounts above to convert</span>
     </div>
@@ -1175,6 +1180,7 @@ async function fetchPrices(){
       const price=parseFloat(d.data&&d.data.amount)||0;
       if(price>0){
         livePrices[coin.id]={usd:price,'usd_24h_change':0};
+        livePrices[coin.sym]={usd:price,'usd_24h_change':0}; // also by SYM for fast lookup
         const p=price<0.001?price.toFixed(8):price<1?price.toFixed(6):price<100?price.toFixed(2):price.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
         liveTicker[coin.sym]={id:coin.id,price:price,type:'crypto'};
         h+='<div class="ticker-item" style="cursor:default;"><span class="ticker-name">'+coin.sym+'</span><span class="ticker-price">$'+p+'</span><span class="ticker-change" style="color:var(--muted);">spot</span><button class="use-btn" data-sym="'+coin.sym+'" data-price="'+price+'" data-type="crypto" style="font-family:var(--mono);font-size:9px;padding:3px 8px;background:transparent;border:1px solid var(--neon);color:var(--neon);border-radius:2px;cursor:pointer;margin-left:6px;letter-spacing:1px;">USE</button></div>';
@@ -1189,6 +1195,10 @@ async function fetchPrices(){
   document.getElementById('ticker-container').innerHTML=h||'<div style="color:var(--red);font-family:var(--mono);font-size:12px;">Unable to load. Refresh page.</div>';
   // Auto-fill first DCA price from current price after each fetch
   if(typeof fillFirstDCAPrice==='function') fillFirstDCAPrice();
+  // NOTE: convSetLivePrice() intentionally NOT called here.
+  // Ticker refreshes fire repeatedly and would overwrite conv-manual-price
+  // with whatever coin happens to be selected — even after user edits.
+  // Price is populated only on: (1) page load, (2) conv-coin dropdown change.
   // Launch meteors to every price tile on every refresh
   launchMeteorsToAll();
   // Track prices for future use
@@ -1338,6 +1348,10 @@ function launchMeteorsToAll(){
 }
 
 fetchPrices();setInterval(fetchPrices,10000);
+// Populate converter price field on initial page load.
+// Retries automatically (up to 10x) until fetchPrices has loaded prices.
+// NOT called from fetchPrices loop — that caused the BTC-overwrite bug.
+setTimeout(function(){ if(typeof convSetLivePrice==='function') convSetLivePrice(); }, 200);
 
 // USE button clicks via event delegation (avoids inline quote escaping issues)
 document.addEventListener('click',function(e){
@@ -1683,12 +1697,19 @@ function getFromCryptoId(){
 }
 
 function getCryptoPriceUSD(id){
-  if(livePrices[id]) return livePrices[id].usd;
-  // try liveTicker by id
+  if(!id) return 0;
+  // Check by CoinGecko id (e.g. 'ripple')
+  if(livePrices[id]&&livePrices[id].usd>0) return livePrices[id].usd;
+  // Check by SYM directly (e.g. 'XRP')
+  var upper=id.toUpperCase();
+  if(livePrices[upper]&&livePrices[upper].usd>0) return livePrices[upper].usd;
+  // Check liveTicker by id
   var keys=Object.keys(liveTicker);
   for(var i=0;i<keys.length;i++){
     if(liveTicker[keys[i]].id===id) return liveTicker[keys[i]].price;
   }
+  // Check liveTicker by sym
+  if(liveTicker[upper]) return liveTicker[upper].price;
   return 0;
 }
 
@@ -1736,71 +1757,116 @@ function updateConverterLabels(){
     var sub=document.getElementById('conv-sub');
     if(sub) sub.textContent='// '+fromSym+' → '+toSym+' · Crypto to Crypto';
   }
-  var toAmtLabel=document.getElementById('conv-to-amt-label');
-  if(toAmtLabel) toAmtLabel.textContent=toLabel;
-  var fromAmtLabel=document.getElementById('conv-from-amt-label');
-  if(fromAmtLabel) fromAmtLabel.textContent=fromSym+' Amount';
+  // Only update labels if in legacy mode — convToggleDir manages labels now
+  if(typeof _convDir==='undefined'||_convDir==='legacy'){
+    var toAmtLabel=document.getElementById('conv-to-amt-label');
+    if(toAmtLabel) toAmtLabel.textContent=toLabel;
+    var fromAmtLabel=document.getElementById('conv-from-amt-label');
+    if(fromAmtLabel) fromAmtLabel.textContent=fromSym+' Amount';
+  }
 }
 
-function convertCoinToFiat(){
-  var fromId=getFromCryptoId();
-  var manualPrice=parseFloat(document.getElementById('conv-manual-price')&&document.getElementById('conv-manual-price').value)||0;
-  var priceUSD=manualPrice>0?manualPrice:getCryptoPriceUSD(fromId);
-  if(priceUSD<=0){document.getElementById('conv-result').textContent='⏳ Price loading — or enter price above';return;}
-  var amount=parseFloat(document.getElementById('conv-coin-amt').value)||0;
-  if(amount<=0) return;
-  var fromSym=cryptoIdToSym(fromId);
-  var cur=getSelectedCurrency();
-  var resultAmt,resultStr,rateStr;
-  if(cur.type==='fiat'){
-    var rate=_fxRates[cur.code]||1;
-    var fiatAmt=amount*priceUSD*rate;
-    document.getElementById('conv-usd-amt').value=(fiatAmt).toFixed(2);
-    resultStr=fmtCrypto(amount,fromId)+' = '+fmtFiat(fiatAmt,cur.code);
-    rateStr='1 '+fromSym+' = '+fmtFiat(priceUSD*rate,cur.code)+' · 1 '+cur.code+' = '+fmtCrypto(1/(priceUSD*rate),fromId);
+// ── Converter — clean rewrite ────────────────────────────
+// _convDir: 'budget' = USD input → coins output
+//           'coins'  = coins input → USD output
+var _convDir = 'budget';
+
+function convToggleDir(){
+  _convDir = _convDir==='budget' ? 'coins' : 'budget';
+  var btn     = document.getElementById('conv-dir-btn');
+  var fromLbl = document.getElementById('conv-from-amt-label');
+  var toLbl   = document.getElementById('conv-to-amt-label');
+  var fromInp = document.getElementById('conv-coin-amt');
+  var toInp   = document.getElementById('conv-usd-amt');
+  if(_convDir==='budget'){
+    if(btn)     btn.innerHTML='⇄ &nbsp; MODE: USD → COINS';
+    if(fromLbl) fromLbl.textContent='Amount (USD $)';
+    if(toLbl)   toLbl.textContent='Coins You Get';
+    if(fromInp) fromInp.placeholder='500';
+    if(toInp)   toInp.style.color='var(--cyan)';
   } else {
-    var toId=cur.code;
-    var toPriceUSD=getCryptoPriceUSD(toId);
-    if(toPriceUSD<=0){document.getElementById('conv-result').textContent='⏳ Target price loading...';return;}
-    var toAmt=amount*(priceUSD/toPriceUSD);
-    var toSym=cryptoIdToSym(toId);
-    document.getElementById('conv-usd-amt').value=toAmt.toFixed(8);
-    resultStr=fmtCrypto(amount,fromId)+' = '+fmtCrypto(toAmt,toId);
-    rateStr='1 '+fromSym+' = '+fmtCrypto(priceUSD/toPriceUSD,toId)+' · 1 '+toSym+' = '+fmtCrypto(toPriceUSD/priceUSD,fromId);
+    if(btn)     btn.innerHTML='⇄ &nbsp; MODE: COINS → USD';
+    if(fromLbl) fromLbl.textContent='Your Coins';
+    if(toLbl)   toLbl.textContent='Value (USD $)';
+    if(fromInp) fromInp.placeholder='100';
+    if(toInp)   toInp.style.color='var(--gold)';
   }
-  document.getElementById('conv-result').textContent=resultStr;
-  var rateLine=document.getElementById('conv-rate-line');
-  if(rateLine) rateLine.textContent=rateStr;
-  // Render converter chart
-  (function(){
-    var coinAmt2=parseFloat(document.getElementById('conv-coin-amt').value)||0;
-    var usdAmt2=parseFloat(document.getElementById('conv-usd-amt').value)||0;
-    if(coinAmt2>0&&usdAmt2>0&&typeof renderCalcCharts==='function'){
-      var fromSym2=cryptoIdToSym(getFromCryptoId());
-      var cur2=getSelectedCurrency();
-      var toLabel2=cur2.type==='fiat'?cur2.code:cryptoIdToSym(cur2.code);
-      renderCalcCharts({
-        wrapId:'conv-chart-wrap', svgId:'conv-pie', legendId:'conv-legend', barId:'conv-bar',
-        slices:[
-          {val:coinAmt2, color:'var(--gold)', label:fromSym2+' Amount', fmtVal:coinAmt2.toFixed(4)},
-          {val:usdAmt2,  color:'var(--cyan)', label:toLabel2+' Value',  fmtVal:usdAmt2.toFixed(2)}
-        ],
-        centerLabel:{line1:'CONV', line2:fromSym2},
-        bars:[
-          {label:fromSym2+' (coins)', val:coinAmt2, max:coinAmt2, color:'var(--gold)', fmt:coinAmt2.toFixed(4)},
-          {label:toLabel2+' value',   val:usdAmt2,  max:usdAmt2,  color:'var(--cyan)', fmt:usdAmt2.toFixed(2)}
-        ]
-      });
-    }
-  })();
-  // Auto-fill manual price field if empty (user can override)
-  var mpEl=document.getElementById('conv-manual-price');
-  if(mpEl&&!mpEl.value) mpEl.value=priceUSD.toFixed(4);
-  // keep hidden fields populated for sync compat
-  document.getElementById('conv-price').value=priceUSD;
-  document.getElementById('conv-rate').value=cur.type==='fiat'?(1/(priceUSD*(_fxRates[cur.code]||1))).toFixed(8):'--';
-  document.getElementById('conv-rate-usd').value=priceUSD.toFixed(2);
+  if(toInp)  { toInp.value=''; toInp.setAttribute('readonly',''); }
+  if(fromInp){ fromInp.value=''; fromInp.removeAttribute('readonly'); }
+  var res=document.getElementById('conv-result');
+  if(res) res.textContent='';
 }
+
+// Get price for selected coin: manual input wins, else live price
+function convGetPrice(){
+  var mpEl=document.getElementById('conv-manual-price');
+  var manual=mpEl?parseFloat(mpEl.value)||0:0;
+  if(manual>0) return manual;
+  var fromId=getFromCryptoId();
+  return getCryptoPriceUSD(fromId);
+}
+
+// Set the price field from live data — ONLY if user hasn't typed anything
+function convSetLivePrice(retries){
+  var mpEl=document.getElementById('conv-manual-price');
+  if(!mpEl||mpEl.value.trim()!=='') return; // never overwrite user input
+  var fromId=getFromCryptoId();
+  var lp=getCryptoPriceUSD(fromId);
+  if(lp>0){
+    var decimals=lp<0.001?8:lp<1?6:lp<100?4:2;
+    mpEl.value=parseFloat(lp.toFixed(decimals)).toString();
+    convCalc(); // recalc with correct price
+  } else if((retries||0)<10){
+    // Price not loaded yet — retry after 500ms (prices load async)
+    setTimeout(function(){ convSetLivePrice((retries||0)+1); }, 500);
+  }
+}
+
+function convCalc(){
+  var fromId  = getFromCryptoId();
+  var fromSym = cryptoIdToSym(fromId)||'coins';
+  var price   = convGetPrice();
+  var inputAmt= parseFloat((document.getElementById('conv-coin-amt')||{}).value)||0;
+  var toInp   = document.getElementById('conv-usd-amt');
+  var resEl   = document.getElementById('conv-result');
+  var rateEl  = document.getElementById('conv-rate-line');
+
+  if(price<=0){
+    if(resEl) resEl.textContent='Enter a price — or select a coin to load live price';
+    return;
+  }
+  if(inputAmt<=0){
+    if(toInp) toInp.value='';
+    if(resEl) resEl.textContent='';
+    return;
+  }
+
+  var output, resultStr;
+  if(_convDir==='budget'){
+    // Mode 1: USD ÷ price = coins
+    output = inputAmt / price;
+    var fmt = output<0.0001?output.toFixed(8):output<1?output.toFixed(6):parseFloat(output.toFixed(4)).toString();
+    if(toInp) toInp.value = fmt;
+    resultStr = '$'+inputAmt.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+
+                ' → '+fmt+' '+fromSym+' at $'+price.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:price<1?6:2});
+  } else {
+    // Mode 2: coins × price = USD
+    output = inputAmt * price;
+    if(toInp) toInp.value = output.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+    resultStr = inputAmt+' '+fromSym+
+                ' → $'+output.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+
+                ' at $'+price.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:price<1?6:2});
+  }
+
+  if(resEl)  resEl.textContent = resultStr;
+  if(rateEl) rateEl.textContent = '1 '+fromSym+' = $'+price+' · $1 = '+parseFloat((1/price).toFixed(6))+' '+fromSym;
+
+  // keep hidden fields for sync compat
+  var cp=document.getElementById('conv-price'); if(cp) cp.value=price;
+  var cu=document.getElementById('conv-rate-usd'); if(cu) cu.value=price.toFixed(2);
+}
+
+function convertCoinToFiat(){ convCalc(); }
 
 function convertFiatToCoin(){
   var fromId=getFromCryptoId();
@@ -1899,8 +1965,12 @@ function getConvPrice(){
 
 // Wire coin dropdown
 document.getElementById('conv-coin').addEventListener('change',function(){
-  // Clear manual price so it refreshes from live feed
-  var mpEl=document.getElementById('conv-manual-price'); if(mpEl) mpEl.value='';
+  // Clear the price field first so convSetLivePrice() will populate
+  // the newly selected coin's price (guard checks for empty string)
+  var mpEl=document.getElementById('conv-manual-price');
+  if(mpEl) mpEl.value='';
+  // Now populate with live price for newly selected coin
+  if(typeof convSetLivePrice==='function') convSetLivePrice();
   document.getElementById('conv-coin-amt').value='';
   document.getElementById('conv-usd-amt').value='';
   document.getElementById('conv-result').textContent='';
@@ -2934,7 +3004,7 @@ function revertResultCurrency(){
 function autoSync(){
   // Called after any calculator runs — pushes all filled values to empty fields
   if(!syncOn) return;
-  var PRICE_IDS=['dca-current','se-entry','pt-current','dbb-price','dbb-entry','conv-price','conv-manual-price','proj-price','div-price','pyr-price'];
+  var PRICE_IDS=['dca-current','se-entry','pt-current','dbb-price','dbb-entry','conv-price','proj-price','div-price','pyr-price'];
   var NAME_IDS=['dca-name','se-name','pt-name','pyr-name'];
   var INVESTED_IDS=['dbb-capital','se-invested','proj-invested'];
   var QTY_IDS_SYNC=['proj-qty','se-qty','div-shares','pt-qty','conv-qty']; // dca-total-qty excluded — set only by DCA calculator
@@ -2954,7 +3024,7 @@ function autoSync(){
 }
 
 function reSyncAll(){
-  var PRICE_IDS=['dca-current','se-entry','proj-price','div-price','pt-current','pt-price','dbb-price','dbb-entry','conv-price','conv-manual-price','pyr-price'];
+  var PRICE_IDS=['dca-current','se-entry','proj-price','div-price','pt-current','pt-price','dbb-price','dbb-entry','conv-price','pyr-price'];
   var QTY_IDS=['proj-qty','se-qty','div-shares','pt-qty','dca-total-qty','conv-qty'];
   var INVESTED_IDS=['proj-invested','se-invested','pyr-budget','dbb-capital'];
   var NAME_IDS=['dca-name','se-name','pt-name','pyr-name'];
@@ -3196,8 +3266,15 @@ function syncConverterCoin(sym, priceId, price){
   if(price>0){
     var cp=document.getElementById('conv-price');
     if(cp) cp.value=price;
+    // Also update the visible manual price field
+    var mpEl=document.getElementById('conv-manual-price');
+    if(mpEl){
+      var decimals=price<0.001?8:price<1?6:price<100?4:2;
+      mpEl.value=parseFloat(price.toFixed(decimals)).toString();
+    }
   }
   updateConverterLabels();
+  if(typeof convCalc==='function') convCalc();
 }
 function syncPrice(price, sourceId){
   if(!syncOn||!price||price<=0) return;
