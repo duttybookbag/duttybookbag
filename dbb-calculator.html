@@ -757,7 +757,7 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
       </div>
     </div>
     <button class="add-entry-btn" onclick="addDCAEntry()">+ Add Another Entry</button>
-    <div style="margin:8px 0 4px;"><label>Quantity <span style="color:var(--muted);font-size:10px;">// total across all entries</span></label><input type="text" inputmode="decimal" id="dca-total-qty" placeholder="0.00" step="any" readonly style="opacity:0.7;cursor:default;width:100%;"/></div>
+    <div style="margin:8px 0 4px;"><label>Quantity <span style="color:var(--muted);font-size:10px;">// total across all entries</span></label><input type="text" inputmode="decimal" id="dca-total-qty" placeholder="0.00" step="any" style="width:100%;"/></div>
     <div class="grid-2">
       <div><label>Current Price ($) <span style="color:var(--muted);font-size:10px;">// optional for P&L</span></label><input type="text" id="dca-current" placeholder="type XRP, BTC... or enter price" step="any" inputmode="decimal"/></div>
     <div><label>Potential Exit Price ($) <span style="color:var(--muted);font-size:10px;">// optional — hypothetical return, not a recommendation</span></label><input type="text" id="dca-target" placeholder="e.g. 1.50 or type BTC" step="any" inputmode="decimal"/></div><div></div>
@@ -793,12 +793,12 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
     <div class="calc-sub">// Model what it might look like to exit in stages — hypothetical only</div>
     <div class="grid-2">
       <div><label>Asset Name</label><input type="text" id="se-name" placeholder="BTC, TSLA, SOL..."/></div>
-      <div><label>Quantity</label><input type="text" inputmode="decimal" id="se-qty" placeholder="1.5" readonly style="opacity:0.7;cursor:default;" step="any"/></div>
+      <div><label>Quantity</label><input type="text" inputmode="decimal" id="se-qty" placeholder="1.5" step="any"/></div>
     </div>
     <div class="grid-2">
       <div><label>Avg Entry Price ($) <span style="color:var(--muted);font-size:10px;">// or current price if single buy</span></label><input type="text" inputmode="decimal" id="se-entry" placeholder="45000" step="any" oninput="seSingleBuyHint()"/></div>
     <div><label>🎯 Potential Best-Case Price ($) <span style="color:var(--muted);font-size:10px;">// optional — hypothetical max, not a recommendation</span></label><input type="text" inputmode="decimal" id="se-best-exit" placeholder="e.g. 2.00" step="any"/></div>
-      <div><label>Budget ($)</label><input type="text" inputmode="decimal" id="se-invested" placeholder="67500" step="any"/></div>
+      <div><label>Budget ($) <span style="color:var(--muted);font-size:10px;">// optional</span></label><input type="text" inputmode="decimal" id="se-invested" placeholder="optional" step="any"/></div>
     </div>
     <div style="font-family:var(--mono);font-size:10px;letter-spacing:3px;color:var(--gold);margin:16px 0 10px;">// EXIT LEVELS</div>
     <div id="se-levels">
@@ -838,7 +838,7 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
     <div class="calc-sub">// See your current and future dividend income</div>
     <div class="grid-2">
       <div><label>Asset Price ($)</label><input type="text" inputmode="decimal" id="div-price" placeholder="150.00" step="any"/></div>
-      <div><label>Quantity</label><input type="text" inputmode="decimal" id="div-shares" placeholder="100" readonly style="opacity:0.7;cursor:default;" step="any"/></div>
+      <div><label>Quantity</label><input type="text" inputmode="decimal" id="div-shares" placeholder="100" step="any"/></div>
     </div>
     <div class="grid-2">
       <div><label>Annual Dividend / Asset ($)</label><input type="text" inputmode="decimal" id="div-annual" placeholder="3.28" step="any"/></div>
@@ -877,15 +877,16 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
   <div class="calc-box">
     <div class="calc-title">What If Calculator</div>
     <button onclick="reSyncAll()" style="font-family:var(--mono);font-size:9px;letter-spacing:2px;padding:4px 10px;background:transparent;border:1px solid var(--cyan);color:var(--cyan);border-radius:3px;cursor:pointer;text-transform:uppercase;margin-bottom:10px;">🔄 Re-Sync</button>
-    <div class="calc-sub">// See what your holdings could be worth</div>
+    <div class="calc-sub">// Enter your trade — see P&amp;L + future projections</div>
     <div class="grid-2">
-      <div><label>Current Price ($)</label><input type="text" inputmode="decimal" id="proj-price" placeholder="45000" step="any"/></div>
-      <div><label>Quantity</label><input type="text" inputmode="decimal" id="proj-qty" placeholder="0.5" readonly style="opacity:0.7;cursor:default;" step="any"/></div>
+      <div><label>Price You Bought At ($)</label><input type="text" inputmode="decimal" id="proj-buyprice" placeholder="40000" step="any"/></div>
+      <div><label>Shares / Quantity</label><input type="text" inputmode="decimal" id="proj-qty" placeholder="0.5" step="any"/></div>
     </div>
     <div class="grid-2">
-      <div><label>Budget ($)</label><input type="text" inputmode="decimal" id="proj-invested" placeholder="22500" step="any"/></div>
-      <div><label>🎯 Potential Exit Price ($) <span style="color:var(--muted);font-size:10px;">// optional — hypothetical return, not a recommendation</span></label><input type="text" inputmode="decimal" id="proj-target" placeholder="100000" step="any"/></div>
+      <div><label>Current Price ($) <span style="color:var(--muted);font-size:10px;">// change to project forward</span></label><input type="text" inputmode="decimal" id="proj-price" placeholder="45000" step="any"/></div>
+      <div><label>🎯 Potential Exit Price ($) <span style="color:var(--muted);font-size:10px;">// optional</span></label><input type="text" inputmode="decimal" id="proj-target" placeholder="100000" step="any"/></div>
     </div>
+    <input type="hidden" id="proj-invested" value="0"/>
     <button class="btn-calc" onclick="calcProjection()">Project It</button>
     <button class="btn-secondary" onclick="injectWhatIfToPortfolio()">Send to Portfolio Tracker</button>
     <button class="btn-clear" onclick="clearProj()">Clear</button>
@@ -919,7 +920,7 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
     <div class="grid-3">
       <div><label>Name</label><input type="text" id="pt-name" placeholder="BTC"/></div>
       <div><label>Price Bought ($)</label><input type="text" inputmode="decimal" id="pt-price" placeholder="45000" step="any"/></div>
-      <div><label>Quantity</label><input type="text" inputmode="decimal" id="pt-qty" placeholder="0.5" readonly style="opacity:0.7;cursor:default;" step="any"/></div>
+      <div><label>Quantity</label><input type="text" inputmode="decimal" id="pt-qty" placeholder="0.5" step="any"/></div>
     </div>
     <div class="grid-3">
       <div><label>Fee ($)</label><input type="text" inputmode="decimal" id="pt-fee" placeholder="5" step="any"/></div>
@@ -2109,31 +2110,46 @@ function clearDiv(){['div-price','div-shares','div-annual','div-years'].forEach(
 // ===== WHAT IF =====
 function calcProjection(){
   const price=parseFloat(document.getElementById('proj-price').value)||0,qty=parseFloat(document.getElementById('proj-qty').value)||0,inv=parseFloat(document.getElementById('proj-invested').value)||0,target=parseFloat(document.getElementById('proj-target').value)||0;
+  const buyPrice=parseFloat(document.getElementById('proj-buyprice').value)||0;
   if(price<=0||qty<=0)return;
   const cv=price*qty;
+  // P&L calc from buy price
+  const costBasis = buyPrice>0 ? buyPrice*qty : 0;
+  const pnl = buyPrice>0 ? cv - costBasis : null;
+  const pnlPct = (buyPrice>0 && costBasis>0) ? ((pnl/costBasis)*100) : null;
+  const pnlColor = pnl===null ? 'var(--cyan)' : pnl>0 ? 'var(--green)' : pnl<0 ? 'var(--red)' : 'var(--gold)';
   const isShort=(typeof shortMode!=='undefined')&&shortMode;
   let ph='';
   if(isShort){
-    // SHORT: show what happens when price drops 25%, 50%, 75%, 90%
     [{label:'−25%',mult:0.75},{label:'−50%',mult:0.50},{label:'−75%',mult:0.25},{label:'−90%',mult:0.10}].forEach(function(s){
-      const fp=price*s.mult,fv=fp*qty,g=inv>0?(inv-fv):(cv-fv);
+      const fp=price*s.mult,fv=fp*qty,g=costBasis>0?(costBasis-fv):(cv-fv);
       const gc=g>=0?'green':'red';
-      ph+='<div class="result-row"><span class="result-label">'+s.label+' ($'+fp.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:6})+')</span><span class="result-val '+gc+'">$'+fv.toLocaleString('en-US',{minimumFractionDigits:2})+(inv>0?' ('+((g/inv)*100).toFixed(0)+'% gain)':'')+'</span></div>';
+      ph+='<div class="result-row"><span class="result-label">'+s.label+' ($'+fp.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:6})+')</span><span class="result-val '+gc+'">$'+fv.toLocaleString('en-US',{minimumFractionDigits:2})+(costBasis>0?' ('+((g/costBasis)*100).toFixed(0)+'% gain)':'')+'</span></div>';
     });
   } else {
-    [2,3,4,5,10].forEach(m=>{const fp=price*m,fv=fp*qty,g=inv>0?fv-inv:fv-cv;ph+='<div class="result-row"><span class="result-label">'+m+'x ($'+fp.toLocaleString()+')</span><span class="result-val green">$'+fv.toLocaleString('en-US',{minimumFractionDigits:2})+(inv>0?' (+'+((g/inv)*100).toFixed(0)+'%)':'')+'</span></div>';});
+    [2,3,4,5,10].forEach(m=>{const fp=price*m,fv=fp*qty,g=costBasis>0?fv-costBasis:fv-cv;ph+='<div class="result-row"><span class="result-label">'+m+'x ($'+fp.toLocaleString()+')</span><span class="result-val green">$'+fv.toLocaleString('en-US',{minimumFractionDigits:2})+(costBasis>0?' (+'+((g/costBasis)*100).toFixed(0)+'%)':'')+'</span></div>';});
   }
   const tv=target>0?target*qty:0;
-  const tgl=isShort?(inv>0?inv-tv:cv-tv):(inv>0?tv-inv:tv-cv);
+  const tgl=isShort?(costBasis>0?costBasis-tv:cv-tv):(costBasis>0?tv-costBasis:tv-cv);
   const tgc=tgl>=0?'green':'red';
   const b=document.getElementById('proj-results');b.style.display='block';
-  b.innerHTML='<div class="result-row"><span class="result-label">Current Value'+(isShort?' 📉 SHORT':'')+' </span><span class="result-val">$'+cv.toLocaleString('en-US',{minimumFractionDigits:2})+'</span></div>'
-    +(inv>0?'<div class="result-row"><span class="result-label">Invested</span><span class="result-val">$'+inv.toLocaleString('en-US',{minimumFractionDigits:2})+'</span></div>':'')
-    +(target>0?'<div class="result-row"><span class="result-label">At '+(isShort?'Cover':'Target')+' ($'+target.toLocaleString()+')</span><span class="result-val '+tgc+'">$'+tv.toLocaleString('en-US',{minimumFractionDigits:2})+(inv>0?' ('+((tgl/inv)*100).toFixed(0)+'%)':'')+'</span></div>':'')
+  b.innerHTML=
+    // P&L block at top
+    (buyPrice>0?
+      '<div style="border:1px solid '+pnlColor+';border-radius:6px;padding:14px;margin-bottom:14px;background:rgba(0,0,0,0.3);">'
+      +'<div class="result-row"><span class="result-label">Buy Price</span><span class="result-val" style="color:var(--text);font-size:22px;">$'+buyPrice.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:6})+'</span></div>'
+      +'<div class="result-row"><span class="result-label">Shares / Qty</span><span class="result-val" style="color:var(--text);font-size:22px;">'+qty.toLocaleString()+'</span></div>'
+      +'<div class="result-row"><span class="result-label">Cost Basis</span><span class="result-val" style="color:var(--text);font-size:22px;">$'+costBasis.toLocaleString('en-US',{minimumFractionDigits:2})+'</span></div>'
+      +'<div class="result-row"><span class="result-label">Current Value</span><span class="result-val" style="color:var(--blue);font-size:22px;">$'+cv.toLocaleString('en-US',{minimumFractionDigits:2})+'</span></div>'
+      +'<div class="result-row" style="border-top:2px solid '+pnlColor+';padding-top:12px;margin-top:6px;"><span class="result-label" style="font-size:15px;">P&amp;L</span><span class="result-val" style="color:'+pnlColor+';font-size:32px;">'+(pnl>=0?'+':'')+pnl.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+'</span></div>'
+      +'<div class="result-row"><span class="result-label">Return %</span><span class="result-val" style="color:'+pnlColor+';font-size:26px;">'+(pnlPct>=0?'+':'')+pnlPct.toFixed(2)+'%</span></div>'
+      +'</div>'
+    :'')
+    +'<div class="result-row"><span class="result-label">Current Value'+(isShort?' 📉 SHORT':'')+' </span><span class="result-val">$'+cv.toLocaleString('en-US',{minimumFractionDigits:2})+'</span></div>'
+    +(target>0?'<div class="result-row"><span class="result-label">At '+(isShort?'Cover':'Target')+' ($'+target.toLocaleString()+')</span><span class="result-val '+tgc+'">$'+tv.toLocaleString('en-US',{minimumFractionDigits:2})+(costBasis>0?' ('+((tgl/costBasis)*100).toFixed(0)+'%)':'')+'</span></div>':'')
     +'<div style="font-family:var(--mono);font-size:10px;color:var(--gold);margin:12px 0 6px;letter-spacing:2px;">'+(isShort?'SHORT PROJECTIONS (PRICE DROPS)':'MULTIPLIER PROJECTIONS')+'</div>'+ph;
-  window._whatIfData={price:price,qty:qty,invested:inv};
+  window._whatIfData={price:price,qty:qty,invested:costBasis>0?costBasis:inv};
 
-  // ── AUTO-FILL: What If → Dividends shares + Portfolio ──
   function wiAutoFill(id,val,dec){
     var el=document.getElementById(id);
     if(el&&!el.value&&val>0){
@@ -2143,13 +2159,12 @@ function calcProjection(){
       setTimeout(function(){el.style.borderColor='';el.style.boxShadow='';},1500);
     }
   }
-  wiAutoFill('div-shares',  qty,   6);   // Dividends — shares owned
-  wiAutoFill('div-price',   price, 2);   // Dividends — stock price
-  wiAutoFill('pt-qty',      qty,   8);   // Portfolio — quantity
-  wiAutoFill('pt-price',    price, 2);   // Portfolio — price bought
-  if(inv>0) wiAutoFill('pt-fee', 0, 2);  // Portfolio — fee (0 if not known)
-  // Draw What If charts
-  const projInv=inv>0?inv:cv;
+  wiAutoFill('div-shares',qty,6);
+  wiAutoFill('div-price',price,2);
+  wiAutoFill('pt-qty',qty,8);
+  wiAutoFill('pt-price',buyPrice>0?buyPrice:price,2);
+  if(costBasis>0) wiAutoFill('pt-fee',0,2);
+  const projInv=costBasis>0?costBasis:cv;
   const projGain=cv-projInv;
   const projIsGain=projGain>=0;
   const projGainPct=projInv>0?(Math.abs(projGain)/projInv*100):0;
@@ -2157,7 +2172,7 @@ function calcProjection(){
     wrapId:'proj-chart-wrap', svgId:'proj-pie', legendId:'proj-legend', barId:'proj-bar',
     slices:(function(){
       const projSlices=[];
-      projSlices.push({val:projInv>0?projInv:0.01, color:'#4db8ff', label:'Amount Invested', fmtVal:'$'+projInv.toFixed(2)});
+      projSlices.push({val:projInv>0?projInv:0.01, color:'#4db8ff', label:'Cost Basis', fmtVal:'$'+projInv.toFixed(2)});
       projSlices.push({val:cv>0?cv:0.01, color:projIsGain?'#39ff14':'#ff5252', label:'Current Value', fmtVal:'$'+cv.toFixed(2)});
       if(Math.abs(projGain)>0) projSlices.push({val:Math.abs(projGain), color:projIsGain?'#00ffe1':'#ff9f1c', label:projIsGain?'Unrealised Gain':'Unrealised Loss', fmtVal:(projIsGain?'+':'-')+'$'+Math.abs(projGain).toFixed(2)+' ('+projGainPct.toFixed(1)+'%)'});
       projSlices.push({val:cv*2>0?cv*2:0.01, color:'#ffd166', label:'Value at 2x ($'+(price*2).toLocaleString()+')', fmtVal:'$'+(cv*2).toFixed(2)});
@@ -2168,7 +2183,7 @@ function calcProjection(){
     })(),
     centerLabel:{line1:'NOW', line2:'$'+cv.toFixed(0)},
     bars:[
-      {label:'Invested', val:projInv, color:'#4db8ff', fmt:'$'+projInv.toFixed(2), pct:'100%'},
+      {label:'Cost Basis', val:projInv, color:'#4db8ff', fmt:'$'+projInv.toFixed(2), pct:'100%'},
       {label:'Current Value', val:cv, color:projIsGain?'#39ff14':'#ff5252', fmt:'$'+cv.toFixed(2), pct:projGainPct.toFixed(1)+'%'},
       {label:'At 2x ($'+(price*2).toFixed(2)+')', val:cv*2, color:'#ffd166', fmt:'$'+(cv*2).toFixed(2), pct:'200%'},
       {label:'At 5x ($'+(price*5).toFixed(2)+')', val:cv*5, color:'#b44dff', fmt:'$'+(cv*5).toFixed(2), pct:'500%'},
@@ -2179,7 +2194,7 @@ function calcProjection(){
   maybeApplyResultCurrency();
   setTimeout(autoSync,100);
 }
-function clearProj(){['proj-price','proj-qty','proj-invested','proj-target'].forEach(id=>document.getElementById(id).value='');document.getElementById('proj-results').style.display='none';}
+function clearProj(){['proj-price','proj-qty','proj-buyprice','proj-target'].forEach(id=>document.getElementById(id).value='');document.getElementById('proj-results').style.display='none';}
 
 function injectWhatIfToPortfolio(){
   if(!window._whatIfData)return alert('Run What If first');
