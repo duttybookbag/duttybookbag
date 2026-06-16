@@ -348,7 +348,7 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
         <ul class="levels-list">
           <li><span class="dot" style="background:#00ff6a;"></span> 1h / 4h / 1D rows — shows trend direction arrow (⬆️ or ⬇️)</li>
           <li><span class="dot" style="background:#ffd166;"></span> 1m row — shows combined dominance direction (🟢 or 🔴)</li>
-          <li><span class="dot" style="background:#4db8ff;"></span> 5m row — shows dominance percentage number</li>
+          <li><span class="dot" style="background:#4db8ff;"></span> 5m row — shows a dominance score number. Higher = stronger overall market pressure across all timeframes combined</li>
           <li><span class="dot" style="background:#3d7070;"></span> 15m / 30m rows — intentionally blank</li>
         </ul>
       </div>
@@ -367,13 +367,14 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
 
       <div class="col-card c-di">
         <div class="col-name">DI</div>
-        <div class="col-sub">// Directional Intensity</div>
-        <p>Measures the dominant directional momentum on each timeframe. Once a direction is confirmed, it holds — filtering out noise to show whether buyers or sellers are in control.</p>
+        <div class="col-sub">// Directional State</div>
+        <p>Tracks the directional state of each timeframe using an internal proprietary system. Once a state is confirmed it locks in and holds — it does not reset on every bar. States update incrementally across timeframes, so you may see the 1m confirm first, then 5m, then 15m as conditions spread through the timeframes.</p>
         <ul class="levels-list">
-          <li><span class="dot" style="background:#003399;"></span> B (Blue) = strong directional UP state confirmed</li>
-          <li><span class="dot" style="background:#555;"></span> G (Gray) = strong directional DOWN state confirmed</li>
-          <li><span class="dot" style="background:#3d7070;"></span> Blank = no directional state confirmed yet on that timeframe</li>
+          <li><span class="dot" style="background:#003399;"></span> B = overbought condition confirmed on that timeframe</li>
+          <li><span class="dot" style="background:#555;"></span> G = oversold condition confirmed on that timeframe</li>
+          <li><span class="dot" style="background:#3d7070;"></span> Blank = no condition confirmed yet on that timeframe</li>
         </ul>
+        <div class="warn" style="margin-top:10px;">⚠ Overbought does not mean sell. Oversold does not mean buy. Use DI alongside the other columns — not in isolation.</div>
       </div>
 
     </div>
@@ -441,10 +442,11 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
         <div class="row-icon">⚡</div>
         <div>
           <h4>PWR % in the BIA Row — AMP</h4>
-          <p>The PWR cell in the BIA row shows the current volume amplification level. This is called AMP — Amplification.</p>
+          <p>The PWR cell in the BIA row shows current volume compared to its recent average. This is called AMP.</p>
           <div class="tip" style="margin-top:10px;">
-            <strong>Above 100%</strong> = volume is amplified — shown in blue, strong activity behind the market<br>
-            <strong>Below 100%</strong> = volume is quiet — shown in orange, low activity
+            <strong>100%</strong> = volume is exactly at its average — normal activity<br>
+            <strong>Above 100%</strong> = more volume than usual — shown in blue<br>
+            <strong>Below 100%</strong> = quieter than usual — shown in orange
           </div>
         </div>
       </div>
@@ -505,7 +507,7 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
         <div class="icon">🔵</div>
         <div>
           <h4>DI Column Shows B Across Timeframes</h4>
-          <p>When the DI column shows B (blue) across multiple timeframes, buyers are dominant across the board. This directional read holds until sellers take over — giving you a clear picture of who is in control.</p>
+          <p>When DI shows B across multiple timeframes, an overbought condition has been confirmed on each one. Watch how it spreads — 1m confirms first, then 5m, then 15m and so on. When it reaches the higher timeframes, the condition has been active across the board. Use the other columns alongside DI — not in isolation.</p>
         </div>
       </div>
     </div>
