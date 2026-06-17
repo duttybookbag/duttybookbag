@@ -3869,9 +3869,13 @@ function calcPyramid(){
 
   var html='<div style="font-family:var(--mono);font-size:10px;letter-spacing:4px;color:var(--gold);margin-bottom:14px;">// PYRAMID — '+name.toUpperCase()+'</div>';
   html+='<div style="background:#030a0a;border:1px solid rgba(255,209,102,0.2);border-radius:6px;padding:12px 16px;margin-bottom:12px;display:flex;gap:20px;flex-wrap:wrap;">';
+  var totalQtyPreview=allocations.reduce(function(sum,alloc,idx){return sum+(alloc/levels[idx].price);},0);
+  var avgCost=totalQtyPreview>0?budget/totalQtyPreview:0;
   html+='<div><div style="font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:2px;">BUDGET</div><div style="font-family:var(--display);font-size:22px;color:var(--gold);">$'+budget.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+'</div></div>';
   html+='<div><div style="font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:2px;">LEVELS</div><div style="font-family:var(--display);font-size:22px;color:var(--cyan);">'+n+'</div></div>';
-  html+='<div><div style="font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:2px;">MODE</div><div style="font-family:var(--display);font-size:22px;color:var(--text);">'+mode.toUpperCase()+'</div></div></div>';
+  html+='<div><div style="font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:2px;">MODE</div><div style="font-family:var(--display);font-size:22px;color:var(--text);">'+mode.toUpperCase()+'</div></div>';
+  html+='<div style="border-left:2px solid var(--gold);padding-left:14px;"><div style="font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:2px;">AVG COST PRICE</div><div style="font-family:var(--display);font-size:22px;color:var(--neon);">$'+avgCost.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:8}).replace(/\.?0+$/,'')+'</div><div style="font-family:var(--mono);font-size:9px;color:var(--muted);">weighted avg across all levels</div></div>';
+  html+='</div>';
   if(syncActive){
     html+='<div style="background:rgba(255,209,102,0.05);border:1px solid rgba(255,209,102,0.25);border-left:3px solid var(--gold);border-radius:4px;padding:10px 14px;margin-bottom:12px;font-family:var(--mono);font-size:10px;line-height:2;">';
     html+='\u26a1 Money Management synced (empty fields only)<br>';
