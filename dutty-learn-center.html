@@ -1862,72 +1862,79 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
       <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:20px;margin:20px 0 10px;">
         <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:12px;">ACCUMULATION SCHEMATIC — A THROUGH E</div>
         <svg viewBox="0 0 500 200" style="width:100%;height:auto;">
-          <!-- Grid lines -->
-          <line x1="0" y1="55" x2="500" y2="55" stroke="#0c2020" stroke-width="1"/>
-          <line x1="0" y1="135" x2="500" y2="135" stroke="#0c2020" stroke-width="1"/>
           <!-- Trading range box -->
-          <rect x="60" y="55" width="360" height="80" fill="rgba(0,255,106,0.04)" stroke="rgba(0,255,106,0.15)" stroke-width="1" rx="2"/>
-          <!-- AR resistance label -->
-          <text x="430" y="52" fill="#00ff6a" font-family="Share Tech Mono" font-size="7">AR HIGH</text>
-          <!-- SC support label -->
-          <text x="430" y="142" fill="#ff5252" font-family="Share Tech Mono" font-size="7">SC LOW</text>
+          <rect x="60" y="55" width="360" height="80" fill="rgba(0,255,106,0.04)" stroke="rgba(0,255,106,0.08)" stroke-width="1" rx="2"/>
+
+          <!-- RESISTANCE LINE — connects AR high to Phase B peaks (dashed) -->
+          <line x1="60" y1="90" x2="420" y2="90" stroke="rgba(255,82,82,0.5)" stroke-width="1" stroke-dasharray="5,4"/>
+          <text x="422" y="93" fill="#ff5252" font-family="Share Tech Mono" font-size="6">RESISTANCE</text>
+
+          <!-- SUPPORT LINE — connects SC low to ST lows (dashed) -->
+          <line x1="60" y1="148" x2="420" y2="148" stroke="rgba(0,255,106,0.5)" stroke-width="1" stroke-dasharray="5,4"/>
+          <text x="422" y="151" fill="#00ff6a" font-family="Share Tech Mono" font-size="6">SUPPORT</text>
+
+          <!-- AR HIGH / SC LOW labels -->
+          <text x="422" y="55" fill="#ff5252" font-family="Share Tech Mono" font-size="6">AR HIGH</text>
+          <text x="422" y="140" fill="#00ff6a" font-family="Share Tech Mono" font-size="6">SC LOW</text>
 
           <!-- PHASE LABELS -->
-          <text x="5" y="185" fill="#00ff6a" font-family="Share Tech Mono" font-size="7">A</text>
-          <text x="115" y="185" fill="#00ffe1" font-family="Share Tech Mono" font-size="7">B</text>
-          <text x="240" y="185" fill="#b44dff" font-family="Share Tech Mono" font-size="7">C</text>
-          <text x="305" y="185" fill="#ffd166" font-family="Share Tech Mono" font-size="7">D</text>
-          <text x="410" y="185" fill="#ff8c00" font-family="Share Tech Mono" font-size="7">E</text>
+          <text x="5" y="195" fill="#00ff6a" font-family="Share Tech Mono" font-size="7">A</text>
+          <text x="115" y="195" fill="#00ffe1" font-family="Share Tech Mono" font-size="7">B</text>
+          <text x="240" y="195" fill="#b44dff" font-family="Share Tech Mono" font-size="7">C</text>
+          <text x="305" y="195" fill="#ffd166" font-family="Share Tech Mono" font-size="7">D</text>
+          <text x="410" y="195" fill="#ff8c00" font-family="Share Tech Mono" font-size="7">E</text>
 
-          <!-- Price path — downtrend into accumulation then markup -->
           <!-- Downtrend before -->
-          <polyline points="5,20 25,35 45,55 60,75 70,140" fill="none" stroke="#ff5252" stroke-width="2">
+          <polyline points="5,20 25,38 45,58 62,80 72,148" fill="none" stroke="#ff5252" stroke-width="2">
             <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.8s" fill="freeze"/>
           </polyline>
-          <!-- SC spike down then AR bounce -->
-          <polyline points="70,140 80,150 90,135" fill="none" stroke="#ff5252" stroke-width="2.5">
+          <!-- SC low spike -->
+          <text x="58" y="168" fill="#ff5252" font-family="Share Tech Mono" font-size="6">SC</text>
+          <!-- AR bounce up to resistance -->
+          <polyline points="72,148 88,90 100,102" fill="none" stroke="#00ffe1" stroke-width="1.5">
             <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.5s" begin="0.8s" fill="freeze"/>
           </polyline>
-          <text x="62" y="162" fill="#ff5252" font-family="Share Tech Mono" font-size="6">SC</text>
-          <!-- AR -->
-          <polyline points="90,135 105,90 115,100" fill="none" stroke="#00ffe1" stroke-width="1.5">
+          <text x="84" y="83" fill="#00ffe1" font-family="Share Tech Mono" font-size="6">AR</text>
+          <!-- ST retest — bounces off support line -->
+          <polyline points="100,102 116,148 130,118" fill="none" stroke="#3d7070" stroke-width="1.5">
             <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.4s" begin="1.3s" fill="freeze"/>
           </polyline>
-          <text x="105" y="82" fill="#00ffe1" font-family="Share Tech Mono" font-size="6">AR</text>
-          <!-- ST retest -->
-          <polyline points="115,100 130,130 145,110" fill="none" stroke="#3d7070" stroke-width="1.5">
-            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.4s" begin="1.7s" fill="freeze"/>
+          <text x="108" y="163" fill="#888" font-family="Share Tech Mono" font-size="6">ST</text>
+          <!-- Phase B — price bouncing between resistance and support lines, touching both -->
+          <polyline points="130,118 148,90 165,132 182,90 200,138 218,92 232,110" fill="none" stroke="#3d7070" stroke-width="1.5">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.9s" begin="1.7s" fill="freeze"/>
           </polyline>
-          <text x="124" y="145" fill="#888" font-family="Share Tech Mono" font-size="6">ST</text>
-          <!-- Phase B ranging -->
-          <polyline points="145,110 165,80 185,115 205,85 225,120 235,100" fill="none" stroke="#3d7070" stroke-width="1.5">
-            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.8s" begin="2.1s" fill="freeze"/>
+          <!-- Spring — dips below support line -->
+          <polyline points="232,110 244,158 256,138" fill="none" stroke="#b44dff" stroke-width="2.5">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.4s" begin="2.6s" fill="freeze"/>
           </polyline>
-          <!-- Spring -->
-          <polyline points="235,100 248,148 258,130" fill="none" stroke="#b44dff" stroke-width="2.5">
-            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.5s" begin="2.9s" fill="freeze"/>
+          <text x="244" y="172" fill="#b44dff" font-family="Share Tech Mono" font-size="6">SPRING</text>
+          <!-- Test of spring — near support line, lower volume -->
+          <polyline points="256,138 266,148 276,124" fill="none" stroke="#3d7070" stroke-width="1.5">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.3s" begin="3s" fill="freeze"/>
           </polyline>
-          <text x="250" y="162" fill="#b44dff" font-family="Share Tech Mono" font-size="6">SPRING</text>
-          <!-- Test of spring -->
-          <polyline points="258,130 268,138 278,118" fill="none" stroke="#3d7070" stroke-width="1.5">
-            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.3s" begin="3.4s" fill="freeze"/>
+          <text x="256" y="160" fill="#888" font-family="Share Tech Mono" font-size="6">TEST</text>
+          <!-- SOS — breaks through resistance line -->
+          <polyline points="276,124 290,72 302,85" fill="none" stroke="#00ff6a" stroke-width="2.5">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.4s" begin="3.3s" fill="freeze"/>
           </polyline>
-          <text x="262" y="148" fill="#888" font-family="Share Tech Mono" font-size="6">TEST</text>
-          <!-- SOS -->
-          <polyline points="278,118 295,75 305,88" fill="none" stroke="#00ff6a" stroke-width="2.5">
+          <text x="280" y="65" fill="#00ff6a" font-family="Share Tech Mono" font-size="6">SOS</text>
+          <!-- LPS — pulls back to old RESISTANCE now acting as SUPPORT, small consolidation, then launches -->
+          <polyline points="302,85 312,90 320,86 328,90 338,84" fill="none" stroke="#ffd166" stroke-width="2">
             <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.5s" begin="3.7s" fill="freeze"/>
           </polyline>
-          <text x="285" y="68" fill="#00ff6a" font-family="Share Tech Mono" font-size="6">SOS</text>
-          <!-- LPS -->
-          <polyline points="305,88 318,105 330,80" fill="none" stroke="#ffd166" stroke-width="2">
-            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.4s" begin="4.2s" fill="freeze"/>
+          <text x="305" y="104" fill="#ffd166" font-family="Share Tech Mono" font-size="6">LPS</text>
+          <!-- Small label showing resistance→support flip -->
+          <text x="290" y="82" fill="rgba(255,209,102,0.6)" font-family="Share Tech Mono" font-size="5" opacity="0">
+            <animate attributeName="opacity" from="0" to="1" begin="4s" dur="0.5s" fill="freeze"/>RES→SUP
+          </text>
+          <!-- Markup launches off old resistance now support -->
+          <polyline points="338,84 362,62 390,42 420,24 460,10 492,3" fill="none" stroke="#00ff6a" stroke-width="2.5">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.9s" begin="4.2s" fill="freeze"/>
           </polyline>
-          <text x="308" y="118" fill="#ffd166" font-family="Share Tech Mono" font-size="6">LPS</text>
-          <!-- Breakout and markup -->
-          <polyline points="330,80 360,55 390,35 420,20 460,8 490,3" fill="none" stroke="#00ff6a" stroke-width="2.5">
-            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="1s" begin="4.6s" fill="freeze"/>
-          </polyline>
-          <text x="380" y="30" fill="#00ff6a" font-family="Share Tech Mono" font-size="6" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="5.2s" dur="0.5s" fill="freeze"/>MARKUP</text>
+          <text x="390" y="36" fill="#00ff6a" font-family="Share Tech Mono" font-size="6" opacity="0">
+            <animate attributeName="opacity" from="0" to="1" begin="4.8s" dur="0.5s" fill="freeze"/>MARKUP
+          </text>
         </svg>
       </div>
       <div class="term-tip">&#128161; <strong>Real talk:</strong> Not every accumulation range will follow this exact sequence. The Spring sometimes doesn't happen at all. What you're looking for is the general pattern -- declining volume on drops, expanding volume on rallies, and a market that refuses to make new lows.</div>
@@ -2035,67 +2042,81 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
         <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:12px;">DISTRIBUTION SCHEMATIC — A THROUGH E</div>
         <svg viewBox="0 0 500 200" style="width:100%;height:auto;">
           <!-- Trading range box -->
-          <rect x="80" y="60" width="330" height="75" fill="rgba(255,82,82,0.04)" stroke="rgba(255,82,82,0.15)" stroke-width="1" rx="2"/>
-          <!-- BC high label -->
-          <text x="422" y="58" fill="#ff5252" font-family="Share Tech Mono" font-size="7">BC HIGH</text>
-          <!-- AR low label -->
-          <text x="422" y="140" fill="#ff8c00" font-family="Share Tech Mono" font-size="7">AR LOW</text>
+          <rect x="80" y="60" width="330" height="75" fill="rgba(255,82,82,0.04)" stroke="rgba(255,82,82,0.08)" stroke-width="1" rx="2"/>
+
+          <!-- RESISTANCE LINE — connects BC high to Phase B peaks (dashed red) -->
+          <line x1="80" y1="75" x2="410" y2="75" stroke="rgba(255,82,82,0.55)" stroke-width="1" stroke-dasharray="5,4"/>
+          <text x="412" y="78" fill="#ff5252" font-family="Share Tech Mono" font-size="6">RESISTANCE</text>
+
+          <!-- SUPPORT LINE — connects AR low to Phase B troughs (dashed green) -->
+          <line x1="80" y1="135" x2="410" y2="135" stroke="rgba(0,255,106,0.45)" stroke-width="1" stroke-dasharray="5,4"/>
+          <text x="412" y="138" fill="#00ff6a" font-family="Share Tech Mono" font-size="6">SUPPORT</text>
+
+          <!-- Labels -->
+          <text x="412" y="62" fill="#ff5252" font-family="Share Tech Mono" font-size="6">BC HIGH</text>
+          <text x="412" y="128" fill="#ff8c00" font-family="Share Tech Mono" font-size="6">AR LOW</text>
 
           <!-- PHASE LABELS -->
           <text x="15" y="190" fill="#ff5252" font-family="Share Tech Mono" font-size="7">A</text>
           <text x="120" y="190" fill="#ff8c00" font-family="Share Tech Mono" font-size="7">B</text>
-          <text x="250" y="190" fill="#b44dff" font-family="Share Tech Mono" font-size="7">C</text>
-          <text x="320" y="190" fill="#ffd166" font-family="Share Tech Mono" font-size="7">D</text>
-          <text x="415" y="190" fill="#ff5252" font-family="Share Tech Mono" font-size="7">E</text>
+          <text x="248" y="190" fill="#b44dff" font-family="Share Tech Mono" font-size="7">C</text>
+          <text x="318" y="190" fill="#ffd166" font-family="Share Tech Mono" font-size="7">D</text>
+          <text x="400" y="190" fill="#ff5252" font-family="Share Tech Mono" font-size="7">E</text>
 
           <!-- Uptrend before -->
-          <polyline points="5,178 25,155 45,135 65,110 80,80" fill="none" stroke="#00ff6a" stroke-width="2">
+          <polyline points="5,178 25,155 45,135 65,108 80,80" fill="none" stroke="#00ff6a" stroke-width="2">
             <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.8s" fill="freeze"/>
           </polyline>
-          <!-- BC spike -->
-          <polyline points="80,80 92,68 100,75" fill="none" stroke="#ff5252" stroke-width="2.5">
+          <!-- BC spike up to resistance -->
+          <polyline points="80,80 92,68 102,75" fill="none" stroke="#ff5252" stroke-width="2.5">
             <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.4s" begin="0.8s" fill="freeze"/>
           </polyline>
-          <text x="82" y="62" fill="#ff5252" font-family="Share Tech Mono" font-size="6">BC</text>
-          <!-- AR drop -->
-          <polyline points="100,75 112,135 120,120" fill="none" stroke="#ff8c00" stroke-width="1.5">
+          <text x="82" y="60" fill="#ff5252" font-family="Share Tech Mono" font-size="6">BC</text>
+          <!-- AR drop down to support line -->
+          <polyline points="102,75 115,135 124,118" fill="none" stroke="#ff8c00" stroke-width="1.5">
             <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.4s" begin="1.2s" fill="freeze"/>
           </polyline>
-          <text x="110" y="148" fill="#ff8c00" font-family="Share Tech Mono" font-size="6">AR</text>
-          <!-- ST weak rally -->
-          <polyline points="120,120 132,82 142,100" fill="none" stroke="#3d7070" stroke-width="1.5">
+          <text x="108" y="150" fill="#ff8c00" font-family="Share Tech Mono" font-size="6">AR</text>
+          <!-- ST — weak rally back up toward resistance, fails -->
+          <polyline points="124,118 136,76 148,96" fill="none" stroke="#3d7070" stroke-width="1.5">
             <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.4s" begin="1.6s" fill="freeze"/>
           </polyline>
-          <text x="130" y="74" fill="#888" font-family="Share Tech Mono" font-size="6">ST</text>
-          <!-- Phase B ranging -->
-          <polyline points="142,100 160,125 178,88 196,118 215,85 228,110" fill="none" stroke="#3d7070" stroke-width="1.5">
-            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.8s" begin="2s" fill="freeze"/>
+          <text x="132" y="68" fill="#888" font-family="Share Tech Mono" font-size="6">ST</text>
+          <!-- Phase B — bouncing between resistance and support, touching both lines -->
+          <polyline points="148,96 162,135 178,78 196,130 214,76 228,108" fill="none" stroke="#3d7070" stroke-width="1.5">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.9s" begin="2s" fill="freeze"/>
           </polyline>
-          <!-- UTAD -->
-          <polyline points="228,110 242,62 255,78" fill="none" stroke="#b44dff" stroke-width="2.5">
-            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.5s" begin="2.8s" fill="freeze"/>
+          <!-- UTAD — fake breakout above resistance line -->
+          <polyline points="228,108 240,60 255,75" fill="none" stroke="#b44dff" stroke-width="2.5">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.4s" begin="2.9s" fill="freeze"/>
           </polyline>
-          <text x="244" y="56" fill="#b44dff" font-family="Share Tech Mono" font-size="6">UTAD</text>
-          <!-- Test after UTAD -->
-          <polyline points="255,78 268,95 280,82" fill="none" stroke="#3d7070" stroke-width="1.5">
+          <text x="240" y="53" fill="#b44dff" font-family="Share Tech Mono" font-size="6">UTAD</text>
+          <!-- Test after UTAD — drops back, near resistance -->
+          <polyline points="255,75 268,92 280,80" fill="none" stroke="#3d7070" stroke-width="1.5">
             <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.3s" begin="3.3s" fill="freeze"/>
           </polyline>
-          <text x="260" y="106" fill="#888" font-family="Share Tech Mono" font-size="6">TEST</text>
-          <!-- SOW -->
-          <polyline points="280,82 295,120 308,100" fill="none" stroke="#ff5252" stroke-width="2.5">
+          <text x="256" y="105" fill="#888" font-family="Share Tech Mono" font-size="6">TEST</text>
+          <!-- SOW — breaks below support line -->
+          <polyline points="280,80 294,135 308,112" fill="none" stroke="#ff5252" stroke-width="2.5">
             <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.4s" begin="3.6s" fill="freeze"/>
           </polyline>
-          <text x="284" y="132" fill="#ff5252" font-family="Share Tech Mono" font-size="6">SOW</text>
-          <!-- LPSY -->
-          <polyline points="308,100 320,82 330,95" fill="none" stroke="#ffd166" stroke-width="2">
-            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.4s" begin="4s" fill="freeze"/>
+          <text x="280" y="150" fill="#ff5252" font-family="Share Tech Mono" font-size="6">SOW</text>
+          <!-- LPSY — feeble rally back UP to old SUPPORT now acting as RESISTANCE, small consolidation, rejected -->
+          <polyline points="308,112 318,135 326,130 334,135 342,128" fill="none" stroke="#ffd166" stroke-width="2">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.5s" begin="4s" fill="freeze"/>
           </polyline>
-          <text x="316" y="75" fill="#ffd166" font-family="Share Tech Mono" font-size="6">LPSY</text>
-          <!-- Breakdown and markdown -->
-          <polyline points="330,95 358,140 385,160 410,175 445,185 480,192" fill="none" stroke="#ff5252" stroke-width="2.5">
-            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="1s" begin="4.4s" fill="freeze"/>
+          <text x="310" y="120" fill="#ffd166" font-family="Share Tech Mono" font-size="6">LPSY</text>
+          <!-- Small label showing support→resistance flip -->
+          <text x="292" y="128" fill="rgba(255,209,102,0.6)" font-family="Share Tech Mono" font-size="5" opacity="0">
+            <animate attributeName="opacity" from="0" to="1" begin="4.3s" dur="0.5s" fill="freeze"/>SUP→RES
+          </text>
+          <!-- Markdown launches off old support now resistance -->
+          <polyline points="342,128 365,152 388,165 410,174 440,182 478,190" fill="none" stroke="#ff5252" stroke-width="2.5">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.9s" begin="4.5s" fill="freeze"/>
           </polyline>
-          <text x="365" y="172" fill="#ff5252" font-family="Share Tech Mono" font-size="6" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="5s" dur="0.5s" fill="freeze"/>MARKDOWN</text>
+          <text x="360" y="168" fill="#ff5252" font-family="Share Tech Mono" font-size="6" opacity="0">
+            <animate attributeName="opacity" from="0" to="1" begin="5s" dur="0.5s" fill="freeze"/>MARKDOWN
+          </text>
         </svg>
       </div>
       <div class="term-tip">&#128161; <strong>Remember:</strong> Distribution feels bullish while it's happening. The public keeps buying because the trend has been up. That optimism is what institutions need to sell into. The market looks the most dangerous right before the breakdown.</div>
