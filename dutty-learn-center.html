@@ -95,8 +95,9 @@
     .section-label{font-family:var(--mono);font-size:10px;letter-spacing:5px;color:var(--green);text-transform:uppercase;margin-bottom:14px;}
     h2{font-family:var(--display);font-size:clamp(28px,5vw,48px);letter-spacing:3px;color:#fff;text-transform:uppercase;margin-bottom:28px;}
     /* JUMP NAV */
-    .jump-nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:20px 0 10px;padding:20px;background:var(--panel);border:1px solid var(--border);border-radius:6px;}
-    .jump-nav a{font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--cyan);text-decoration:none;padding:6px 14px;border:1px solid rgba(0,255,225,0.2);border-radius:3px;transition:all 0.2s;}
+    .jump-nav{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:20px 0 10px;padding:14px 16px;background:var(--panel);border:1px solid var(--border);border-radius:6px;scrollbar-width:thin;scrollbar-color:rgba(0,255,225,0.3) transparent;}
+    .jump-nav-inner{display:flex;flex-wrap:nowrap;gap:8px;width:max-content;}
+    .jump-nav a{font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--cyan);text-decoration:none;padding:6px 14px;border:1px solid rgba(0,255,225,0.2);border-radius:3px;white-space:nowrap;flex-shrink:0;}
     .jump-nav a:hover{background:rgba(0,255,225,0.1);border-color:var(--cyan);}
     /* TERM CARDS */
     .term-card{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:24px 26px;margin-bottom:16px;position:relative;overflow:hidden;transition:border-color 0.25s;}
@@ -166,28 +167,42 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
 <!-- SECTION NAV -->
 <section>
   <div class="wrap">
-    <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:20px 0 0;padding:16px;background:var(--panel);border:1px solid var(--border);border-radius:6px;">
-      <a href="#sec-basics" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--cyan);text-decoration:none;padding:10px 18px;border:2px solid var(--cyan);border-radius:4px;text-transform:uppercase;transition:all 0.2s;">Trading Terms</a>
-      <a href="#sec-candles" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--green);text-decoration:none;padding:10px 18px;border:2px solid var(--green);border-radius:4px;text-transform:uppercase;transition:all 0.2s;">Candle Patterns</a>
-      <a href="#sec-chart-patterns" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--cyan);text-decoration:none;padding:10px 18px;border:2px solid var(--cyan);border-radius:4px;text-transform:uppercase;transition:all 0.2s;">Chart Patterns</a>
-      <a href="#sec-advanced" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--green);text-decoration:none;padding:10px 18px;border:2px solid var(--green);border-radius:4px;text-transform:uppercase;transition:all 0.2s;">Advanced</a>
-      <a href="#wyckoff" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--gold);text-decoration:none;padding:10px 18px;border:2px solid var(--gold);border-radius:4px;text-transform:uppercase;transition:all 0.2s;">Wyckoff</a>
-      <a href="#sec-internal" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:#39ff14;text-decoration:none;padding:10px 18px;border:2px solid #39ff14;border-radius:4px;text-transform:uppercase;transition:all 0.2s;">My Designs</a>
-      <a href="#sec-stocks" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:#ffd166;text-decoration:none;padding:10px 18px;border:2px solid #ffd166;border-radius:4px;text-transform:uppercase;transition:all 0.2s;">Stocks</a>
-      <a href="#sec-crypto" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--purple);text-decoration:none;padding:10px 18px;border:2px solid var(--purple);border-radius:4px;text-transform:uppercase;transition:all 0.2s;">Crypto</a>
-      <a href="#sec-good" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:#00d4ff;text-decoration:none;padding:10px 18px;border:2px solid #00d4ff;border-radius:4px;text-transform:uppercase;transition:all 0.2s;">Why Crypto Matters</a>
-      <a href="#sec-top10" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--gold);text-decoration:none;padding:10px 18px;border:2px solid var(--gold);border-radius:4px;text-transform:uppercase;transition:all 0.2s;">Top 10 Coins</a>
-      <a href="#sec-memecoins" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--red);text-decoration:none;padding:10px 18px;border:2px solid var(--red);border-radius:4px;text-transform:uppercase;transition:all 0.2s;">Meme Coins</a>
-      <a href="#sec-utility-coins" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:#ff8c00;text-decoration:none;padding:10px 18px;border:2px solid #ff8c00;border-radius:4px;text-transform:uppercase;transition:all 0.2s;">Coins With Purpose</a>
-      <a href="#sec-blockchain" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:#00ffe1;text-decoration:none;padding:10px 18px;border:2px solid #00ffe1;border-radius:4px;text-transform:uppercase;transition:all 0.2s;">Blockchain</a>
-      <a href="#sec-slang" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--yellow);text-decoration:none;padding:10px 18px;border:2px solid var(--yellow);border-radius:4px;text-transform:uppercase;transition:all 0.2s;">Slang</a>
-      <a href="#sec-quiz" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--purple);text-decoration:none;padding:10px 18px;border:2px solid var(--purple);border-radius:4px;text-transform:uppercase;transition:all 0.2s;">Quiz</a>
+    <div style="position:relative;margin:20px 0 0;">
+      <!-- LEFT ARROW -->
+      <button onclick="document.getElementById('main-nav-scroll').scrollBy({left:-220,behavior:'smooth'})" style="position:absolute;left:0;top:50%;transform:translateY(-50%);z-index:10;width:36px;height:48px;background:rgba(0,255,225,0.12);border:2px solid rgba(0,255,225,0.4);border-radius:4px 0 0 4px;color:#00ffe1;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;">&#8592;</button>
+      <!-- SCROLL STRIP -->
+      <div id="main-nav-scroll" style="overflow-x:auto;-webkit-overflow-scrolling:touch;padding:12px 44px;background:var(--panel);border:1px solid var(--border);border-radius:6px;scrollbar-width:none;">
+        <div style="display:flex;flex-wrap:nowrap;gap:10px;width:max-content;">
+          <a href="#sec-basics" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--cyan);text-decoration:none;padding:10px 18px;border:2px solid var(--cyan);border-radius:4px;text-transform:uppercase;white-space:nowrap;flex-shrink:0;">Trading Terms</a>
+          <a href="#sec-candles" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--green);text-decoration:none;padding:10px 18px;border:2px solid var(--green);border-radius:4px;text-transform:uppercase;white-space:nowrap;flex-shrink:0;">Candle Patterns</a>
+          <a href="#sec-chart-patterns" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--cyan);text-decoration:none;padding:10px 18px;border:2px solid var(--cyan);border-radius:4px;text-transform:uppercase;white-space:nowrap;flex-shrink:0;">Chart Patterns</a>
+          <a href="#sec-advanced" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--green);text-decoration:none;padding:10px 18px;border:2px solid var(--green);border-radius:4px;text-transform:uppercase;white-space:nowrap;flex-shrink:0;">Advanced</a>
+          <a href="#wyckoff" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--gold);text-decoration:none;padding:10px 18px;border:2px solid var(--gold);border-radius:4px;text-transform:uppercase;white-space:nowrap;flex-shrink:0;">Wyckoff</a>
+          <a href="#sec-internal" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:#39ff14;text-decoration:none;padding:10px 18px;border:2px solid #39ff14;border-radius:4px;text-transform:uppercase;white-space:nowrap;flex-shrink:0;">My Designs</a>
+          <a href="#sec-stocks" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:#ffd166;text-decoration:none;padding:10px 18px;border:2px solid #ffd166;border-radius:4px;text-transform:uppercase;white-space:nowrap;flex-shrink:0;">Stocks</a>
+          <a href="#sec-orders" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:#ff8c00;text-decoration:none;padding:10px 18px;border:2px solid #ff8c00;border-radius:4px;text-transform:uppercase;white-space:nowrap;flex-shrink:0;">Order Types</a>
+          <a href="#sec-etfs" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:#00d4ff;text-decoration:none;padding:10px 18px;border:2px solid #00d4ff;border-radius:4px;text-transform:uppercase;white-space:nowrap;flex-shrink:0;">ETF Deep Dive</a>
+          <a href="#sec-crypto" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--purple);text-decoration:none;padding:10px 18px;border:2px solid var(--purple);border-radius:4px;text-transform:uppercase;white-space:nowrap;flex-shrink:0;">Crypto</a>
+          <a href="#sec-good" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:#00d4ff;text-decoration:none;padding:10px 18px;border:2px solid #00d4ff;border-radius:4px;text-transform:uppercase;white-space:nowrap;flex-shrink:0;">Why Crypto Matters</a>
+          <a href="#sec-top10" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--gold);text-decoration:none;padding:10px 18px;border:2px solid var(--gold);border-radius:4px;text-transform:uppercase;white-space:nowrap;flex-shrink:0;">Top 10 Coins</a>
+          <a href="#sec-memecoins" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--red);text-decoration:none;padding:10px 18px;border:2px solid var(--red);border-radius:4px;text-transform:uppercase;white-space:nowrap;flex-shrink:0;">Meme Coins</a>
+          <a href="#sec-utility-coins" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:#ff8c00;text-decoration:none;padding:10px 18px;border:2px solid #ff8c00;border-radius:4px;text-transform:uppercase;white-space:nowrap;flex-shrink:0;">Coins With Purpose</a>
+          <a href="#sec-blockchain" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:#00ffe1;text-decoration:none;padding:10px 18px;border:2px solid #00ffe1;border-radius:4px;text-transform:uppercase;white-space:nowrap;flex-shrink:0;">Blockchain</a>
+          <a href="#sec-slang" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--yellow);text-decoration:none;padding:10px 18px;border:2px solid var(--yellow);border-radius:4px;text-transform:uppercase;white-space:nowrap;flex-shrink:0;">Slang</a>
+          <a href="#sec-quiz" style="font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--purple);text-decoration:none;padding:10px 18px;border:2px solid var(--purple);border-radius:4px;text-transform:uppercase;white-space:nowrap;flex-shrink:0;">Quiz</a>
+        </div>
+      </div>
+      <!-- RIGHT ARROW -->
+      <button onclick="document.getElementById('main-nav-scroll').scrollBy({left:220,behavior:'smooth'})" style="position:absolute;right:0;top:50%;transform:translateY(-50%);z-index:10;width:36px;height:48px;background:rgba(0,255,225,0.12);border:2px solid rgba(0,255,225,0.4);border-radius:0 4px 4px 0;color:#00ffe1;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;">&#8594;</button>
     </div>
+    <!-- HINT TEXT -->
+    <p style="font-family:var(--mono);font-size:10px;color:#3d7070;text-align:center;margin:6px 0 0;letter-spacing:1px;">&#8592; swipe or tap arrows to scroll &#8594;</p>
   </div>
 </section>
 <section>
   <div class="wrap">
     <div class="jump-nav">
+      <div class="jump-nav-inner">
       <a href="#candlesticks">Candlesticks</a>
       <a href="#rsi">RSI</a>
       <a href="#stochrsi">Stoch RSI</a>
@@ -231,6 +246,30 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
       <a href="#spring" style="color:var(--gold);border-color:rgba(255,209,102,0.3);">Spring</a>
       <a href="#upthrust" style="color:var(--gold);border-color:rgba(255,209,102,0.3);">Upthrust</a>
       <a href="#composite-operator" style="color:var(--gold);border-color:rgba(255,209,102,0.3);">Composite Operator</a>
+      <a href="#wyckoff-phases-accum" style="color:var(--gold);border-color:rgba(255,209,102,0.3);">Accum Phases A-E</a>
+      <a href="#wyckoff-events-accum" style="color:var(--gold);border-color:rgba(255,209,102,0.3);">Accum Events</a>
+      <a href="#wyckoff-phases-dist" style="color:var(--gold);border-color:rgba(255,209,102,0.3);">Dist Phases A-E</a>
+      <a href="#wyckoff-events-dist" style="color:var(--gold);border-color:rgba(255,209,102,0.3);">Dist Events</a>
+      <a href="#wyckoff-volume" style="color:var(--gold);border-color:rgba(255,209,102,0.3);">Volume Rules</a>
+      <a href="#wyckoff-reaccum" style="color:var(--gold);border-color:rgba(255,209,102,0.3);">Re-Accumulation</a>
+      <a href="#sec-orders" style="color:#ff8c00;border-color:rgba(255,140,0,0.3);">Order Types</a>
+      <a href="#market-order" style="color:#ff8c00;border-color:rgba(255,140,0,0.3);">Market Order</a>
+      <a href="#limit-order" style="color:#ff8c00;border-color:rgba(255,140,0,0.3);">Limit Order</a>
+      <a href="#stop-loss" style="color:#ff8c00;border-color:rgba(255,140,0,0.3);">Stop Loss</a>
+      <a href="#trailing-stop" style="color:#ff8c00;border-color:rgba(255,140,0,0.3);">Trailing Stop</a>
+      <a href="#oco-order" style="color:#ff8c00;border-color:rgba(255,140,0,0.3);">OCO Order</a>
+      <a href="#position-sizing" style="color:#ff8c00;border-color:rgba(255,140,0,0.3);">Position Sizing</a>
+      <a href="#risk-reward" style="color:#ff8c00;border-color:rgba(255,140,0,0.3);">Risk:Reward</a>
+      <a href="#order-name-comparison" style="color:#ff8c00;border-color:rgba(255,140,0,0.3);">Stocks vs Crypto</a>
+      <a href="#sec-etfs" style="color:#00d4ff;border-color:rgba(0,212,255,0.3);">ETF Types</a>
+      <a href="#etf-index" style="color:#00d4ff;border-color:rgba(0,212,255,0.3);">Index ETFs</a>
+      <a href="#etf-sector" style="color:#00d4ff;border-color:rgba(0,212,255,0.3);">Sector ETFs</a>
+      <a href="#etf-bond" style="color:#00d4ff;border-color:rgba(0,212,255,0.3);">Bond ETFs</a>
+      <a href="#etf-dividend" style="color:#00d4ff;border-color:rgba(0,212,255,0.3);">Dividend ETFs</a>
+      <a href="#etf-leveraged" style="color:#00d4ff;border-color:rgba(0,212,255,0.3);">Leveraged ETFs</a>
+      <a href="#etf-inverse" style="color:#00d4ff;border-color:rgba(0,212,255,0.3);">Inverse ETFs</a>
+      <a href="#etf-thematic" style="color:#00d4ff;border-color:rgba(0,212,255,0.3);">Thematic ETFs</a>
+      <a href="#etf-expense" style="color:#00d4ff;border-color:rgba(0,212,255,0.3);">Expense Ratio</a>
       <a href="#wave-stages" style="color:#39ff14;border-color:rgba(57,255,20,0.4);background:rgba(57,255,20,0.05);">Wave Stages</a>
       <a href="#internal-di" style="color:#39ff14;border-color:rgba(57,255,20,0.4);background:rgba(57,255,20,0.05);">DI System</a>
       <a href="#internal-xpush" style="color:#39ff14;border-color:rgba(57,255,20,0.4);background:rgba(57,255,20,0.05);">Xpush</a>
@@ -260,6 +299,7 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
       <a href="#coin-ada" style="color:var(--gold);border-color:rgba(255,209,102,0.3);background:rgba(255,209,102,0.05);">Cardano</a>
       <a href="#what-are-memecoins" style="color:var(--red);border-color:rgba(255,82,82,0.3);background:rgba(255,82,82,0.05);">Meme Coins</a>
       <a href="#meme-dangers" style="color:var(--red);border-color:rgba(255,82,82,0.3);background:rgba(255,82,82,0.05);">Meme Dangers</a>
+      </div>
     </div>
   </div>
 </section>
@@ -360,6 +400,7 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
       <p>When someone says "the market is bullish," they mean buyers are in control and price is rising. When they say "bearish," sellers are in control and price is falling. Most of our indicators color-code green for bull and red for bear.</p>
     </div>
 
+    <div id="supply-demand" style="scroll-margin-top:20px;"></div>
     <div class="term-card gold" id="support-resistance">
       <div class="term-name">Support & Resistance</div>
       <div class="term-aka">// Price levels where the market tends to react</div>
@@ -1453,6 +1494,7 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
       <span class="term-used">Used in: Alpha Oscillator (-100% to +100%), Dutty Big Bag (Combined Dominance), DBB Analytics Table (SR column on 1m/5m)</span>
     </div>
 
+    <div id="alerts" style="scroll-margin-top:20px;"></div>
     <div class="term-card green" id="atr">
       <div class="term-name">ATR (Average True Range)</div>
       <div class="term-aka">// Measures how much price typically moves</div>
@@ -1460,6 +1502,8 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
       <p>Traders use ATR to set stop losses, gauge how far price might move, and understand whether current volatility is normal or extreme. It doesn't tell you direction -- just how much movement to expect.</p>
     </div>
 
+    <div id="pullback" style="scroll-margin-top:20px;"></div>
+    <div id="breakout" style="scroll-margin-top:20px;"></div>
     <div class="term-card purple" id="divergence">
       <div class="term-name">Divergence</div>
       <div class="term-aka">// When price and an indicator disagree</div>
@@ -1627,6 +1671,7 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
       <div class="term-tip">&#128161; <strong>Cheat sheet:</strong> Regular divergence = REVERSAL (price and indicator moving OPPOSITE at extremes -- top or bottom of trend). Hidden divergence = CONTINUATION (price and indicator moving OPPOSITE during a pullback -- trend resumes). Regular warns the trend is dying. Hidden confirms the trend is alive.</div>
     </div>
 
+    <div id="wyckoff" style="scroll-margin-top:20px;"></div>
     <div class="term-card" id="wyckoff-laws">
       <div class="term-name">Wyckoff's 3 Laws</div>
       <div class="term-aka">// The foundation of the method</div>
@@ -1772,6 +1817,394 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
       <p>But the buying climax often marks the end of the rally. The big traders use this wave of public buying to distribute their shares. Once the buying frenzy dies down, price stalls and distribution begins.</p>
     </div>
 
+    <!-- ═══════════════════════════════════════════════════════════════
+         WYCKOFF DEEP DIVE — ACCUMULATION PHASES A–E
+    ═══════════════════════════════════════════════════════════════ -->
+
+    <div class="divider"></div>
+    <div class="section-label">// Wyckoff Deep Dive — Accumulation</div>
+
+    <div class="term-card gold" id="wyckoff-phases-accum">
+      <div class="term-name">Accumulation — Phases A Through E</div>
+      <div class="term-aka">// The full roadmap from bottom to breakout</div>
+      <p>Every Wyckoff accumulation range moves through five phases labeled A to E. Each phase has a job. Understanding which phase you're in tells you where you are in the story and what's likely to happen next.</p>
+
+      <div style="background:#050d0d;border:1px solid rgba(255,209,102,0.2);border-radius:8px;padding:18px;margin:16px 0;">
+        <div style="font-family:var(--mono);font-size:9px;color:var(--gold);letter-spacing:3px;margin-bottom:16px;">ACCUMULATION — PHASE BREAKDOWN</div>
+
+        <div style="border-left:3px solid #00ff6a;padding:10px 14px;margin-bottom:12px;background:rgba(0,255,106,0.04);border-radius:0 6px 6px 0;">
+          <div style="font-family:var(--mono);font-size:11px;color:#00ff6a;letter-spacing:2px;margin-bottom:6px;">PHASE A — STOPPING THE DECLINE</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">The downtrend finally runs out of fuel. You see a Preliminary Support (PS) where buying slows things down for the first time. Then a Selling Climax (SC) where panic reaches a peak and volume explodes — that's the floor being set. Price bounces sharply in an Automatic Rally (AR), then comes back down in a Secondary Test (ST) on much lower volume. The distance between the SC low and the AR high defines the trading range that will hold for the whole accumulation phase.</p>
+        </div>
+
+        <div style="border-left:3px solid #00ffe1;padding:10px 14px;margin-bottom:12px;background:rgba(0,255,225,0.04);border-radius:0 6px 6px 0;">
+          <div style="font-family:var(--mono);font-size:11px;color:#00ffe1;letter-spacing:2px;margin-bottom:6px;">PHASE B — BUILDING THE CAUSE</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">This is the longest and most boring phase to watch — but the most important one. Price bounces back and forth inside the range while big institutions are slowly and quietly absorbing supply. The more time spent here and the wider the range, the bigger the eventual move will be. Volume is uneven. There can be multiple tests of both support and resistance. The public mostly ignores this because nothing dramatic is happening.</p>
+        </div>
+
+        <div style="border-left:3px solid #b44dff;padding:10px 14px;margin-bottom:12px;background:rgba(180,77,255,0.04);border-radius:0 6px 6px 0;">
+          <div style="font-family:var(--mono);font-size:11px;color:#b44dff;letter-spacing:2px;margin-bottom:6px;">PHASE C — THE TEST (THE SPRING)</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">This is the moment of truth. Price makes one final dip below the bottom of the range — the Spring. It triggers stop losses, scares out weak holders, and looks exactly like a breakdown. But if it bounces back quickly with declining volume on the recovery, it signals that all the remaining sellers have been shaken out. A low-volume Test of the Spring follows to confirm supply is gone. Phase C is often where the best entries are found.</p>
+        </div>
+
+        <div style="border-left:3px solid #ffd166;padding:10px 14px;margin-bottom:12px;background:rgba(255,209,102,0.04);border-radius:0 6px 6px 0;">
+          <div style="font-family:var(--mono);font-size:11px;color:#ffd166;letter-spacing:2px;margin-bottom:6px;">PHASE D — DEMAND TAKES OVER</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">After the Spring test confirms supply is exhausted, the market shows its first Sign of Strength (SOS) — a strong move up on expanding volume that pushes above the middle of the range. Then a Last Point of Support (LPS) forms: a pullback on light volume that holds at a higher level than the Spring. The LPS is the final opportunity to enter before the big move. Higher lows start forming, confirming demand is in control.</p>
+        </div>
+
+        <div style="border-left:3px solid #ff8c00;padding:10px 14px;margin-bottom:0;background:rgba(255,140,0,0.04);border-radius:0 6px 6px 0;">
+          <div style="font-family:var(--mono);font-size:11px;color:#ff8c00;letter-spacing:2px;margin-bottom:6px;">PHASE E — MARKUP BEGINS</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">Price breaks cleanly above the top of the range (the AR high) on above-average volume. The accumulation is complete. The cause has been built. Now the effect begins — the markup phase. Sometimes there's a brief Backup (BU) where price comes back to test the top of the old range from above. If it holds, that old resistance is now support. Then price continues upward.</p>
+        </div>
+      </div>
+
+      <!-- ACCUMULATION SCHEMATIC SVG -->
+      <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:20px;margin:20px 0 10px;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:12px;">ACCUMULATION SCHEMATIC — A THROUGH E</div>
+        <svg viewBox="0 0 500 200" style="width:100%;height:auto;">
+          <!-- Grid lines -->
+          <line x1="0" y1="55" x2="500" y2="55" stroke="#0c2020" stroke-width="1"/>
+          <line x1="0" y1="135" x2="500" y2="135" stroke="#0c2020" stroke-width="1"/>
+          <!-- Trading range box -->
+          <rect x="60" y="55" width="360" height="80" fill="rgba(0,255,106,0.04)" stroke="rgba(0,255,106,0.15)" stroke-width="1" rx="2"/>
+          <!-- AR resistance label -->
+          <text x="430" y="52" fill="#00ff6a" font-family="Share Tech Mono" font-size="7">AR HIGH</text>
+          <!-- SC support label -->
+          <text x="430" y="142" fill="#ff5252" font-family="Share Tech Mono" font-size="7">SC LOW</text>
+
+          <!-- PHASE LABELS -->
+          <text x="5" y="185" fill="#00ff6a" font-family="Share Tech Mono" font-size="7">A</text>
+          <text x="115" y="185" fill="#00ffe1" font-family="Share Tech Mono" font-size="7">B</text>
+          <text x="240" y="185" fill="#b44dff" font-family="Share Tech Mono" font-size="7">C</text>
+          <text x="305" y="185" fill="#ffd166" font-family="Share Tech Mono" font-size="7">D</text>
+          <text x="410" y="185" fill="#ff8c00" font-family="Share Tech Mono" font-size="7">E</text>
+
+          <!-- Price path — downtrend into accumulation then markup -->
+          <!-- Downtrend before -->
+          <polyline points="5,20 25,35 45,55 60,75 70,140" fill="none" stroke="#ff5252" stroke-width="2">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.8s" fill="freeze"/>
+          </polyline>
+          <!-- SC spike down then AR bounce -->
+          <polyline points="70,140 80,150 90,135" fill="none" stroke="#ff5252" stroke-width="2.5">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.5s" begin="0.8s" fill="freeze"/>
+          </polyline>
+          <text x="62" y="162" fill="#ff5252" font-family="Share Tech Mono" font-size="6">SC</text>
+          <!-- AR -->
+          <polyline points="90,135 105,90 115,100" fill="none" stroke="#00ffe1" stroke-width="1.5">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.4s" begin="1.3s" fill="freeze"/>
+          </polyline>
+          <text x="105" y="82" fill="#00ffe1" font-family="Share Tech Mono" font-size="6">AR</text>
+          <!-- ST retest -->
+          <polyline points="115,100 130,130 145,110" fill="none" stroke="#3d7070" stroke-width="1.5">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.4s" begin="1.7s" fill="freeze"/>
+          </polyline>
+          <text x="124" y="145" fill="#888" font-family="Share Tech Mono" font-size="6">ST</text>
+          <!-- Phase B ranging -->
+          <polyline points="145,110 165,80 185,115 205,85 225,120 235,100" fill="none" stroke="#3d7070" stroke-width="1.5">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.8s" begin="2.1s" fill="freeze"/>
+          </polyline>
+          <!-- Spring -->
+          <polyline points="235,100 248,148 258,130" fill="none" stroke="#b44dff" stroke-width="2.5">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.5s" begin="2.9s" fill="freeze"/>
+          </polyline>
+          <text x="250" y="162" fill="#b44dff" font-family="Share Tech Mono" font-size="6">SPRING</text>
+          <!-- Test of spring -->
+          <polyline points="258,130 268,138 278,118" fill="none" stroke="#3d7070" stroke-width="1.5">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.3s" begin="3.4s" fill="freeze"/>
+          </polyline>
+          <text x="262" y="148" fill="#888" font-family="Share Tech Mono" font-size="6">TEST</text>
+          <!-- SOS -->
+          <polyline points="278,118 295,75 305,88" fill="none" stroke="#00ff6a" stroke-width="2.5">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.5s" begin="3.7s" fill="freeze"/>
+          </polyline>
+          <text x="285" y="68" fill="#00ff6a" font-family="Share Tech Mono" font-size="6">SOS</text>
+          <!-- LPS -->
+          <polyline points="305,88 318,105 330,80" fill="none" stroke="#ffd166" stroke-width="2">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.4s" begin="4.2s" fill="freeze"/>
+          </polyline>
+          <text x="308" y="118" fill="#ffd166" font-family="Share Tech Mono" font-size="6">LPS</text>
+          <!-- Breakout and markup -->
+          <polyline points="330,80 360,55 390,35 420,20 460,8 490,3" fill="none" stroke="#00ff6a" stroke-width="2.5">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="1s" begin="4.6s" fill="freeze"/>
+          </polyline>
+          <text x="380" y="30" fill="#00ff6a" font-family="Share Tech Mono" font-size="6" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="5.2s" dur="0.5s" fill="freeze"/>MARKUP</text>
+        </svg>
+      </div>
+      <div class="term-tip">&#128161; <strong>Real talk:</strong> Not every accumulation range will follow this exact sequence. The Spring sometimes doesn't happen at all. What you're looking for is the general pattern -- declining volume on drops, expanding volume on rallies, and a market that refuses to make new lows.</div>
+    </div>
+
+    <!-- ACCUMULATION EVENTS GLOSSARY -->
+    <div class="term-card" id="wyckoff-events-accum">
+      <div class="term-name">Accumulation Events — The Full Glossary</div>
+      <div class="term-aka">// Every label you'll see on a Wyckoff accumulation chart</div>
+      <p>These are the named events that happen inside an accumulation range. When you see these abbreviations on a chart or in analysis, this is what they mean:</p>
+
+      <div style="display:grid;gap:10px;margin-top:14px;">
+
+        <div style="background:#050d0d;border:1px solid rgba(0,255,106,0.2);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#00ff6a;letter-spacing:2px;margin-bottom:6px;">PS — PRELIMINARY SUPPORT</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">The first sign that selling is starting to slow down during a downtrend. Volume picks up and price hesitates. It doesn't stop the decline -- it just shows that buyers are starting to appear. Think of it as the first foot on the brakes.</p>
+        </div>
+
+        <div style="background:#050d0d;border:1px solid rgba(255,82,82,0.2);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#ff5252;letter-spacing:2px;margin-bottom:6px;">SC — SELLING CLIMAX</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">The panic bottom. Volume explodes, price plunges on wide spread candles, often with long wicks below. Everyone is dumping. But the big institutions are on the other side, absorbing every share being thrown at them. The SC sets the floor of the range. You'll often see it as the highest volume candle in the whole decline.</p>
+        </div>
+
+        <div style="background:#050d0d;border:1px solid rgba(0,255,225,0.2);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#00ffe1;letter-spacing:2px;margin-bottom:6px;">AR — AUTOMATIC RALLY</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">Right after the SC, price bounces sharply and quickly. Why? Because the selling pressure dried up so fast that even small buying pushes price up significantly. Short sellers also cover their positions here, adding fuel to the bounce. The AR high defines the top of the accumulation range and sets the resistance level.</p>
+        </div>
+
+        <div style="background:#050d0d;border:1px solid rgba(100,100,100,0.2);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#aaa;letter-spacing:2px;margin-bottom:6px;">ST — SECONDARY TEST</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">Price comes back down to retest the SC area. The key is volume -- it should be noticeably lower than the SC. If volume is light on the test, it confirms the sellers are running out. If volume is high and price drops below the SC low, the accumulation thesis may be wrong. The ST can happen more than once in Phase B.</p>
+        </div>
+
+        <div style="background:#050d0d;border:1px solid rgba(180,77,255,0.2);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#b44dff;letter-spacing:2px;margin-bottom:6px;">SPRING — THE SHAKEOUT</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">Price dips below the SC low -- below the bottom of the range -- and then immediately snaps back. It's a trap. The dip triggers stop losses from people who placed them just below support, creates panic that causes more selling, and allows institutions to buy even more shares at the lowest prices. A spring on low volume that recovers quickly is the most bullish signal in the Wyckoff method. Not every accumulation has a spring (Schematic 2 skips it), but when it's there, it's powerful.</p>
+        </div>
+
+        <div style="background:#050d0d;border:1px solid rgba(100,100,100,0.2);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#aaa;letter-spacing:2px;margin-bottom:6px;">TEST OF SPRING</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">After the spring, price needs to be verified. It comes back down to the spring area on very low volume -- if supply truly dried up, the test won't go as low as the spring and will hold easily. This low-volume test is the confirmation that the spring worked. It's often the ideal entry point for a long position.</p>
+        </div>
+
+        <div style="background:#050d0d;border:1px solid rgba(0,255,106,0.2);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#00ff6a;letter-spacing:2px;margin-bottom:6px;">SOS — SIGN OF STRENGTH</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">A wide-spread, high-volume rally that moves price well above the midpoint of the range and often breaks through the top resistance (the AR high). It's the first proof that demand has taken control. Big candles. Strong closes. Volume above average. When you see a real SOS, the accumulation phase is wrapping up and markup is approaching.</p>
+        </div>
+
+        <div style="background:#050d0d;border:1px solid rgba(255,209,102,0.2);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#ffd166;letter-spacing:2px;margin-bottom:6px;">LPS — LAST POINT OF SUPPORT</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">After the SOS, price pulls back on light volume and forms a higher low -- the LPS. This is the final pullback before the real move up. The volume on the decline to the LPS should be noticeably lighter than the SOS that preceded it. It's one of the best entry opportunities in Wyckoff -- confirmation that the range is ending and markup is starting.</p>
+        </div>
+
+        <div style="background:#050d0d;border:1px solid rgba(255,140,0,0.2);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#ff8c00;letter-spacing:2px;margin-bottom:6px;">BU — BACKUP (OR BU/LPS)</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">Sometimes after the breakout above the range, price comes back to retest the top of the old range from above. What was resistance is now support. This backup is a final opportunity to enter before price continues up. Not every markup phase has a backup, but when it does, it's a gift.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         WYCKOFF DEEP DIVE — DISTRIBUTION PHASES A–E
+    ═══════════════════════════════════════════════════════════════ -->
+
+    <div class="divider"></div>
+    <div class="section-label">// Wyckoff Deep Dive — Distribution</div>
+
+    <div class="term-card red" id="wyckoff-phases-dist">
+      <div class="term-name">Distribution — Phases A Through E</div>
+      <div class="term-aka">// The full roadmap from top to breakdown</div>
+      <p>Distribution is accumulation in reverse. Instead of smart money quietly buying at the bottom, they're quietly selling at the top. The phases still run A through E, but everything is flipped. The trap is an upthrust instead of a spring. The move out is a breakdown instead of a breakout.</p>
+
+      <div style="background:#050d0d;border:1px solid rgba(255,82,82,0.2);border-radius:8px;padding:18px;margin:16px 0;">
+        <div style="font-family:var(--mono);font-size:9px;color:#ff5252;letter-spacing:3px;margin-bottom:16px;">DISTRIBUTION — PHASE BREAKDOWN</div>
+
+        <div style="border-left:3px solid #ff5252;padding:10px 14px;margin-bottom:12px;background:rgba(255,82,82,0.04);border-radius:0 6px 6px 0;">
+          <div style="font-family:var(--mono);font-size:11px;color:#ff5252;letter-spacing:2px;margin-bottom:6px;">PHASE A — STOPPING THE ADVANCE</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">The uptrend runs out of steam. Preliminary Supply (PSY) shows up as the first wave of heavy selling that stalls momentum. Then a Buying Climax (BC) -- the emotional peak where the public rushes in at the top on extremely high volume. Institutions use that demand to dump their positions. An Automatic Reaction (AR) drops sharply after the BC, followed by a Secondary Test (ST) that rallies back toward the BC high but fails on lighter volume. The BC high and AR low define the distribution range.</p>
+        </div>
+
+        <div style="border-left:3px solid #ff8c00;padding:10px 14px;margin-bottom:12px;background:rgba(255,140,0,0.04);border-radius:0 6px 6px 0;">
+          <div style="font-family:var(--mono);font-size:11px;color:#ff8c00;letter-spacing:2px;margin-bottom:6px;">PHASE B — BUILDING THE CAUSE (FOR MARKDOWN)</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">Just like accumulation Phase B, this is the long, grinding middle section where institutions continue selling into any strength. The market looks like it's just consolidating -- maybe about to break higher. The public keeps buying dips, thinking the uptrend will resume. But institutions are quietly using those buying opportunities to reduce their positions. Supply overwhelms demand more and more as this phase progresses.</p>
+        </div>
+
+        <div style="border-left:3px solid #b44dff;padding:10px 14px;margin-bottom:12px;background:rgba(180,77,255,0.04);border-radius:0 6px 6px 0;">
+          <div style="font-family:var(--mono);font-size:11px;color:#b44dff;letter-spacing:2px;margin-bottom:6px;">PHASE C — THE UTAD (THE TRAP)</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">The Upthrust After Distribution (UTAD) is the distribution equivalent of the spring. Price temporarily breaks above the BC high -- it looks like a breakout and sucks in breakout traders. But it quickly reverses back inside the range. The UTAD gives institutions one final opportunity to sell into the surge of buying. A Test follows, usually on low volume, confirming demand is exhausted. Not every distribution has a clear UTAD (Schematic 2 skips it), but when present it's a major warning sign.</p>
+        </div>
+
+        <div style="border-left:3px solid #ffd166;padding:10px 14px;margin-bottom:12px;background:rgba(255,209,102,0.04);border-radius:0 6px 6px 0;">
+          <div style="font-family:var(--mono);font-size:11px;color:#ffd166;letter-spacing:2px;margin-bottom:6px;">PHASE D — SUPPLY TAKES OVER</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">Signs of Weakness (SOW) appear -- price drops through the middle of the range on high volume, making lower lows. Last Points of Supply (LPSY) form as feeble, low-volume rallies that can't reach the old highs. Each LPSY is a lower high. The staircase of lower highs confirms supply is in control. For traders looking to short, the LPSY is often the entry point -- the SOW supports the idea that distribution is real, and the LPSY gives a relatively safe short entry with a clear stop above.</p>
+        </div>
+
+        <div style="border-left:3px solid #ff5252;padding:10px 14px;margin-bottom:0;background:rgba(255,82,82,0.04);border-radius:0 6px 6px 0;">
+          <div style="font-family:var(--mono);font-size:11px;color:#ff5252;letter-spacing:2px;margin-bottom:6px;">PHASE E — MARKDOWN BEGINS</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">Price breaks below the bottom of the distribution range (the AR low) on expanding volume. The cause that was built over all those weeks or months now converts into the markdown move. Sometimes price comes back to retest the underside of the broken range -- what used to be support is now resistance. If it holds there, the markdown continues with force.</p>
+        </div>
+      </div>
+
+      <!-- DISTRIBUTION SCHEMATIC SVG -->
+      <div style="background:#050d0d;border:1px solid var(--border);border-radius:6px;padding:20px;margin:20px 0 10px;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:12px;">DISTRIBUTION SCHEMATIC — A THROUGH E</div>
+        <svg viewBox="0 0 500 200" style="width:100%;height:auto;">
+          <!-- Trading range box -->
+          <rect x="80" y="60" width="330" height="75" fill="rgba(255,82,82,0.04)" stroke="rgba(255,82,82,0.15)" stroke-width="1" rx="2"/>
+          <!-- BC high label -->
+          <text x="422" y="58" fill="#ff5252" font-family="Share Tech Mono" font-size="7">BC HIGH</text>
+          <!-- AR low label -->
+          <text x="422" y="140" fill="#ff8c00" font-family="Share Tech Mono" font-size="7">AR LOW</text>
+
+          <!-- PHASE LABELS -->
+          <text x="15" y="190" fill="#ff5252" font-family="Share Tech Mono" font-size="7">A</text>
+          <text x="120" y="190" fill="#ff8c00" font-family="Share Tech Mono" font-size="7">B</text>
+          <text x="250" y="190" fill="#b44dff" font-family="Share Tech Mono" font-size="7">C</text>
+          <text x="320" y="190" fill="#ffd166" font-family="Share Tech Mono" font-size="7">D</text>
+          <text x="415" y="190" fill="#ff5252" font-family="Share Tech Mono" font-size="7">E</text>
+
+          <!-- Uptrend before -->
+          <polyline points="5,178 25,155 45,135 65,110 80,80" fill="none" stroke="#00ff6a" stroke-width="2">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.8s" fill="freeze"/>
+          </polyline>
+          <!-- BC spike -->
+          <polyline points="80,80 92,68 100,75" fill="none" stroke="#ff5252" stroke-width="2.5">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.4s" begin="0.8s" fill="freeze"/>
+          </polyline>
+          <text x="82" y="62" fill="#ff5252" font-family="Share Tech Mono" font-size="6">BC</text>
+          <!-- AR drop -->
+          <polyline points="100,75 112,135 120,120" fill="none" stroke="#ff8c00" stroke-width="1.5">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.4s" begin="1.2s" fill="freeze"/>
+          </polyline>
+          <text x="110" y="148" fill="#ff8c00" font-family="Share Tech Mono" font-size="6">AR</text>
+          <!-- ST weak rally -->
+          <polyline points="120,120 132,82 142,100" fill="none" stroke="#3d7070" stroke-width="1.5">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.4s" begin="1.6s" fill="freeze"/>
+          </polyline>
+          <text x="130" y="74" fill="#888" font-family="Share Tech Mono" font-size="6">ST</text>
+          <!-- Phase B ranging -->
+          <polyline points="142,100 160,125 178,88 196,118 215,85 228,110" fill="none" stroke="#3d7070" stroke-width="1.5">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.8s" begin="2s" fill="freeze"/>
+          </polyline>
+          <!-- UTAD -->
+          <polyline points="228,110 242,62 255,78" fill="none" stroke="#b44dff" stroke-width="2.5">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.5s" begin="2.8s" fill="freeze"/>
+          </polyline>
+          <text x="244" y="56" fill="#b44dff" font-family="Share Tech Mono" font-size="6">UTAD</text>
+          <!-- Test after UTAD -->
+          <polyline points="255,78 268,95 280,82" fill="none" stroke="#3d7070" stroke-width="1.5">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.3s" begin="3.3s" fill="freeze"/>
+          </polyline>
+          <text x="260" y="106" fill="#888" font-family="Share Tech Mono" font-size="6">TEST</text>
+          <!-- SOW -->
+          <polyline points="280,82 295,120 308,100" fill="none" stroke="#ff5252" stroke-width="2.5">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.4s" begin="3.6s" fill="freeze"/>
+          </polyline>
+          <text x="284" y="132" fill="#ff5252" font-family="Share Tech Mono" font-size="6">SOW</text>
+          <!-- LPSY -->
+          <polyline points="308,100 320,82 330,95" fill="none" stroke="#ffd166" stroke-width="2">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="0.4s" begin="4s" fill="freeze"/>
+          </polyline>
+          <text x="316" y="75" fill="#ffd166" font-family="Share Tech Mono" font-size="6">LPSY</text>
+          <!-- Breakdown and markdown -->
+          <polyline points="330,95 358,140 385,160 410,175 445,185 480,192" fill="none" stroke="#ff5252" stroke-width="2.5">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="1s" begin="4.4s" fill="freeze"/>
+          </polyline>
+          <text x="365" y="172" fill="#ff5252" font-family="Share Tech Mono" font-size="6" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="5s" dur="0.5s" fill="freeze"/>MARKDOWN</text>
+        </svg>
+      </div>
+      <div class="term-tip">&#128161; <strong>Remember:</strong> Distribution feels bullish while it's happening. The public keeps buying because the trend has been up. That optimism is what institutions need to sell into. The market looks the most dangerous right before the breakdown.</div>
+    </div>
+
+    <!-- DISTRIBUTION EVENTS GLOSSARY -->
+    <div class="term-card" id="wyckoff-events-dist">
+      <div class="term-name">Distribution Events — The Full Glossary</div>
+      <div class="term-aka">// Every label you'll see on a Wyckoff distribution chart</div>
+      <p>Mirror image of the accumulation events -- but everything happens at the top instead of the bottom:</p>
+
+      <div style="display:grid;gap:10px;margin-top:14px;">
+
+        <div style="background:#050d0d;border:1px solid rgba(255,140,0,0.2);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#ff8c00;letter-spacing:2px;margin-bottom:6px;">PSY — PRELIMINARY SUPPLY</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">The first sign that selling pressure is entering the market. Volume picks up and price action starts to lose momentum. The uptrend slows but hasn't reversed yet. This is the first warning that big players are starting to unload -- the brakes going on for the first time. Most retail traders completely miss this because the trend still looks fine.</p>
+        </div>
+
+        <div style="background:#050d0d;border:1px solid rgba(255,82,82,0.2);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#ff5252;letter-spacing:2px;margin-bottom:6px;">BC — BUYING CLIMAX</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">The emotional peak. Usually triggered by good news, excitement, or fear of missing out. Price surges on the highest volume the chart has seen. But institutions are on the other side -- they're selling into every buy order the public is placing. The BC often has a wide spread candle that closes in the lower half of its range or leaves a long upper wick. It marks the top of the distribution range.</p>
+        </div>
+
+        <div style="background:#050d0d;border:1px solid rgba(0,255,225,0.2);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#00ffe1;letter-spacing:2px;margin-bottom:6px;">AR — AUTOMATIC REACTION</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">Right after the BC, supply overwhelms demand and price drops sharply. The AR establishes the floor of the distribution range. From here price will bounce and retest the BC area multiple times but struggle to exceed it. The height between the BC and AR defines the range that will contain price action for the entire distribution phase.</p>
+        </div>
+
+        <div style="background:#050d0d;border:1px solid rgba(100,100,100,0.2);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#aaa;letter-spacing:2px;margin-bottom:6px;">ST — SECONDARY TEST (AT THE TOP)</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">Price rallies back toward the BC high to test whether supply is still overhead. Volume should be noticeably lighter than the BC. If the rally stalls before reaching the BC level and then rolls over, that's confirmation the supply overhang is real. The ST can happen several times in Phase B as institutions continue distributing.</p>
+        </div>
+
+        <div style="background:#050d0d;border:1px solid rgba(180,77,255,0.2);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#b44dff;letter-spacing:2px;margin-bottom:6px;">UT — UPTHRUST</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">A brief push above the BC high that immediately reverses back into the range. Not as extreme as the UTAD. Think of it as a preliminary test of the resistance. Breakout traders get faked out, institutions sell into the spike, and price falls back in. The quick reversal on light volume after the push is the tell.</p>
+        </div>
+
+        <div style="background:#050d0d;border:1px solid rgba(180,77,255,0.3);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#cc66ff;letter-spacing:2px;margin-bottom:6px;">UTAD — UPTHRUST AFTER DISTRIBUTION</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">The ultimate trap. Price blasts above the BC high on above-average volume -- it looks exactly like a real breakout. Breakout traders pile in. But it reverses and crashes back inside the range, usually within a few candles. The UTAD is the distribution equivalent of the spring. It's institutions making one final big sale into the public's excitement. After the UTAD fails and volume dries up on the test, the breakdown often follows quickly.</p>
+        </div>
+
+        <div style="background:#050d0d;border:1px solid rgba(255,82,82,0.2);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#ff5252;letter-spacing:2px;margin-bottom:6px;">SOW — SIGN OF WEAKNESS</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">A wide-spread, high-volume drop through the middle of the range and often below the AR low. It's the first hard evidence that supply has taken control. Price moves with urgency to the downside. The SOW is the distribution equivalent of the SOS -- it signals the phase is ending and markdown is approaching. When you see a real SOW, you should be thinking about whether to get out of longs or begin preparing for shorts.</p>
+        </div>
+
+        <div style="background:#050d0d;border:1px solid rgba(255,209,102,0.2);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#ffd166;letter-spacing:2px;margin-bottom:6px;">LPSY — LAST POINT OF SUPPLY</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">After the SOW, price attempts a feeble rally on narrow spread and low volume. It can't reach the old highs. This is the last gasp of demand -- the final point where remaining institutional sellers are offloading. Each LPSY forms a lower high. For short sellers, the LPSY within Phase D is one of the highest-probability entry points in the Wyckoff framework -- the breakdown thesis is confirmed by the SOW, and the LPSY offers a relatively safe entry with a manageable stop.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- VOLUME RULES -->
+    <div class="term-card blue" id="wyckoff-volume">
+      <div class="term-name">Wyckoff Volume Rules</div>
+      <div class="term-aka">// Volume tells the real story — price just shows you the result</div>
+      <p>Volume is the engine of the Wyckoff method. Price action alone can lie. Volume is harder to fake. Here are the core volume principles that Wyckoff used to read market intent:</p>
+
+      <div style="display:grid;gap:10px;margin-top:14px;">
+        <div style="background:#050d0d;border:1px solid rgba(0,114,255,0.2);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#4488ff;letter-spacing:2px;margin-bottom:6px;">EFFORT VS RESULT — THE CORE TEST</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">High volume should produce a big price move. If you see huge volume but price barely moves, something is wrong. That effort isn't producing a result -- which means the opposite side is absorbing it. In accumulation, big volume on a down candle that barely moves price means buyers are soaking up every share being sold. In distribution, big volume on an up candle that stalls near the high means sellers are eating every buy order.</p>
+        </div>
+
+        <div style="background:#050d0d;border:1px solid rgba(0,255,106,0.2);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#00ff6a;letter-spacing:2px;margin-bottom:6px;">ACCUMULATION VOLUME PATTERN</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">In a healthy accumulation range, you'll see: high volume on the initial SC (exhaustion), then declining volume on the ST retests (sellers drying up), low volume on the Spring (no real selling pressure), low volume on the Test of Spring (confirmation), and then expanding volume on the SOS breakout (demand taking over). Volume should confirm the story the price is telling.</p>
+        </div>
+
+        <div style="background:#050d0d;border:1px solid rgba(255,82,82,0.2);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#ff5252;letter-spacing:2px;margin-bottom:6px;">DISTRIBUTION VOLUME PATTERN</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">In a distribution range: very high volume on the BC (institutions selling into public demand), declining volume on the ST rallies (demand fading), high volume on the UTAD fake breakout (one last sell), then expanding volume on the SOW breakdown (supply overwhelming demand). Light volume on the LPSY rallies shows there's simply no buying left. When rallies happen on whisper-quiet volume, be very suspicious.</p>
+        </div>
+
+        <div style="background:#050d0d;border:1px solid rgba(255,209,102,0.2);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#ffd166;letter-spacing:2px;margin-bottom:6px;">THE VOLUME DIVERGENCE RULE</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">When price and volume stop agreeing, pay close attention. During an uptrend, if price keeps making higher highs but volume gets lighter with each new high -- that's a warning. The advance is losing participation. In a downtrend, if each new low comes on lighter volume, sellers are running out of ammunition. The trend may be dying. Volume divergence won't tell you exactly when the reversal happens, but it tells you the fuel supply is running low.</p>
+        </div>
+      </div>
+
+      <div class="term-tip">&#128161; <strong>Quick checklist:</strong> On any strong move, ask two questions: (1) Is the volume confirming this move? (2) Is the price movement proportional to the volume? If both answers are yes, the move is probably real. If volume is high but price barely moved, the invisible hand is absorbing it. If volume is low and price moves a lot, it can be a sign of little resistance -- which can be either good or bad depending on which direction you're watching.</div>
+    </div>
+
+    <!-- RE-ACCUMULATION -->
+    <div class="term-card gold" id="wyckoff-reaccum">
+      <div class="term-name">Re-Accumulation & Re-Distribution</div>
+      <div class="term-aka">// The market pauses mid-trend to reload</div>
+      <p>Markets don't go straight up or straight down forever. Within a markup phase, price will often pause and consolidate in a sideways range before continuing higher. This pause is called <strong>re-accumulation</strong> -- the trend is still up, but institutions are adding to their positions or new buyers are getting on board before the next leg up.</p>
+      <p>The same thing happens in downtrends. A sideways range in the middle of a markdown is <strong>re-distribution</strong> -- institutions are continuing to sell into temporary bounces before the next leg down.</p>
+
+      <div style="display:grid;gap:10px;margin:14px 0;">
+        <div style="background:#050d0d;border:1px solid rgba(255,209,102,0.2);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#ffd166;letter-spacing:2px;margin-bottom:6px;">HOW TO TELL RE-ACCUM FROM DISTRIBUTION</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">This is one of the trickiest parts of the Wyckoff method and where a lot of people get confused. Both look like sideways ranges. The difference is context and volume behavior. Re-accumulation happens after a markup -- price has already gone up significantly. The range shows declining volume on the drops and heavier volume on the bounces within the range. A spring in a re-accumulation range tends to be shallow and recover quickly. The breakout continues in the original direction (upward).</p>
+        </div>
+
+        <div style="background:#050d0d;border:1px solid rgba(255,82,82,0.2);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#ff5252;letter-spacing:2px;margin-bottom:6px;">HOW TO TELL RE-DIST FROM ACCUMULATION</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">Re-distribution happens after a markdown -- price has already gone down significantly. A sideways pause mid-decline that still shows heavy volume on the rallies and light volume on the drops is a red flag. When that range eventually resolves, it breaks down instead of up. This is why you can't analyze a range in isolation -- you have to understand where price is in the larger cycle. The same range structure can mean completely different things depending on what happened before it.</p>
+        </div>
+      </div>
+
+      <div class="term-tip">&#128161; <strong>The big picture rule:</strong> Before you analyze any sideways range with Wyckoff tools, zoom out. Is price high or low in the bigger trend? A consolidation near all-time highs after a long rally is more likely distribution or re-distribution. A consolidation near multi-year lows after a long decline is more likely accumulation or re-accumulation. The location of the range in the bigger trend cycle is your first filter.</div>
+    </div>
+
   </div>
 </section>
 
@@ -1901,7 +2334,260 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
       <div class="term-tip">&#128161; Most beginner investors are better off in ETFs than individual stocks. You get instant diversification, lower risk, and historically strong long-term returns without needing to research every company.</div>
     </div>
 
-    <div class="term-card" id="market-cap-stocks">
+    <!-- ═══════════════════════════════════════════════════════════════
+         ETF DEEP DIVE
+    ═══════════════════════════════════════════════════════════════ -->
+    <div class="divider" style="background:linear-gradient(90deg,transparent,#00d4ff,transparent);"></div>
+    <div id="sec-etfs" class="section-label" style="color:#00d4ff;">// ETF Deep Dive — All Types Explained</div>
+    <h2>Every Type of ETF — From Simple to Advanced</h2>
+
+    <div class="callout" style="background:rgba(0,212,255,0.05);border-left:4px solid #00d4ff;border-radius:0 8px 8px 0;padding:18px 22px;margin-bottom:24px;">
+      <p style="font-family:var(--mono);font-size:13px;color:#00d4ff;line-height:1.9;margin:0;">There are thousands of ETFs on the market. They all share the same basic structure -- a basket of assets that trades like a stock -- but what's inside that basket is where everything changes. Knowing the type of ETF tells you what you're actually buying, how risky it is, and who it's designed for.</p>
+    </div>
+
+    <!-- INDEX ETFs -->
+    <div class="term-card green" id="etf-index">
+      <div class="term-name">Index ETFs</div>
+      <div class="term-aka">// The foundation. Set it, forget it, grow.</div>
+      <p>An index ETF simply tracks a market index -- a predefined list of stocks ranked by size or sector. The fund buys everything in the index automatically. No fund manager picking winners. No guessing. Just the whole index, in one purchase.</p>
+      <p>Because there's no active management, fees are extremely low -- often under 0.05% per year. Over decades, low fees compound into a massive advantage.</p>
+
+      <div style="display:grid;gap:8px;margin:14px 0;">
+        <div style="background:#050d0d;border:1px solid rgba(0,255,106,0.15);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#00ff6a;letter-spacing:2px;margin-bottom:6px;">SPY — SPDR S&amp;P 500 ETF TRUST</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">Tracks the S&amp;P 500 -- the 500 largest US companies. One of the most traded ETFs on Earth. When people say "the market went up today" they mostly mean the S&amp;P 500. SPY is the original, launched in 1993. High daily volume makes it great for active traders too.</p>
+        </div>
+        <div style="background:#050d0d;border:1px solid rgba(0,255,106,0.15);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#00ff6a;letter-spacing:2px;margin-bottom:6px;">VOO — VANGUARD S&amp;P 500 ETF</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">Same index as SPY but from Vanguard with a lower expense ratio -- one of the cheapest ways to own the S&amp;P 500. More popular with long-term investors and retirement accounts. Less daily volume than SPY so better for holding than trading.</p>
+        </div>
+        <div style="background:#050d0d;border:1px solid rgba(0,255,106,0.15);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#00ff6a;letter-spacing:2px;margin-bottom:6px;">QQQ — INVESCO NASDAQ-100 ETF</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">Tracks the 100 largest non-financial companies on the NASDAQ -- heavily weighted toward tech. Apple, Microsoft, Nvidia, Meta, Amazon, Tesla are top holdings. Higher growth potential than S&amp;P 500 but also more volatile. QQQ moves harder in both directions.</p>
+        </div>
+        <div style="background:#050d0d;border:1px solid rgba(0,255,106,0.15);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#00ff6a;letter-spacing:2px;margin-bottom:6px;">VTI — VANGUARD TOTAL STOCK MARKET ETF</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">Owns basically the entire US stock market -- over 3,500 companies of all sizes. Large, mid, small, and micro cap. The most diversified single US equity ETF you can own. If the US economy grows over the next 30 years, VTI goes up.</p>
+        </div>
+        <div style="background:#050d0d;border:1px solid rgba(0,255,106,0.15);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#00ff6a;letter-spacing:2px;margin-bottom:6px;">IWM — ISHARES RUSSELL 2000 ETF</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">Tracks 2,000 small-cap US companies. Small caps move faster and wilder than large caps -- higher risk, higher potential reward. IWM is often watched as a risk indicator: when IWM is strong, investors are feeling confident enough to buy smaller, riskier companies.</p>
+        </div>
+        <div style="background:#050d0d;border:1px solid rgba(0,255,106,0.15);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#00ff6a;letter-spacing:2px;margin-bottom:6px;">DIA — SPDR DOW JONES INDUSTRIAL AVERAGE ETF</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">Tracks the Dow Jones -- the 30 biggest, most established US industrial companies. Goldman Sachs, Boeing, Disney, JPMorgan, Coca-Cola. The Dow is the oldest major US index. DIA is slower, steadier, and less tech-heavy than QQQ or SPY.</p>
+        </div>
+      </div>
+      <div class="term-tip">&#128161; <strong>Novice move:</strong> VOO or VTI in a retirement account, held for decades, has historically beaten the vast majority of professional fund managers. Sometimes the boring play is the right play.</div>
+    </div>
+
+    <!-- SECTOR ETFs -->
+    <div class="term-card blue" id="etf-sector">
+      <div class="term-name">Sector ETFs</div>
+      <div class="term-aka">// Bet on an industry, not just one company</div>
+      <p>Instead of buying the whole market, sector ETFs let you target a specific slice of the economy. If you believe healthcare will outperform everything else this year, you buy a healthcare ETF instead of guessing which individual healthcare company wins.</p>
+      <p>The US stock market is divided into 11 official sectors. There are ETFs for every single one of them.</p>
+
+      <div style="display:grid;gap:8px;margin:14px 0;">
+        <div style="background:#050d0d;border:1px solid rgba(0,114,255,0.15);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#4488ff;letter-spacing:2px;margin-bottom:6px;">XLK — TECHNOLOGY SELECT SECTOR SPDR</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">The tech sector ETF. Apple, Microsoft, Nvidia make up the biggest chunks. When tech runs, XLK runs. When tech gets hit -- rising rates, regulatory fears -- XLK gets hit harder than the broader market.</p>
+        </div>
+        <div style="background:#050d0d;border:1px solid rgba(0,114,255,0.15);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#4488ff;letter-spacing:2px;margin-bottom:6px;">XLF — FINANCIAL SELECT SECTOR SPDR</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">Banks, insurance companies, and financial services. JPMorgan, Berkshire Hathaway, Bank of America. XLF tends to benefit when interest rates rise because banks can charge more on loans.</p>
+        </div>
+        <div style="background:#050d0d;border:1px solid rgba(0,114,255,0.15);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#4488ff;letter-spacing:2px;margin-bottom:6px;">XLE — ENERGY SELECT SECTOR SPDR</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">Oil, gas, and energy companies. ExxonMobil, Chevron, ConocoPhillips. XLE moves with oil prices. When crude oil goes up, XLE tends to follow. Useful during inflation because energy companies benefit from higher commodity prices.</p>
+        </div>
+        <div style="background:#050d0d;border:1px solid rgba(0,114,255,0.15);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#4488ff;letter-spacing:2px;margin-bottom:6px;">XLV — HEALTH CARE SELECT SECTOR SPDR</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">Pharmaceutical companies, hospitals, health insurers, medical device makers. Johnson &amp; Johnson, UnitedHealth, Pfizer. Healthcare is considered defensive -- people need medicine regardless of the economy. XLV tends to hold up better in downturns.</p>
+        </div>
+        <div style="background:#050d0d;border:1px solid rgba(0,114,255,0.15);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#4488ff;letter-spacing:2px;margin-bottom:6px;">XLU — UTILITIES SELECT SECTOR SPDR</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">Electric and gas utility companies. Another defensive sector -- people pay their power bills no matter what. XLU also pays solid dividends. Tends to rise when rates fall (utilities borrow a lot) and fall when rates rise.</p>
+        </div>
+        <div style="background:#050d0d;border:1px solid rgba(0,114,255,0.15);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#4488ff;letter-spacing:2px;margin-bottom:6px;">XLP — CONSUMER STAPLES SELECT SECTOR SPDR</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">Companies making things people always need: food, drinks, household products, toilet paper. Procter &amp; Gamble, Coca-Cola, Walmart. The ultimate recession-resistant sector. If the economy collapses, people still buy toothpaste.</p>
+        </div>
+        <div style="background:#050d0d;border:1px solid rgba(0,114,255,0.15);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#4488ff;letter-spacing:2px;margin-bottom:6px;">XLY — CONSUMER DISCRETIONARY SELECT SECTOR SPDR</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">Things people want but don't necessarily need -- cars, restaurants, luxury goods, retail. Amazon, Tesla, McDonald's, Nike. XLY is the opposite of XLP. It surges when the economy is booming and people are spending freely. It gets hammered in recessions.</p>
+        </div>
+      </div>
+      <div class="term-tip">&#128161; <strong>Sector rotation strategy:</strong> Different sectors outperform at different points in the economic cycle. Early recovery = financials and consumer discretionary. Expansion = tech. Late cycle = energy and materials. Recession = utilities, healthcare, consumer staples. Watching which sectors are getting money flows tells you a lot about where the smart money thinks the economy is heading.</div>
+    </div>
+
+    <!-- BOND ETFs -->
+    <div class="term-card" id="etf-bond">
+      <div class="term-name">Bond ETFs</div>
+      <div class="term-aka">// Lending money to governments or companies -- and getting paid for it</div>
+      <p>When governments or companies need to borrow money, they issue bonds -- basically IOUs that pay regular interest. Bond ETFs hold a collection of these bonds so you can invest in them like buying a stock, collecting interest along the way.</p>
+      <p>Bonds are generally less volatile than stocks. They don't grow as fast but they hold their value better in downturns. Many investors hold a mix of stocks and bonds to balance risk.</p>
+
+      <div style="display:grid;gap:8px;margin:14px 0;">
+        <div style="background:#050d0d;border:1px solid rgba(100,100,100,0.2);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#aaa;letter-spacing:2px;margin-bottom:6px;">AGG — ISHARES CORE U.S. AGGREGATE BOND ETF</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">The broadest US bond market ETF. Holds thousands of US government and investment-grade corporate bonds. The bond market equivalent of VTI -- if you want broad bond exposure in one fund, this is it. Very low fee, very diversified.</p>
+        </div>
+        <div style="background:#050d0d;border:1px solid rgba(100,100,100,0.2);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#aaa;letter-spacing:2px;margin-bottom:6px;">TLT — ISHARES 20+ YEAR TREASURY BOND ETF</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">Holds long-term US government bonds (20+ years to maturity). Very sensitive to interest rate changes -- when rates drop, TLT surges. When rates rise, TLT gets crushed. Traders use TLT to bet on Fed rate decisions. It's also a safe haven during stock market crashes since investors flee to government bonds.</p>
+        </div>
+        <div style="background:#050d0d;border:1px solid rgba(100,100,100,0.2);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#aaa;letter-spacing:2px;margin-bottom:6px;">SHY — ISHARES 1-3 YEAR TREASURY BOND ETF</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">Short-term government bonds. Much less sensitive to rate changes than TLT. Lower risk, lower reward. Used as a cash-like parking spot when investors want safety but slightly better than just sitting in cash.</p>
+        </div>
+        <div style="background:#050d0d;border:1px solid rgba(100,100,100,0.2);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#aaa;letter-spacing:2px;margin-bottom:6px;">HYG — ISHARES IBOXX HIGH YIELD CORPORATE BOND ETF</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">Holds "junk bonds" -- bonds from companies with lower credit ratings that need to offer higher interest to attract buyers. Higher yield, higher risk. HYG actually tracks closely with stocks because when the economy struggles, these lower-rated companies are most at risk of defaulting.</p>
+        </div>
+      </div>
+      <div class="term-tip">&#128161; <strong>Bond vs stock relationship:</strong> When stocks crash, investors often flee to government bonds for safety (pushing bond prices up). This is why holding some bonds can cushion a portfolio during a stock market downturn. TLT and SPY often move in opposite directions during crises.</div>
+    </div>
+
+    <!-- DIVIDEND ETFs -->
+    <div class="term-card gold" id="etf-dividend">
+      <div class="term-name">Dividend ETFs</div>
+      <div class="term-aka">// Get paid just for holding -- every quarter</div>
+      <p>Dividend ETFs hold companies that pay consistent dividends -- regular cash payments to shareholders. Instead of waiting for the stock to go up to make money, dividend ETFs generate income just from owning them. The ETF collects dividends from all its holdings and passes them on to you.</p>
+      <p>Popular with retirees and income investors who want cash flow without selling their investments.</p>
+
+      <div style="display:grid;gap:8px;margin:14px 0;">
+        <div style="background:#050d0d;border:1px solid rgba(255,209,102,0.15);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#ffd166;letter-spacing:2px;margin-bottom:6px;">VYM — VANGUARD HIGH DIVIDEND YIELD ETF</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">Holds US stocks with above-average dividend yields. Heavy in financials, energy, consumer staples, and healthcare. Gives you a higher income stream than the S&amp;P 500 while still owning large, established companies. Low fee, very popular for retirement accounts.</p>
+        </div>
+        <div style="background:#050d0d;border:1px solid rgba(255,209,102,0.15);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#ffd166;letter-spacing:2px;margin-bottom:6px;">SCHD — SCHWAB US DIVIDEND EQUITY ETF</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">One of the most respected dividend ETFs out there. Focuses on companies with a strong history of paying AND growing their dividends over time. Quality filter built in -- companies that consistently grow dividends tend to be financially strong. Strong total return record combined with solid income.</p>
+        </div>
+        <div style="background:#050d0d;border:1px solid rgba(255,209,102,0.15);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#ffd166;letter-spacing:2px;margin-bottom:6px;">JEPI — JPMORGAN EQUITY PREMIUM INCOME ETF</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">A newer type of income ETF that uses options strategies on top of dividend stocks to generate extra monthly income. The yield is significantly higher than traditional dividend ETFs but the growth potential is capped. Used by income seekers who prioritize cash flow over long-term price appreciation.</p>
+        </div>
+      </div>
+      <div class="term-tip">&#128161; <strong>Dividend reinvestment (DRIP):</strong> Most brokers let you automatically reinvest dividends back into buying more shares. Over decades this compounding effect is enormous -- you're earning dividends on dividends on dividends. Turn it on and leave it on.</div>
+    </div>
+
+    <!-- LEVERAGED ETFs -->
+    <div class="term-card red" id="etf-leveraged">
+      <div class="term-name">Leveraged ETFs</div>
+      <div class="term-aka">// 2x and 3x the daily move -- cuts both ways, FAST</div>
+      <p>Leveraged ETFs use financial tools like derivatives to deliver a multiple of an index's daily return. A 2x leveraged S&amp;P 500 ETF goes up 2% when the S&amp;P 500 goes up 1%. It also goes DOWN 2% when the S&amp;P 500 drops 1%.</p>
+      <p><strong>These are NOT long-term hold investments.</strong> Because they reset daily, they suffer from something called "volatility decay" -- in a choppy market that goes nowhere over a month, a 3x ETF can lose money even if the index is flat. They are short-term trading instruments, not buy-and-hold vehicles.</p>
+
+      <div style="display:grid;gap:8px;margin:14px 0;">
+        <div style="background:#050d0d;border:1px solid rgba(255,82,82,0.15);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#ff5252;letter-spacing:2px;margin-bottom:6px;">TQQQ — PROSHARES ULTRAPRO QQQ (3X NASDAQ)</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">3x daily leverage on the NASDAQ-100. When tech is running, TQQQ rockets. When tech drops 10% in a day, TQQQ drops ~30%. One of the most actively traded leveraged ETFs. Beloved by aggressive short-term traders. Dangerous to hold through earnings seasons or volatile periods without tight stops.</p>
+        </div>
+        <div style="background:#050d0d;border:1px solid rgba(255,82,82,0.15);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#ff5252;letter-spacing:2px;margin-bottom:6px;">SPXL — DIREXION DAILY S&amp;P 500 BULL 3X ETF</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">3x daily leverage on the S&amp;P 500. Same concept as TQQQ but tracking the broader market instead of just tech. Used by traders who want amplified exposure to a broad market move without options.</p>
+        </div>
+        <div style="background:#050d0d;border:1px solid rgba(255,82,82,0.15);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#ff5252;letter-spacing:2px;margin-bottom:6px;">SOXL — DIREXION DAILY SEMICONDUCTOR BULL 3X</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">3x leverage on semiconductor companies -- Nvidia, TSMC, AMD, Intel, Qualcomm. Semiconductors are the backbone of AI, mobile, and computing. SOXL can swing 10-20% in a single day. Extremely volatile. Traders who know the chip sector well use this for short-term momentum plays.</p>
+        </div>
+      </div>
+
+      <div style="background:rgba(255,82,82,0.08);border:1px solid rgba(255,82,82,0.3);border-radius:6px;padding:14px;margin:14px 0;">
+        <div style="font-family:var(--mono);font-size:9px;color:#ff5252;letter-spacing:3px;margin-bottom:8px;">⚠ VOLATILITY DECAY — THE HIDDEN KILLER</div>
+        <p style="margin:0;font-size:13px;color:var(--text);">Day 1: Index up 10%. Your 3x ETF up 30%. ($100 → $130)<br>Day 2: Index down 10%. Your 3x ETF down 30%. ($130 → $91)<br>The index is back to where it started. Your 3x ETF is down 9%. This is volatility decay -- it erodes value in sideways or choppy markets even when the underlying index is flat over time.</p>
+      </div>
+      <div class="term-tip">&#128161; <strong>Strict rules for leveraged ETFs:</strong> Always use a stop loss. Never hold overnight if you can avoid it. Never hold through major news events without a plan. These are race cars, not family sedans.</div>
+    </div>
+
+    <!-- INVERSE ETFs -->
+    <div class="term-card purple" id="etf-inverse">
+      <div class="term-name">Inverse ETFs</div>
+      <div class="term-aka">// Profit when the market goes DOWN</div>
+      <p>Inverse ETFs move in the opposite direction of their target index. When the S&amp;P 500 drops 1%, a basic inverse S&amp;P 500 ETF goes up 1%. They let you bet against the market or hedge your portfolio without needing a margin account or short selling skills.</p>
+      <p>Like leveraged ETFs, most inverse ETFs are designed for short-term use and suffer from volatility decay over time. They're not meant to be long-term holds.</p>
+
+      <div style="display:grid;gap:8px;margin:14px 0;">
+        <div style="background:#050d0d;border:1px solid rgba(180,77,255,0.15);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#b44dff;letter-spacing:2px;margin-bottom:6px;">SH — PROSHARES SHORT S&amp;P 500</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">Simple 1x inverse on the S&amp;P 500. Goes up when the S&amp;P 500 goes down, dollar for dollar. Used as a portfolio hedge -- if you hold a lot of stocks and you're worried about a short-term pullback, buying some SH can offset potential losses without selling your entire portfolio.</p>
+        </div>
+        <div style="background:#050d0d;border:1px solid rgba(180,77,255,0.15);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#b44dff;letter-spacing:2px;margin-bottom:6px;">SQQQ — PROSHARES ULTRAPRO SHORT QQQ (3X INVERSE NASDAQ)</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">3x inverse on the NASDAQ-100. When NASDAQ drops 1%, SQQQ goes up 3%. The counterpart to TQQQ -- traders use this to short the tech sector without borrowing shares. Extremely volatile. A strong tech rally can destroy the value of an SQQQ position very quickly.</p>
+        </div>
+        <div style="background:#050d0d;border:1px solid rgba(180,77,255,0.15);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#b44dff;letter-spacing:2px;margin-bottom:6px;">TBF — PROSHARES SHORT 20+ YEAR TREASURY</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">Inverse on long-term government bonds. Goes up when bond prices drop (which happens when interest rates rise). Used by traders betting that the Fed will raise rates or that bond prices will fall. When the Fed was aggressively hiking rates in 2022, bond inverse ETFs like this were among the best performers.</p>
+        </div>
+      </div>
+      <div class="term-tip">&#128161; Inverse ETFs are tools, not a long-term strategy. The stock market historically goes up over long periods -- an inverse ETF held for years is fighting that tide. Use them for short-term hedges or directional bets, not as a retirement plan.</div>
+    </div>
+
+    <!-- THEMATIC ETFs -->
+    <div class="term-card" id="etf-thematic">
+      <div class="term-name">Thematic &amp; Specialty ETFs</div>
+      <div class="term-aka">// Bet on a trend, not just a sector</div>
+      <p>Thematic ETFs target a specific idea, trend, or technology instead of a traditional sector. Instead of "tech companies" broadly, you can invest in "AI companies specifically" or "clean energy only" or "cannabis companies" or "cybersecurity firms." These are more concentrated and therefore riskier -- but when the theme is right, the gains can be significant.</p>
+
+      <div style="display:grid;gap:8px;margin:14px 0;">
+        <div style="background:#050d0d;border:1px solid rgba(0,255,225,0.1);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#00ffe1;letter-spacing:2px;margin-bottom:6px;">ARKK — ARK INNOVATION ETF</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">Actively managed by Cathie Wood's ARK Invest, targeting disruptive innovation -- AI, genomics, fintech, space exploration, robotics. Famous for explosive 2020 gains and an equally dramatic 2021-2022 crash. High conviction, high concentration, high volatility. Not a passive index -- a human is making decisions about what goes in it.</p>
+        </div>
+        <div style="background:#050d0d;border:1px solid rgba(0,255,225,0.1);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#00ffe1;letter-spacing:2px;margin-bottom:6px;">BOTZ — GLOBAL X ROBOTICS &amp; ARTIFICIAL INTELLIGENCE ETF</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">Companies developing robots and AI systems -- industrial automation, autonomous vehicles, AI software providers. Nvidia, Intuitive Surgical, Keyence. Tracks the global rise of machines replacing human labor. Long-term structural trend but individual holdings can be volatile.</p>
+        </div>
+        <div style="background:#050d0d;border:1px solid rgba(0,255,225,0.1);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#00ffe1;letter-spacing:2px;margin-bottom:6px;">ICLN — ISHARES GLOBAL CLEAN ENERGY ETF</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">Solar, wind, and clean energy companies worldwide. Plays the global shift away from fossil fuels. Heavily influenced by government energy policy -- subsidies help, deregulation or political changes can hurt. More volatile than traditional energy ETFs because many clean energy companies aren't yet profitable.</p>
+        </div>
+        <div style="background:#050d0d;border:1px solid rgba(0,255,225,0.1);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#00ffe1;letter-spacing:2px;margin-bottom:6px;">HACK — ETFMG PRIME CYBER SECURITY ETF</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">Cybersecurity companies -- the firms protecting networks, data, and infrastructure from hacking. CrowdStrike, Palo Alto Networks, Fortinet. As the world moves more digital, cybersecurity spending only grows. Every major data breach in the news tends to push this sector up as companies rush to upgrade their defenses.</p>
+        </div>
+        <div style="background:#050d0d;border:1px solid rgba(0,255,225,0.1);border-radius:6px;padding:12px 14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#00ffe1;letter-spacing:2px;margin-bottom:6px;">GLD — SPDR GOLD SHARES</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">Holds physical gold. When you buy GLD, you own a claim on actual gold bars sitting in a vault. Gold is a traditional inflation hedge and safe-haven asset -- when people lose confidence in currency or governments, gold tends to rise. Doesn't pay dividends but holds value in a way stocks sometimes don't during crises.</p>
+        </div>
+      </div>
+      <div class="term-tip">&#128161; Thematic ETFs are the most exciting and the most dangerous. The theme has to actually play out AND the ETF has to own the right companies capturing that theme. Many thematic ETFs underperform broad index funds over long periods because good themes get priced in early.</div>
+    </div>
+
+    <!-- EXPENSE RATIO -->
+    <div class="term-card green" id="etf-expense">
+      <div class="term-name">Expense Ratio — The One Fee That Never Stops</div>
+      <div class="term-aka">// The invisible cost eating your returns every single year</div>
+      <p>Every ETF charges an annual fee called the <strong>expense ratio</strong>. It's expressed as a percentage of what you have invested and gets deducted automatically -- you never write a check, it just quietly reduces your returns every year.</p>
+
+      <div style="background:#050d0d;border:1px solid rgba(0,255,106,0.15);border-radius:6px;padding:16px;margin:14px 0;font-family:var(--mono);font-size:12px;line-height:2.2;">
+        <div style="color:#ffd166;letter-spacing:2px;font-size:10px;margin-bottom:10px;">EXPENSE RATIO COMPARISON</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center;">
+          <div style="background:rgba(0,255,106,0.08);border:1px solid rgba(0,255,106,0.2);border-radius:4px;padding:10px;">
+            <div style="color:#00ff6a;font-size:11px;margin-bottom:4px;">VOO / VTI</div>
+            <div style="color:#fff;font-size:16px;font-weight:bold;">0.03%</div>
+            <div style="color:#3d7070;font-size:10px;">$3/yr per $10k</div>
+          </div>
+          <div style="background:rgba(255,209,102,0.08);border:1px solid rgba(255,209,102,0.2);border-radius:4px;padding:10px;">
+            <div style="color:#ffd166;font-size:11px;margin-bottom:4px;">ARKK / BOTZ</div>
+            <div style="color:#fff;font-size:16px;font-weight:bold;">0.75%</div>
+            <div style="color:#3d7070;font-size:10px;">$75/yr per $10k</div>
+          </div>
+          <div style="background:rgba(255,82,82,0.08);border:1px solid rgba(255,82,82,0.2);border-radius:4px;padding:10px;">
+            <div style="color:#ff5252;font-size:11px;margin-bottom:4px;">TQQQ / SQQQ</div>
+            <div style="color:#fff;font-size:16px;font-weight:bold;">0.88%</div>
+            <div style="color:#3d7070;font-size:10px;">$88/yr per $10k</div>
+          </div>
+        </div>
+      </div>
+
+      <p>Over 30 years, a 1% expense ratio difference on a $10,000 investment can cost you over $100,000 in lost compounding. This is why Vanguard's ultra-low fee index funds have built such a loyal following -- the fee difference sounds tiny but is massive over time.</p>
+      <p><strong>General rule:</strong> The simpler the ETF, the lower the fee. Index ETFs are cheap. Actively managed ETFs are expensive. Leveraged and inverse ETFs are the most expensive of all.</p>
+      <div class="term-tip">&#128161; Always check the expense ratio before buying any ETF. It's on every ETF's page on any brokerage or on sites like ETF.com. For long-term holds, keep it under 0.20% if possible. For short-term trades it matters less -- but for retirement money it matters enormously.</div>
+    </div>
       <div class="term-name">Market Cap -- Small, Mid and Large Cap</div>
       <div class="term-aka">// How big is the company?</div>
       <p><strong>Market capitalization</strong> is the total value of all a company's shares combined. It tells you the size of the company in the market's eyes.</p>
@@ -2125,6 +2811,379 @@ function googleTranslateElementInit(){new google.translate.TranslateElement({pag
       <p><strong>When the Fed RAISES rates:</strong> Borrowing costs more. Companies pay more on debt. Growth slows down. High-P/E growth stocks (especially tech) get hit hardest because their future earnings are worth less when discounted at higher rates. Bonds become more attractive.</p>
       <p><strong>When the Fed CUTS rates:</strong> Borrowing is cheaper. Companies can invest and grow. Growth stocks and tech tend to rally. Real estate often benefits. The whole market usually goes up.</p>
       <div class="term-tip">&#128161; Watch the Fed meeting calendar. When the Fed speaks -- markets move. Even a hint of a rate change can cause a 2-3% market swing in one day. Go to TradingView and search "FEDFUNDS" to see the historical rate chart.</div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ORDER TYPES SECTION -->
+<section>
+  <div class="wrap">
+    <div class="divider" style="background:linear-gradient(90deg,transparent,#ff8c00,transparent);"></div>
+    <div id="sec-orders" class="section-label" style="color:#ff8c00;">// Order Types &amp; Trade Execution</div>
+    <h2>How to Actually Place a Trade — Every Order Type Explained</h2>
+
+    <div class="callout" style="background:rgba(255,140,0,0.06);border-left:4px solid #ff8c00;border-radius:0 8px 8px 0;padding:18px 22px;margin-bottom:28px;">
+      <p style="font-family:var(--mono);font-size:13px;color:#ff8c00;line-height:1.9;margin:0;">
+        &ldquo;Knowing what to buy is only half the job. Knowing HOW to buy it -- and HOW to protect yourself -- is the other half that most beginners skip.&rdquo;
+      </p>
+      <p style="font-family:var(--mono);font-size:10px;color:#3d7070;margin-top:8px;letter-spacing:2px;">// DuttyBookBag Learning Center</p>
+    </div>
+
+    <p class="lead">Whether you are on Robinhood, Coinbase, Binance, Webull, or Schwab -- every platform uses the same fundamental order types. The buttons look different but the logic is identical. Learn these once and you are set on any platform, any asset class.</p>
+
+    <!-- NOVICE BADGE EXPLANATION -->
+    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:24px;padding:14px 18px;background:#050d0d;border:1px solid #0c3030;border-radius:6px;">
+      <div style="display:flex;align-items:center;gap:8px;"><span style="background:rgba(0,255,106,0.15);border:1px solid #00ff6a;border-radius:4px;padding:3px 10px;font-family:var(--mono);font-size:10px;color:#00ff6a;letter-spacing:2px;">NOVICE</span><span style="font-size:12px;color:var(--muted);font-family:var(--mono);">Start here. These are the basics every beginner must know.</span></div>
+      <div style="display:flex;align-items:center;gap:8px;"><span style="background:rgba(255,209,102,0.15);border:1px solid #ffd166;border-radius:4px;padding:3px 10px;font-family:var(--mono);font-size:10px;color:#ffd166;letter-spacing:2px;">INTERMEDIATE</span><span style="font-size:12px;color:var(--muted);font-family:var(--mono);">Once you are comfortable with basics, add these.</span></div>
+      <div style="display:flex;align-items:center;gap:8px;"><span style="background:rgba(180,77,255,0.15);border:1px solid #b44dff;border-radius:4px;padding:3px 10px;font-family:var(--mono);font-size:10px;color:#b44dff;letter-spacing:2px;">ADVANCED</span><span style="font-size:12px;color:var(--muted);font-family:var(--mono);">Power tools. Complex but worth learning.</span></div>
+    </div>
+
+    <!-- ── MARKET ORDER ── -->
+    <div class="term-card green" id="market-order">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+        <div class="term-name" style="margin:0;">Market Order</div>
+        <span style="background:rgba(0,255,106,0.15);border:1px solid #00ff6a;border-radius:4px;padding:2px 9px;font-family:var(--mono);font-size:9px;color:#00ff6a;letter-spacing:2px;">NOVICE</span>
+      </div>
+      <div class="term-aka">// Buy or sell RIGHT NOW at whatever price the market gives you</div>
+      <p>A market order is the simplest thing you can do. You tell the platform: <em>"I want this stock/coin. Buy it now. I don't care what exact price, just get it done."</em> The order fills immediately at the best available price.</p>
+      <p><strong>When to use it:</strong> When speed is more important than price. You see something moving fast and you need in RIGHT NOW. Or you need to exit a position immediately -- no waiting.</p>
+      <p><strong>The catch:</strong> In a fast-moving or low-liquidity market, the price you pay might be slightly (or a lot) worse than the price you saw on screen when you clicked. This is called <strong>slippage</strong>. On popular stocks and big coins it's usually small. On penny stocks or low-volume crypto it can be ugly.</p>
+      <div class="term-tip">&#128161; <strong>Novice tip:</strong> Market orders are fine for liquid assets (Apple, Bitcoin, S&amp;P 500 ETFs) during normal market hours. For anything illiquid or thinly traded, use a limit order instead so you control the price you pay.</div>
+    </div>
+
+    <!-- ── LIMIT ORDER ── -->
+    <div class="term-card blue" id="limit-order">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+        <div class="term-name" style="margin:0;">Limit Order</div>
+        <span style="background:rgba(0,255,106,0.15);border:1px solid #00ff6a;border-radius:4px;padding:2px 9px;font-family:var(--mono);font-size:9px;color:#00ff6a;letter-spacing:2px;">NOVICE</span>
+      </div>
+      <div class="term-aka">// Buy or sell ONLY at the price you set -- or better</div>
+      <p>A limit order lets you name your price. You tell the platform: <em>"I'll buy this, but only if the price drops to $X or lower."</em> Or: <em>"I'll sell, but only if price rises to $Y or higher."</em> The order sits on the exchange waiting until that price is hit.</p>
+      <p><strong>Buy Limit:</strong> You want to buy Apple at $180 but it's currently at $185. You set a buy limit at $180. Your order waits. If Apple dips to $180, you're filled. If it never hits $180, nothing happens.</p>
+      <p><strong>Sell Limit (Take Profit):</strong> You own Bitcoin at $60,000 and want to sell if it reaches $70,000. Set a sell limit at $70,000. It sells automatically when that price is hit.</p>
+      <p><strong>The catch:</strong> There's no guarantee the price actually reaches your limit. You might miss the trade entirely. The market doesn't owe you a fill.</p>
+      <div class="term-tip">&#128161; <strong>Novice tip:</strong> Use limit orders when you have a specific price in mind and you're not in a rush. It's how you avoid overpaying. Most experienced traders prefer limit orders over market orders for their entries.</div>
+    </div>
+
+    <!-- ── STOP LOSS ── -->
+    <div class="term-card red" id="stop-loss">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+        <div class="term-name" style="margin:0;">Stop Loss</div>
+        <span style="background:rgba(0,255,106,0.15);border:1px solid #00ff6a;border-radius:4px;padding:2px 9px;font-family:var(--mono);font-size:9px;color:#00ff6a;letter-spacing:2px;">NOVICE</span>
+      </div>
+      <div class="term-aka">// Your automatic eject button when a trade goes wrong</div>
+      <p>A stop loss is an order that automatically sells your position if the price drops to a level you can't accept. You set it and forget it -- it protects you while you sleep, while you work, while you're not watching the screen.</p>
+      <p><strong>How it works:</strong> You buy a stock at $100. You decide you can't afford to lose more than 10%. You place a stop loss at $90. If the stock drops to $90, your position automatically sells and you walk away with a $10 loss per share instead of potentially much worse.</p>
+      <p><strong>It becomes a market order when triggered:</strong> When the stop price is hit, a regular stop loss converts into a market order and sells at the next available price. If the stock gaps down hard overnight, you could get filled below your stop level. This is called <strong>gap risk</strong>.</p>
+
+      <!-- STOP LOSS DIAGRAM -->
+      <div style="background:#050505;border:1px solid #1a0505;border-radius:6px;padding:18px;margin:16px 0;">
+        <div style="font-family:var(--mono);font-size:9px;color:#3d7070;letter-spacing:2px;margin-bottom:10px;">STOP LOSS — HOW IT WORKS</div>
+        <svg viewBox="0 0 400 140" style="width:100%;height:auto;">
+          <!-- Entry price line -->
+          <line x1="0" y1="45" x2="400" y2="45" stroke="rgba(0,255,106,0.3)" stroke-width="1" stroke-dasharray="5,4"/>
+          <text x="5" y="40" fill="#00ff6a" font-family="Share Tech Mono" font-size="7">ENTRY $100</text>
+          <!-- Stop loss line -->
+          <line x1="0" y1="90" x2="400" y2="90" stroke="rgba(255,82,82,0.4)" stroke-width="1" stroke-dasharray="5,4"/>
+          <text x="5" y="85" fill="#ff5252" font-family="Share Tech Mono" font-size="7">STOP LOSS $90</text>
+          <!-- Price going up then dropping -->
+          <polyline points="20,45 60,35 100,28 140,32 170,45 200,60 230,80 255,92" fill="none" stroke="#00ffe1" stroke-width="2">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="2s" fill="freeze"/>
+          </polyline>
+          <!-- Hit stop - auto sell marker -->
+          <circle cx="255" cy="92" r="5" fill="#ff5252" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="2s" dur="0.3s" fill="freeze"/></circle>
+          <text x="262" y="88" fill="#ff5252" font-family="Share Tech Mono" font-size="8" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="2s" dur="0.3s" fill="freeze"/>AUTO SELL</text>
+          <!-- Arrow down after stop -->
+          <polyline points="255,92 280,108 310,118 350,128" fill="none" stroke="#ff5252" stroke-width="1.5" stroke-dasharray="4,3" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="2.3s" dur="0.5s" fill="freeze"/></polyline>
+          <text x="270" y="130" fill="#ff5252" font-family="Share Tech Mono" font-size="7" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="2.5s" dur="0.5s" fill="freeze"/>YOU ALREADY EXITED HERE ↑</text>
+        </svg>
+      </div>
+      <div class="term-tip">&#128161; <strong>Golden rule:</strong> Set your stop loss BEFORE you enter a trade. Not after. Not when things start going wrong. Before. Every trade you make should have a predefined answer to the question: "How much am I willing to lose on this?"</div>
+    </div>
+
+    <!-- ── STOP LIMIT ORDER ── -->
+    <div class="term-card" id="stop-limit-order">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+        <div class="term-name" style="margin:0;">Stop-Limit Order</div>
+        <span style="background:rgba(255,209,102,0.15);border:1px solid #ffd166;border-radius:4px;padding:2px 9px;font-family:var(--mono);font-size:9px;color:#ffd166;letter-spacing:2px;">INTERMEDIATE</span>
+      </div>
+      <div class="term-aka">// A stop loss with a price floor -- more control, more risk of not filling</div>
+      <p>A stop-limit is a two-part order. You set a <strong>stop price</strong> and a <strong>limit price</strong>. When the stop price is hit, instead of becoming a market order, it becomes a limit order at your specified price.</p>
+      <p><strong>Example:</strong> You own a stock at $100. You set a stop at $90 and a limit at $88. When price hits $90, a sell limit order at $88 activates. Your order will only fill at $88 or better -- never lower. But if the stock crashes straight through $88 without any buyers there, your order doesn't fill and you stay in a losing position.</p>
+      <p><strong>The trade-off:</strong> More price control but no guarantee of getting out. A regular stop loss gets you out no matter what. A stop-limit might leave you holding a position that keeps dropping if the market gaps.</p>
+      <div class="term-tip">&#128161; Stop-limits are useful when you care more about the price you exit at than whether you exit at all. In fast-moving or gapping markets, a regular stop loss may actually be safer for protecting capital.</div>
+    </div>
+
+    <!-- ── TRAILING STOP ── -->
+    <div class="term-card gold" id="trailing-stop">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+        <div class="term-name" style="margin:0;">Trailing Stop</div>
+        <span style="background:rgba(255,209,102,0.15);border:1px solid #ffd166;border-radius:4px;padding:2px 9px;font-family:var(--mono);font-size:9px;color:#ffd166;letter-spacing:2px;">INTERMEDIATE</span>
+      </div>
+      <div class="term-aka">// A stop loss that moves UP automatically as your trade profits</div>
+      <p>A trailing stop is a dynamic stop loss that follows price as it moves in your favor. Instead of setting a fixed exit price, you set a distance -- either a dollar amount or a percentage -- and your stop moves up automatically as price rises. It only moves up, never down.</p>
+      <p><strong>Example:</strong> You buy Bitcoin at $60,000 and set a 10% trailing stop. Your stop starts at $54,000. Bitcoin rises to $70,000 -- your stop automatically moves to $63,000. Bitcoin hits $80,000 -- stop is now at $72,000. If Bitcoin then drops 10% from its peak to $72,000, your stop triggers and you exit with a big profit, having locked in a large portion of the move.</p>
+
+      <!-- TRAILING STOP DIAGRAM -->
+      <div style="background:#050505;border:1px solid #1a1200;border-radius:6px;padding:18px;margin:16px 0;">
+        <div style="font-family:var(--mono);font-size:9px;color:#3d7070;letter-spacing:2px;margin-bottom:10px;">TRAILING STOP — LOCKS IN PROFITS AS PRICE RISES</div>
+        <svg viewBox="0 0 420 150" style="width:100%;height:auto;">
+          <!-- Price line going up -->
+          <polyline points="20,120 60,95 100,70 150,50 200,35 250,20 290,15" fill="none" stroke="#00ff6a" stroke-width="2">
+            <animate attributeName="stroke-dasharray" from="0,600" to="600,0" dur="2s" fill="freeze"/>
+          </polyline>
+          <!-- Trailing stop line (10% below, follows price up) -->
+          <polyline points="20,132 60,107 100,83 150,63 200,49 250,33 290,28" fill="none" stroke="#ffd166" stroke-width="1.5" stroke-dasharray="5,3">
+            <animate attributeName="stroke-dasharray" from="0,0,600" to="5,3,600" dur="0.1s" begin="0.5s" fill="freeze"/>
+            <animate attributeName="opacity" from="0" to="1" begin="0.5s" dur="0.5s" fill="freeze"/>
+          </polyline>
+          <text x="295" y="32" fill="#ffd166" font-family="Share Tech Mono" font-size="7" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="1.5s" dur="0.5s" fill="freeze"/>TRAILING STOP</text>
+          <!-- Price drops at the end -->
+          <polyline points="290,15 320,35 350,60 375,80" fill="none" stroke="#ff5252" stroke-width="2">
+            <animate attributeName="stroke-dasharray" from="0,200" to="200,0" dur="0.8s" begin="2s" fill="freeze"/>
+          </polyline>
+          <!-- Stop triggers -->
+          <circle cx="340" cy="50" r="5" fill="#ff5252" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="2.5s" dur="0.3s" fill="freeze"/></circle>
+          <text x="348" y="47" fill="#ff5252" font-family="Share Tech Mono" font-size="7" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="2.5s" dur="0.3s" fill="freeze"/>STOP HIT</text>
+          <text x="295" y="115" fill="#ffd166" font-family="Share Tech Mono" font-size="7" opacity="0"><animate attributeName="opacity" from="0" to="1" begin="2.8s" dur="0.5s" fill="freeze">PROFIT LOCKED IN ✓</animate></text>
+          <!-- Labels -->
+          <text x="22" y="115" fill="#00ff6a" font-family="Share Tech Mono" font-size="7">ENTRY</text>
+        </svg>
+      </div>
+      <p><strong>Trailing stop as a dollar amount:</strong> "Trail by $5" -- stop stays $5 below the highest price reached.</p>
+      <p><strong>Trailing stop as a percentage:</strong> "Trail by 5%" -- stop stays 5% below the highest price reached.</p>
+      <div class="term-tip">&#128161; Trailing stops are excellent for riding trending moves without babysitting your screen. The risk is that a short-term pullback in a strong trend can hit your stop and kick you out before the real move resumes. Set the trail distance wide enough to absorb normal volatility but tight enough to protect meaningful profits.</div>
+    </div>
+
+    <!-- ── TAKE PROFIT ── -->
+    <div class="term-card green" id="take-profit">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+        <div class="term-name" style="margin:0;">Take Profit</div>
+        <span style="background:rgba(0,255,106,0.15);border:1px solid #00ff6a;border-radius:4px;padding:2px 9px;font-family:var(--mono);font-size:9px;color:#00ff6a;letter-spacing:2px;">NOVICE</span>
+      </div>
+      <div class="term-aka">// Your automatic win -- sell when the target is reached</div>
+      <p>A take profit is a sell limit order placed above your entry price. When price reaches your target, the position automatically closes and you collect your profit without having to watch the screen.</p>
+      <p>You buy ETH at $3,000. You believe it will go to $3,500. You place a take profit (sell limit) at $3,500. Price hits $3,500 -- you're out with a $500 gain per ETH, automatically, whether you're awake or not.</p>
+      <div class="term-tip">&#128161; <strong>Use stop loss AND take profit together.</strong> Setting only a stop loss means you might miss your profit target. Setting only a take profit means one bad drop wipes you out. The combination is what protects and grows your account at the same time.</div>
+    </div>
+
+    <!-- ── OCO ORDER ── -->
+    <div class="term-card purple" id="oco-order">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+        <div class="term-name" style="margin:0;">OCO — One Cancels the Other</div>
+        <span style="background:rgba(255,209,102,0.15);border:1px solid #ffd166;border-radius:4px;padding:2px 9px;font-family:var(--mono);font-size:9px;color:#ffd166;letter-spacing:2px;">INTERMEDIATE</span>
+      </div>
+      <div class="term-aka">// Two orders at once -- when one fills, the other disappears</div>
+      <p>An OCO order links a take profit and a stop loss together. You set both simultaneously. Whichever one gets triggered first automatically cancels the other. This is how professional traders manage positions without babysitting them.</p>
+      <p><strong>Example:</strong> You buy a stock at $50. You set an OCO with a take profit at $60 and a stop loss at $45. Two scenarios:</p>
+      <ul style="margin:10px 0 10px 18px;line-height:2.4;">
+        <li>Price rises to $60 → take profit triggers → stop loss automatically cancels ✅</li>
+        <li>Price drops to $45 → stop loss triggers → take profit automatically cancels ✅</li>
+      </ul>
+      <p>Without OCO you'd have to remember to manually cancel whichever order didn't fill. Forgetting to do this can open you to accidental double positions or unexpected fills.</p>
+      <div class="term-tip">&#128161; OCO is available on most serious trading platforms including Binance, Coinbase Advanced, Interactive Brokers, TD Ameritrade, and more. On some platforms it's called a "bracket order" or "TP/SL." Same thing, different name.</div>
+    </div>
+
+    <!-- ── BRACKET ORDER ── -->
+    <div class="term-card" id="bracket-order">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+        <div class="term-name" style="margin:0;">Bracket Order</div>
+        <span style="background:rgba(180,77,255,0.15);border:1px solid #b44dff;border-radius:4px;padding:2px 9px;font-family:var(--mono);font-size:9px;color:#b44dff;letter-spacing:2px;">ADVANCED</span>
+      </div>
+      <div class="term-aka">// Entry + take profit + stop loss -- all in one click</div>
+      <p>A bracket order is the full package. When you enter a trade, the platform immediately wraps it in an OCO on both sides -- a take profit above and a stop loss below. Your entire trade plan -- entry, exit for win, exit for loss -- gets placed in one action.</p>
+      <p>You enter at $100. Bracket order automatically places take profit at $115 and stop loss at $92. Whichever one gets hit closes the trade and cancels the other. Clean. Automated. Disciplined.</p>
+      <div class="term-tip">&#128161; Bracket orders enforce trade discipline. You can't "forget" to put a stop loss in because it's part of the entry. Most active trading platforms (Interactive Brokers, TD Ameritrade's thinkorswim, Schwab, TradeStation) offer bracket orders as a standard feature.</div>
+    </div>
+
+    <!-- ── GTC ORDER ── -->
+    <div class="term-card" id="gtc-order">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+        <div class="term-name" style="margin:0;">GTC — Good Till Canceled</div>
+        <span style="background:rgba(255,209,102,0.15);border:1px solid #ffd166;border-radius:4px;padding:2px 9px;font-family:var(--mono);font-size:9px;color:#ffd166;letter-spacing:2px;">INTERMEDIATE</span>
+      </div>
+      <div class="term-aka">// Your order stays open until it fills or you cancel it</div>
+      <p>By default, most limit orders are "Day Orders" -- if they don't fill by market close, they cancel. A GTC order keeps your limit order active across multiple trading days. It stays open until either it fills at your price or you manually cancel it (most brokers cap this at 60-90 days).</p>
+      <p><strong>Use case:</strong> You want to buy Apple at $170 but it's currently at $180. You place a GTC buy limit at $170. It sits there for days, weeks, however long it takes. If Apple ever dips to $170, you get filled automatically -- even if that happens two weeks later while you're at work.</p>
+      <div class="term-tip">&#128161; GTC orders are powerful but require monitoring. Set a reminder to check them periodically. Market conditions change, and an old GTC order might still be sitting there for a price that no longer makes sense.</div>
+    </div>
+
+    <!-- ── SAME CONCEPT DIFFERENT NAMES ── -->
+    <div class="divider"></div>
+    <div class="section-label" style="color:#00ffe1;">// Same Thing, Different Planet</div>
+
+    <div class="term-card" id="order-name-comparison">
+      <div class="term-name">Order Types — Stocks vs Crypto</div>
+      <div class="term-aka">// It's like speaking two languages but saying the same sentence</div>
+      <p>You're going to notice that the same concept has different names depending on where you're trading. A stock broker calls it one thing. A crypto exchange calls it something else. They're talking about the same idea. Here's the decoder ring:</p>
+
+      <div style="overflow-x:auto;margin:16px 0;">
+        <table style="width:100%;border-collapse:collapse;font-family:var(--mono);font-size:12px;">
+          <thead>
+            <tr>
+              <th style="text-align:left;padding:10px 14px;background:#080f0f;color:#ffd166;border:1px solid #0c3030;letter-spacing:1px;">CONCEPT</th>
+              <th style="text-align:left;padding:10px 14px;background:#080f0f;color:#00ff6a;border:1px solid #0c3030;letter-spacing:1px;">STOCK PLATFORM TERM</th>
+              <th style="text-align:left;padding:10px 14px;background:#080f0f;color:#b44dff;border:1px solid #0c3030;letter-spacing:1px;">CRYPTO PLATFORM TERM</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border:1px solid #0c3030;">
+              <td style="padding:10px 14px;color:var(--text);border:1px solid #0c3030;">Buy now at market price</td>
+              <td style="padding:10px 14px;color:#00ff6a;border:1px solid #0c3030;">Market Order</td>
+              <td style="padding:10px 14px;color:#b44dff;border:1px solid #0c3030;">Market Order / Spot Buy</td>
+            </tr>
+            <tr style="background:#050d0d;border:1px solid #0c3030;">
+              <td style="padding:10px 14px;color:var(--text);border:1px solid #0c3030;">Buy at a specific price</td>
+              <td style="padding:10px 14px;color:#00ff6a;border:1px solid #0c3030;">Buy Limit Order</td>
+              <td style="padding:10px 14px;color:#b44dff;border:1px solid #0c3030;">Limit Buy</td>
+            </tr>
+            <tr style="border:1px solid #0c3030;">
+              <td style="padding:10px 14px;color:var(--text);border:1px solid #0c3030;">Exit trade to lock in profit</td>
+              <td style="padding:10px 14px;color:#00ff6a;border:1px solid #0c3030;">Sell Limit / Take Profit</td>
+              <td style="padding:10px 14px;color:#b44dff;border:1px solid #0c3030;">Take Profit (TP)</td>
+            </tr>
+            <tr style="background:#050d0d;border:1px solid #0c3030;">
+              <td style="padding:10px 14px;color:var(--text);border:1px solid #0c3030;">Auto-exit when losing too much</td>
+              <td style="padding:10px 14px;color:#00ff6a;border:1px solid #0c3030;">Stop Order / Stop Loss</td>
+              <td style="padding:10px 14px;color:#b44dff;border:1px solid #0c3030;">Stop Loss (SL)</td>
+            </tr>
+            <tr style="border:1px solid #0c3030;">
+              <td style="padding:10px 14px;color:var(--text);border:1px solid #0c3030;">Stop with a price floor</td>
+              <td style="padding:10px 14px;color:#00ff6a;border:1px solid #0c3030;">Stop-Limit Order</td>
+              <td style="padding:10px 14px;color:#b44dff;border:1px solid #0c3030;">Stop-Limit</td>
+            </tr>
+            <tr style="background:#050d0d;border:1px solid #0c3030;">
+              <td style="padding:10px 14px;color:var(--text);border:1px solid #0c3030;">Stop that follows price up</td>
+              <td style="padding:10px 14px;color:#00ff6a;border:1px solid #0c3030;">Trailing Stop Order</td>
+              <td style="padding:10px 14px;color:#b44dff;border:1px solid #0c3030;">Trailing Stop / TSL</td>
+            </tr>
+            <tr style="border:1px solid #0c3030;">
+              <td style="padding:10px 14px;color:var(--text);border:1px solid #0c3030;">TP + SL linked together</td>
+              <td style="padding:10px 14px;color:#00ff6a;border:1px solid #0c3030;">OCO / Bracket Order</td>
+              <td style="padding:10px 14px;color:#b44dff;border:1px solid #0c3030;">OCO / TP+SL / Hedge Mode</td>
+            </tr>
+            <tr style="background:#050d0d;border:1px solid #0c3030;">
+              <td style="padding:10px 14px;color:var(--text);border:1px solid #0c3030;">Order that stays open for days</td>
+              <td style="padding:10px 14px;color:#00ff6a;border:1px solid #0c3030;">GTC Order</td>
+              <td style="padding:10px 14px;color:#b44dff;border:1px solid #0c3030;">GTC / Open Order</td>
+            </tr>
+            <tr style="border:1px solid #0c3030;">
+              <td style="padding:10px 14px;color:var(--text);border:1px solid #0c3030;">Order valid only for today</td>
+              <td style="padding:10px 14px;color:#00ff6a;border:1px solid #0c3030;">Day Order</td>
+              <td style="padding:10px 14px;color:#b44dff;border:1px solid #0c3030;">Day Order (crypto runs 24/7 so this is rare)</td>
+            </tr>
+            <tr style="background:#050d0d;border:1px solid #0c3030;">
+              <td style="padding:10px 14px;color:var(--text);border:1px solid #0c3030;">Fill completely or cancel</td>
+              <td style="padding:10px 14px;color:#00ff6a;border:1px solid #0c3030;">Fill or Kill (FOK)</td>
+              <td style="padding:10px 14px;color:#b44dff;border:1px solid #0c3030;">Fill or Kill (FOK)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p style="color:var(--muted);font-family:var(--mono);font-size:12px;margin-top:10px;">&#128161; The platforms look different. The names sometimes differ. But the logic underneath is identical. Learn the concept and you can navigate any platform.</p>
+    </div>
+
+    <!-- ── KEY DIFFERENCE: STOCKS VS CRYPTO ── -->
+    <div class="term-card gold" id="stocks-vs-crypto-orders">
+      <div class="term-name">One Real Difference — Stocks vs Crypto Hours</div>
+      <div class="term-aka">// This one catches everyone off guard at least once</div>
+      <p>The biggest practical difference between placing orders on stocks vs crypto isn't the order type -- it's the clock.</p>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0;">
+        <div style="background:#050d0d;border:1px solid rgba(0,255,106,0.2);border-radius:6px;padding:14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#00ff6a;letter-spacing:2px;margin-bottom:8px;">📈 STOCKS</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">Open Monday–Friday, 9:30am–4:00pm Eastern. After-hours trading exists (4pm–8pm, 4am–9:30am) but is thinner and riskier. Market is closed weekends and holidays. Stocks can gap hard overnight on earnings or news while your stop loss can't protect you.</p>
+        </div>
+        <div style="background:#050d0d;border:1px solid rgba(180,77,255,0.2);border-radius:6px;padding:14px;">
+          <div style="font-family:var(--mono);font-size:10px;color:#b44dff;letter-spacing:2px;margin-bottom:8px;">₿ CRYPTO</div>
+          <p style="margin:0;font-size:13px;color:var(--text);">Never closes. 365 days a year, 24/7. Your stop loss is always active. But volatility can spike at 3am on a Sunday with no warning. There's no "overnight gap" because there's no overnight -- the market never pauses.</p>
+        </div>
+      </div>
+
+      <div class="term-tip">&#128161; <strong>Because of this:</strong> Position sizing and stop loss placement matter even more in crypto. You won't always be there when the move happens. Your orders need to be set properly before you walk away from the screen.</div>
+    </div>
+
+    <!-- ── SLIPPAGE ── -->
+    <div class="term-card" id="slippage-explained">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+        <div class="term-name" style="margin:0;">Slippage</div>
+        <span style="background:rgba(0,255,106,0.15);border:1px solid #00ff6a;border-radius:4px;padding:2px 9px;font-family:var(--mono);font-size:9px;color:#00ff6a;letter-spacing:2px;">NOVICE</span>
+      </div>
+      <div class="term-aka">// The gap between the price you saw and the price you actually paid</div>
+      <p>Slippage happens when the price moves between the moment you click "buy" and the moment your order actually executes. On a liquid stock or major crypto pair with millions in volume, slippage is usually a fraction of a cent. On thin, low-volume assets it can be brutal.</p>
+      <p><strong>Example:</strong> Bitcoin is showing $67,000 on your screen. You smash the market buy button. By the time your order hits the exchange, enough other buyers got there first and pushed the price to $67,045. You paid $45 more than you expected. That's slippage.</p>
+      <p><strong>How to minimize it:</strong> Use limit orders instead of market orders. Trade assets with high volume. Avoid placing large orders on small, illiquid assets where your own buy will push the price against you.</p>
+    </div>
+
+    <!-- ── LIQUIDITY ── -->
+    <div class="term-card blue" id="liquidity-explained">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+        <div class="term-name" style="margin:0;">Liquidity</div>
+        <span style="background:rgba(0,255,106,0.15);border:1px solid #00ff6a;border-radius:4px;padding:2px 9px;font-family:var(--mono);font-size:9px;color:#00ff6a;letter-spacing:2px;">NOVICE</span>
+      </div>
+      <div class="term-aka">// How easy is it to buy or sell without moving the price?</div>
+      <p>Liquidity describes how much trading activity exists for an asset. A highly liquid asset has thousands of buyers and sellers at any moment -- you can buy or sell large amounts with minimal price impact. An illiquid asset has few participants -- even a small trade can move the price dramatically.</p>
+      <p><strong>High liquidity:</strong> Apple, Bitcoin, S&amp;P 500 ETFs. You can move in and out quickly, stop losses fill close to where you set them, slippage is tiny.</p>
+      <p><strong>Low liquidity:</strong> Small cap stocks, obscure altcoins. Wide spreads between buy and sell prices. Your stop loss might fill far from your target. Hard to exit a large position without crashing the price on yourself.</p>
+      <div class="term-tip">&#128161; Beginners should stick to liquid assets. The better prices and easier exits are worth more than the potential gains of illiquid "hidden gem" assets -- especially when learning.</div>
+    </div>
+
+    <!-- ── BID / ASK / SPREAD ── -->
+    <div class="term-card" id="bid-ask-spread">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+        <div class="term-name" style="margin:0;">Bid, Ask &amp; The Spread</div>
+        <span style="background:rgba(0,255,106,0.15);border:1px solid #00ff6a;border-radius:4px;padding:2px 9px;font-family:var(--mono);font-size:9px;color:#00ff6a;letter-spacing:2px;">NOVICE</span>
+      </div>
+      <div class="term-aka">// The two prices that always exist at the same time</div>
+      <p>Every traded asset has two prices at any moment:</p>
+      <ul style="margin:10px 0 10px 18px;line-height:2.4;">
+        <li><strong>Bid</strong> -- The highest price a buyer is willing to pay right now. If you want to sell immediately, you get the bid.</li>
+        <li><strong>Ask</strong> -- The lowest price a seller is willing to accept right now. If you want to buy immediately, you pay the ask.</li>
+        <li><strong>Spread</strong> -- The difference between the two. On Apple it might be a penny. On a small altcoin it might be 2-5%.</li>
+      </ul>
+      <p>When you place a market order to buy, you pay the ask. When you place a market order to sell, you get the bid. The spread is an invisible cost every time you trade -- the wider the spread, the more you're giving up just by entering the trade.</p>
+      <div class="term-tip">&#128161; Checking the spread before trading is especially important with limit orders. If the spread is wide, place your limit inside the spread to get a better fill instead of automatically paying the full ask.</div>
+    </div>
+
+    <!-- ── POSITION SIZING ── -->
+    <div class="term-card gold" id="position-sizing">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+        <div class="term-name" style="margin:0;">Position Sizing</div>
+        <span style="background:rgba(255,209,102,0.15);border:1px solid #ffd166;border-radius:4px;padding:2px 9px;font-family:var(--mono);font-size:9px;color:#ffd166;letter-spacing:2px;">INTERMEDIATE</span>
+      </div>
+      <div class="term-aka">// How much of your account to put in one trade</div>
+      <p>Position sizing is how you decide how many shares or how much crypto to buy. It's not about how much you want -- it's about how much risk you can absorb if the trade goes wrong.</p>
+      <p><strong>The 1-2% rule:</strong> Many professional traders risk no more than 1-2% of their total account on any single trade. If your account is $5,000, you risk at most $50-$100 per trade. This way, even 10 consecutive losing trades won't blow up your account.</p>
+      <p><strong>How to calculate it:</strong> Decide your stop loss distance. Divide your max risk by that distance. That gives you your position size.</p>
+      <div style="background:#050d0d;border:1px solid rgba(255,209,102,0.15);border-radius:6px;padding:14px;margin:14px 0;font-family:var(--mono);font-size:12px;line-height:2;">
+        <div style="color:#ffd166;letter-spacing:2px;font-size:10px;margin-bottom:8px;">EXAMPLE CALCULATION</div>
+        <div style="color:var(--text);">Account: $5,000</div>
+        <div style="color:var(--text);">Max risk per trade (2%): $100</div>
+        <div style="color:var(--text);">Stock price: $50 — Stop loss at $47 = $3 risk per share</div>
+        <div style="color:#00ff6a;">Position size: $100 ÷ $3 = <strong>33 shares</strong></div>
+        <div style="color:#3d7070;font-size:10px;margin-top:6px;">If stop is hit: lose $99. Account survives. Try again.</div>
+      </div>
+      <div class="term-tip">&#128161; Most blown accounts aren't from bad analysis -- they're from oversized positions. A great setup at 50% of your account that goes wrong can permanently end your trading. A great setup at 2% of your account that goes wrong is just Tuesday.</div>
+    </div>
+
+    <!-- ── RISK REWARD RATIO ── -->
+    <div class="term-card" id="risk-reward">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+        <div class="term-name" style="margin:0;">Risk-to-Reward Ratio (R:R)</div>
+        <span style="background:rgba(255,209,102,0.15);border:1px solid #ffd166;border-radius:4px;padding:2px 9px;font-family:var(--mono);font-size:9px;color:#ffd166;letter-spacing:2px;">INTERMEDIATE</span>
+      </div>
+      <div class="term-aka">// Are you risking more than you stand to gain?</div>
+      <p>Before entering any trade, ask: what's the most I can lose vs what's the most I can gain? That ratio is your R:R.</p>
+      <ul style="margin:10px 0 10px 18px;line-height:2.4;">
+        <li><strong>1:1</strong> -- Risk $100 to make $100. Breakeven ratio. Need to win more than 50% of trades to profit.</li>
+        <li><strong>1:2</strong> -- Risk $100 to make $200. Good ratio. Can be profitable even if you lose more trades than you win.</li>
+        <li><strong>1:3</strong> -- Risk $100 to make $300. Excellent. Win only 30% of trades and still be profitable.</li>
+      </ul>
+      <p>Most experienced traders won't take a trade unless the R:R is at least 1:2. The math protects them -- even a 40% win rate at 1:2 R:R is a net-profitable strategy over time.</p>
+      <div class="term-tip">&#128161; Set your stop loss first. Then see how far your target is. If the target isn't at least 2x the stop distance away, the trade might not be worth taking. R:R separates patient, calculated traders from gamblers.</div>
     </div>
 
   </div>
